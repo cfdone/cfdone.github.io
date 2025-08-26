@@ -1,7 +1,7 @@
 import logo from "../assets/logo.svg";
 export default function Splash() {
     return (
-        <div className="bg-black flex py-8 flex-col justify-between items-center h-screen">
+        <div className="bg-black flex py-8 flex-col justify-between items-center h-lvh overflow-hidden">
             <h1 className="text-white text-xl font-semibold text-center font-playfair">
                 FAST timetable <span className="text-accent">sucks?</span> 
                 <br />
