@@ -13,10 +13,13 @@
     <script src="https://unpkg.com/ios-pwa-splash@1.0.0/cdn.min.js"></script>
     <script>iosPWASplash('/apple-touch-icon.png', '#000000');</script>
     <!-- Viewport -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+   <meta
+	name="viewport"
+	content="width=device-width, initial-scale=1, viewport-fit=cover"
+/>
     <title>CFD ONE</title>
   </head>
-  <body>
+  <body class="px-safe">
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>
