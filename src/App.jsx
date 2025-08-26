@@ -1,5 +1,4 @@
-
-  import Splash from "./pages/Splash"
+import Splash from "./pages/Onboarding"
 function App() {
 
 
