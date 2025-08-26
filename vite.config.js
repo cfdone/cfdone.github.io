@@ -19,8 +19,8 @@ export default defineConfig({
       manifest: {
         name: 'CFD ONE',
         short_name: 'CFD ONE',
-        start_url: '/',
-        scope: '/',
+        start_url: '/cfdone/',
+        scope: '/cfdone/',
         display: 'standalone',
         orientation: 'portrait',
         background_color: '#000000',
