@@ -1,1 +1,13 @@
 @import "tailwindcss";
+@font-face {
+  font-family: "Gilroy";
+  src: url("https://gist.githubusercontent.com/mfd/09b70eb47474836f25a21660282ce0fd/raw/2126ddc899c0621cd9d8fd86ad0ac3cb55b2a5e9/Gilroy-Medium.woff") format("woff");
+}
+@theme{
+  --font-playfair: "Playfair Display", serif;
+  --font-gilroy: "Gilroy", sans-serif;
+  --color-accent: #A098FF;
+}
+.user-select-none {
+  user-select: none;
+}
