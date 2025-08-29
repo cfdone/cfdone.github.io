@@ -17,7 +17,7 @@ export default function Onboarding() {
     }
 
     return (
-        <div className="h-dvh bg-black flex flex-col justify-between items-center px-4 pt-safe-offset-8 pb-safe-offset-8">
+        <div className="h-dvh bg-gradient-to-b from-[#15141f] from-0% to-black flex flex-col justify-between items-center px-4 pt-safe-offset-8 pb-safe-offset-8">
             {step === 1 && <Step1 onNext={() => setStep(2)} />}
 
             {step === 2 && (

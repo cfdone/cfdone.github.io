@@ -41,21 +41,21 @@ export default function Regular({ onPrev, onNext }) {
 
     return (
         <>
-        <div className="gap-[12px] justify-center flex flex-col items-center">
-            <img src={logo} alt="Logo" className="w-20 h-20 user-select-none" />
-            <h1 className="text-white text-xl font-semibold text-center font-playfair">
+        <div className="flex flex-col items-center gap-6 px-4 py-6 w-full max-w-md mx-auto">
+            <img src={logo} alt="Logo" className="w-16 h-16 user-select-none mb-2" />
+            <h1 className="text-white text-lg font-semibold text-center font-playfair mb-2">
                 Choose Your Degree
             </h1>
-            <div className="gap-[12px] flex flex-col items-center">
-                <div className="flex flex-wrap justify-center gap-4 mb-4">
+            <div className="w-full flex flex-col gap-4">
+                <div className="flex flex-row flex-wrap gap-1 justify-center overflow-x-auto pb-2">
                     {degreeNames.map((deg) => (
                         <button
                             key={deg}
                             type="button"
-                            className={`px-6 py-2 rounded-full font-product-sans text-[15px] border transition
+                            className={`min-w-[60px] px-2 py-1 rounded font-product-sans text-[13px] border transition shadow-sm
                                 ${selectedDegree === deg
-                                    ? "bg-accent text-white border-accent shadow-lg"
-                                    : "bg-transparent text-accent border-accent/20 hover:bg-accent/10"
+                                    ? "bg-accent text-white border-accent shadow-md"
+                                    : "bg-white/10 text-accent border-accent/10 hover:bg-accent/10"
                                 }
                             `}
                             onClick={() => handleDegree(deg)}
@@ -66,18 +66,18 @@ export default function Regular({ onPrev, onNext }) {
                 </div>
                 {selectedDegree && (
                     <>
-                        <h2 className="text-white text-lg font-semibold text-center font-playfair">
+                        <h2 className="text-white text-base font-semibold text-center font-playfair mb-1 mt-2">
                             Choose Semester
                         </h2>
-                        <div className="flex flex-wrap justify-center gap-4 mb-4">
+                        <div className="flex flex-row flex-wrap gap-1 justify-center overflow-x-auto pb-2">
                             {semesterNames.map((sem) => (
                                 <button
                                     key={sem}
                                     type="button"
-                                    className={`px-6 py-2 rounded-full font-product-sans text-[15px] border transition
+                                    className={`min-w-[45px] px-2 py-1 rounded font-product-sans text-[13px] border transition shadow-sm
                                         ${selectedSemester === sem
-                                            ? "bg-accent text-white border-accent shadow-lg"
-                                            : "bg-transparent text-accent border-accent/20 hover:bg-accent/10"
+                                            ? "bg-accent text-white border-accent shadow-md"
+                                            : "bg-white/10 text-accent border-accent/10 hover:bg-accent/10"
                                         }
                                     `}
                                     onClick={() => handleSemester(sem)}
@@ -90,18 +90,18 @@ export default function Regular({ onPrev, onNext }) {
                 )}
                 {selectedSemester && (
                     <>
-                        <h2 className="text-white text-lg font-semibold text-center font-playfair">
+                        <h2 className="text-white text-base font-semibold text-center font-playfair mb-1 mt-2">
                             Choose Section
                         </h2>
-                        <div className="flex flex-wrap justify-center gap-4 mb-4">
+                        <div className="flex flex-row flex-wrap gap-1 justify-center overflow-x-auto pb-2">
                             {sectionNames.map((sec) => (
                                 <button
                                     key={sec}
                                     type="button"
-                                    className={`px-6 py-2 rounded-full font-product-sans text-[15px] border transition
+                                    className={`min-w-[35px] px-2 py-1 rounded font-product-sans text-[13px] border transition shadow-sm
                                         ${selectedSection === sec
-                                            ? "bg-accent text-white border-accent shadow-lg"
-                                            : "bg-transparent text-accent border-accent/20 hover:bg-accent/10"
+                                            ? "bg-accent text-white border-accent shadow-md"
+                                            : "bg-white/10 text-accent border-accent/10 hover:bg-accent/10"
                                         }
                                     `}
                                     onClick={() => handleSection(sec)}
@@ -114,15 +114,20 @@ export default function Regular({ onPrev, onNext }) {
                 )}
             </div>
         </div>
-        <div className="flex items-center justify-center gap-[12px] w-full">
+        <div className="flex flex-row gap-3 items-center justify-center w-full max-w-md mx-auto px-4 pb-6">
             <button
-                className="bg-transparent border text-white border-accent/20 hover:bg-accent/10 font-product-sans  px-4 py-2 rounded-full w-[150px] text-[14px] p-2"
+                className="bg-white/10 border text-white border-accent/10 hover:bg-accent/10 font-product-sans px-4 py-3 rounded-xl w-full text-[15px] transition"
                 onClick={onPrev}
             >
                 Go Back
             </button>
             <button
-                className="bg-accent font-product-sans text-white px-4 py-2 rounded-full w-[150px] text-[14px] p-2"
+                className={`font-product-sans px-4 py-3 rounded-xl w-full text-[15px] transition shadow-md
+                    ${selectedDegree && selectedSemester && selectedSection
+                        ? "bg-accent text-white"
+                        : "bg-accent/40 text-white/60"
+                    }
+                `}
                 disabled={!(selectedDegree && selectedSemester && selectedSection)}
                 onClick={handleNext}
             >
