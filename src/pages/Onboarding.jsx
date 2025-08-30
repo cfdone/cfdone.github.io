@@ -1,9 +1,10 @@
 import { useState } from "react";
 import Step1 from "./components/Onboarding/StepOne";
-import Step2 from "./components/Onboarding/StepTwo";
 import Regular from "./components/Onboarding/Regular";
 import Lagger from "./components/Onboarding/Lagger";
 import Home from "./Home"; // import Home
+import StepTrack from "./components/Onboarding/StepTrack"; // import StepTrack
+import logo from "../assets/logo.svg"
 
 
 export default function Onboarding() {
@@ -17,27 +18,29 @@ export default function Onboarding() {
     }
 
     return (
-        <div className="h-dvh bg-gradient-to-b from-[#15141f] from-0% to-black flex flex-col justify-between items-center px-4 pt-safe-offset-8 pb-safe-offset-8">
-            {step === 1 && <Step1 onNext={() => setStep(2)} />}
+        <div className="h-screen bg-black flex flex-col justify-between items-center px-4 pt-safe-offset-8 pb-safe-offset-8">
+            <div className="w-full  justify-center  flex flex-col gap-6 items-center">
+             <img src={logo} alt="Logo" className="w-15 h-15 user-select-none mb-2" />
+                <StepTrack currentStep={step} totalSteps={2} />
+            </div>
 
-            {step === 2 && (
-                <Step2
-                    onNext={() => setStep(3)}
-                    onPrev={() => setStep(1)}
+            {step === 1 && (
+                <Step1
+                    onNext={() => setStep(2)}
                     onSelectStudentType={setStudentType}
                     studentType={studentType}
                 />
             )}
 
-            {step === 3 && studentType === "regular" && (
+            {step === 2 && studentType === "regular" && (
                 <Regular
-                    onPrev={() => setStep(2)}
-                    onNext={setSelection} // pass setSelection to Regular
+                    onPrev={() => setStep(1)}
+                    onNext={setSelection}
                 />
             )}
 
-            {step === 3 && studentType === "lagger" && (
-                <Lagger onPrev={() => setStep(2)} />
+            {step === 2 && studentType === "lagger" && (
+                <Lagger onPrev={() => setStep(1)} />
             )}
         </div>
     );
