@@ -74,7 +74,7 @@ export default function Lagger({ onPrev, onNext }) {
                         </div>
                     </div>
                 </div>
-                <div className="flex flex-row gap-3 items-center justify-center w-full max-w-md mx-auto px-4 pb-6 pt-2 bg-gradient-to-b from-transparent to-black">
+                <div className="flex flex-row gap-3 items-center justify-center w-full max-w-md mx-auto px-2 pb-6 pt-2 bg-gradient-to-b from-transparent to-black">
                     <button
                         className="font-product-sans px-4 py-3 rounded-xl w-full text-[15px] transition shadow-md bg-white/10 border text-white border-accent/10 hover:bg-accent/10"
                         onClick={onPrev || (() => navigate("/stepone"))}
