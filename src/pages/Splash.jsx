@@ -19,7 +19,7 @@ export default function Splash() {
 				<p className="text-white font-playfair">Let’s fix this mess in 2 minutes flat!</p>
 				<button
 					className="bg-accent font-product-sans text-white px-4 py-3 rounded-xl w-full text-[15px] transition shadow-md"
-					onClick={() => navigate("/onboarding")}
+					onClick={() => navigate("/stepone")}
 				>
 					Let's Fix This!
 				</button>

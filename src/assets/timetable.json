@@ -18,34 +18,6 @@
             "room": "FSM R-6"
           },
           {
-            "start": "11:45",
-            "end": "12:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "12:15",
-            "end": "12:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "12:45",
-            "end": "1:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "1:10",
-            "end": "1:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
             "start": "1:45",
             "end": "4:40",
             "course": "Programming Fundamentals-Lab",
@@ -54,13 +26,6 @@
           }
         ],
         "Tuesday": [
-          {
-            "start": "8:45",
-            "end": "9:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
           {
             "start": "9:15",
             "end": "10:10",
@@ -76,13 +41,6 @@
             "room": "R-5"
           },
           {
-            "start": "11:15",
-            "end": "11:40",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
             "start": "11:45",
             "end": "1:45",
             "course": "Introduction to Information and Communication Technology",
@@ -95,34 +53,6 @@
             "course": "Pakistan Studies",
             "teacher": "Zafar Iqbal",
             "room": "R-8"
-          },
-          {
-            "start": "2:45",
-            "end": "3:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "3:15",
-            "end": "3:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "3:45",
-            "end": "4:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "4:15",
-            "end": "4:40",
-            "course": null,
-            "teacher": null,
-            "room": null
           }
         ],
         "Wednesday": [
@@ -132,13 +62,6 @@
             "course": "Functional English",
             "teacher": "Tehreem Wali",
             "room": "R-6"
-          },
-          {
-            "start": "9:45",
-            "end": "10:10",
-            "course": null,
-            "teacher": null,
-            "room": null
           },
           {
             "start": "10:15",
@@ -155,46 +78,11 @@
             "room": "[A1] Lab 9"
           },
           {
-            "start": "1:10",
-            "end": "1:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
             "start": "1:45",
             "end": "2:45",
             "course": "Dr Iqra Muhammad / IICT Seminar Momna Javaid / Amna Waheed / Maham Saleem /",
             "teacher": "Areeba Waseem",
             "room": "Audi"
-          },
-          {
-            "start": "2:45",
-            "end": "3:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "3:15",
-            "end": "3:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "3:45",
-            "end": "4:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "4:15",
-            "end": "4:40",
-            "course": null,
-            "teacher": null,
-            "room": null
           }
         ],
         "Thursday": [
@@ -204,13 +92,6 @@
             "course": "Programming Fundamentals",
             "teacher": "Rizwan ul Haq",
             "room": "R-20"
-          },
-          {
-            "start": "10:15",
-            "end": "10:45",
-            "course": null,
-            "teacher": null,
-            "room": null
           },
           {
             "start": "10:45",
@@ -239,20 +120,6 @@
             "course": "Pakistan Studies",
             "teacher": "Zafar Iqbal",
             "room": "R-9"
-          },
-          {
-            "start": "3:45",
-            "end": "4:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "4:15",
-            "end": "4:40",
-            "course": null,
-            "teacher": null,
-            "room": null
           }
         ],
         "Friday": [
@@ -262,97 +129,6 @@
             "course": "Calculus and Analytical Geometry",
             "teacher": "Amjad Hussain",
             "room": "FSM R-6"
-          },
-          {
-            "start": "10:15",
-            "end": "10:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "10:45",
-            "end": "11:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "11:15",
-            "end": "11:40",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "11:45",
-            "end": "12:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "12:15",
-            "end": "12:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "12:45",
-            "end": "1:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "1:10",
-            "end": "1:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "1:45",
-            "end": "2:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "2:15",
-            "end": "2:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "2:45",
-            "end": "3:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "3:15",
-            "end": "3:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "3:45",
-            "end": "4:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "4:15",
-            "end": "4:40",
-            "course": null,
-            "teacher": null,
-            "room": null
           }
         ]
       },
@@ -380,25 +156,11 @@
             "room": "Lab 4"
           },
           {
-            "start": "1:45",
-            "end": "2:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
             "start": "2:15",
             "end": "3:10",
             "course": "Pakistan Studies",
             "teacher": "Zafar Iqbal",
             "room": "R-20"
-          },
-          {
-            "start": "3:15",
-            "end": "3:45",
-            "course": null,
-            "teacher": null,
-            "room": null
           },
           {
             "start": "3:45",
@@ -417,46 +179,11 @@
             "room": "Lab 2"
           },
           {
-            "start": "11:45",
-            "end": "12:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "12:15",
-            "end": "12:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "12:45",
-            "end": "1:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "1:10",
-            "end": "1:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
             "start": "1:45",
             "end": "3:10",
             "course": "Functional English-Lab",
             "teacher": "Muhammad Hasnain",
             "room": "[B1] Lab 9"
-          },
-          {
-            "start": "3:15",
-            "end": "3:45",
-            "course": null,
-            "teacher": null,
-            "room": null
           },
           {
             "start": "3:45",
@@ -475,39 +202,11 @@
             "room": "[B1] Lab 9"
           },
           {
-            "start": "10:15",
-            "end": "10:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "10:45",
-            "end": "11:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "11:15",
-            "end": "11:40",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
             "start": "11:45",
             "end": "1:10",
             "course": "Calculus and Analytical Geometry",
             "teacher": "Amjad Hussain",
             "room": "FSM R-6"
-          },
-          {
-            "start": "1:10",
-            "end": "1:45",
-            "course": null,
-            "teacher": null,
-            "room": null
           },
           {
             "start": "1:45",
@@ -522,20 +221,6 @@
             "course": "Ideology and Constitution of Pakistan",
             "teacher": "Sidra Tabasum",
             "room": "FSM R-6"
-          },
-          {
-            "start": "3:45",
-            "end": "4:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "4:15",
-            "end": "4:40",
-            "course": null,
-            "teacher": null,
-            "room": null
           }
         ],
         "Thursday": [
@@ -547,25 +232,11 @@
             "room": "R-11"
           },
           {
-            "start": "9:45",
-            "end": "10:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
             "start": "10:15",
             "end": "11:40",
             "course": "Programming Fundamentals",
             "teacher": "Rizwan ul Haq",
             "room": "R-20"
-          },
-          {
-            "start": "11:45",
-            "end": "12:15",
-            "course": null,
-            "teacher": null,
-            "room": null
           },
           {
             "start": "12:15",
@@ -580,134 +251,15 @@
             "course": "Ideology and Constitution of Pakistan",
             "teacher": "Sidra Tabasum",
             "room": "R-11"
-          },
-          {
-            "start": "2:45",
-            "end": "3:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "3:15",
-            "end": "3:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "3:45",
-            "end": "4:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "4:15",
-            "end": "4:40",
-            "course": null,
-            "teacher": null,
-            "room": null
           }
         ],
         "Friday": [
-          {
-            "start": "8:45",
-            "end": "9:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "9:15",
-            "end": "9:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "9:45",
-            "end": "10:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
           {
             "start": "10:15",
             "end": "11:40",
             "course": "Calculus and Analytical Geometry",
             "teacher": "Amjad Hussain",
             "room": "FSM R-6"
-          },
-          {
-            "start": "11:45",
-            "end": "12:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "12:15",
-            "end": "12:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "12:45",
-            "end": "1:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "1:10",
-            "end": "1:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "1:45",
-            "end": "2:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "2:15",
-            "end": "2:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "2:45",
-            "end": "3:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "3:15",
-            "end": "3:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "3:45",
-            "end": "4:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "4:15",
-            "end": "4:40",
-            "course": null,
-            "teacher": null,
-            "room": null
           }
         ]
       },
@@ -735,39 +287,11 @@
             "room": "Lab 2"
           },
           {
-            "start": "1:45",
-            "end": "2:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "2:15",
-            "end": "2:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "2:45",
-            "end": "3:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
             "start": "3:15",
             "end": "4:15",
             "course": "Pakistan Studies",
             "teacher": "Zafar Iqbal",
             "room": "R-20"
-          },
-          {
-            "start": "4:15",
-            "end": "4:40",
-            "course": null,
-            "teacher": null,
-            "room": null
           }
         ],
         "Tuesday": [
@@ -779,25 +303,11 @@
             "room": "R-11"
           },
           {
-            "start": "9:45",
-            "end": "10:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
             "start": "10:15",
             "end": "11:40",
             "course": "Applied Physics",
             "teacher": "Rimsha Bashir",
             "room": "R-9"
-          },
-          {
-            "start": "11:45",
-            "end": "12:15",
-            "course": null,
-            "teacher": null,
-            "room": null
           },
           {
             "start": "12:15",
@@ -812,34 +322,6 @@
             "course": "Ideology and Constitution of Pakistan",
             "teacher": "Sidra Tabasum",
             "room": "R-6"
-          },
-          {
-            "start": "2:45",
-            "end": "3:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "3:15",
-            "end": "3:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "3:45",
-            "end": "4:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "4:15",
-            "end": "4:40",
-            "course": null,
-            "teacher": null,
-            "room": null
           }
         ],
         "Wednesday": [
@@ -856,41 +338,6 @@
             "course": "Functional English",
             "teacher": "Maria Hussain",
             "room": "S.Hall"
-          },
-          {
-            "start": "11:15",
-            "end": "11:40",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "11:45",
-            "end": "12:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "12:15",
-            "end": "12:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "12:45",
-            "end": "1:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "1:10",
-            "end": "1:45",
-            "course": null,
-            "teacher": null,
-            "room": null
           },
           {
             "start": "1:45",
@@ -916,27 +363,6 @@
         ],
         "Thursday": [
           {
-            "start": "8:45",
-            "end": "9:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "9:15",
-            "end": "9:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "9:45",
-            "end": "10:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
             "start": "10:15",
             "end": "11:40",
             "course": "Functional English-Lab",
@@ -944,60 +370,11 @@
             "room": "[C1] Lab 9"
           },
           {
-            "start": "11:45",
-            "end": "12:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
             "start": "12:15",
             "end": "1:45",
             "course": "Calculus and Analytical Geometry",
             "teacher": "Amjad Hussain",
             "room": "FSM R-6"
-          },
-          {
-            "start": "1:45",
-            "end": "2:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "2:15",
-            "end": "2:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "2:45",
-            "end": "3:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "3:15",
-            "end": "3:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "3:45",
-            "end": "4:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "4:15",
-            "end": "4:40",
-            "course": null,
-            "teacher": null,
-            "room": null
           }
         ],
         "Friday": [
@@ -1014,55 +391,6 @@
             "course": "Applied Physics",
             "teacher": "Rimsha Bashir",
             "room": "R-8"
-          },
-          {
-            "start": "1:10",
-            "end": "1:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "1:45",
-            "end": "2:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "2:15",
-            "end": "2:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "2:45",
-            "end": "3:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "3:15",
-            "end": "3:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "3:45",
-            "end": "4:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "4:15",
-            "end": "4:40",
-            "course": null,
-            "teacher": null,
-            "room": null
           }
         ]
       },
@@ -1083,46 +411,11 @@
             "room": "R-19"
           },
           {
-            "start": "11:45",
-            "end": "12:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "12:15",
-            "end": "12:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "12:45",
-            "end": "1:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
             "start": "1:10",
             "end": "2:15",
             "course": "Functional English",
             "teacher": "Khalid Mehmood",
             "room": "R-20"
-          },
-          {
-            "start": "2:15",
-            "end": "2:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "2:45",
-            "end": "3:10",
-            "course": null,
-            "teacher": null,
-            "room": null
           },
           {
             "start": "3:15",
@@ -1141,46 +434,11 @@
             "room": "FSM R-6"
           },
           {
-            "start": "10:15",
-            "end": "10:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
             "start": "10:45",
             "end": "11:40",
             "course": "Ideology and Constitution of Pakistan",
             "teacher": "Sidra Tabasum",
             "room": "R-8"
-          },
-          {
-            "start": "11:45",
-            "end": "12:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "12:15",
-            "end": "12:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "12:45",
-            "end": "1:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "1:10",
-            "end": "1:45",
-            "course": null,
-            "teacher": null,
-            "room": null
           },
           {
             "start": "1:45",
@@ -1213,13 +471,6 @@
             "room": "R-8"
           },
           {
-            "start": "11:15",
-            "end": "11:40",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
             "start": "11:45",
             "end": "1:45",
             "course": "Introduction to Information and Communication Technology",
@@ -1232,20 +483,6 @@
             "course": "Dr Iqra Muhammad / IICT Seminar Momna Javaid / Amna Waheed / Maham Saleem /",
             "teacher": "Areeba Waseem",
             "room": "Audi"
-          },
-          {
-            "start": "2:45",
-            "end": "3:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "3:15",
-            "end": "3:45",
-            "course": null,
-            "teacher": null,
-            "room": null
           },
           {
             "start": "3:45",
@@ -1264,25 +501,11 @@
             "room": "Lab 2"
           },
           {
-            "start": "11:45",
-            "end": "12:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
             "start": "12:15",
             "end": "1:10",
             "course": "Functional English",
             "teacher": "Khalid Mehmood",
             "room": "R-7"
-          },
-          {
-            "start": "1:10",
-            "end": "1:45",
-            "course": null,
-            "teacher": null,
-            "room": null
           },
           {
             "start": "1:45",
@@ -1292,13 +515,6 @@
             "room": "[D1] Lab 9"
           },
           {
-            "start": "3:15",
-            "end": "3:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
             "start": "3:45",
             "end": "4:40",
             "course": "Pakistan Studies",
@@ -1306,120 +522,7 @@
             "room": "R-9"
           }
         ],
-        "Friday": [
-          {
-            "start": "8:45",
-            "end": "9:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "9:15",
-            "end": "9:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "9:45",
-            "end": "10:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "10:15",
-            "end": "10:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "10:45",
-            "end": "11:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "11:15",
-            "end": "11:40",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "11:45",
-            "end": "12:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "12:15",
-            "end": "12:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "12:45",
-            "end": "1:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "1:10",
-            "end": "1:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "1:45",
-            "end": "2:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "2:15",
-            "end": "2:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "2:45",
-            "end": "3:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "3:15",
-            "end": "3:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "3:45",
-            "end": "4:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "4:15",
-            "end": "4:40",
-            "course": null,
-            "teacher": null,
-            "room": null
-          }
-        ]
+        "Friday": []
       },
       "E": {
         "Monday": [
@@ -1438,13 +541,6 @@
             "room": "R-7"
           },
           {
-            "start": "11:15",
-            "end": "11:40",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
             "start": "11:45",
             "end": "1:10",
             "course": "Programming Fundamentals",
@@ -1452,25 +548,11 @@
             "room": "S.Hall"
           },
           {
-            "start": "1:10",
-            "end": "1:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
             "start": "1:45",
             "end": "3:10",
             "course": "Functional English-Lab",
             "teacher": "Zainab Mubarik",
             "room": "[E1] CAL Lab"
-          },
-          {
-            "start": "3:15",
-            "end": "3:45",
-            "course": null,
-            "teacher": null,
-            "room": null
           },
           {
             "start": "3:45",
@@ -1481,27 +563,6 @@
           }
         ],
         "Tuesday": [
-          {
-            "start": "8:45",
-            "end": "9:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "9:15",
-            "end": "9:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "9:45",
-            "end": "10:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
           {
             "start": "10:15",
             "end": "11:40",
@@ -1515,13 +576,6 @@
             "course": "Introduction to Information and Communication Technology",
             "teacher": "Momna Javaid",
             "room": "Lab 4"
-          },
-          {
-            "start": "1:45",
-            "end": "2:15",
-            "course": null,
-            "teacher": null,
-            "room": null
           },
           {
             "start": "2:15",
@@ -1540,27 +594,6 @@
         ],
         "Wednesday": [
           {
-            "start": "8:45",
-            "end": "9:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "9:15",
-            "end": "9:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "9:45",
-            "end": "10:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
             "start": "10:15",
             "end": "11:40",
             "course": "Calculus and Analytical Geometry",
@@ -1575,25 +608,11 @@
             "room": "S.Hall"
           },
           {
-            "start": "1:10",
-            "end": "1:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
             "start": "1:45",
             "end": "2:45",
             "course": "Dr Iqra Muhammad IICT Seminar Momna Javaid Amna Waheed Maham Saleem",
             "teacher": "Areeba Waseem",
             "room": "Audi"
-          },
-          {
-            "start": "2:45",
-            "end": "3:10",
-            "course": null,
-            "teacher": null,
-            "room": null
           },
           {
             "start": "3:15",
@@ -1605,13 +624,6 @@
         ],
         "Thursday": [
           {
-            "start": "8:45",
-            "end": "9:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
             "start": "9:15",
             "end": "10:10",
             "course": "Functional English",
@@ -1619,32 +631,11 @@
             "room": "R-13"
           },
           {
-            "start": "10:15",
-            "end": "10:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "10:45",
-            "end": "11:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
             "start": "11:15",
             "end": "12:15",
             "course": "Ideology and Constitution of Pakistan",
             "teacher": "Shahida Awan",
             "room": "FSM R-6"
-          },
-          {
-            "start": "12:15",
-            "end": "12:45",
-            "course": null,
-            "teacher": null,
-            "room": null
           },
           {
             "start": "12:45",
@@ -1661,120 +652,7 @@
             "room": "Lab 2"
           }
         ],
-        "Friday": [
-          {
-            "start": "8:45",
-            "end": "9:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "9:15",
-            "end": "9:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "9:45",
-            "end": "10:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "10:15",
-            "end": "10:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "10:45",
-            "end": "11:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "11:15",
-            "end": "11:40",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "11:45",
-            "end": "12:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "12:15",
-            "end": "12:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "12:45",
-            "end": "1:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "1:10",
-            "end": "1:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "1:45",
-            "end": "2:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "2:15",
-            "end": "2:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "2:45",
-            "end": "3:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "3:15",
-            "end": "3:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "3:45",
-            "end": "4:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "4:15",
-            "end": "4:40",
-            "course": null,
-            "teacher": null,
-            "room": null
-          }
-        ]
+        "Friday": []
       },
       "F": {
         "Monday": [
@@ -1786,32 +664,11 @@
             "room": "R-7"
           },
           {
-            "start": "9:45",
-            "end": "10:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
             "start": "10:15",
             "end": "11:40",
             "course": "Programming Fundamentals",
             "teacher": "Dr Rabia Maqsood",
             "room": "S.Hall"
-          },
-          {
-            "start": "11:45",
-            "end": "12:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "12:15",
-            "end": "12:45",
-            "course": null,
-            "teacher": null,
-            "room": null
           },
           {
             "start": "12:45",
@@ -1837,34 +694,6 @@
             "room": "[F1] CAL Lab"
           },
           {
-            "start": "10:15",
-            "end": "10:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "10:45",
-            "end": "11:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "11:15",
-            "end": "11:40",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "11:45",
-            "end": "12:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
             "start": "12:15",
             "end": "1:45",
             "course": "Programming Fundamentals",
@@ -1872,39 +701,11 @@
             "room": "S.Hall"
           },
           {
-            "start": "1:45",
-            "end": "2:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
             "start": "2:15",
             "end": "3:10",
             "course": "Pakistan Studies",
             "teacher": "Shahida Awan",
             "room": "FSM R-6"
-          },
-          {
-            "start": "3:15",
-            "end": "3:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "3:45",
-            "end": "4:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "4:15",
-            "end": "4:40",
-            "course": null,
-            "teacher": null,
-            "room": null
           }
         ],
         "Wednesday": [
@@ -1914,27 +715,6 @@
             "course": "Applied Physics",
             "teacher": "Mohsin Hameed",
             "room": "R-10"
-          },
-          {
-            "start": "10:15",
-            "end": "10:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "10:45",
-            "end": "11:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "11:15",
-            "end": "11:40",
-            "course": null,
-            "teacher": null,
-            "room": null
           },
           {
             "start": "11:45",
@@ -1949,34 +729,6 @@
             "course": "Dr Iqra Muhammad / IICT Seminar Momna Javaid / Amna Waheed / Maham Saleem /",
             "teacher": "Areeba Waseem",
             "room": "Audi"
-          },
-          {
-            "start": "2:45",
-            "end": "3:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "3:15",
-            "end": "3:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "3:45",
-            "end": "4:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "4:15",
-            "end": "4:40",
-            "course": null,
-            "teacher": null,
-            "room": null
           }
         ],
         "Thursday": [
@@ -1988,27 +740,6 @@
             "room": "R-5"
           },
           {
-            "start": "10:15",
-            "end": "10:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "10:45",
-            "end": "11:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "11:15",
-            "end": "11:40",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
             "start": "11:45",
             "end": "1:10",
             "course": "Functional English-Lab",
@@ -2016,25 +747,11 @@
             "room": "[F1] CAL Lab"
           },
           {
-            "start": "1:10",
-            "end": "1:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
             "start": "1:45",
             "end": "3:10",
             "course": "Applied Physics",
             "teacher": "Mohsin Hameed",
             "room": "R-5"
-          },
-          {
-            "start": "3:15",
-            "end": "3:45",
-            "course": null,
-            "teacher": null,
-            "room": null
           },
           {
             "start": "3:45",
@@ -2053,20 +770,6 @@
             "room": "R-6"
           },
           {
-            "start": "10:15",
-            "end": "10:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "10:45",
-            "end": "11:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
             "start": "11:15",
             "end": "12:15",
             "course": "Ideology and Constitution of Pakistan",
@@ -2079,55 +782,6 @@
             "course": "Ideology and Constitution of Pakistan",
             "teacher": "Shahida Awan",
             "room": "R-20"
-          },
-          {
-            "start": "1:10",
-            "end": "1:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "1:45",
-            "end": "2:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "2:15",
-            "end": "2:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "2:45",
-            "end": "3:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "3:15",
-            "end": "3:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "3:45",
-            "end": "4:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "4:15",
-            "end": "4:40",
-            "course": null,
-            "teacher": null,
-            "room": null
           }
         ]
       }
@@ -2148,27 +802,6 @@
             "course": "Theory of Automata",
             "teacher": "Faryal Saud",
             "room": "R-5"
-          },
-          {
-            "start": "11:45",
-            "end": "12:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "12:15",
-            "end": "12:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "12:45",
-            "end": "1:10",
-            "course": null,
-            "teacher": null,
-            "room": null
           },
           {
             "start": "1:10",
@@ -2208,13 +841,6 @@
             "room": "R-10"
           },
           {
-            "start": "11:45",
-            "end": "12:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
             "start": "12:15",
             "end": "1:45",
             "course": "Discrete Structures",
@@ -2229,13 +855,6 @@
             "room": "R-5"
           },
           {
-            "start": "3:15",
-            "end": "3:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
             "start": "3:45",
             "end": "4:40",
             "course": "Civics and Community Engagement",
@@ -2245,46 +864,11 @@
         ],
         "Wednesday": [
           {
-            "start": "8:45",
-            "end": "9:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "9:15",
-            "end": "9:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "9:45",
-            "end": "10:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
             "start": "10:15",
             "end": "11:40",
             "course": "Object Oriented Programming",
             "teacher": "Dr Muhammad Fayyaz",
             "room": "R-10"
-          },
-          {
-            "start": "11:45",
-            "end": "12:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "12:15",
-            "end": "12:45",
-            "course": null,
-            "teacher": null,
-            "room": null
           },
           {
             "start": "12:45",
@@ -2310,39 +894,11 @@
             "room": "SFC Lab 8"
           },
           {
-            "start": "11:45",
-            "end": "12:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
             "start": "12:15",
             "end": "1:45",
             "course": "Computer Organization and Assembly Language",
             "teacher": "Samia Mujahid",
             "room": "R-12"
-          },
-          {
-            "start": "1:45",
-            "end": "2:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "2:15",
-            "end": "2:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "2:45",
-            "end": "3:10",
-            "course": null,
-            "teacher": null,
-            "room": null
           },
           {
             "start": "3:15",
@@ -2354,60 +910,11 @@
         ],
         "Friday": [
           {
-            "start": "8:45",
-            "end": "9:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "9:15",
-            "end": "9:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "9:45",
-            "end": "10:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
             "start": "10:15",
             "end": "11:40",
             "course": "Discrete Structures",
             "teacher": "Ali Hamza",
             "room": "R-19"
-          },
-          {
-            "start": "11:45",
-            "end": "12:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "12:15",
-            "end": "12:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "12:45",
-            "end": "1:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "1:10",
-            "end": "1:45",
-            "course": null,
-            "teacher": null,
-            "room": null
           },
           {
             "start": "1:45",
@@ -2420,27 +927,6 @@
       },
       "E": {
         "Monday": [
-          {
-            "start": "8:45",
-            "end": "9:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "9:15",
-            "end": "9:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "9:45",
-            "end": "10:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
           {
             "start": "10:15",
             "end": "11:40",
@@ -2456,34 +942,6 @@
             "room": "R-12"
           },
           {
-            "start": "1:10",
-            "end": "1:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "1:45",
-            "end": "2:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "2:15",
-            "end": "2:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "2:45",
-            "end": "3:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
             "start": "3:15",
             "end": "4:40",
             "course": "Linear Algebra",
@@ -2492,13 +950,6 @@
           }
         ],
         "Tuesday": [
-          {
-            "start": "8:45",
-            "end": "9:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
           {
             "start": "9:15",
             "end": "10:10",
@@ -2514,25 +965,11 @@
             "room": "R-10"
           },
           {
-            "start": "11:45",
-            "end": "12:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
             "start": "12:15",
             "end": "1:10",
             "course": "Psychology",
             "teacher": "Zartash Naqvi",
             "room": "FSM R-7"
-          },
-          {
-            "start": "1:10",
-            "end": "1:45",
-            "course": null,
-            "teacher": null,
-            "room": null
           },
           {
             "start": "1:45",
@@ -2572,20 +1009,6 @@
             "room": "R-9"
           },
           {
-            "start": "12:45",
-            "end": "1:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "1:10",
-            "end": "1:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
             "start": "1:45",
             "end": "4:40",
             "course": "Object Oriented Programming-Lab",
@@ -2602,13 +1025,6 @@
             "room": "R-12"
           },
           {
-            "start": "10:15",
-            "end": "10:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
             "start": "10:45",
             "end": "11:40",
             "course": "Psychology",
@@ -2616,39 +1032,11 @@
             "room": "FSM R-7"
           },
           {
-            "start": "11:45",
-            "end": "12:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
             "start": "12:15",
             "end": "1:45",
             "course": "Theory of Automata",
             "teacher": "Dr Tayyeb Javed",
             "room": "R-20"
-          },
-          {
-            "start": "1:45",
-            "end": "2:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "2:15",
-            "end": "2:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "2:45",
-            "end": "3:10",
-            "course": null,
-            "teacher": null,
-            "room": null
           },
           {
             "start": "3:15",
@@ -2667,34 +1055,6 @@
             "room": "Lab 2"
           },
           {
-            "start": "11:45",
-            "end": "12:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "12:15",
-            "end": "12:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "12:45",
-            "end": "1:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "1:10",
-            "end": "1:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
             "start": "1:45",
             "end": "4:40",
             "course": "Data Structures-Lab",
@@ -2706,39 +1066,11 @@
       "F": {
         "Monday": [
           {
-            "start": "8:45",
-            "end": "9:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "9:15",
-            "end": "9:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "9:45",
-            "end": "10:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
             "start": "10:15",
             "end": "11:40",
             "course": "Data Structures",
             "teacher": "Abdul Mateen",
             "room": "R-8"
-          },
-          {
-            "start": "11:45",
-            "end": "12:15",
-            "course": null,
-            "teacher": null,
-            "room": null
           },
           {
             "start": "12:15",
@@ -2822,13 +1154,6 @@
             "room": "Object Oriented R-10"
           },
           {
-            "start": "11:45",
-            "end": "12:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
             "start": "12:15",
             "end": "1:45",
             "course": "Data Structures",
@@ -2850,34 +1175,6 @@
             "course": "Data Structures-Lab",
             "teacher": "Rohan Farooq",
             "room": "SFC Lab 8"
-          },
-          {
-            "start": "11:45",
-            "end": "12:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "12:15",
-            "end": "12:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "12:45",
-            "end": "1:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "1:10",
-            "end": "1:45",
-            "course": null,
-            "teacher": null,
-            "room": null
           },
           {
             "start": "1:45",
@@ -2910,48 +1207,6 @@
             "room": "R-20"
           },
           {
-            "start": "10:45",
-            "end": "11:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "11:15",
-            "end": "11:40",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "11:45",
-            "end": "12:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "12:15",
-            "end": "12:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "12:45",
-            "end": "1:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "1:10",
-            "end": "1:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
             "start": "1:45",
             "end": "4:40",
             "course": "Computer Organization and Assembly Language-Lab",
@@ -2968,34 +1223,6 @@
             "course": "Theory of Automata",
             "teacher": "Mahzaib Younas",
             "room": "R-5"
-          },
-          {
-            "start": "10:15",
-            "end": "10:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "10:45",
-            "end": "11:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "11:15",
-            "end": "11:40",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "11:45",
-            "end": "12:15",
-            "course": null,
-            "teacher": null,
-            "room": null
           },
           {
             "start": "12:15",
@@ -3070,13 +1297,6 @@
             "course": "Object Oriented Programming",
             "teacher": "Dr Muhammad Fayyaz",
             "room": "R-10"
-          },
-          {
-            "start": "11:45",
-            "end": "12:15",
-            "course": null,
-            "teacher": null,
-            "room": null
           },
           {
             "start": "12:15",
@@ -3109,27 +1329,6 @@
             "room": "R-8"
           },
           {
-            "start": "11:45",
-            "end": "12:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "12:15",
-            "end": "12:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "12:45",
-            "end": "1:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
             "start": "1:10",
             "end": "2:15",
             "course": "French Language",
@@ -3151,120 +1350,7 @@
             "room": "R-5"
           }
         ],
-        "Friday": [
-          {
-            "start": "8:45",
-            "end": "9:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "9:15",
-            "end": "9:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "9:45",
-            "end": "10:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "10:15",
-            "end": "10:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "10:45",
-            "end": "11:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "11:15",
-            "end": "11:40",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "11:45",
-            "end": "12:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "12:15",
-            "end": "12:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "12:45",
-            "end": "1:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "1:10",
-            "end": "1:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "1:45",
-            "end": "2:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "2:15",
-            "end": "2:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "2:45",
-            "end": "3:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "3:15",
-            "end": "3:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "3:45",
-            "end": "4:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "4:15",
-            "end": "4:40",
-            "course": null,
-            "teacher": null,
-            "room": null
-          }
-        ]
+        "Friday": []
       },
       "B": {
         "Monday": [
@@ -3281,20 +1367,6 @@
             "course": "Psychology",
             "teacher": "Anoosha Rehan",
             "room": "R-6"
-          },
-          {
-            "start": "11:15",
-            "end": "11:40",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "11:45",
-            "end": "12:15",
-            "course": null,
-            "teacher": null,
-            "room": null
           },
           {
             "start": "12:15",
@@ -3320,39 +1392,11 @@
         ],
         "Tuesday": [
           {
-            "start": "8:45",
-            "end": "9:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "9:15",
-            "end": "9:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "9:45",
-            "end": "10:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
             "start": "10:15",
             "end": "11:40",
             "course": "Object Oriented Programming",
             "teacher": "Dr Muhammad Fayyaz",
             "room": "R-10"
-          },
-          {
-            "start": "11:45",
-            "end": "12:15",
-            "course": null,
-            "teacher": null,
-            "room": null
           },
           {
             "start": "12:15",
@@ -3378,46 +1422,11 @@
             "room": "R-20"
           },
           {
-            "start": "9:45",
-            "end": "10:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
             "start": "10:15",
             "end": "11:40",
             "course": "Object Oriented Programming",
             "teacher": "Dr Muhammad Fayyaz",
             "room": "R-10"
-          },
-          {
-            "start": "11:45",
-            "end": "12:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "12:15",
-            "end": "12:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "12:45",
-            "end": "1:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "1:10",
-            "end": "1:45",
-            "course": null,
-            "teacher": null,
-            "room": null
           },
           {
             "start": "1:45",
@@ -3428,13 +1437,6 @@
           }
         ],
         "Thursday": [
-          {
-            "start": "8:45",
-            "end": "9:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
           {
             "start": "9:15",
             "end": "10:10",
@@ -3457,25 +1459,11 @@
             "room": "R-13"
           },
           {
-            "start": "1:10",
-            "end": "1:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
             "start": "1:45",
             "end": "2:45",
             "course": "Civics and Community Engagement",
             "teacher": "Hassan Ali",
             "room": "R-10"
-          },
-          {
-            "start": "2:45",
-            "end": "3:10",
-            "course": null,
-            "teacher": null,
-            "room": null
           },
           {
             "start": "3:15",
@@ -3499,115 +1487,17 @@
             "course": "Discrete Structures",
             "teacher": "Muhammad Adeel",
             "room": "R-6"
-          },
-          {
-            "start": "11:45",
-            "end": "12:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "12:15",
-            "end": "12:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "12:45",
-            "end": "1:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "1:10",
-            "end": "1:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "1:45",
-            "end": "2:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "2:15",
-            "end": "2:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "2:45",
-            "end": "3:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "3:15",
-            "end": "3:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "3:45",
-            "end": "4:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "4:15",
-            "end": "4:40",
-            "course": null,
-            "teacher": null,
-            "room": null
           }
         ]
       },
       "C": {
         "Monday": [
           {
-            "start": "8:45",
-            "end": "9:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "9:15",
-            "end": "9:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "9:45",
-            "end": "10:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
             "start": "10:15",
             "end": "11:40",
             "course": "Data Structures",
             "teacher": "Abdul Mateen",
             "room": "R-8"
-          },
-          {
-            "start": "11:45",
-            "end": "12:15",
-            "course": null,
-            "teacher": null,
-            "room": null
           },
           {
             "start": "12:15",
@@ -3633,39 +1523,11 @@
         ],
         "Tuesday": [
           {
-            "start": "8:45",
-            "end": "9:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "9:15",
-            "end": "9:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "9:45",
-            "end": "10:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
             "start": "10:15",
             "end": "11:40",
             "course": "Object Oriented Programming",
             "teacher": "Dr Muhammad Fayyaz",
             "room": "R-10"
-          },
-          {
-            "start": "11:45",
-            "end": "12:15",
-            "course": null,
-            "teacher": null,
-            "room": null
           },
           {
             "start": "12:15",
@@ -3683,27 +1545,6 @@
           }
         ],
         "Wednesday": [
-          {
-            "start": "8:45",
-            "end": "9:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "9:15",
-            "end": "9:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "9:45",
-            "end": "10:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
           {
             "start": "10:15",
             "end": "11:40",
@@ -3742,27 +1583,6 @@
             "room": "R-6"
           },
           {
-            "start": "10:15",
-            "end": "10:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "10:45",
-            "end": "11:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "11:15",
-            "end": "11:40",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
             "start": "11:45",
             "end": "12:45",
             "course": "Civics and Community Engagement",
@@ -3775,27 +1595,6 @@
             "course": "Psychology",
             "teacher": "Anoosha Rehan",
             "room": "R-10"
-          },
-          {
-            "start": "1:45",
-            "end": "2:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "2:15",
-            "end": "2:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "2:45",
-            "end": "3:10",
-            "course": null,
-            "teacher": null,
-            "room": null
           },
           {
             "start": "3:15",
@@ -3819,76 +1618,6 @@
             "course": "Theory of Automata",
             "teacher": "Faryal Saud",
             "room": "R-12"
-          },
-          {
-            "start": "11:45",
-            "end": "12:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "12:15",
-            "end": "12:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "12:45",
-            "end": "1:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "1:10",
-            "end": "1:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "1:45",
-            "end": "2:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "2:15",
-            "end": "2:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "2:45",
-            "end": "3:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "3:15",
-            "end": "3:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "3:45",
-            "end": "4:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "4:15",
-            "end": "4:40",
-            "course": null,
-            "teacher": null,
-            "room": null
           }
         ]
       }
@@ -3911,13 +1640,6 @@
             "room": "SFC Lab 8"
           },
           {
-            "start": "1:10",
-            "end": "1:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
             "start": "1:45",
             "end": "3:10",
             "course": "Software Design and Analysis",
@@ -3948,13 +1670,6 @@
             "room": "R-20"
           },
           {
-            "start": "11:45",
-            "end": "12:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
             "start": "12:15",
             "end": "1:45",
             "course": "Computer Networks",
@@ -3970,55 +1685,6 @@
           }
         ],
         "Wednesday": [
-          {
-            "start": "8:45",
-            "end": "9:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "9:15",
-            "end": "9:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "9:45",
-            "end": "10:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "10:15",
-            "end": "10:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "10:45",
-            "end": "11:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "11:15",
-            "end": "11:40",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "11:45",
-            "end": "12:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
           {
             "start": "12:15",
             "end": "1:45",
@@ -4057,39 +1723,11 @@
             "room": "R-13"
           },
           {
-            "start": "11:45",
-            "end": "12:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
             "start": "12:15",
             "end": "1:45",
             "course": "Software Engineering",
             "teacher": "Fraz Zaheer",
             "room": "R-6"
-          },
-          {
-            "start": "1:45",
-            "end": "2:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "2:15",
-            "end": "2:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "2:45",
-            "end": "3:10",
-            "course": null,
-            "teacher": null,
-            "room": null
           },
           {
             "start": "3:15",
@@ -4106,123 +1744,11 @@
             "course": "Data Science",
             "teacher": "Haseeb Arshad",
             "room": "R-10"
-          },
-          {
-            "start": "10:15",
-            "end": "10:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "10:45",
-            "end": "11:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "11:15",
-            "end": "11:40",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "11:45",
-            "end": "12:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "12:15",
-            "end": "12:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "12:45",
-            "end": "1:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "1:10",
-            "end": "1:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "1:45",
-            "end": "2:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "2:15",
-            "end": "2:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "2:45",
-            "end": "3:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "3:15",
-            "end": "3:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "3:45",
-            "end": "4:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "4:15",
-            "end": "4:40",
-            "course": null,
-            "teacher": null,
-            "room": null
           }
         ]
       },
       "B": {
         "Monday": [
-          {
-            "start": "8:45",
-            "end": "9:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "9:15",
-            "end": "9:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "9:45",
-            "end": "10:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
           {
             "start": "10:15",
             "end": "11:40",
@@ -4231,60 +1757,11 @@
             "room": "R-12"
           },
           {
-            "start": "11:45",
-            "end": "12:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "12:15",
-            "end": "12:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "12:45",
-            "end": "1:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "1:10",
-            "end": "1:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
             "start": "1:45",
             "end": "3:10",
             "course": "Software Design and Analysis",
             "teacher": "Mahzaib Younas",
             "room": "R-5"
-          },
-          {
-            "start": "3:15",
-            "end": "3:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "3:45",
-            "end": "4:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "4:15",
-            "end": "4:40",
-            "course": null,
-            "teacher": null,
-            "room": null
           }
         ],
         "Tuesday": [
@@ -4301,13 +1778,6 @@
             "course": "Technical and Business Writing",
             "teacher": "Sadia Ashfaq",
             "room": "FSM R-6"
-          },
-          {
-            "start": "11:45",
-            "end": "12:15",
-            "course": null,
-            "teacher": null,
-            "room": null
           },
           {
             "start": "12:15",
@@ -4333,34 +1803,6 @@
             "room": "R-19"
           },
           {
-            "start": "10:15",
-            "end": "10:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "10:45",
-            "end": "11:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "11:15",
-            "end": "11:40",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "11:45",
-            "end": "12:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
             "start": "12:15",
             "end": "1:45",
             "course": "Software Design and Analysis",
@@ -4382,34 +1824,6 @@
             "course": "Data Science",
             "teacher": "Haseeb Arshad",
             "room": "R-9"
-          },
-          {
-            "start": "10:15",
-            "end": "10:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "10:45",
-            "end": "11:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "11:15",
-            "end": "11:40",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "11:45",
-            "end": "12:15",
-            "course": null,
-            "teacher": null,
-            "room": null
           },
           {
             "start": "12:15",
@@ -4447,115 +1861,17 @@
             "course": "Design and Analysis of Algorithms",
             "teacher": "Dr Usman Ghous",
             "room": "R-10"
-          },
-          {
-            "start": "11:45",
-            "end": "12:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "12:15",
-            "end": "12:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "12:45",
-            "end": "1:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "1:10",
-            "end": "1:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "1:45",
-            "end": "2:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "2:15",
-            "end": "2:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "2:45",
-            "end": "3:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "3:15",
-            "end": "3:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "3:45",
-            "end": "4:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "4:15",
-            "end": "4:40",
-            "course": null,
-            "teacher": null,
-            "room": null
           }
         ]
       },
       "C": {
         "Monday": [
           {
-            "start": "8:45",
-            "end": "9:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "9:15",
-            "end": "9:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "9:45",
-            "end": "10:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
             "start": "10:15",
             "end": "11:40",
             "course": "Computer Networks",
             "teacher": "Momna Javaid",
             "room": "R-20"
-          },
-          {
-            "start": "11:45",
-            "end": "12:15",
-            "course": null,
-            "teacher": null,
-            "room": null
           },
           {
             "start": "12:15",
@@ -4570,27 +1886,6 @@
             "course": "Software Design and Analysis",
             "teacher": "Mahzaib Younas",
             "room": "R-5"
-          },
-          {
-            "start": "3:15",
-            "end": "3:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "3:45",
-            "end": "4:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "4:15",
-            "end": "4:40",
-            "course": null,
-            "teacher": null,
-            "room": null
           }
         ],
         "Tuesday": [
@@ -4609,60 +1904,11 @@
             "room": "R-12"
           },
           {
-            "start": "11:45",
-            "end": "12:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
             "start": "12:15",
             "end": "1:45",
             "course": "Software Engineering",
             "teacher": "Juhinah Batool",
             "room": "R-12"
-          },
-          {
-            "start": "1:45",
-            "end": "2:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "2:15",
-            "end": "2:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "2:45",
-            "end": "3:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "3:15",
-            "end": "3:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "3:45",
-            "end": "4:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "4:15",
-            "end": "4:40",
-            "course": null,
-            "teacher": null,
-            "room": null
           }
         ],
         "Wednesday": [
@@ -4672,13 +1918,6 @@
             "course": "Database Systems-Lab",
             "teacher": "Rohan Farooq",
             "room": "Lab 2"
-          },
-          {
-            "start": "11:45",
-            "end": "12:15",
-            "course": null,
-            "teacher": null,
-            "room": null
           },
           {
             "start": "12:15",
@@ -4704,27 +1943,6 @@
         ],
         "Thursday": [
           {
-            "start": "8:45",
-            "end": "9:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "9:15",
-            "end": "9:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "9:45",
-            "end": "10:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
             "start": "10:15",
             "end": "11:40",
             "course": "Data Science",
@@ -4732,39 +1950,11 @@
             "room": "S.Hall"
           },
           {
-            "start": "11:45",
-            "end": "12:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
             "start": "12:15",
             "end": "1:45",
             "course": "Computer Networks",
             "teacher": "Momna Javaid",
             "room": "S.Hall"
-          },
-          {
-            "start": "1:45",
-            "end": "2:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "2:15",
-            "end": "2:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "2:45",
-            "end": "3:10",
-            "course": null,
-            "teacher": null,
-            "room": null
           },
           {
             "start": "3:15",
@@ -4790,39 +1980,11 @@
             "room": "R-11"
           },
           {
-            "start": "1:10",
-            "end": "1:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
             "start": "1:45",
             "end": "3:10",
             "course": "Technical and Business Writing",
             "teacher": "Muhammad Iqbal",
             "room": "FSM R-6"
-          },
-          {
-            "start": "3:15",
-            "end": "3:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "3:45",
-            "end": "4:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "4:15",
-            "end": "4:40",
-            "course": null,
-            "teacher": null,
-            "room": null
           }
         ]
       },
@@ -4834,13 +1996,6 @@
             "course": "Computer Networks-Lab",
             "teacher": "Hassan Ahmed",
             "room": "Lab 2"
-          },
-          {
-            "start": "11:45",
-            "end": "12:15",
-            "course": null,
-            "teacher": null,
-            "room": null
           },
           {
             "start": "12:15",
@@ -4880,34 +2035,6 @@
             "room": "R-19"
           },
           {
-            "start": "11:45",
-            "end": "12:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "12:15",
-            "end": "12:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "12:45",
-            "end": "1:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "1:10",
-            "end": "1:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
             "start": "1:45",
             "end": "3:10",
             "course": "Design and Analysis of Algorithms",
@@ -4931,39 +2058,11 @@
             "room": "Lab 2"
           },
           {
-            "start": "11:45",
-            "end": "12:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
             "start": "12:15",
             "end": "1:45",
             "course": "Software Design and Analysis",
             "teacher": "Mahzaib Younas",
             "room": "R-8"
-          },
-          {
-            "start": "1:45",
-            "end": "2:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "2:15",
-            "end": "2:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "2:45",
-            "end": "3:10",
-            "course": null,
-            "teacher": null,
-            "room": null
           },
           {
             "start": "3:15",
@@ -4975,60 +2074,11 @@
         ],
         "Thursday": [
           {
-            "start": "8:45",
-            "end": "9:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "9:15",
-            "end": "9:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "9:45",
-            "end": "10:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
             "start": "10:15",
             "end": "11:40",
             "course": "Data Science",
             "teacher": "Hannan Farooq",
             "room": "R-12"
-          },
-          {
-            "start": "11:45",
-            "end": "12:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "12:15",
-            "end": "12:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "12:45",
-            "end": "1:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "1:10",
-            "end": "1:45",
-            "course": null,
-            "teacher": null,
-            "room": null
           },
           {
             "start": "1:45",
@@ -5059,102 +2109,11 @@
             "course": "Design and Analysis of Algorithms",
             "teacher": "Dr Hashim Yasin",
             "room": "R-11"
-          },
-          {
-            "start": "11:45",
-            "end": "12:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "12:15",
-            "end": "12:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "12:45",
-            "end": "1:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "1:10",
-            "end": "1:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "1:45",
-            "end": "2:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "2:15",
-            "end": "2:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "2:45",
-            "end": "3:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "3:15",
-            "end": "3:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "3:45",
-            "end": "4:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "4:15",
-            "end": "4:40",
-            "course": null,
-            "teacher": null,
-            "room": null
           }
         ]
       },
       "E": {
         "Monday": [
-          {
-            "start": "8:45",
-            "end": "9:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "9:15",
-            "end": "9:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "9:45",
-            "end": "10:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
           {
             "start": "10:15",
             "end": "11:40",
@@ -5168,13 +2127,6 @@
             "course": "Data Science",
             "teacher": "Hannan Farooq",
             "room": "R-19"
-          },
-          {
-            "start": "1:10",
-            "end": "1:45",
-            "course": null,
-            "teacher": null,
-            "room": null
           },
           {
             "start": "1:45",
@@ -5193,27 +2145,6 @@
         ],
         "Tuesday": [
           {
-            "start": "8:45",
-            "end": "9:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "9:15",
-            "end": "9:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "9:45",
-            "end": "10:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
             "start": "10:15",
             "end": "11:40",
             "course": "Data Science",
@@ -5228,39 +2159,11 @@
             "room": "R-8"
           },
           {
-            "start": "1:10",
-            "end": "1:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
             "start": "1:45",
             "end": "3:10",
             "course": "Technical and Business Writing",
             "teacher": "Sadia Ashfaq",
             "room": "FSM R-7"
-          },
-          {
-            "start": "3:15",
-            "end": "3:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "3:45",
-            "end": "4:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "4:15",
-            "end": "4:40",
-            "course": null,
-            "teacher": null,
-            "room": null
           }
         ],
         "Wednesday": [
@@ -5277,13 +2180,6 @@
             "course": "Design and Analysis of Algorithms",
             "teacher": "Mughees Ismail",
             "room": "R-12"
-          },
-          {
-            "start": "11:45",
-            "end": "12:15",
-            "course": null,
-            "teacher": null,
-            "room": null
           },
           {
             "start": "12:15",
@@ -5309,60 +2205,11 @@
             "room": "SFC Lab 7"
           },
           {
-            "start": "11:45",
-            "end": "12:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "12:15",
-            "end": "12:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "12:45",
-            "end": "1:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "1:10",
-            "end": "1:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
             "start": "1:45",
             "end": "3:10",
             "course": "Computer Networks",
             "teacher": "Dr Ammar Rafiq",
             "room": "R-12"
-          },
-          {
-            "start": "3:15",
-            "end": "3:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "3:45",
-            "end": "4:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "4:15",
-            "end": "4:40",
-            "course": null,
-            "teacher": null,
-            "room": null
           }
         ],
         "Friday": [
@@ -5386,81 +2233,11 @@
             "course": "Technical and Business Writing",
             "teacher": "Sadia Ashfaq",
             "room": "R-6"
-          },
-          {
-            "start": "1:10",
-            "end": "1:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "1:45",
-            "end": "2:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "2:15",
-            "end": "2:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "2:45",
-            "end": "3:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "3:15",
-            "end": "3:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "3:45",
-            "end": "4:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "4:15",
-            "end": "4:40",
-            "course": null,
-            "teacher": null,
-            "room": null
           }
         ]
       },
       "F": {
         "Monday": [
-          {
-            "start": "8:45",
-            "end": "9:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "9:15",
-            "end": "9:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "9:45",
-            "end": "10:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
           {
             "start": "10:15",
             "end": "11:40",
@@ -5474,13 +2251,6 @@
             "course": "Data Science",
             "teacher": "Hannan Farooq",
             "room": "R-19"
-          },
-          {
-            "start": "1:10",
-            "end": "1:45",
-            "course": null,
-            "teacher": null,
-            "room": null
           },
           {
             "start": "1:45",
@@ -5499,27 +2269,6 @@
         ],
         "Tuesday": [
           {
-            "start": "8:45",
-            "end": "9:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "9:15",
-            "end": "9:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "9:45",
-            "end": "10:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
             "start": "10:15",
             "end": "11:40",
             "course": "Data Science",
@@ -5532,13 +2281,6 @@
             "course": "Design and Analysis of Algorithms",
             "teacher": "Dr Umar Aftab",
             "room": "R-7"
-          },
-          {
-            "start": "1:10",
-            "end": "1:45",
-            "course": null,
-            "teacher": null,
-            "room": null
           },
           {
             "start": "1:45",
@@ -5557,27 +2299,6 @@
         ],
         "Wednesday": [
           {
-            "start": "8:45",
-            "end": "9:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "9:15",
-            "end": "9:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "9:45",
-            "end": "10:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
             "start": "10:15",
             "end": "11:40",
             "course": "Software Engineering",
@@ -5585,60 +2306,11 @@
             "room": "R-13"
           },
           {
-            "start": "11:45",
-            "end": "12:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
             "start": "12:15",
             "end": "1:45",
             "course": "Software Design and Analysis",
             "teacher": "Mahzaib Younas",
             "room": "R-8"
-          },
-          {
-            "start": "1:45",
-            "end": "2:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "2:15",
-            "end": "2:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "2:45",
-            "end": "3:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "3:15",
-            "end": "3:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "3:45",
-            "end": "4:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "4:15",
-            "end": "4:40",
-            "course": null,
-            "teacher": null,
-            "room": null
           }
         ],
         "Thursday": [
@@ -5648,13 +2320,6 @@
             "course": "Database Systems-Lab",
             "teacher": "Talha Arif",
             "room": "SFC Lab 7"
-          },
-          {
-            "start": "11:45",
-            "end": "12:15",
-            "course": null,
-            "teacher": null,
-            "room": null
           },
           {
             "start": "12:15",
@@ -5692,55 +2357,6 @@
             "course": "Technical and Business Writing",
             "teacher": "Muhammad Iqbal",
             "room": "FSM R-6"
-          },
-          {
-            "start": "1:10",
-            "end": "1:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "1:45",
-            "end": "2:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "2:15",
-            "end": "2:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "2:45",
-            "end": "3:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "3:15",
-            "end": "3:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "3:45",
-            "end": "4:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "4:15",
-            "end": "4:40",
-            "course": null,
-            "teacher": null,
-            "room": null
           }
         ]
       }
@@ -5749,81 +2365,11 @@
       "A": {
         "Monday": [
           {
-            "start": "8:45",
-            "end": "9:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "9:15",
-            "end": "9:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "9:45",
-            "end": "10:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "10:15",
-            "end": "10:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "10:45",
-            "end": "11:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "11:15",
-            "end": "11:40",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "11:45",
-            "end": "12:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
             "start": "12:15",
             "end": "1:45",
             "course": "Parallel and Distributed Computing",
             "teacher": "Aliza Saeed",
             "room": "R-9"
-          },
-          {
-            "start": "1:45",
-            "end": "2:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "2:15",
-            "end": "2:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "2:45",
-            "end": "3:10",
-            "course": null,
-            "teacher": null,
-            "room": null
           },
           {
             "start": "3:15",
@@ -5835,60 +2381,11 @@
         ],
         "Tuesday": [
           {
-            "start": "8:45",
-            "end": "9:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "9:15",
-            "end": "9:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "9:45",
-            "end": "10:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
             "start": "10:15",
             "end": "11:40",
             "course": "Natural Language Processing",
             "teacher": "Ali Raza",
             "room": "R-6"
-          },
-          {
-            "start": "11:45",
-            "end": "12:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "12:15",
-            "end": "12:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "12:45",
-            "end": "1:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "1:10",
-            "end": "1:45",
-            "course": null,
-            "teacher": null,
-            "room": null
           },
           {
             "start": "1:45",
@@ -5914,139 +2411,20 @@
             "room": "R-5"
           },
           {
-            "start": "10:15",
-            "end": "10:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "10:45",
-            "end": "11:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "11:15",
-            "end": "11:40",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "11:45",
-            "end": "12:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
             "start": "12:15",
             "end": "1:45",
             "course": "Fundamentals of Computer Vision",
             "teacher": "Dr Hashim Yasin",
             "room": "R-6"
-          },
-          {
-            "start": "1:45",
-            "end": "2:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "2:15",
-            "end": "2:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "2:45",
-            "end": "3:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "3:15",
-            "end": "3:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "3:45",
-            "end": "4:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "4:15",
-            "end": "4:40",
-            "course": null,
-            "teacher": null,
-            "room": null
           }
         ],
         "Thursday": [
-          {
-            "start": "8:45",
-            "end": "9:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "9:15",
-            "end": "9:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "9:45",
-            "end": "10:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
           {
             "start": "10:15",
             "end": "11:40",
             "course": "Operations Research",
             "teacher": "Hayat Ali",
             "room": "R-7"
-          },
-          {
-            "start": "11:45",
-            "end": "12:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "12:15",
-            "end": "12:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "12:45",
-            "end": "1:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "1:10",
-            "end": "1:45",
-            "course": null,
-            "teacher": null,
-            "room": null
           },
           {
             "start": "1:45",
@@ -6086,93 +2464,16 @@
             "room": "R-5"
           },
           {
-            "start": "1:10",
-            "end": "1:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
             "start": "1:45",
             "end": "3:10",
             "course": "Parallel and Distributed Computing",
             "teacher": "Aliza Saeed",
             "room": "R-9"
-          },
-          {
-            "start": "3:15",
-            "end": "3:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "3:45",
-            "end": "4:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "4:15",
-            "end": "4:40",
-            "course": null,
-            "teacher": null,
-            "room": null
           }
         ]
       },
       "B": {
         "Monday": [
-          {
-            "start": "8:45",
-            "end": "9:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "9:15",
-            "end": "9:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "9:45",
-            "end": "10:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "10:15",
-            "end": "10:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "10:45",
-            "end": "11:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "11:15",
-            "end": "11:40",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "11:45",
-            "end": "12:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
           {
             "start": "12:15",
             "end": "1:45",
@@ -6204,76 +2505,6 @@
             "room": "R-19"
           },
           {
-            "start": "10:15",
-            "end": "10:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "10:45",
-            "end": "11:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "11:15",
-            "end": "11:40",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "11:45",
-            "end": "12:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "12:15",
-            "end": "12:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "12:45",
-            "end": "1:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "1:10",
-            "end": "1:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "1:45",
-            "end": "2:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "2:15",
-            "end": "2:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "2:45",
-            "end": "3:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
             "start": "3:15",
             "end": "4:40",
             "course": "Deep Learning for Perception",
@@ -6290,60 +2521,11 @@
             "room": "R-8"
           },
           {
-            "start": "10:15",
-            "end": "10:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "10:45",
-            "end": "11:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "11:15",
-            "end": "11:40",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "11:45",
-            "end": "12:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
             "start": "12:15",
             "end": "1:45",
             "course": "Fundamentals of Computer Vision",
             "teacher": "Shahbaz Ayyaz",
             "room": "R-7"
-          },
-          {
-            "start": "1:45",
-            "end": "2:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "2:15",
-            "end": "2:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "2:45",
-            "end": "3:10",
-            "course": null,
-            "teacher": null,
-            "room": null
           },
           {
             "start": "3:15",
@@ -6367,100 +2549,9 @@
             "course": "Information Security",
             "teacher": "Juhinah Batool",
             "room": "R-10"
-          },
-          {
-            "start": "11:45",
-            "end": "12:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "12:15",
-            "end": "12:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "12:45",
-            "end": "1:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "1:10",
-            "end": "1:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "1:45",
-            "end": "2:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "2:15",
-            "end": "2:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "2:45",
-            "end": "3:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "3:15",
-            "end": "3:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "3:45",
-            "end": "4:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "4:15",
-            "end": "4:40",
-            "course": null,
-            "teacher": null,
-            "room": null
           }
         ],
         "Friday": [
-          {
-            "start": "8:45",
-            "end": "9:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "9:15",
-            "end": "9:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "9:45",
-            "end": "10:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
           {
             "start": "10:15",
             "end": "11:40",
@@ -6474,13 +2565,6 @@
             "course": "Compiler Construction",
             "teacher": "Faryal Saud",
             "room": "R-5"
-          },
-          {
-            "start": "1:10",
-            "end": "1:45",
-            "course": null,
-            "teacher": null,
-            "room": null
           },
           {
             "start": "1:45",
@@ -6515,55 +2599,6 @@
             "room": "R-13"
           },
           {
-            "start": "11:45",
-            "end": "12:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "12:15",
-            "end": "12:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "12:45",
-            "end": "1:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "1:10",
-            "end": "1:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "1:45",
-            "end": "2:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "2:15",
-            "end": "2:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "2:45",
-            "end": "3:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
             "start": "3:15",
             "end": "4:40",
             "course": "Compiler Construction",
@@ -6573,27 +2608,6 @@
         ],
         "Tuesday": [
           {
-            "start": "8:45",
-            "end": "9:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "9:15",
-            "end": "9:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "9:45",
-            "end": "10:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
             "start": "10:15",
             "end": "11:40",
             "course": "Parallel and Distributed Computing",
@@ -6601,60 +2615,11 @@
             "room": "R-11"
           },
           {
-            "start": "11:45",
-            "end": "12:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "12:15",
-            "end": "12:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "12:45",
-            "end": "1:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "1:10",
-            "end": "1:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
             "start": "1:45",
             "end": "3:10",
             "course": "Information Security",
             "teacher": "Dr Ammar Rafiq",
             "room": "R-20"
-          },
-          {
-            "start": "3:15",
-            "end": "3:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "3:45",
-            "end": "4:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "4:15",
-            "end": "4:40",
-            "course": null,
-            "teacher": null,
-            "room": null
           }
         ],
         "Wednesday": [
@@ -6673,13 +2638,6 @@
             "room": "R-19"
           },
           {
-            "start": "11:45",
-            "end": "12:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
             "start": "12:15",
             "end": "1:45",
             "course": "Information Security",
@@ -6692,27 +2650,6 @@
             "course": "Deep Learning for Perception",
             "teacher": "Abdul Mateen",
             "room": "R-8"
-          },
-          {
-            "start": "3:15",
-            "end": "3:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "3:45",
-            "end": "4:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "4:15",
-            "end": "4:40",
-            "course": null,
-            "teacher": null,
-            "room": null
           }
         ],
         "Thursday": [
@@ -6729,76 +2666,6 @@
             "course": "Fundamentals of Computer Vision",
             "teacher": "Shahbaz Ayyaz",
             "room": "R-11"
-          },
-          {
-            "start": "11:45",
-            "end": "12:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "12:15",
-            "end": "12:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "12:45",
-            "end": "1:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "1:10",
-            "end": "1:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "1:45",
-            "end": "2:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "2:15",
-            "end": "2:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "2:45",
-            "end": "3:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "3:15",
-            "end": "3:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "3:45",
-            "end": "4:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "4:15",
-            "end": "4:40",
-            "course": null,
-            "teacher": null,
-            "room": null
           }
         ],
         "Friday": [
@@ -6822,136 +2689,17 @@
             "course": "Compiler Construction",
             "teacher": "Faryal Saud",
             "room": "R-5"
-          },
-          {
-            "start": "1:10",
-            "end": "1:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "1:45",
-            "end": "2:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "2:15",
-            "end": "2:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "2:45",
-            "end": "3:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "3:15",
-            "end": "3:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "3:45",
-            "end": "4:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "4:15",
-            "end": "4:40",
-            "course": null,
-            "teacher": null,
-            "room": null
           }
         ]
       },
       "D": {
         "Monday": [
           {
-            "start": "8:45",
-            "end": "9:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "9:15",
-            "end": "9:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "9:45",
-            "end": "10:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "10:15",
-            "end": "10:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "10:45",
-            "end": "11:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "11:15",
-            "end": "11:40",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "11:45",
-            "end": "12:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
             "start": "12:15",
             "end": "1:45",
             "course": "Parallel and Distributed Computing",
             "teacher": "Aliza Saeed",
             "room": "R-9"
-          },
-          {
-            "start": "1:45",
-            "end": "2:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "2:15",
-            "end": "2:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "2:45",
-            "end": "3:10",
-            "course": null,
-            "teacher": null,
-            "room": null
           },
           {
             "start": "3:15",
@@ -6963,27 +2711,6 @@
         ],
         "Tuesday": [
           {
-            "start": "8:45",
-            "end": "9:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "9:15",
-            "end": "9:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "9:45",
-            "end": "10:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
             "start": "10:15",
             "end": "11:40",
             "course": "Natural Language Processing",
@@ -6991,39 +2718,11 @@
             "room": "R-6"
           },
           {
-            "start": "11:45",
-            "end": "12:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
             "start": "12:15",
             "end": "1:45",
             "course": "Information Security",
             "teacher": "Dr Ammar Rafiq",
             "room": "R-20"
-          },
-          {
-            "start": "1:45",
-            "end": "2:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "2:15",
-            "end": "2:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "2:45",
-            "end": "3:10",
-            "course": null,
-            "teacher": null,
-            "room": null
           },
           {
             "start": "3:15",
@@ -7049,13 +2748,6 @@
             "room": "R-20"
           },
           {
-            "start": "11:45",
-            "end": "12:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
             "start": "12:15",
             "end": "1:45",
             "course": "Fundamentals of Computer Vision",
@@ -7079,76 +2771,6 @@
         ],
         "Thursday": [
           {
-            "start": "8:45",
-            "end": "9:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "9:15",
-            "end": "9:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "9:45",
-            "end": "10:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "10:15",
-            "end": "10:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "10:45",
-            "end": "11:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "11:15",
-            "end": "11:40",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "11:45",
-            "end": "12:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "12:15",
-            "end": "12:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "12:45",
-            "end": "1:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "1:10",
-            "end": "1:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
             "start": "1:45",
             "end": "3:10",
             "course": "Fundamentals of Computer Vision",
@@ -7165,48 +2787,6 @@
         ],
         "Friday": [
           {
-            "start": "8:45",
-            "end": "9:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "9:15",
-            "end": "9:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "9:45",
-            "end": "10:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "10:15",
-            "end": "10:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "10:45",
-            "end": "11:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "11:15",
-            "end": "11:40",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
             "start": "11:45",
             "end": "1:10",
             "course": "Compiler Construction",
@@ -7214,99 +2794,22 @@
             "room": "R-5"
           },
           {
-            "start": "1:10",
-            "end": "1:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
             "start": "1:45",
             "end": "3:10",
             "course": "Parallel and Distributed Computing",
             "teacher": "Aliza Saeed",
             "room": "R-9"
-          },
-          {
-            "start": "3:15",
-            "end": "3:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "3:45",
-            "end": "4:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "4:15",
-            "end": "4:40",
-            "course": null,
-            "teacher": null,
-            "room": null
           }
         ]
       },
       "E": {
         "Monday": [
           {
-            "start": "8:45",
-            "end": "9:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "9:15",
-            "end": "9:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "9:45",
-            "end": "10:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
             "start": "10:15",
             "end": "11:40",
             "course": "Parallel and Distributed Computing",
             "teacher": "Aliza Saeed",
             "room": "R-13"
-          },
-          {
-            "start": "11:45",
-            "end": "12:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "12:15",
-            "end": "12:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "12:45",
-            "end": "1:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "1:10",
-            "end": "1:45",
-            "course": null,
-            "teacher": null,
-            "room": null
           },
           {
             "start": "1:45",
@@ -7339,34 +2842,6 @@
             "room": "R-11"
           },
           {
-            "start": "11:45",
-            "end": "12:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "12:15",
-            "end": "12:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "12:45",
-            "end": "1:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "1:10",
-            "end": "1:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
             "start": "1:45",
             "end": "3:10",
             "course": "Deep Learning for Perception",
@@ -7383,39 +2858,11 @@
         ],
         "Wednesday": [
           {
-            "start": "8:45",
-            "end": "9:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "9:15",
-            "end": "9:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "9:45",
-            "end": "10:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
             "start": "10:15",
             "end": "11:40",
             "course": "Operations Research",
             "teacher": "Dr Haris Khurram",
             "room": "R-7"
-          },
-          {
-            "start": "11:45",
-            "end": "12:15",
-            "course": null,
-            "teacher": null,
-            "room": null
           },
           {
             "start": "12:15",
@@ -7430,51 +2877,9 @@
             "course": "Information Security",
             "teacher": "Dr Umar Aftab",
             "room": "R-6"
-          },
-          {
-            "start": "3:15",
-            "end": "3:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "3:45",
-            "end": "4:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "4:15",
-            "end": "4:40",
-            "course": null,
-            "teacher": null,
-            "room": null
           }
         ],
         "Thursday": [
-          {
-            "start": "8:45",
-            "end": "9:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "9:15",
-            "end": "9:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "9:45",
-            "end": "10:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
           {
             "start": "10:15",
             "end": "11:40",
@@ -7483,139 +2888,20 @@
             "room": "R-9"
           },
           {
-            "start": "11:45",
-            "end": "12:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "12:15",
-            "end": "12:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "12:45",
-            "end": "1:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "1:10",
-            "end": "1:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
             "start": "1:45",
             "end": "3:10",
             "course": "Deep Learning for Perception",
             "teacher": "Dr Iqra Muhammad",
             "room": "R-7"
-          },
-          {
-            "start": "3:15",
-            "end": "3:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "3:45",
-            "end": "4:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "4:15",
-            "end": "4:40",
-            "course": null,
-            "teacher": null,
-            "room": null
           }
         ],
         "Friday": [
-          {
-            "start": "8:45",
-            "end": "9:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "9:15",
-            "end": "9:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "9:45",
-            "end": "10:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "10:15",
-            "end": "10:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "10:45",
-            "end": "11:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "11:15",
-            "end": "11:40",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
           {
             "start": "11:45",
             "end": "1:10",
             "course": "Compiler Construction",
             "teacher": "Faryal Saud",
             "room": "R-5"
-          },
-          {
-            "start": "1:10",
-            "end": "1:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "1:45",
-            "end": "2:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "2:15",
-            "end": "2:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "2:45",
-            "end": "3:10",
-            "course": null,
-            "teacher": null,
-            "room": null
           },
           {
             "start": "3:15",
@@ -7628,27 +2914,6 @@
       },
       "F": {
         "Monday": [
-          {
-            "start": "8:45",
-            "end": "9:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "9:15",
-            "end": "9:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "9:45",
-            "end": "10:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
           {
             "start": "10:15",
             "end": "11:40",
@@ -7664,13 +2929,6 @@
             "room": "R-20"
           },
           {
-            "start": "1:10",
-            "end": "1:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
             "start": "1:45",
             "end": "3:10",
             "course": "Operations Research",
@@ -7701,55 +2959,6 @@
             "room": "R-11"
           },
           {
-            "start": "11:45",
-            "end": "12:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "12:15",
-            "end": "12:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "12:45",
-            "end": "1:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "1:10",
-            "end": "1:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "1:45",
-            "end": "2:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "2:15",
-            "end": "2:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "2:45",
-            "end": "3:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
             "start": "3:15",
             "end": "4:40",
             "course": "Deep Learning for Perception",
@@ -7759,27 +2968,6 @@
         ],
         "Wednesday": [
           {
-            "start": "8:45",
-            "end": "9:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "9:15",
-            "end": "9:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "9:45",
-            "end": "10:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
             "start": "10:15",
             "end": "11:40",
             "course": "Fundamentals of Computer Vision",
@@ -7787,60 +2975,11 @@
             "room": "R-19"
           },
           {
-            "start": "11:45",
-            "end": "12:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
             "start": "12:15",
             "end": "1:45",
             "course": "Information Security",
             "teacher": "Dr Umar Aftab",
             "room": "R-19"
-          },
-          {
-            "start": "1:45",
-            "end": "2:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "2:15",
-            "end": "2:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "2:45",
-            "end": "3:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "3:15",
-            "end": "3:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "3:45",
-            "end": "4:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "4:15",
-            "end": "4:40",
-            "course": null,
-            "teacher": null,
-            "room": null
           }
         ],
         "Thursday": [
@@ -7859,55 +2998,6 @@
             "room": "R-11"
           },
           {
-            "start": "11:45",
-            "end": "12:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "12:15",
-            "end": "12:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "12:45",
-            "end": "1:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "1:10",
-            "end": "1:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "1:45",
-            "end": "2:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "2:15",
-            "end": "2:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "2:45",
-            "end": "3:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
             "start": "3:15",
             "end": "4:40",
             "course": "Deep Learning for Perception",
@@ -7924,81 +3014,11 @@
             "room": "R-8"
           },
           {
-            "start": "10:15",
-            "end": "10:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "10:45",
-            "end": "11:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "11:15",
-            "end": "11:40",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
             "start": "11:45",
             "end": "1:10",
             "course": "Compiler Construction",
             "teacher": "Faryal Saud",
             "room": "R-5"
-          },
-          {
-            "start": "1:10",
-            "end": "1:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "1:45",
-            "end": "2:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "2:15",
-            "end": "2:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "2:45",
-            "end": "3:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "3:15",
-            "end": "3:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "3:45",
-            "end": "4:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "4:15",
-            "end": "4:40",
-            "course": null,
-            "teacher": null,
-            "room": null
           }
         ]
       }
@@ -8007,348 +3027,9 @@
   "MS/PhD": {
     "UNKNOWN": {
       "UNKNOWN": {
-        "Monday": [
-          {
-            "start": "8:45",
-            "end": "9:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "9:15",
-            "end": "9:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "9:45",
-            "end": "10:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "10:15",
-            "end": "10:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "10:45",
-            "end": "11:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "11:15",
-            "end": "11:40",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "11:45",
-            "end": "12:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "12:15",
-            "end": "12:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "12:45",
-            "end": "1:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "1:10",
-            "end": "1:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "1:45",
-            "end": "2:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "2:15",
-            "end": "2:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "2:45",
-            "end": "3:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "3:15",
-            "end": "3:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "3:45",
-            "end": "4:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "4:15",
-            "end": "4:40",
-            "course": null,
-            "teacher": null,
-            "room": null
-          }
-        ],
-        "Tuesday": [
-          {
-            "start": "8:45",
-            "end": "9:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "9:15",
-            "end": "9:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "9:45",
-            "end": "10:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "10:15",
-            "end": "10:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "10:45",
-            "end": "11:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "11:15",
-            "end": "11:40",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "11:45",
-            "end": "12:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "12:15",
-            "end": "12:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "12:45",
-            "end": "1:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "1:10",
-            "end": "1:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "1:45",
-            "end": "2:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "2:15",
-            "end": "2:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "2:45",
-            "end": "3:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "3:15",
-            "end": "3:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "3:45",
-            "end": "4:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "4:15",
-            "end": "4:40",
-            "course": null,
-            "teacher": null,
-            "room": null
-          }
-        ],
-        "Wednesday": [
-          {
-            "start": "8:45",
-            "end": "9:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "9:15",
-            "end": "9:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "9:45",
-            "end": "10:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "10:15",
-            "end": "10:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "10:45",
-            "end": "11:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "11:15",
-            "end": "11:40",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "11:45",
-            "end": "12:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "12:15",
-            "end": "12:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "12:45",
-            "end": "1:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "1:10",
-            "end": "1:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "1:45",
-            "end": "2:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "2:15",
-            "end": "2:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "2:45",
-            "end": "3:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "3:15",
-            "end": "3:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "3:45",
-            "end": "4:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "4:15",
-            "end": "4:40",
-            "course": null,
-            "teacher": null,
-            "room": null
-          }
-        ],
+        "Monday": [],
+        "Tuesday": [],
+        "Wednesday": [],
         "Thursday": [
           {
             "start": "8:45",
@@ -8363,100 +3044,9 @@
             "course": "Advanced Computer Vision",
             "teacher": "Dr Usman Ghous",
             "room": "MS Research Room"
-          },
-          {
-            "start": "11:45",
-            "end": "12:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "12:15",
-            "end": "12:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "12:45",
-            "end": "1:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "1:10",
-            "end": "1:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "1:45",
-            "end": "2:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "2:15",
-            "end": "2:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "2:45",
-            "end": "3:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "3:15",
-            "end": "3:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "3:45",
-            "end": "4:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "4:15",
-            "end": "4:40",
-            "course": null,
-            "teacher": null,
-            "room": null
           }
         ],
         "Friday": [
-          {
-            "start": "8:45",
-            "end": "9:15",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "9:15",
-            "end": "9:45",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
-          {
-            "start": "9:45",
-            "end": "10:10",
-            "course": null,
-            "teacher": null,
-            "room": null
-          },
           {
             "start": "10:15",
             "end": "11:40",
@@ -8470,13 +3060,6 @@
             "course": "Research Methodology Prof Dr Muhammad Shahzad",
             "teacher": "Sarfraz",
             "room": "CS FYP Lab"
-          },
-          {
-            "start": "1:10",
-            "end": "1:45",
-            "course": null,
-            "teacher": null,
-            "room": null
           },
           {
             "start": "1:45",
