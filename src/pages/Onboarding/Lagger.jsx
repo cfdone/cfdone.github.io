@@ -17,7 +17,7 @@ export default function Lagger({ onPrev, onNext }) {
     };
 
     return (
-        <div className="h-screen bg-black flex flex-col justify-between items-center px-4 pt-safe-offset-8 pb-safe-offset-8">
+        <div className="h-screen bg-black flex flex-col justify-between items-center px-2 pt-safe-offset-8 pb-safe-offset-6">
             <div className="w-full justify-center flex flex-col gap-6 items-center">
                 <img src={logo} alt="Logo" className="w-15 h-15 user-select-none mb-2" />
                 <StepTrack currentStep={2} totalSteps={3} />
@@ -27,9 +27,9 @@ export default function Lagger({ onPrev, onNext }) {
                 </div>
             </div>
             <div className="h-full flex flex-col justify-between items-center w-full">
-                <div className="flex flex-col items-center gap-4 px-4 py-4 w-full max-w-md mx-auto overflow-y-auto flex-1">
+                <div className="flex flex-col items-center gap-4 px-2 py-4 w-full max-w-md mx-auto overflow-y-auto flex-1">
                     <div className="w-full">
-                        <div className="grid grid-cols-1 gap-4 max-h-64">
+                        <div className="flex flex-col gap-4 max-h-64">
                             <div>
                                 <div className="font-bold text-white mb-2">Resolution Status</div>
                                 <div className="flex flex-col gap-3">

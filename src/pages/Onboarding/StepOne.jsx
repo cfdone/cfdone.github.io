@@ -8,20 +8,20 @@ export default function StepOne() {
     const [steps, setSteps] = useState(1);
     return (
         <>
-        <div className="h-screen bg-black flex flex-col justify-between items-center px-4 pt-safe-offset-8 pb-safe-offset-8">
+        <div className="h-screen bg-black flex flex-col justify-between items-center px-2 pt-safe-offset-8 pb-safe-offset-6">
                     <div className="w-full justify-center flex flex-col gap-6 items-center">
                         <img src={logo} alt="Logo" className="w-15 h-15 user-select-none mb-2" />
                         <StepTrack currentStep={1} totalSteps={steps} />
                     </div>
             <div className="h-full flex flex-col justify-between items-center w-full">
-                <div className="flex flex-col items-center gap-4 px-4 py-4 w-full max-w-md mx-auto overflow-y-auto flex-1">
+                <div className="flex flex-col items-center gap-4 px-2 py-4 w-full max-w-md mx-auto overflow-y-auto flex-1">
                     <div className="w-full">
                         <div className="text-center mb-6">
                             <h3 className="text-white font-semibold text-xl mb-2">Select Student Type</h3>
                             <p className="text-white/70 text-sm">Choose the option that best describes your situation</p>
                         </div>
                         
-                        <div className="grid grid-cols-1 gap-4 max-h-64">
+                        <div className="flex flex-col gap-4 max-h-64">
                             <button
                                 type="button"
                                 className={`p-4 rounded-xl font-product-sans text-lg border transition-all duration-200 text-left
