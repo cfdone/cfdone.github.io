@@ -180,7 +180,7 @@ export default function SubjectSelector({ onPrev, onNext }) {
                     {currentSection && (
                         <div className="w-full flex flex-col gap-3">
                             <div className="bg-accent/10 rounded-xl p-3 border border-accent/20">
-                                <p className="text-accent text-center font-semibold text-sm mb-2">
+                                <p className="text-accent text-center font-playfair text-sm mb-2">
                                     {currentDegree} - Semester {currentSemester} - Section {currentSection}
                                 </p>
                                 <div className="flex flex-col gap-2 max-h-40 overflow-y-auto">
@@ -235,7 +235,7 @@ export default function SubjectSelector({ onPrev, onNext }) {
                         <div className="w-full">
                             <div className="bg-accent/10 rounded-xl p-3 border border-accent/20">
                                 <div className="flex items-center justify-between mb-3">
-                                    <span className="text-accent font-semibold text-sm">
+                                    <span className="text-accent font-playfair text-sm">
                                         {selectedSubjects.length} Subject{selectedSubjects.length !== 1 ? 's' : ''} Selected
                                     </span>
                                     <button

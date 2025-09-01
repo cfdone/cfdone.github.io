@@ -14,3 +14,24 @@
 .user-select-none {
   user-select: none;
 }
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar-thumb {
+  display: none;
+}
+.no-scrollbar::-webkit-scrollbar-track {
+  display: none;
+}
+.no-scrollbar::-webkit-scrollbar-track-piece {
+  display: none;
+}
+.no-scrollbar::-webkit-scrollbar-corner {
+  display: none;
+}
+.no-scrollbar::-webkit-scrollbar-button {
+  display: none;
+}

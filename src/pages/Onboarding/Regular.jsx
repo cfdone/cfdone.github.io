@@ -26,10 +26,12 @@ export default function Regular() {
     const handleNext = () => {
         if (selectedDegree && selectedSemester && selectedSection) {
             navigate("/home", {
-                degree: selectedDegree,
-                semester: selectedSemester,
-                section: selectedSection,
-                timetable: timetable
+                state: {
+                    degree: selectedDegree,
+                    semester: selectedSemester,
+                    section: selectedSection,
+                    timetable: timetable
+                }
             });
         }
     };
@@ -39,14 +41,14 @@ export default function Regular() {
         <div className="h-screen bg-black flex flex-col justify-between items-center px-2 pt-safe-offset-8 pb-safe-offset-6">
             <div className="w-full justify-center flex flex-col gap-6 items-center">
                 <img src={logo} alt="Logo" className="w-15 h-15 user-select-none mb-2" />
-                <StepTrack currentStep={2} totalSteps={3} />
+                <StepTrack currentStep={2} totalSteps={2} />
                 <div className="text-center mb-6">
-                            <h3 className="text-white font-semibold text-xl mb-2">Select Degree, Semester & Section</h3>
+                            <h3 className=" font-playfair text-accent font-medium text-xl mb-2">Select Degree, Semester & Section</h3>
                             <p className="text-white/70 text-sm">Choose your degree, semester, and section to view your timetable</p>
                         </div>
             </div>
             <div className="h-full flex flex-col justify-between items-center w-full">
-                <div className="flex flex-col items-center gap-4 px-2 py-4 w-full max-w-md mx-auto overflow-y-auto flex-1">
+                <div className="flex flex-col items-center gap-4 px-2 py-4 w-full max-w-md mx-auto overflow-y-auto no-scrollbar flex-1">
                     <div className="w-full">
                         
                         <div className="flex flex-col gap-4 max-h-64">
@@ -154,7 +156,7 @@ export default function Regular() {
                         disabled={!(selectedDegree && selectedSemester && selectedSection)}
                         onClick={handleNext}
                     >
-                        Continue
+                        Create Timetable
                     </button>
                 </div>
             </div>

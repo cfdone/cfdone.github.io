@@ -4,6 +4,9 @@ import Splash from "./pages/Splash";
 import StepOne from "./pages/Onboarding/StepOne";
 import Regular from "./pages/Onboarding/Regular";
 import Lagger from "./pages/Onboarding/Lagger";
+import Resolved from "./pages/Onboarding/Resolved";
+import Resolve from "./pages/Onboarding/Resolve";
+import Home from "./pages/Home";
 
 function App() {
   return (
@@ -12,6 +15,9 @@ function App() {
       <Route path="/stepone" element={<StepOne />} />
       <Route path="/regular" element={<Regular />} />
       <Route path="/lagger" element={<Lagger />} />
+      <Route path="/home" element={<Home />} />
+      <Route path="/resolved" element={<Resolved />} />
+      <Route path="/resolve" element={<Resolve />} />
     </Routes>
   );
 }

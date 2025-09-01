@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 export default function StepOne() {
     const navigate = useNavigate();
     const [studentType, setStudentType] = useState("regular");
-    const [steps, setSteps] = useState(1);
+    const [steps, setSteps] = useState(2);
     return (
         <>
         <div className="h-screen bg-black flex flex-col justify-between items-center px-2 pt-safe-offset-8 pb-safe-offset-6">
@@ -17,7 +17,7 @@ export default function StepOne() {
                 <div className="flex flex-col items-center gap-4 px-2 py-4 w-full max-w-md mx-auto overflow-y-auto flex-1">
                     <div className="w-full">
                         <div className="text-center mb-6">
-                            <h3 className="text-white font-semibold text-xl mb-2">Select Student Type</h3>
+                            <h3 className=" font-playfair text-accent font-medium text-xl mb-2">Select Student Type</h3>
                             <p className="text-white/70 text-sm">Choose the option that best describes your situation</p>
                         </div>
                         
@@ -68,7 +68,7 @@ export default function StepOne() {
                 </div>
 
 
-                <div className="flex flex-row gap-3 items-center justify-center w-full max-w-md mx-auto px-4 pb-6">
+                <div className="flex flex-row gap-3 items-center justify-center w-full max-w-md mx-auto px-2 pb-6">
                    
                     <button
                         className={`font-product-sans px-4 py-3 rounded-xl w-full text-[15px] transition shadow-md

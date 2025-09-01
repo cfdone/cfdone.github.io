@@ -6,15 +6,11 @@ import logo from "../../assets/logo.svg";
 import StepTrack from "../components/Onboarding/StepTrack";
 
 
-export default function Lagger({ onPrev, onNext }) {
+export default function Lagger({ onPrev, }) {
     const [choice, setChoice] = useState("");
     const navigate = useNavigate();
 
-    const handleNext = () => {
-        if (choice && onNext) {
-            onNext({ yesNo: choice });
-        }
-    };
+   
 
     return (
         <div className="h-screen bg-black flex flex-col justify-between items-center px-2 pt-safe-offset-8 pb-safe-offset-6">
@@ -22,7 +18,7 @@ export default function Lagger({ onPrev, onNext }) {
                 <img src={logo} alt="Logo" className="w-15 h-15 user-select-none mb-2" />
                 <StepTrack currentStep={2} totalSteps={3} />
                 <div className="text-center mb-6">
-                    <h3 className="text-white font-semibold text-xl mb-2">Clash Resolution</h3>
+                    <h3 className=" font-playfair text-accent font-medium text-xl mb-2">Clash Resolution</h3>
                     <p className="text-white/70 text-sm">Have you already <span className="text-accent">resolved</span> your clashes?</p>
                 </div>
             </div>
@@ -86,9 +82,15 @@ export default function Lagger({ onPrev, onNext }) {
                             ${choice ? "bg-accent text-white" : "bg-accent/40 text-white/60"}
                         `}
                         disabled={!choice}
-                        onClick={handleNext}
+                        onClick={() => {
+                            if (choice === "yes") {
+                                navigate("/resolved");
+                            } else {
+                                navigate("/resolve");
+                            }
+                        }}
                     >
-                        Continue
+                        Next
                     </button>
                 </div>
             </div>

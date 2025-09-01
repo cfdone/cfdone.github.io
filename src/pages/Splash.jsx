@@ -8,7 +8,7 @@ export default function Splash() {
 		<>
          <div className="h-screen bg-black  flex flex-col justify-between items-center px-4 pt-safe-offset-8 pb-safe-offset-6">
 			<div className=" flex flex-col items-center gap-6 px-4 py-6 w-full max-w-md mx-auto">
-				<h1 className="text-white text-2xl font-semibold text-center font-playfair mb-2">
+				<h1 className=" font-playfair text-accent font-medium text-2xl mb-2 text-center">
 					FAST timetable <span className="text-accent">sucks?</span>
 					<br />
 					<span className="text-sm font-light font-product-sans">Yeah, we feel your pain 😅</span>
