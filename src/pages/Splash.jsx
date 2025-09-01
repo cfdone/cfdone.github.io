@@ -6,7 +6,7 @@ export default function Splash() {
 	const navigate = useNavigate();
 	return (
 		<>
-         <div className="h-screen bg-black  flex flex-col justify-between items-center px-4 pt-safe-offset-8 pb-safe-offset-6">
+         <div className="h-screen bg-black  flex flex-col justify-between items-center px-4 pt-safe-offset-8 pb-safe">
 			<div className=" flex flex-col items-center gap-6 px-4 py-6 w-full max-w-md mx-auto">
 				<h1 className=" font-playfair text-accent font-medium text-2xl mb-2 text-center">
 					FAST timetable <span className="text-accent">sucks?</span>

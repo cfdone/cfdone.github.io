@@ -13,7 +13,7 @@ export default function Lagger({ onPrev, }) {
    
 
     return (
-        <div className="h-screen bg-black flex flex-col justify-between items-center px-2 pt-safe-offset-8 pb-safe-offset-6">
+        <div className="h-screen bg-black flex flex-col justify-between items-center px-2 pt-safe-offset-8 pb-safe">
             <div className="w-full justify-center flex flex-col gap-6 items-center">
                 <img src={logo} alt="Logo" className="w-15 h-15 user-select-none mb-2" />
                 <StepTrack currentStep={2} totalSteps={3} />
