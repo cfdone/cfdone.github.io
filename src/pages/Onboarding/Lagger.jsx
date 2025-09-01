@@ -19,7 +19,7 @@ export default function Lagger({ onPrev, }) {
                 <StepTrack currentStep={2} totalSteps={3} />
                 <div className="text-center mb-6">
                     <h3 className=" font-playfair text-accent font-medium text-xl mb-2">Clash Resolution</h3>
-                    <p className="text-white/70 text-sm">Have you already <span className="text-accent">resolved</span> your clashes?</p>
+                    <p className="text-white/70 text-sm font-product-sans">Have you already <span className="text-accent">resolved</span> your clashes?</p>
                 </div>
             </div>
             <div className="h-full flex flex-col justify-between items-center w-full">

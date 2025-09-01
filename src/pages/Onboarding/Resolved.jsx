@@ -161,7 +161,7 @@ export default function Resolved() {
                 <StepTrack currentStep={3} totalSteps={3} />
                 <div className="text-center mb-6">
                             <h3 className=" font-playfair text-accent font-medium text-xl mb-2">Build Custom Timetable</h3>
-                            <p className="text-white/70 text-sm">Select subjects from any degree, semester, and section</p>
+                            <p className="text-white/70 text-sm font-product-sans">Select subjects from any degree, semester, and section</p>
                         </div>
             </div>
             

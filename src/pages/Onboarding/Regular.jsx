@@ -44,7 +44,7 @@ export default function Regular() {
                 <StepTrack currentStep={2} totalSteps={2} />
                 <div className="text-center mb-6">
                             <h3 className=" font-playfair text-accent font-medium text-xl mb-2">Select Degree, Semester & Section</h3>
-                            <p className="text-white/70 text-sm">Choose your degree, semester, and section to view your timetable</p>
+                            <p className="text-white/70 text-sm font-product-sans">Choose your degree, semester, and section to view your timetable</p>
                         </div>
             </div>
             <div className="h-full flex flex-col justify-between items-center w-full">

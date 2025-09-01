@@ -18,7 +18,7 @@ export default function StepOne() {
                     <div className="w-full">
                         <div className="text-center mb-6">
                             <h3 className=" font-playfair text-accent font-medium text-xl mb-2">Select Student Type</h3>
-                            <p className="text-white/70 text-sm">Choose the option that best describes your situation</p>
+                            <p className="text-white/70 text-sm font-product-sans">Choose the option that best describes your situation</p>
                         </div>
                         
                         <div className="flex flex-col gap-4 max-h-64">
