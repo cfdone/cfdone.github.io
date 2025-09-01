@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import logo from "../../assets/logo.svg";
-import StepTrack from "../components/Onboarding/StepTrack";
+import StepTrack from "../../components/Onboarding/StepTrack";
 
 
 export default function Lagger({ onPrev, }) {

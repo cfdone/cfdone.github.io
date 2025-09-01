@@ -1,6 +1,6 @@
 import { useState } from "react";
 import logo from "../../assets/logo.svg";
-import StepTrack from "../components/Onboarding/StepTrack";
+import StepTrack from "../../components/Onboarding/StepTrack";
 import { useNavigate } from "react-router-dom";
 export default function StepOne() {
     const navigate = useNavigate();

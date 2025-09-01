@@ -2,7 +2,7 @@ import { useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import TimeTable from "../../assets/timetable.json";
 import logo from "../../assets/logo.svg";
-import StepTrack from "../components/Onboarding/StepTrack";
+import StepTrack from "../../components/Onboarding/StepTrack";
 
 export default function Regular() {
     const navigate = useNavigate();
