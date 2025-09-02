@@ -1,9 +1,37 @@
 
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 import logo from "../assets/logo.svg";
 
 export default function Splash() {
 	const navigate = useNavigate();
+
+	useEffect(() => {
+		// Check if onboarding is completed
+		const checkOnboardingStatus = () => {
+			try {
+				const isOnboardingComplete = localStorage.getItem('onboardingComplete');
+				const savedTimetableData = localStorage.getItem('timetableData');
+				
+				if (isOnboardingComplete === 'true' && savedTimetableData) {
+					const timetableData = JSON.parse(savedTimetableData);
+					// Navigate directly to home with saved data
+					navigate("/", { 
+						state: timetableData,
+						replace: true 
+					});
+				}
+			} catch (error) {
+				console.error('Error checking onboarding status:', error);
+				// Continue to splash screen if there's an error
+			}
+		};
+
+		// Small delay to show splash screen briefly
+		const timer = setTimeout(checkOnboardingStatus, 1000);
+		
+		return () => clearTimeout(timer);
+	}, [navigate]);
 	return (
 		<>
          <div className="h-screen bg-black  flex flex-col justify-between items-center px-4 pt-safe-offset-8 pb-safe">

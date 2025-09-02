@@ -17,6 +17,11 @@ export default function Resolved() {
     const [showSemesterSelector, setShowSemesterSelector] = useState(false);
     const [showSectionSelector, setShowSectionSelector] = useState(false);
     const [showSubjectSelector, setShowSubjectSelector] = useState(false);
+    
+    // Loader states
+    const [isCreating, setIsCreating] = useState(false);
+    const [progress, setProgress] = useState(0);
+    const [progressText, setProgressText] = useState("");
 
     // Get all available degrees, semesters, and sections
     const degreeNames = Object.keys(TimeTable);
@@ -265,20 +270,76 @@ export default function Resolved() {
                                     : "bg-accent/40 text-white/60"
                                 }
                             `}
-                            disabled={selectedSubjects.length === 0}
-                            onClick={() => {
+                            disabled={selectedSubjects.length === 0 || isCreating}
+                            onClick={async () => {
                                 if (selectedSubjects.length > 0) {
-                                    navigate("/home", {
-                                        state: {
-                                            subjects: selectedSubjects,
-                                            timetable: customTimetable,
-                                            isCustom: true
+                                    setIsCreating(true);
+                                    setProgress(0);
+                                    
+                                    // Fake progress simulation with Mars theme
+                                    const steps = [
+                                        { text: "Establishing Mars connection...", duration: 700 },
+                                        { text: "Processing custom subjects...", duration: 900 },
+                                        { text: "Resolving schedule conflicts...", duration: 800 },
+                                        { text: "Creating your timetable on Mars...", duration: 1100 },
+                                        { text: "Finalizing cosmic schedule...", duration: 500 }
+                                    ];
+
+                                    let currentProgress = 0;
+                                    
+                                    for (let i = 0; i < steps.length; i++) {
+                                        setProgressText(steps[i].text);
+                                        const targetProgress = ((i + 1) / steps.length) * 100;
+                                        
+                                        // Animate progress smoothly
+                                        while (currentProgress < targetProgress) {
+                                            currentProgress += 2;
+                                            setProgress(Math.min(currentProgress, targetProgress));
+                                            await new Promise(resolve => setTimeout(resolve, 20));
                                         }
+                                        
+                                        // Wait for step duration
+                                        await new Promise(resolve => setTimeout(resolve, steps[i].duration));
+                                    }
+
+                                    const timetableData = {
+                                        subjects: selectedSubjects,
+                                        timetable: customTimetable,
+                                        isCustom: true,
+                                        studentType: 'lagger'
+                                    };
+
+                                    try {
+                                        // Save to localStorage
+                                        localStorage.setItem('onboardingComplete', 'true');
+                                        localStorage.setItem('timetableData', JSON.stringify(timetableData));
+                                    } catch (error) {
+                                        console.error('Error saving to localStorage:', error);
+                                    }
+
+                                    navigate("/", {
+                                        state: timetableData
                                     });
                                 }
                             }}
                         >
-                            Create Timetable
+                            {isCreating ? (
+                                <div className="flex flex-col items-center">
+                                    <div className="flex items-center gap-2 mb-2">
+                                        <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+                                        <span className="text-sm">{Math.round(progress)}%</span>
+                                    </div>
+                                    <div className="w-full bg-white/20 rounded-full h-1.5 mb-1">
+                                        <div 
+                                            className="bg-white h-1.5 rounded-full transition-all duration-75 ease-out" 
+                                            style={{ width: `${progress}%` }}
+                                        ></div>
+                                    </div>
+                                    <div className="text-xs opacity-80">{progressText}</div>
+                                </div>
+                            ) : (
+                                "Create Timetable"
+                            )}
                         </button>
                     </div>
                 </div>

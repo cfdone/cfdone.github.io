@@ -5,9 +5,24 @@ import logo from "../assets/logo.svg";
 
 export default function Home() {
     const location = useLocation();
-    const selection = location.state || null;
+    const [selection, setSelection] = useState(location.state || null);
     const [currentTime, setCurrentTime] = useState(new Date());
     const [viewWeekly, setViewWeekly] = useState(false);
+
+    // Load data from localStorage if not provided via location state
+    useEffect(() => {
+        if (!selection) {
+            try {
+                const savedTimetableData = localStorage.getItem('timetableData');
+                if (savedTimetableData) {
+                    const parsedData = JSON.parse(savedTimetableData);
+                    setSelection(parsedData);
+                }
+            } catch (error) {
+                console.error('Error loading timetable data from localStorage:', error);
+            }
+        }
+    }, [selection]);
 
     // Update time every minute
     useEffect(() => {
@@ -101,12 +116,17 @@ export default function Home() {
     // Get timetable data
     const timetableData = useMemo(() => {
         if (!selection) return {};
-        if (selection.passtimetable) {
-            return selection.passtimetable;
-        }
+        
+        // Handle data from localStorage or navigation state
         if (selection.timetable) {
             return selection.timetable;
         }
+        
+        // Legacy support for passtimetable
+        if (selection.passtimetable) {
+            return selection.passtimetable;
+        }
+        
         return {};
     }, [selection]);
 
@@ -173,6 +193,12 @@ export default function Home() {
                                 <h1 className="font-playfair text-white text-2xl font-medium mb-1">{getGreeting()}</h1>
                                 <p className="text-accent font-product-sans">Today is {currentDay}</p>
                                 <p className="text-white text-xl font-product-sans">{getFormattedTime()}</p>
+                                {/* Show degree/section info only for regular students */}
+                                {selection && selection.studentType === 'regular' && selection.degree && (
+                                    <p className="text-white/70 text-sm font-product-sans">
+                                        {selection.degree} • S{selection.semester}-{selection.section}
+                                    </p>
+                                )}
                             </div>
                            <img src={logo} alt="" className="h-10 w-10" />
                         </div>
@@ -221,6 +247,13 @@ export default function Home() {
                                                 <div className="text-white/50 text-xs font-product-sans uppercase">Teacher</div>
                                                 <div className="text-white font-semibold text-sm">{currentClass.teacher}</div>
                                             </div>
+                                            {/* Show degree/section for lagger students */}
+                                            {selection && selection.studentType === 'lagger' && currentClass.degree && (
+                                                <div>
+                                                    <div className="text-white/50 text-xs font-product-sans uppercase">Section</div>
+                                                    <div className="text-white font-semibold text-sm">{currentClass.degree} • S{currentClass.semester}-{currentClass.section}</div>
+                                                </div>
+                                            )}
                                         </div>
                                         
                                         <div className="bg-black/20 p-2 rounded-lg">
@@ -269,6 +302,13 @@ export default function Home() {
                                                 <div className="text-white/50 text-xs font-product-sans uppercase">Teacher</div>
                                                 <div className="text-white font-semibold text-sm">{nextClass.teacher}</div>
                                             </div>
+                                            {/* Show degree/section for lagger students */}
+                                            {selection && selection.studentType === 'lagger' && nextClass.degree && (
+                                                <div>
+                                                    <div className="text-white/50 text-xs font-product-sans uppercase">Section</div>
+                                                    <div className="text-white font-semibold text-sm">{nextClass.degree} • S{nextClass.semester}-{nextClass.section}</div>
+                                                </div>
+                                            )}
                                         </div>
                                         
                                         <div className="bg-black/20 p-2 rounded-lg">
@@ -336,6 +376,12 @@ export default function Home() {
                                                                 <div className="text-white/70 text-xs font-product-sans">
                                                                     {classInfo.teacher} • {classInfo.room}
                                                                 </div>
+                                                                {/* Show degree/section for lagger students */}
+                                                                {selection && selection.studentType === 'lagger' && classInfo.degree && (
+                                                                    <div className="text-white/50 text-xs font-product-sans">
+                                                                        {classInfo.degree} • S{classInfo.semester}-{classInfo.section}
+                                                                    </div>
+                                                                )}
                                                             </div>
                                                             <div className="text-accent text-sm font-product-sans">
                                                                 {classInfo.start} - {classInfo.end}
@@ -384,9 +430,15 @@ export default function Home() {
                                                 <div className="text-sm font-product-sans opacity-80 mb-1">
                                                     {classInfo.start} - {classInfo.end} • {classInfo.room}
                                                 </div>
-                                                <div className="text-sm font-product-sans opacity-80">
+                                                <div className="text-sm font-product-sans opacity-80 mb-1">
                                                     Teacher: {classInfo.teacher}
                                                 </div>
+                                                {/* Show degree/section for lagger students */}
+                                                {selection && selection.studentType === 'lagger' && classInfo.degree && (
+                                                    <div className="text-xs font-product-sans opacity-70">
+                                                        {classInfo.degree} • S{classInfo.semester}-{classInfo.section}
+                                                    </div>
+                                                )}
                                                 {isCurrentClass && (
                                                     <div className="text-accent font-medium text-sm mt-2">
                                                         {calculateRemainingTime(classInfo.end)}
