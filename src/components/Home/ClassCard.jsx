@@ -1,4 +1,4 @@
-import { MapPin } from 'lucide-react'
+import { MapPin, Check } from 'lucide-react'
 
 export default function ClassCard({
   classInfo,
@@ -59,8 +59,9 @@ export default function ClassCard({
                   </span>
                 )}
                 {isPastClass && (
-                  <span className="bg-green-500/30 text-green-300 px-3 py-1 rounded-full text-xs font-product-sans font-bold">
-                    ✓ DONE
+                  <span className="bg-green-500/30 text-green-300 px-3 py-1 rounded-full text-xs font-product-sans font-bold flex items-center gap-1">
+                    <Check className="w-3 h-3" />
+                    DONE
                   </span>
                 )}
               </div>

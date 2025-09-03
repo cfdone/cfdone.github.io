@@ -1,6 +1,6 @@
 import { useState, useMemo, useEffect, useCallback } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
-import { BookOpen, CheckCircle, AlertTriangle, Book, Target } from 'lucide-react'
+import { BookOpen, CheckCircle, AlertTriangle, Book, Target, MapPin } from 'lucide-react'
 import TimeTable from '../../assets/timetable.json'
 import logo from '../../assets/logo.svg'
 import StepTrack from '../../components/Onboarding/StepTrack'
@@ -714,7 +714,7 @@ export default function Resolve() {
               <img src={logo} alt="Logo" className="w-15 h-15 user-select-none mb-2" />
               <StepTrack currentStep={3} totalSteps={5} />
               <div className="text-center mb-6">
-                <h3 className="font-product-sans text-accent font-medium text-xl mb-2">
+                <h3 className="font-product-sans text-accent font-black text-xl mb-2">
                   Select Your Subjects
                 </h3>
                 <p className="text-white/70 text-sm font-product-sans">
@@ -765,8 +765,9 @@ export default function Resolve() {
                               {subject.locations.length > 1 ? 's' : ''}:
                             </div>
                             {subject.locations.slice(0, 2).map((loc, locIdx) => (
-                              <div key={locIdx} className="text-xs opacity-70">
-                                📍 {loc.degree} • S{loc.semester}-{loc.section}{' '}
+                              <div key={locIdx} className="text-xs opacity-70 flex items-center gap-1">
+                                <MapPin className="w-3 h-3" />
+                                {loc.degree} • S{loc.semester}-{loc.section}{' '}
                                 {loc.teacher ? `• ${loc.teacher}` : ''}
                               </div>
                             ))}
@@ -777,7 +778,7 @@ export default function Resolve() {
                             )}
                           </div>
                         </div>
-                        <BookOpen className="w-6 h-6 text-accent ml-3" />
+                        <BookOpen className={`w-6 h-6 ml-3 ${isSelected ? 'text-white' : 'text-accent'}`} />
                       </div>
                     </button>
                   )
@@ -823,7 +824,7 @@ export default function Resolve() {
             <img src={logo} alt="Logo" className="w-15 h-15 user-select-none mb-2" />
             <StepTrack currentStep={5} totalSteps={5} />
             <div className="text-center mb-6">
-              <h3 className=" font-product-sans text-accent font-medium text-xl mb-2">
+              <h3 className=" font-product-sans text-accent font-black text-xl mb-2">
                 Auto Clash Resolution
               </h3>
               <p className="text-white/70 text-sm font-product-sans">
@@ -979,8 +980,9 @@ export default function Resolve() {
                                 <div className="text-sm opacity-80 space-y-1">
                                   <div className="font-medium">Available in:</div>
                                   {subject.locations.slice(0, 3).map((loc, locIdx) => (
-                                    <div key={locIdx} className="text-xs opacity-70">
-                                      📍 {loc.degree} • Semester {loc.semester} • Section{' '}
+                                    <div key={locIdx} className="text-xs opacity-70 flex items-center gap-1">
+                                      <MapPin className="w-3 h-3" />
+                                      {loc.degree} • Semester {loc.semester} • Section{' '}
                                       {loc.section}
                                     </div>
                                   ))}

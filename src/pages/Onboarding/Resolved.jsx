@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { BookOpen, GraduationCap, Calendar } from 'lucide-react'
+import { BookOpen, GraduationCap, Calendar, Tag } from 'lucide-react'
 import TimeTable from '../../assets/timetable.json'
 import logo from '../../assets/logo.svg'
 import StepTrack from '../../components/Onboarding/StepTrack'
@@ -166,7 +166,7 @@ export default function Resolved() {
           <img src={logo} alt="Logo" className="w-15 h-15 user-select-none mb-2" />
           <StepTrack currentStep={3} totalSteps={3} />
           <div className="text-center mb-6">
-            <h3 className=" font-product-sans text-accent font-medium text-xl mb-2">
+            <h3 className=" font-product-sans text-accent font-black text-xl mb-2">
               Build Custom Timetable
             </h3>
             <p className="text-white/70 text-sm font-product-sans">
@@ -334,7 +334,7 @@ export default function Resolved() {
         {/* Degree Selection Popup */}
         {showDegreeSelector && (
           <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 px-4">
-            <div className="bg-black border border-accent/20 rounded-xl p-4 w-full max-w-sm max-h-[70vh] overflow-y-auto">
+            <div className="bg-black border border-accent/20 rounded-xl p-4 w-full max-w-sm max-h-[70vh] overflow-y-auto no-scrollbar">
               <div className="flex items-center justify-between mb-3">
                 <h3 className=" font-product-sans text-accent font-medium text-lg mb-2">
                   Select Degree
@@ -374,7 +374,7 @@ export default function Resolved() {
         {/* Semester Selection Popup */}
         {showSemesterSelector && (
           <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 px-4">
-            <div className="bg-black border border-accent/20 rounded-xl p-4 w-full max-w-sm max-h-[70vh] overflow-y-auto">
+            <div className="bg-black border border-accent/20 rounded-xl p-4 w-full max-w-sm max-h-[70vh] overflow-y-auto no-scrollbar">
               <div className="flex items-center justify-between mb-3">
                 <h3 className=" font-product-sans text-accent font-medium text-lg mb-2">
                   Select Semester
@@ -415,7 +415,7 @@ export default function Resolved() {
         {/* Section Selection Popup */}
         {showSectionSelector && (
           <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 px-4">
-            <div className="bg-black border border-accent/20 rounded-xl p-4 w-full max-w-sm max-h-[70vh] overflow-y-auto">
+            <div className="bg-black border border-accent/20 rounded-xl p-4 w-full max-w-sm max-h-[70vh] overflow-y-auto no-scrollbar">
               <div className="flex items-center justify-between mb-3">
                 <h3 className=" font-product-sans text-accent font-medium text-lg mb-2">
                   Select Section
@@ -444,7 +444,7 @@ export default function Resolved() {
                         <div className="font-bold mb-1">Section {sec}</div>
                         <div className="text-sm opacity-80">Class section</div>
                       </div>
-                      <div className="text-xl">🏷️</div>
+                      <Tag className="w-6 h-6 text-accent" />
                     </div>
                   </button>
                 ))}
@@ -456,7 +456,7 @@ export default function Resolved() {
         {/* Subject Selection Popup */}
         {showSubjectSelector && (
           <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 px-4">
-            <div className="bg-black border border-accent/20 rounded-xl p-4 w-full max-w-sm max-h-[70vh] overflow-y-auto">
+            <div className="bg-black border border-accent/20 rounded-xl p-4 w-full max-w-sm max-h-[70vh] overflow-y-auto no-scrollbar">
               <div className="flex items-center justify-between mb-3">
                 <h3 className=" font-product-sans text-accent font-medium text-lg mb-2">
                   Select Subjects
@@ -472,7 +472,7 @@ export default function Resolved() {
                 From {currentDegree} • Semester {currentSemester} • Section {currentSection}
               </div>
 
-              <div className="space-y-2 max-h-60 overflow-y-auto">
+              <div className="space-y-2 max-h-60 overflow-y-auto no-scrollbar">
                 {availableSubjects.map(subject => {
                   const isSelected = isSubjectSelected(subject)
                   const isFromCurrentSection = selectedSubjects.some(
@@ -523,7 +523,7 @@ export default function Resolved() {
                               />
                             </svg>
                           )}
-                          <BookOpen className="w-6 h-6 text-accent" />
+                          <BookOpen className={`w-6 h-6 ${isSelected ? 'text-white' : 'text-accent'}`} />
                         </div>
                       </div>
                     </button>

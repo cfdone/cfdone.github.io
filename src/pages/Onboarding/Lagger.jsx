@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { CheckCircle } from 'lucide-react'
+import { CheckCircle, XCircle } from 'lucide-react'
 import logo from '../../assets/logo.svg'
 import StepTrack from '../../components/Onboarding/StepTrack'
 
@@ -14,7 +14,7 @@ export default function Lagger({ onPrev }) {
         <img src={logo} alt="Logo" className="w-15 h-15 user-select-none mb-2" />
         <StepTrack currentStep={2} totalSteps={5} />
         <div className="text-center mb-6">
-          <h3 className=" font-product-sans text-accent font-medium text-xl mb-2">
+          <h3 className=" font-product-sans text-accent font-black text-xl mb-2">
             Clash Resolution
           </h3>
           <p className="text-white/70 text-sm font-product-sans">
@@ -45,7 +45,7 @@ export default function Lagger({ onPrev }) {
                         <div className="font-bold mb-2">Yes</div>
                         <div className="text-sm opacity-80">I have resolved my clashes</div>
                       </div>
-                      <CheckCircle className="w-6 h-6 text-accent" />
+                      <CheckCircle className={`w-6 h-6 ${choice === 'yes' ? 'text-white' : 'text-accent'}`} />
                     </div>
                   </button>
                   <button
@@ -64,7 +64,7 @@ export default function Lagger({ onPrev }) {
                         <div className="font-bold mb-2">No</div>
                         <div className="text-sm opacity-80">I have not resolved my clashes</div>
                       </div>
-                      <div className="text-2xl">❌</div>
+                      <XCircle className={`w-6 h-6 ${choice === 'no' ? 'text-white' : 'text-accent'}`} />
                     </div>
                   </button>
                 </div>

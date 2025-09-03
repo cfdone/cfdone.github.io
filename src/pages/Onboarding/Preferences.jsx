@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
-import { ChevronDown, ChevronRight, Target, Book } from 'lucide-react'
+import { ChevronDown, ChevronRight, Target, Book, CheckCircle, Settings, Check, X } from 'lucide-react'
 import TimeTable from '../../assets/timetable.json'
 import logo from '../../assets/logo.svg'
 import StepTrack from '../../components/Onboarding/StepTrack'
@@ -69,11 +69,10 @@ export default function Preferences() {
       semester: '',
       section: '',
     },
-    generalSeatPolicy: '',
+    generalSeatPolicy: 'custom',
     seatAvailability: {},
   })
 
-  const [showAdvancedOptions, setShowAdvancedOptions] = useState(false)
   const [expandedSubjects, setExpandedSubjects] = useState(new Set())
 
   // Get available degrees, semesters, and sections from subjects
@@ -130,8 +129,7 @@ export default function Preferences() {
   const canContinue =
     userPreferences.parentSection.degree &&
     userPreferences.parentSection.semester &&
-    userPreferences.parentSection.section &&
-    userPreferences.generalSeatPolicy
+    userPreferences.parentSection.section
 
   return (
     <div className="h-screen bg-black flex flex-col items-center px-2 pt-safe-offset-8 pb-safe">
@@ -140,7 +138,7 @@ export default function Preferences() {
         <img src={logo} alt="Logo" className="w-15 h-15 user-select-none mb-2" />
         <StepTrack currentStep={4} totalSteps={5} />
         <div className="text-center mb-6">
-          <h3 className="font-product-sans text-accent font-medium text-xl mb-2">
+          <h3 className="font-product-sans text-accent font-black text-xl mb-2">
             Set Your Preferences
           </h3>
           <p className="text-white/70 text-sm font-product-sans">
@@ -275,8 +273,9 @@ export default function Preferences() {
               userPreferences.parentSection.semester &&
               userPreferences.parentSection.section && (
                 <div className="mt-4 p-3 bg-accent/20 border border-accent/30 rounded-lg">
-                  <div className="text-accent font-medium text-sm mb-1">
-                    ✅ Selected Parent Section:
+                  <div className="text-accent font-medium text-sm mb-1 flex items-center gap-2">
+                    <CheckCircle className="w-4 h-4" />
+                    Selected Parent Section:
                   </div>
                   <div className="text-accent text-lg font-bold">
                     {userPreferences.parentSection.degree} • Semester{' '}
@@ -287,274 +286,168 @@ export default function Preferences() {
               )}
           </div>
 
-          {/* Seat Availability Policy Card */}
+          {/* Manual Seat Selection */}
           <div className="bg-white/5 border border-white/10 rounded-xl p-4">
             <div className="flex items-center gap-3 mb-4">
-              <div className="text-2xl">🪑</div>
+              <div className="text-lg">
+                <Settings className="w-6 h-6 text-accent" />
+              </div>
               <div>
-                <h4 className="text-white font-medium text-lg">Seat Availability</h4>
+                <h4 className="text-white font-medium text-lg">Manual Seat Selection</h4>
                 <p className="text-white/60 text-sm">
-                  How strict should we be about seat availability?
+                  Specify exact seat availability for each subject-section combination
                 </p>
               </div>
             </div>
 
-            <div className="space-y-2">
-              <button
-                onClick={() =>
-                  setUserPreferences(prev => ({
-                    ...prev,
-                    generalSeatPolicy: 'flexible',
-                    seatAvailability: {},
-                  }))
-                }
-                className={`w-full p-3 rounded-lg border text-left transition-all ${
-                  userPreferences.generalSeatPolicy === 'flexible'
-                    ? 'bg-green-500/20 border-green-500/40 text-green-300'
-                    : 'bg-white/5 border-white/10 text-white/70 hover:border-green-500/30 hover:bg-green-500/5'
-                }`}
-              >
-                <div className="flex items-center gap-3">
-                  <div className="text-lg">✅</div>
-                  <div>
-                    <div className="font-medium text-sm">Flexible - Seats Generally Available</div>
-                    <div className="text-xs opacity-80 mt-0.5">
-                      I can get seats in most sections. Focus on parent section first, then best
-                      schedule.
-                    </div>
-                  </div>
-                </div>
-              </button>
-
-              <button
-                onClick={() =>
-                  setUserPreferences(prev => ({
-                    ...prev,
-                    generalSeatPolicy: 'moderate',
-                    seatAvailability: {},
-                  }))
-                }
-                className={`w-full p-3 rounded-lg border text-left transition-all ${
-                  userPreferences.generalSeatPolicy === 'moderate'
-                    ? 'bg-yellow-500/20 border-yellow-500/40 text-yellow-300'
-                    : 'bg-white/5 border-white/10 text-white/70 hover:border-yellow-500/30 hover:bg-yellow-500/5'
-                }`}
-              >
-                <div className="flex items-center gap-3">
-                  <div className="text-lg">⚠️</div>
-                  <div>
-                    <div className="font-medium text-sm">Moderate - Some Sections May Be Full</div>
-                    <div className="text-xs opacity-80 mt-0.5">
-                      Parent section is priority, but be cautious with popular sections.
-                    </div>
-                  </div>
-                </div>
-              </button>
-
-              <button
-                onClick={() =>
-                  setUserPreferences(prev => ({
-                    ...prev,
-                    generalSeatPolicy: 'strict',
-                    seatAvailability: {},
-                  }))
-                }
-                className={`w-full p-3 rounded-lg border text-left transition-all ${
-                  userPreferences.generalSeatPolicy === 'strict'
-                    ? 'bg-red-500/20 border-red-500/40 text-red-300'
-                    : 'bg-white/5 border-white/10 text-white/70 hover:border-red-500/30 hover:bg-red-500/5'
-                }`}
-              >
-                <div className="flex items-center gap-3">
-                  <div className="text-lg">🔒</div>
-                  <div>
-                    <div className="font-medium text-sm">
-                      Strict - Only Confirmed Available Sections
-                    </div>
-                    <div className="text-xs opacity-80 mt-0.5">
-                      Many sections are full. Heavily favor parent section and avoid risky options.
-                    </div>
-                  </div>
-                </div>
-              </button>
+            {/* Manual Seat Selection Content */}
+            <div className="mb-4">
+              <h4 className="text-white font-medium text-lg mb-2">
+                Subject-Specific Seat Availability
+              </h4>
+              <p className="text-white/60 text-sm">
+                Set exact seat availability for each subject-section combination.
+              </p>
             </div>
-          </div>
 
-          {/* Advanced Options Toggle */}
-          <button
-            onClick={() => setShowAdvancedOptions(!showAdvancedOptions)}
-            className="w-full p-3 rounded-lg border border-blue-500/20 bg-blue-500/10 text-blue-300 hover:bg-blue-500/15 transition-all"
-          >
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <div className="text-lg">⚙️</div>
-                <div className="text-left">
-                  <div className="font-medium text-sm">Advanced Seat Configuration</div>
-                  <div className="text-xs opacity-80">
-                    Specify exact seat availability per section
-                  </div>
-                </div>
-              </div>
-              {showAdvancedOptions ? (
-                <ChevronDown className="w-4 h-4" />
-              ) : (
-                <ChevronRight className="w-4 h-4" />
-              )}
-            </div>
-          </button>
-
-          {/* Advanced Options Content */}
-          {showAdvancedOptions && (
-            <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-              <div className="mb-4">
-                <h4 className="text-white font-medium text-lg mb-2">
-                  Subject-Specific Seat Availability
-                </h4>
-                <p className="text-white/60 text-sm">
-                  Set exact seat availability for each subject-section combination. This overrides
-                  the general policy.
-                </p>
-              </div>
-
-              <div className="space-y-3">
-                {subjectsForPreferences.map(subject => {
-                  const isExpanded = expandedSubjects.has(subject.name)
-                  return (
-                    <div key={subject.name} className="border border-white/10 rounded-lg">
-                      <button
-                        onClick={() => toggleSubjectExpansion(subject.name)}
-                        className="w-full p-3 text-left hover:bg-white/5 rounded-lg transition-all"
-                      >
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center gap-3">
-                            <div className="text-lg">
-                              <Book className="w-5 h-5 text-accent" />
-                            </div>
-                            <div>
-                              <div className="text-accent font-medium">{subject.name}</div>
-                              <div className="text-white/60 text-sm">
-                                {subject.locations.length} sections available
-                              </div>
+            <div className="space-y-3">
+              {subjectsForPreferences.map(subject => {
+                const isExpanded = expandedSubjects.has(subject.name)
+                return (
+                  <div key={subject.name} className="border border-white/10 rounded-lg">
+                    <button
+                      onClick={() => toggleSubjectExpansion(subject.name)}
+                      className="w-full p-3 text-left hover:bg-white/5 rounded-lg transition-all"
+                    >
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-3">
+                          <div className="text-lg">
+                            <Book className="w-5 h-5 text-accent" />
+                          </div>
+                          <div>
+                            <div className="text-accent font-medium">{subject.name}</div>
+                            <div className="text-white/60 text-sm">
+                              {subject.locations.length} sections available
                             </div>
                           </div>
-                          {isExpanded ? (
-                            <ChevronDown className="w-4 h-4 text-white/60" />
-                          ) : (
-                            <ChevronRight className="w-4 h-4 text-white/60" />
-                          )}
                         </div>
-                      </button>
+                        {isExpanded ? (
+                          <ChevronDown className="w-4 h-4 text-white/60" />
+                        ) : (
+                          <ChevronRight className="w-4 h-4 text-white/60" />
+                        )}
+                      </div>
+                    </button>
 
-                      {isExpanded && (
-                        <div className="p-3 pt-0 space-y-2">
-                          {subject.locations.map((location, idx) => {
-                            const sectionKey = `${location.degree}-${location.semester}-${location.section}`
-                            const availabilityKey = `${subject.name}-${sectionKey}`
-                            const currentStatus = userPreferences.seatAvailability[availabilityKey]
+                    {isExpanded && (
+                      <div className="p-3 pt-0 space-y-2">
+                        {subject.locations.map((location, idx) => {
+                          const sectionKey = `${location.degree}-${location.semester}-${location.section}`
+                          const availabilityKey = `${subject.name}-${sectionKey}`
+                          const currentStatus = userPreferences.seatAvailability[availabilityKey]
 
-                            const isParentSection =
-                              location.degree === userPreferences.parentSection.degree &&
-                              location.semester === userPreferences.parentSection.semester &&
-                              location.section === userPreferences.parentSection.section
+                          const isParentSection =
+                            location.degree === userPreferences.parentSection.degree &&
+                            location.semester === userPreferences.parentSection.semester &&
+                            location.section === userPreferences.parentSection.section
 
-                            return (
-                              <div
-                                key={idx}
-                                className={`p-3 rounded-lg ${
-                                  isParentSection
-                                    ? 'bg-accent/10 border border-accent/20'
-                                    : 'bg-white/5'
-                                }`}
-                              >
-                                <div className="flex items-center justify-between mb-2">
-                                  <div>
-                                    <div className="text-white text-sm font-medium flex items-center gap-2">
-                                      {location.degree} • Semester {location.semester} • Section{' '}
-                                      {location.section}
-                                      {isParentSection && (
-                                        <span className="text-xs bg-accent text-white px-2 py-1 rounded flex items-center gap-1">
-                                          <Target className="w-3 h-3" /> PARENT
-                                        </span>
-                                      )}
-                                    </div>
-                                    {location.teacher && (
-                                      <div className="text-white/60 text-xs mt-1">
-                                        Teacher: {location.teacher}
-                                      </div>
+                          return (
+                            <div
+                              key={idx}
+                              className={`p-3 rounded-lg ${
+                                isParentSection
+                                  ? 'bg-accent/10 border border-accent/20'
+                                  : 'bg-white/5'
+                              }`}
+                            >
+                              <div className="flex items-center justify-between mb-2">
+                                <div>
+                                  <div className="text-white text-sm font-medium flex items-center gap-2">
+                                    {location.degree} • Semester {location.semester} • Section{' '}
+                                    {location.section}
+                                    {isParentSection && (
+                                      <span className="text-xs bg-accent text-white px-2 py-1 rounded flex items-center gap-1">
+                                        <Target className="w-3 h-3" /> PARENT
+                                      </span>
                                     )}
                                   </div>
-                                </div>
-
-                                <div className="flex gap-1.5">
-                                  <button
-                                    onClick={() =>
-                                      setUserPreferences(prev => ({
-                                        ...prev,
-                                        generalSeatPolicy: 'custom',
-                                        seatAvailability: {
-                                          ...prev.seatAvailability,
-                                          [availabilityKey]: true,
-                                        },
-                                      }))
-                                    }
-                                    className={`flex-1 px-2 py-1.5 rounded-md text-xs font-medium transition-all ${
-                                      currentStatus === true
-                                        ? 'bg-green-500 text-white'
-                                        : 'bg-white/10 text-white/70 hover:bg-green-500/20'
-                                    }`}
-                                  >
-                                    ✓ Available
-                                  </button>
-                                  <button
-                                    onClick={() =>
-                                      setUserPreferences(prev => ({
-                                        ...prev,
-                                        generalSeatPolicy: 'custom',
-                                        seatAvailability: {
-                                          ...prev.seatAvailability,
-                                          [availabilityKey]: false,
-                                        },
-                                      }))
-                                    }
-                                    className={`flex-1 px-2 py-1.5 rounded-md text-xs font-medium transition-all ${
-                                      currentStatus === false
-                                        ? 'bg-red-500 text-white'
-                                        : 'bg-white/10 text-white/70 hover:bg-red-500/20'
-                                    }`}
-                                  >
-                                    ✗ Full
-                                  </button>
-                                  <button
-                                    onClick={() =>
-                                      setUserPreferences(prev => {
-                                        const newSeatAvailability = { ...prev.seatAvailability }
-                                        delete newSeatAvailability[availabilityKey]
-                                        return {
-                                          ...prev,
-                                          seatAvailability: newSeatAvailability,
-                                        }
-                                      })
-                                    }
-                                    className={`px-2 py-1.5 rounded-md text-xs font-medium transition-all ${
-                                      currentStatus === undefined
-                                        ? 'bg-yellow-500 text-black'
-                                        : 'bg-white/10 text-white/70 hover:bg-yellow-500/20'
-                                    }`}
-                                  >
-                                    ? Auto
-                                  </button>
+                                  {location.teacher && (
+                                    <div className="text-white/60 text-xs mt-1">
+                                      Teacher: {location.teacher}
+                                    </div>
+                                  )}
                                 </div>
                               </div>
-                            )
-                          })}
-                        </div>
-                      )}
-                    </div>
-                  )
-                })}
-              </div>
+
+                              <div className="flex gap-1.5">
+                                <button
+                                  onClick={() =>
+                                    setUserPreferences(prev => ({
+                                      ...prev,
+                                      generalSeatPolicy: 'custom',
+                                      seatAvailability: {
+                                        ...prev.seatAvailability,
+                                        [availabilityKey]: true,
+                                      },
+                                    }))
+                                  }
+                                  className={`flex-1 px-2 py-1.5 rounded-md text-xs font-medium transition-all flex items-center justify-center gap-1 ${
+                                    currentStatus === true
+                                      ? 'bg-green-500 text-white'
+                                      : 'bg-white/10 text-white/70 hover:bg-green-500/20'
+                                  }`}
+                                >
+                                  <Check className="w-3 h-3" /> Available
+                                </button>
+                                <button
+                                  onClick={() =>
+                                    setUserPreferences(prev => ({
+                                      ...prev,
+                                      generalSeatPolicy: 'custom',
+                                      seatAvailability: {
+                                        ...prev.seatAvailability,
+                                        [availabilityKey]: false,
+                                      },
+                                    }))
+                                  }
+                                  className={`flex-1 px-2 py-1.5 rounded-md text-xs font-medium transition-all flex items-center justify-center gap-1 ${
+                                    currentStatus === false
+                                      ? 'bg-red-500 text-white'
+                                      : 'bg-white/10 text-white/70 hover:bg-red-500/20'
+                                  }`}
+                                >
+                                  <X className="w-3 h-3" /> Full
+                                </button>
+                                <button
+                                  onClick={() =>
+                                    setUserPreferences(prev => {
+                                      const newSeatAvailability = { ...prev.seatAvailability }
+                                      delete newSeatAvailability[availabilityKey]
+                                      return {
+                                        ...prev,
+                                        seatAvailability: newSeatAvailability,
+                                      }
+                                    })
+                                  }
+                                  className={`px-2 py-1.5 rounded-md text-xs font-medium transition-all ${
+                                    currentStatus === undefined
+                                      ? 'bg-yellow-500 text-black'
+                                      : 'bg-white/10 text-white/70 hover:bg-yellow-500/20'
+                                  }`}
+                                >
+                                  ? Auto
+                                </button>
+                              </div>
+                            </div>
+                          )
+                        })}
+                      </div>
+                    )}
+                  </div>
+                )
+              })}
             </div>
-          )}
+          </div>
         </div>
       </div>
 

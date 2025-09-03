@@ -73,7 +73,7 @@ export default function Regular() {
           <img src={logo} alt="Logo" className="w-15 h-15 user-select-none mb-2" />
           <StepTrack currentStep={2} totalSteps={2} />
           <div className="text-center mb-6">
-            <h3 className=" font-product-sans text-accent font-medium text-xl mb-2">
+            <h3 className=" font-product-sans text-accent font-black text-xl mb-2">
               Select Degree, Semester & Section
             </h3>
             <p className="text-white/70 text-sm font-product-sans">
@@ -112,7 +112,7 @@ export default function Regular() {
                             <div className="text-sm opacity-80">Degree</div>
                           </div>
                           <div className="text-2xl">
-                            <GraduationCap className="w-8 h-8 text-accent" />
+                            <GraduationCap className={`w-8 h-8 ${selectedDegree === deg ? 'text-white' : 'text-accent'}`} />
                           </div>
                         </div>
                       </button>
@@ -146,7 +146,7 @@ export default function Regular() {
                               <div className="text-sm opacity-80">Semester</div>
                             </div>
                             <div className="text-2xl">
-                              <Calendar className="w-8 h-8 text-accent" />
+                              <Calendar className={`w-8 h-8 ${selectedSemester === sem ? 'text-white' : 'text-accent'}`} />
                             </div>
                           </div>
                         </button>
@@ -177,7 +177,7 @@ export default function Regular() {
                               <div className="font-bold mb-2">{sec}</div>
                               <div className="text-sm opacity-80">Section</div>
                             </div>
-                            <Tag className="w-6 h-6 text-accent" />
+                            <Tag className={`w-6 h-6 ${selectedSection === sec ? 'text-white' : 'text-accent'}`} />
                           </div>
                         </button>
                       ))}

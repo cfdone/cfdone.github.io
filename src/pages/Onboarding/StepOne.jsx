@@ -18,7 +18,7 @@ export default function StepOne() {
           <div className="flex flex-col items-center gap-4 px-2 py-4 w-full max-w-md mx-auto overflow-y-auto flex-1">
             <div className="w-full">
               <div className="text-center mb-6">
-                <h3 className=" font-product-sans text-accent font-medium text-xl mb-2">
+                <h3 className=" font-product-sans text-accent font-black text-xl mb-2">
                   Select Student Type
                 </h3>
                 <p className="text-white/70 text-sm font-product-sans">
@@ -48,8 +48,8 @@ export default function StepOne() {
                         I want to view the complete timetable for my degree, semester, and section
                       </div>
                     </div>
-                    <div className="text-2xl">
-                      <Book className="w-8 h-8 text-accent" />
+                    <div >
+                      <Book className={`${studentType === 'regular' ? 'text-white' : 'text-accent'} w-8 h-8`}/>
                     </div>
                   </div>
                 </button>
@@ -65,7 +65,7 @@ export default function StepOne() {
                                 `}
                   onClick={() => {
                     setStudentType('lagger')
-                    setSteps(3)
+                    setSteps(5)
                   }}
                 >
                   <div className="flex items-center justify-between">
@@ -76,7 +76,7 @@ export default function StepOne() {
                       </div>
                     </div>
                     <div className="text-2xl">
-                      <Zap className="w-8 h-8 text-accent" />
+                      <Zap className={`${studentType === 'lagger' ? 'text-white' : 'text-accent'} w-8 h-8`} />
                     </div>
                   </div>
                 </button>
