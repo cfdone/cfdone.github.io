@@ -14,7 +14,7 @@ export default defineConfig({
         '/favicon.ico',
         '/apple-touch-icon.png',
         '/android-chrome-192x192.png',
-        '/android-chrome-512x512.png'
+        '/android-chrome-512x512.png',
       ],
       manifest: {
         name: 'CFD ONE',
@@ -30,16 +30,16 @@ export default defineConfig({
             src: '/android-chrome-192x192.png',
             sizes: '192x192',
             type: 'image/png',
-            purpose: 'any maskable'
+            purpose: 'any maskable',
           },
           {
             src: '/android-chrome-512x512.png',
             sizes: '512x512',
             type: 'image/png',
-            purpose: 'any maskable'
-          }
-        ]
-      }
-    })
-  ]
+            purpose: 'any maskable',
+          },
+        ],
+      },
+    }),
+  ],
 })
