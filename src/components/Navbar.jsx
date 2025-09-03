@@ -1,19 +1,16 @@
-import { useNavigate } from 'react-router-dom'
+import {  Link } from 'react-router-dom'
 import { Home, GraduationCap, Settings, Calendar } from 'lucide-react'
 
 export default function Navbar({ currentPage = 'home' }) {
-  const navigate = useNavigate()
+
 
   const menuItems = [
     { id: 'home', label: 'Home', Icon: Home, path: '/' },
-
-    { id: 'unihub', label: 'UniHub', Icon: GraduationCap, path: '/timetable' },
+    { id: 'unihub', label: 'UniHub', Icon: GraduationCap, path: '/unihub' },
     { id: 'settings', label: 'Settings', Icon: Settings, path: '/settings' },
   ]
 
-  const handleNavigation = path => {
-    navigate(path)
-  }
+
 
   return (
     <>
@@ -23,9 +20,9 @@ export default function Navbar({ currentPage = 'home' }) {
           {menuItems.map(item => {
             const IconComponent = item.Icon
             return (
-              <button
+              <Link
                 key={item.id}
-                onClick={() => handleNavigation(item.path)}
+                to={item.path}
                 className={`flex flex-row items-center py-1 px-3 rounded-full transition-all duration-200 ${
                   currentPage === item.id
                     ? 'text-accent bg-accent/10'
@@ -34,7 +31,7 @@ export default function Navbar({ currentPage = 'home' }) {
               >
                 <IconComponent className="w-5 h-5 mb-1 mr-1" />
                 <span className="text-xs font-product-sans">{item.label}</span>
-              </button>
+              </Link>
             )
           })}
         </div>

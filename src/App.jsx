@@ -8,6 +8,7 @@ import Resolved from './pages/Onboarding/Resolved'
 import Resolve from './pages/Onboarding/Resolve'
 import Home from './pages/Home'
 import Settings from './pages/Settings'
+import UniHub from './pages/UniHub'
 import { ProtectedRoute, OnboardingGuard } from './components/RouteGuard'
 
 function App() {
@@ -85,6 +86,7 @@ function App() {
 
       {/* Settings route - always accessible */}
       <Route path="/settings" element={<Settings />} />
+      <Route path="/unihub" element={<UniHub />} />
 
       {/* Legacy home route - redirect to root */}
       <Route

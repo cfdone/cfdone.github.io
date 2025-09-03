@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom'
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useEffect } from 'react'
 import {
   RefreshCw,
   Info,
@@ -12,9 +12,12 @@ import {
   Heart,
   Code,
   ChevronRight,
+  Clock,
+  Bell,
 } from 'lucide-react'
 import Navbar from '../components/Navbar'
 import logo from '../assets/logo.svg'
+import { requestNotificationPermission } from '../utils/notifications'
 
 export default function Settings() {
   const navigate = useNavigate()
@@ -22,6 +25,33 @@ export default function Settings() {
   const [showAboutModal, setShowAboutModal] = useState(false)
   const [showTermsModal, setShowTermsModal] = useState(false)
   const [showPrivacyModal, setShowPrivacyModal] = useState(false)
+  const [notificationEnabled, setNotificationEnabled] = useState(false)
+  const [notificationMinutes, setNotificationMinutes] = useState(5)
+  const [notificationPermission, setNotificationPermission] = useState('default')
+
+  // Check if notifications are enabled
+  useEffect(() => {
+    // Load notification settings from localStorage
+    try {
+      const storedNotificationEnabled = localStorage.getItem('notificationEnabled')
+      const storedNotificationMinutes = localStorage.getItem('notificationMinutes')
+      
+      if (storedNotificationEnabled !== null) {
+        setNotificationEnabled(storedNotificationEnabled === 'true')
+      }
+      
+      if (storedNotificationMinutes !== null) {
+        setNotificationMinutes(parseInt(storedNotificationMinutes, 10))
+      }
+      
+      // Check browser notification permission
+      if ("Notification" in window) {
+        setNotificationPermission(Notification.permission)
+      }
+    } catch (error) {
+      console.error('Error loading notification settings:', error)
+    }
+  }, [])
 
   const handleResetOnboarding = useCallback(() => {
     try {
@@ -35,6 +65,43 @@ export default function Settings() {
       console.error('Error resetting onboarding:', error)
     }
   }, [navigate])
+  
+  const toggleNotifications = useCallback(async () => {
+    try {
+      if (!notificationEnabled) {
+        // If enabling notifications, request permission first
+        const granted = await requestNotificationPermission();
+        if (!granted) {
+          // Permission was denied, don't enable
+          alert("Notification permission is required for class reminders. Please enable notifications in your browser settings.");
+          return;
+        }
+        setNotificationPermission('granted');
+        
+        // Send a test notification
+        if ("Notification" in window && Notification.permission === "granted") {
+          new Notification("Notifications enabled!", {
+            body: "You'll be notified before your classes start.",
+            icon: '/favicon.svg'
+          });
+        }
+      }
+      
+      // Toggle the notification state
+      const newState = !notificationEnabled;
+      setNotificationEnabled(newState);
+      localStorage.setItem('notificationEnabled', newState.toString());
+    } catch (error) {
+      console.error('Error toggling notifications:', error);
+    }
+  }, [notificationEnabled])
+  
+  const updateNotificationTime = useCallback((minutes) => {
+    if (minutes >= 1 && minutes <= 60) {
+      setNotificationMinutes(minutes);
+      localStorage.setItem('notificationMinutes', minutes.toString());
+    }
+  }, [])
 
   const getTimetableInfo = useCallback(() => {
     try {
@@ -132,6 +199,89 @@ export default function Settings() {
                     <ChevronRight className="w-5 h-5 text-white/30" />
                   </div>
                 </button>
+              </div>
+              
+              {/* Notifications Section */}
+              <div className="mb-6">
+                <h2 className="text-white/50 text-xs font-product-sans uppercase tracking-wider mb-3 px-2">
+                  Notifications
+                </h2>
+                
+                <div className="space-y-2">
+                  {/* Toggle notifications */}
+                  <div className="w-full bg-white/5 p-4 rounded-xl border border-accent/10">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center">
+                        <Bell className="w-5 h-5 text-accent mr-3" />
+                        <div>
+                          <h4 className="text-white font-medium text-base mb-1">Class Reminders</h4>
+                          <p className="text-white/70 text-sm font-product-sans">
+                            Receive notifications before classes
+                          </p>
+                        </div>
+                      </div>
+                      <div className="relative">
+                        <input
+                          type="checkbox"
+                          className="sr-only"
+                          checked={notificationEnabled}
+                          onChange={toggleNotifications}
+                          id="notifications-toggle"
+                        />
+                        <label
+                          htmlFor="notifications-toggle"
+                          className={`block w-12 h-6 rounded-full transition-colors duration-300 cursor-pointer ${
+                            notificationEnabled ? 'bg-accent' : 'bg-white/20'
+                          }`}
+                        >
+                          <span
+                            className={`absolute block w-5 h-5 rounded-full bg-white shadow transition-transform duration-300 transform ${
+                              notificationEnabled ? 'translate-x-6' : 'translate-x-1'
+                            }`}
+                            style={{ top: '2px' }}
+                          />
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  {/* Notification timing */}
+                  {notificationEnabled && (
+                    <div className="w-full bg-white/5 p-4 rounded-xl border border-accent/10">
+                      <div className="flex items-center mb-3">
+                        <Clock className="w-5 h-5 text-accent mr-3" />
+                        <div>
+                          <h4 className="text-white font-medium text-base">Reminder Time</h4>
+                          <p className="text-white/70 text-sm font-product-sans">
+                            Minutes before class to send notification
+                          </p>
+                        </div>
+                      </div>
+                      <div className="flex items-center">
+                        <input
+                          type="range"
+                          min="1"
+                          max="30"
+                          value={notificationMinutes}
+                          onChange={(e) => updateNotificationTime(parseInt(e.target.value, 10))}
+                          className="flex-1 accent-accent bg-white/10 h-2 rounded-lg appearance-none cursor-pointer"
+                        />
+                        <span className="text-white ml-3 w-8 text-center">
+                          {notificationMinutes}
+                        </span>
+                      </div>
+                    </div>
+                  )}
+                  
+                  {/* Notification permission info */}
+                  {notificationEnabled && notificationPermission !== 'granted' && (
+                    <div className="w-full bg-red-900/20 p-4 rounded-xl border border-red-500/30">
+                      <p className="text-white/90 text-sm font-product-sans">
+                        Browser notification permission is required. Please allow notifications when prompted.
+                      </p>
+                    </div>
+                  )}
+                </div>
               </div>
 
               {/* About Section */}
@@ -256,7 +406,7 @@ export default function Settings() {
         </div>
 
         {/* Fixed Bottom Navbar */}
-        <div className="flex-shrink-0 flex justify-center p-4">
+        <div className="flex-shrink-0 flex justify-center px-4">
           <Navbar currentPage="settings" />
         </div>
       </div>
