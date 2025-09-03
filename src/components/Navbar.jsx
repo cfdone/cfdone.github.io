@@ -18,7 +18,7 @@ export default function Navbar({ currentPage = 'home' }) {
   return (
     <>
       {/* Bottom Navigation Bar */}
-      <div className="fixed bottom-2 left-1/2 transform -translate-x-1/2 bg-black/80 backdrop-blur-md border border-accent/20 z-50 rounded-full shadow-lg">
+      <div className="fixed bottom-5 left-1/2 transform -translate-x-1/2 bg-black/80 backdrop-blur-md border border-accent/20 z-50 rounded-full shadow-lg">
         <div className="flex items-center justify-around py-3 px-4">
           {menuItems.map(item => {
             const IconComponent = item.Icon

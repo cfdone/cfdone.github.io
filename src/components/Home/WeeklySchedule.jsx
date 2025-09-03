@@ -11,13 +11,21 @@ export default function WeeklySchedule({
   calculateRemainingTime,
   calculateTimeUntilStart,
 }) {
+  // Only show weekdays (Monday-Friday)
+  const weekdaysOnly = (day) => {
+    // Only include Monday through Friday
+    return ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'].includes(day);
+  }
+  
   return (
     <div className="space-y-3">
-      {Object.entries(timetableData).map(([day, classes]) => {
-        const isToday = day === getCurrentDay()
-        return (
-          <div key={day}>
-            <div className="bg-white/5 rounded-xl border border-accent/10 overflow-hidden">
+      {Object.entries(timetableData)
+        .filter(([day]) => weekdaysOnly(day))
+        .map(([day, classes]) => {
+          const isToday = day === getCurrentDay()
+          return (
+            <div key={day}>
+              <div className="bg-white/5 rounded-xl border border-accent/10 overflow-hidden">
               <div
                 className={`p-3 border-b border-accent/10 ${isToday ? 'bg-accent/10' : 'bg-white/5'}`}
               >

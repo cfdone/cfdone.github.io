@@ -1,4 +1,6 @@
 import logo from '../../assets/logo.svg'
+import NextClassCard from './NextClassCard'
+import { useState } from 'react'
 
 export default function Header({
   greeting,
@@ -7,7 +9,16 @@ export default function Header({
   selection,
   doneClasses,
   totalClasses,
+  nextClass,
+  currentClass,
+  sortedTodayClasses,
+  calculateTimeUntilStart,
 }) {
+  const [showCards, setShowCards] = useState(true)
+
+  const toggleCards = () => {
+    setShowCards(!showCards)
+  }
   return (
     <div className="flex-shrink-0 bg-black/90 backdrop-blur-md p-4 pb-1 pt-8 max-w-md mx-auto w-full">
       <div className="flex items-center justify-between mb-4">
@@ -29,6 +40,25 @@ export default function Header({
               <img src={logo} alt="CFD Logo" className="h-10 w-10" />
             </div>
           </div>
+          
+          <div className="flex items-center justify-center mt-3">
+            <button 
+              onClick={toggleCards} 
+              className="bg-accent/10 hover:bg-accent/20 text-accent rounded-full p-1 transition-all duration-200"
+            >
+              <svg 
+                xmlns="http://www.w3.org/2000/svg" 
+                className={`h-5 w-5 transition-transform duration-300 ${showCards ? 'transform rotate-180' : ''}`}
+                fill="none" 
+                viewBox="0 0 24 24" 
+                stroke="currentColor"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
+          </div>
+          
+          <div className={`flex flex-col gap-2.5 transition-all duration-300 ${showCards ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0 overflow-hidden'}`}>       
 
           {/* Progress Summary in header */}
           <div className="bg-gradient-to-r from-accent/10 to-accent/5 p-4 rounded-xl border border-accent/10 mt-3">
@@ -52,6 +82,18 @@ export default function Header({
               ></div>
             </div>
           </div>
+
+ {/* NextClassCard moved to Header */}
+          <NextClassCard
+            nextClass={nextClass}
+            currentClass={currentClass}
+            sortedTodayClasses={sortedTodayClasses}
+            totalClasses={totalClasses}
+            calculateTimeUntilStart={calculateTimeUntilStart}
+          />
+          
+          </div>  
+
         </div>
       </div>
     </div>

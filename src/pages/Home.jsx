@@ -4,12 +4,12 @@ import Navbar from '../components/Navbar'
 import {
   Header,
   CurrentClassCard,
-  NextClassCard,
   StatusCard,
   TodaySchedule,
   WeeklySchedule,
   NoTimetableData,
   ViewToggle,
+  DaySelector,
 } from '../components/Home'
 
 export default function Home() {
@@ -17,6 +17,7 @@ export default function Home() {
   const [selection, setSelection] = useState(location.state || null)
   const [currentTime, setCurrentTime] = useState(new Date())
   const [viewWeekly, setViewWeekly] = useState(false)
+  const [selectedDay, setSelectedDay] = useState('')
 
   // Load data from localStorage if not provided via location state
   useEffect(() => {
@@ -41,11 +42,38 @@ export default function Home() {
     return () => clearInterval(timer)
   }, [])
 
-  // Get current day
-  const getCurrentDay = useCallback(() => {
-    const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
-    return days[currentTime.getDay()]
+  // Get actual current day (for Header)
+  const getActualCurrentDay = useCallback(() => {
+    // Only weekdays (Monday through Friday)
+    const days = ['', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', ''];
+    const dayIndex = currentTime.getDay();
+    
+    // For weekends, display "Friday" in the header as the last working day
+    if (dayIndex === 0 || dayIndex === 6) {
+      return 'Friday'; // Show Friday for weekends
+    }
+    
+    return days[dayIndex];
   }, [currentTime])
+
+  // Get selected day for schedule display
+  const getCurrentDay = useCallback(() => {
+    // Only weekdays (Monday through Friday)
+    const days = ['', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', ''];
+    
+    // If a specific day is selected, use that
+    if (selectedDay) {
+      return selectedDay;
+    }
+    
+    // For weekends, default to showing Monday's schedule
+    const dayIndex = currentTime.getDay();
+    if (dayIndex === 0 || dayIndex === 6) {
+      return 'Monday'; // Default to Monday for weekends
+    }
+    
+    return days[dayIndex];
+  }, [currentTime, selectedDay])
 
   // Get greeting based on time
   const getGreeting = useCallback(() => {
@@ -129,17 +157,22 @@ export default function Home() {
   const timetableData = useMemo(() => {
     if (!selection) return {}
 
-    // Handle data from localStorage or navigation state
+    // Extract data from either source
+    let data = {}
     if (selection.timetable) {
-      return selection.timetable
+      data = selection.timetable
+    } else if (selection.passtimetable) {
+      // Legacy support for passtimetable
+      data = selection.passtimetable
     }
 
-    // Legacy support for passtimetable
-    if (selection.passtimetable) {
-      return selection.passtimetable
-    }
+    // Filter out weekend days
+    const filteredData = { ...data }
+    // Remove weekend days from the data
+    delete filteredData['Saturday']
+    delete filteredData['Sunday']
 
-    return {}
+    return filteredData
   }, [selection])
 
   const todayClasses = useMemo(() => {
@@ -147,38 +180,63 @@ export default function Home() {
     return timetableData[currentDay] || []
   }, [timetableData, getCurrentDay])
 
-  // Sort today's classes by time
+  // Sort today's classes by time (for the selected day)
   const sortedTodayClasses = useMemo(() => {
-    return [...todayClasses].sort((a, b) => timeToMinutes(a.start) - timeToMinutes(b.start))
-  }, [todayClasses, timeToMinutes])
+    // Add the current day to each class object
+    return [...todayClasses].map(classItem => ({
+      ...classItem,
+      day: getCurrentDay()
+    })).sort((a, b) => timeToMinutes(a.start) - timeToMinutes(b.start))
+  }, [todayClasses, timeToMinutes, getCurrentDay])
 
-  // Find current and next class
-  const { currentClass, nextClass, totalClasses, doneClasses } = useMemo(() => {
+  // Get actual today's classes for progress tracking and today's cards
+  const actualTodayClasses = useMemo(() => {
+    const actualDay = getActualCurrentDay()
+    return timetableData[actualDay] || []
+  }, [timetableData, getActualCurrentDay])
+  
+  // Sort actual today's classes (for the current/next class cards)
+  const sortedActualTodayClasses = useMemo(() => {
+    return [...actualTodayClasses].map(classItem => ({
+      ...classItem,
+      day: getActualCurrentDay()
+    })).sort((a, b) => timeToMinutes(a.start) - timeToMinutes(b.start))
+  }, [actualTodayClasses, getActualCurrentDay, timeToMinutes])
+  
+  // Calculate actual today's progress for header and get today's current/next classes
+  const { actualTotalClasses, actualDoneClasses, actualCurrentClass, actualNextClass } = useMemo(() => {
     const currentMinutes = getCurrentMinutes()
-    let current = null
-    let next = null
-    let done = 0
-
-    for (const classInfo of sortedTodayClasses) {
-      const startMinutes = timeToMinutes(classInfo.start)
-      const endMinutes = timeToMinutes(classInfo.end)
-
+    let done = 0;
+    let current = null;
+    let next = null;
+    
+    // Sort actual today's classes
+    const sortedActualClasses = [...actualTodayClasses].sort(
+      (a, b) => timeToMinutes(a.start) - timeToMinutes(b.start)
+    );
+    
+    for (const classInfo of sortedActualClasses) {
+      const startMinutes = timeToMinutes(classInfo.start);
+      const endMinutes = timeToMinutes(classInfo.end);
+      
       if (currentMinutes >= startMinutes && currentMinutes < endMinutes) {
-        current = classInfo
+        current = classInfo;
       } else if (currentMinutes < startMinutes && !next) {
-        next = classInfo
+        next = classInfo;
       } else if (currentMinutes >= endMinutes) {
-        done++
+        done++;
       }
     }
-
+    
     return {
-      currentClass: current,
-      nextClass: next,
-      totalClasses: sortedTodayClasses.length,
-      doneClasses: done,
-    }
-  }, [sortedTodayClasses, getCurrentMinutes, timeToMinutes])
+      actualTotalClasses: sortedActualClasses.length,
+      actualDoneClasses: done,
+      actualCurrentClass: current,
+      actualNextClass: next
+    };
+  }, [actualTodayClasses, getCurrentMinutes, timeToMinutes])
+
+  // We don't need to calculate this anymore since we're using actual values everywhere
 
   if (!selection) {
     return <NoTimetableData />
@@ -193,41 +251,48 @@ export default function Home() {
       </div>
 
       <div className="flex flex-col h-full relative z-10">
-        {/* Fixed Header with Current Class */}
+        {/* Fixed Header with Current Class and Next Class */}
         <Header
           greeting={getGreeting()}
-          currentDay={getCurrentDay()}
+          currentDay={getActualCurrentDay()}
           formattedTime={getFormattedTime()}
           selection={selection}
-          doneClasses={doneClasses}
-          totalClasses={totalClasses}
+          doneClasses={actualDoneClasses}
+          totalClasses={actualTotalClasses}
+          nextClass={actualNextClass}
+          currentClass={actualCurrentClass}
+          sortedTodayClasses={sortedActualTodayClasses}
+          calculateTimeUntilStart={calculateTimeUntilStart}
         />
 
-        {/* Current/Next Class in Header */}
+        {/* Current Class in Header */}
         <div className="flex-shrink-0 max-w-md mx-auto w-full px-4">
           <CurrentClassCard
-            currentClass={currentClass}
-            sortedTodayClasses={sortedTodayClasses}
-            totalClasses={totalClasses}
+            currentClass={actualCurrentClass}
+            sortedTodayClasses={sortedActualTodayClasses}
+            totalClasses={actualTotalClasses}
             calculateRemainingTime={calculateRemainingTime}
           />
 
-          <NextClassCard
-            nextClass={nextClass}
-            currentClass={currentClass}
-            sortedTodayClasses={sortedTodayClasses}
-            totalClasses={totalClasses}
-            calculateTimeUntilStart={calculateTimeUntilStart}
-          />
-
           <StatusCard
-            currentClass={currentClass}
-            nextClass={nextClass}
-            totalClasses={totalClasses}
-            doneClasses={doneClasses}
+            currentClass={actualCurrentClass}
+            nextClass={actualNextClass}
+            totalClasses={actualTotalClasses}
+            doneClasses={actualDoneClasses}
           />
 
-          <ViewToggle viewWeekly={viewWeekly} setViewWeekly={setViewWeekly} />
+          <ViewToggle 
+            viewWeekly={viewWeekly} 
+            setViewWeekly={setViewWeekly} 
+            onResetDay={() => setSelectedDay('')}
+          />
+          
+          {!viewWeekly && (
+            <DaySelector 
+              onDaySelect={(day) => setSelectedDay(day)} 
+              currentDay={getActualCurrentDay()}
+            />
+          )}
         </div>
 
         {/* Scrollable Content Container */}
@@ -241,8 +306,8 @@ export default function Home() {
                   getCurrentDay={getCurrentDay}
                   timeToMinutes={timeToMinutes}
                   getCurrentMinutes={getCurrentMinutes}
-                  currentClass={currentClass}
-                  nextClass={nextClass}
+                  currentClass={actualCurrentClass}
+                  nextClass={actualNextClass}
                   selection={selection}
                   calculateRemainingTime={calculateRemainingTime}
                   calculateTimeUntilStart={calculateTimeUntilStart}
@@ -250,8 +315,8 @@ export default function Home() {
               ) : (
                 <TodaySchedule
                   sortedTodayClasses={sortedTodayClasses}
-                  currentClass={currentClass}
-                  nextClass={nextClass}
+                  currentClass={actualCurrentClass}
+                  nextClass={actualNextClass}
                   getCurrentMinutes={getCurrentMinutes}
                   timeToMinutes={timeToMinutes}
                   selection={selection}

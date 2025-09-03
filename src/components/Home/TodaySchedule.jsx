@@ -11,14 +11,23 @@ export default function TodaySchedule({
   calculateRemainingTime,
   calculateTimeUntilStart,
 }) {
+  const currentDayName = new Date().toLocaleDateString('en-US', { weekday: 'long' });
+  // Get the day name from the current day or use the selected day
+  const displayDay = sortedTodayClasses[0]?.day || currentDayName;
+  const isToday = displayDay === currentDayName;
+  
   if (sortedTodayClasses.length === 0) {
     return (
       <div className="bg-white/5 p-6 rounded-xl border border-accent/10 text-center">
         <div className="mb-3 flex justify-center">
           <Sun className="w-10 h-10 text-accent" />
         </div>
-        <h3 className="text-white font-product-sans text-lg font-bold mb-2">No Classes Today</h3>
-        <p className="text-accent/80 font-product-sans text-sm">Enjoy your free day!</p>
+        <h3 className="text-white font-product-sans text-lg font-bold mb-2">
+          No Classes on {displayDay}
+        </h3>
+        <p className="text-accent/80 font-product-sans text-sm">
+          {isToday ? "Enjoy your free day!" : "This day is free."}
+        </p>
       </div>
     )
   }

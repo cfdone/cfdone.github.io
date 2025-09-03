@@ -14,6 +14,11 @@
   --font-product-sans: 'Product Sans', sans-serif;
   --color-accent: #a098ff;
 }
+
+/* Apply Product Sans globally to all elements */
+* {
+  font-family: 'Product Sans', sans-serif;
+}
 .user-select-none {
   user-select: none;
 }

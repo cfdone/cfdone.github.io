@@ -48,22 +48,7 @@ export default function ClassCard({
                 >
                   {classInfo.course}
                 </h3>
-                {isCurrentClass && (
-                  <span className="bg-red-500/30 text-red-300 px-3 py-1 rounded-full text-xs font-product-sans font-bold animate-pulse">
-                    ● LIVE
-                  </span>
-                )}
-                {isNextClass && (
-                  <span className="bg-blue-500/30 text-blue-300 px-3 py-1 rounded-full text-xs font-product-sans font-bold">
-                    ↗ NEXT
-                  </span>
-                )}
-                {isPastClass && (
-                  <span className="bg-green-500/30 text-green-300 px-3 py-1 rounded-full text-xs font-product-sans font-bold flex items-center gap-1">
-                    <Check className="w-3 h-3" />
-                    DONE
-                  </span>
-                )}
+              
               </div>
 
               <div className="space-y-2">
