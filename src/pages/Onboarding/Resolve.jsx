@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
-import { BookOpen, Book, MapPin } from 'lucide-react'
+import { BookOpen, Book, MapPin, Search } from 'lucide-react'
 import TimeTable from '../../assets/timetable.json'
 import logo from '../../assets/logo.svg'
 import StepTrack from '../../components/Onboarding/StepTrack'
@@ -13,6 +13,9 @@ export default function Resolve() {
   const [selectedSubjects, setSelectedSubjects] = useState(() => {
     return location.state?.selectedSubjects || []
   })
+  
+  // State for search query
+  const [searchQuery, setSearchQuery] = useState('')
 
   // No need for resolution states in this component anymore
 
@@ -87,6 +90,43 @@ export default function Resolve() {
   // Get all unique subjects with their degree/section information (memoized)
   // We've moved the resolution logic to Preview.jsx
 
+  // Filter subjects based on search query
+  const filteredSubjects = useMemo(() => {
+    if (!searchQuery.trim()) {
+      return allAvailableSubjects;
+    }
+    
+    const query = searchQuery.toLowerCase().trim();
+    
+    return allAvailableSubjects.filter(subject => {
+      // Check if query matches subject name
+      if (subject.name.toLowerCase().includes(query)) {
+        return true;
+      }
+      
+      // Generate abbreviation from subject name (e.g., "Object Oriented Programming" -> "OOP")
+      // Ignore words like "and" when creating the abbreviation
+      const words = subject.name.split(' ');
+      const abbreviation = words
+        .filter(word => word.length > 0 && word.toLowerCase() !== 'and')
+        .map(word => word[0])
+        .join('')
+        .toLowerCase();
+      
+      // Check if query matches abbreviation
+      if (abbreviation.includes(query)) {
+        return true;
+      }
+      
+      return false;
+    });
+  }, [allAvailableSubjects, searchQuery]);
+
+  // Handle search input changes
+  const handleSearchChange = (e) => {
+    setSearchQuery(e.target.value);
+  };
+
   // We'll remove the resolution code and focus solely on subject selection
 
   return (
@@ -95,7 +135,7 @@ export default function Resolve() {
       <div className="w-full justify-center flex flex-col gap-6 items-center flex-shrink-0">
         <img src={logo} alt="Logo" className="w-15 h-15 user-select-none mb-2" />
         <StepTrack currentStep={2} totalSteps={4} />
-        <div className="text-center mb-6">
+        <div className="text-center mb-4">
           <h3 className="font-product-sans text-accent font-black text-xl mb-2">
             Select Your Subjects
           </h3>
@@ -103,13 +143,48 @@ export default function Resolve() {
             Choose the subjects you want to include in your timetable
           </p>
         </div>
+        
+        {/* Search Input */}
+        <div className="relative w-full max-w-md mx-auto mb-4 px-2">
+          <div className="relative">
+            <input
+              type="text"
+              placeholder="Search subjects or abbreviations (e.g. OOP)"
+              value={searchQuery}
+              onChange={handleSearchChange}
+              className="w-full px-4 py-3 pr-10 bg-white/10 border border-accent/10 rounded-xl text-white placeholder:text-white/50 focus:outline-none focus:border-accent/30"
+            />
+            <Search className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white/50 w-5 h-5" />
+          </div>
+        </div>
       </div>
 
       {/* Scrollable Subject List */}
       <div className="flex-1 w-full max-w-md mx-auto overflow-y-auto no-scrollbar min-h-0">
         <div className="flex flex-col gap-3 px-2 py-4 pb-8">
-          {allAvailableSubjects.map(subject => {
-            const isSelected = selectedSubjects.some(s => s.name === subject.name)
+          {filteredSubjects.length === 0 ? (
+            <div className="text-center p-6 text-white/70">
+              <BookOpen className="w-12 h-12 mx-auto mb-2 text-accent/50" />
+              <p className="text-lg font-medium">No subjects found</p>
+              <p className="text-sm">Try a different search term</p>
+            </div>
+          ) : (
+            filteredSubjects.map(subject => {
+            const isSelected = selectedSubjects.some(s => s.name === subject.name);
+            
+            // Generate abbreviation for highlighting if matching
+            // Ignore words like "and" when creating the abbreviation
+            const words = subject.name.split(' ');
+            const abbreviation = words
+              .filter(word => word.length > 0 && word.toLowerCase() !== 'and')
+              .map(word => word[0])
+              .join('');
+            
+            // Check if search matches abbreviation to show it
+            const showAbbreviation = searchQuery && 
+              abbreviation.toLowerCase().includes(searchQuery.toLowerCase()) &&
+              !subject.name.toLowerCase().startsWith(searchQuery.toLowerCase());
+              
             return (
               <button
                 key={subject.name}
@@ -127,6 +202,11 @@ export default function Resolve() {
                   <div className="flex-1">
                     <div className="font-bold mb-2 flex items-center gap-2">
                       {subject.name}
+                      {showAbbreviation && (
+                        <span className="text-xs px-2 py-0.5 bg-white/20 rounded text-white/90">
+                          {abbreviation}
+                        </span>
+                      )}
                       {isSelected && (
                         <svg
                           className="w-4 h-4 text-white"
@@ -164,7 +244,8 @@ export default function Resolve() {
                 </div>
               </button>
             )
-          })}
+          })
+          )}
         </div>
       </div>
 

@@ -359,17 +359,11 @@ export default function Home() {
           currentClass={actualCurrentClass}
           sortedTodayClasses={sortedActualTodayClasses}
           calculateTimeUntilStart={calculateTimeUntilStart}
+          calculateRemainingTime={calculateRemainingTime}
         />
 
-        {/* Current Class in Header */}
+        {/* Status Card in Header */}
         <div className="flex-shrink-0 max-w-md mx-auto w-full px-4">
-          <CurrentClassCard
-            currentClass={actualCurrentClass}
-            sortedTodayClasses={sortedActualTodayClasses}
-            totalClasses={actualTotalClasses}
-            calculateRemainingTime={calculateRemainingTime}
-          />
-
           <StatusCard
             currentClass={actualCurrentClass}
             nextClass={actualNextClass}

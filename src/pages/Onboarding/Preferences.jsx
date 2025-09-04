@@ -78,13 +78,19 @@ export default function Preferences() {
   // Get available degrees, semesters, and sections from subjects
   const getAvailableOptions = useMemo(() => {
     const degrees = new Set()
-    const semesters = new Set()
+    const semestersByDegree = {}
     const sectionsByDegreeSem = {}
 
     subjectsForPreferences.forEach(subject => {
       subject.locations.forEach(loc => {
         degrees.add(loc.degree)
-        semesters.add(loc.semester)
+        
+        // Group semesters by degree
+        if (!semestersByDegree[loc.degree]) {
+          semestersByDegree[loc.degree] = new Set()
+        }
+        semestersByDegree[loc.degree].add(loc.semester)
+        
         const key = `${loc.degree}-${loc.semester}`
         if (!sectionsByDegreeSem[key]) {
           sectionsByDegreeSem[key] = new Set()
@@ -95,7 +101,12 @@ export default function Preferences() {
 
     return {
       degrees: Array.from(degrees).sort(),
-      semesters: Array.from(semesters).sort(),
+      semestersByDegree: Object.fromEntries(
+        Object.entries(semestersByDegree).map(([degree, semesters]) => [
+          degree,
+          Array.from(semesters).sort(),
+        ])
+      ),
       sectionsByDegreeSem: Object.fromEntries(
         Object.entries(sectionsByDegreeSem).map(([key, sections]) => [
           key,
@@ -203,7 +214,7 @@ export default function Preferences() {
                   Choose Your Semester <span className="text-red-400">*</span>
                 </label>
                 <div className="grid grid-cols-4 gap-1.5">
-                  {getAvailableOptions.semesters.map(semester => (
+                  {getAvailableOptions.semestersByDegree[userPreferences.parentSection.degree]?.map(semester => (
                     <button
                       key={semester}
                       onClick={() =>
@@ -225,6 +236,12 @@ export default function Preferences() {
                       Sem {semester}
                     </button>
                   ))}
+                  {(!getAvailableOptions.semestersByDegree[userPreferences.parentSection.degree] || 
+                    getAvailableOptions.semestersByDegree[userPreferences.parentSection.degree].length === 0) && (
+                    <div className="col-span-4 text-white/50 text-sm text-center py-4">
+                      No semesters available for this degree
+                    </div>
+                  )}
                 </div>
               </div>
             )}

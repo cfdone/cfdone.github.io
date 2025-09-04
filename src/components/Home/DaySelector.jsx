@@ -40,8 +40,8 @@ export default function DaySelector({ onDaySelect, currentDay }) {
   }
 
   return (
-    <div className="flex justify-between overflow-x-auto no-scrollbar w-full mb-3">
-      <div className="flex w-full justify-between space-x-2">
+    <div className="flex overflow-x-auto no-scrollbar w-full mb-2">
+      <div className="flex w-full justify-between space-x-1">
         {weekDays.map((day, index) => {
           const dayClasses = selectedDay === day.fullName 
             ? 'bg-accent/20 border-accent/30 text-white'
@@ -53,11 +53,11 @@ export default function DaySelector({ onDaySelect, currentDay }) {
             <button
               key={index}
               onClick={() => handleDayClick(day.fullName)}
-              className={`flex-shrink-0 flex flex-col items-center p-2 rounded-xl border min-w-[70px] transition-all ${dayClasses}`}
+              className={`flex-shrink-0 flex flex-col items-center p-1.5 rounded-lg border min-w-[60px] transition-all ${dayClasses}`}
             >
               <span className="text-xs font-medium">{day.shortName}</span>
-              <span className={`text-lg font-bold mt-1 ${day.isToday ? 'text-accent' : ''}`}>{day.date}</span>
-              <span className="text-[10px] text-accent/80 mt-1">{day.isToday ? 'Today' : day.month}</span>
+              <span className={`text-base font-bold ${day.isToday ? 'text-accent' : ''}`}>{day.date}</span>
+              <span className="text-[10px] text-accent/80">{day.isToday ? 'Today' : day.month}</span>
             </button>
           );
         })}

@@ -1,5 +1,6 @@
 import logo from '../../assets/logo.svg'
 import NextClassCard from './NextClassCard'
+import CurrentClassCard from './CurrentClassCard'
 import { useState } from 'react'
 
 export default function Header({
@@ -13,8 +14,9 @@ export default function Header({
   currentClass,
   sortedTodayClasses,
   calculateTimeUntilStart,
+  calculateRemainingTime,
 }) {
-  const [showCards, setShowCards] = useState(true)
+  const [showCards, setShowCards] = useState(false)
 
   const toggleCards = () => {
     setShowCards(!showCards)
@@ -83,7 +85,16 @@ export default function Header({
             </div>
           </div>
 
- {/* NextClassCard moved to Header */}
+ {/* CurrentClassCard and NextClassCard */}
+          {currentClass && (
+            <CurrentClassCard
+              currentClass={currentClass}
+              sortedTodayClasses={sortedTodayClasses}
+              totalClasses={totalClasses}
+              calculateRemainingTime={calculateRemainingTime}
+            />
+          )}
+          
           <NextClassCard
             nextClass={nextClass}
             currentClass={currentClass}
