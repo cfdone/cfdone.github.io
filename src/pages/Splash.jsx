@@ -36,9 +36,9 @@ export default function Splash() {
       <div className="h-screen bg-black  flex flex-col justify-between items-center px-4 pt-safe-offset-8 pb-safe">
         <div className=" flex flex-col items-center gap-6 px-4 py-6 w-full max-w-md mx-auto">
           <h1 className=" font-product-sans text-accent font-black text-2xl mb-2 text-center">
-            FAST Timetable <span className="text-accent">Sucks?</span>
+            Fast Timetable <span className="text-accent">Sucks?</span>
             <br />
-            <span className="text-sm font-light font-product-sans">Yeah, we feel your pain!</span>
+            <span className="text-sm font-light font-product-sans text-neutral-200">Yeah, we feel your pain!</span>
           </h1>
         </div>
         <img src={logo} alt="Logo" className="w-54 h-54 user-select-none mb-2" />

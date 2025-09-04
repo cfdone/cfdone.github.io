@@ -28,8 +28,12 @@ export default function Header({
           <div className="flex justify-between items-center">
             <div>
               <h1 className="font-product-sans text-white text-2xl font-bold mb-1">{greeting}</h1>
+              <div className='flex gap-2  items-center'> 
+              <p className="text-white/90 text-lg font-product-sans font-black">{formattedTime}</p>
+              <span className='h-1 w-1 bg-white rounded-full'></span>
               <p className="text-accent font-product-sans text-base">{currentDay}</p>
-              <p className="text-white/90 text-lg font-product-sans font-medium">{formattedTime}</p>
+              </div>
+             
               {/* Show degree/section info only for regular students */}
               {selection && selection.studentType === 'regular' && selection.degree && (
                 <p className="text-white/60 text-sm font-product-sans mt-1">
