@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo, useCallback, useRef } from 'react'
+import { useState, useEffect, useMemo, useCallback } from 'react'
 import { useLocation } from 'react-router-dom'
 import Navbar from '../components/Navbar'
 import {
@@ -11,7 +11,6 @@ import {
   ViewToggle,
   DaySelector,
 } from '../components/Home'
-import { sendNotification } from '../utils/notifications'
 
 export default function Home() {
   const location = useLocation()
@@ -19,9 +18,6 @@ export default function Home() {
   const [currentTime, setCurrentTime] = useState(new Date())
   const [viewWeekly, setViewWeekly] = useState(false)
   const [selectedDay, setSelectedDay] = useState('')
-  const [notificationEnabled, setNotificationEnabled] = useState(false)
-  const [notificationMinutes, setNotificationMinutes] = useState(5)
-  const notifiedClassesRef = useRef(new Set())
 
   // Load data from localStorage if not provided via location state
   useEffect(() => {
@@ -36,22 +32,6 @@ export default function Home() {
         console.error('Error loading timetable data from localStorage:', error)
       }
     }
-    
-    // Load notification settings
-    try {
-      const storedNotificationEnabled = localStorage.getItem('notificationEnabled')
-      const storedNotificationMinutes = localStorage.getItem('notificationMinutes')
-      
-      if (storedNotificationEnabled !== null) {
-        setNotificationEnabled(storedNotificationEnabled === 'true')
-      }
-      
-      if (storedNotificationMinutes !== null) {
-        setNotificationMinutes(parseInt(storedNotificationMinutes, 10))
-      }
-    } catch (error) {
-      console.error('Error loading notification settings:', error)
-    }
   }, [selection])
 
   // Update time every minute
@@ -61,82 +41,6 @@ export default function Home() {
     }, 60000)
     return () => clearInterval(timer)
   }, [])
-  
-  // Notification check effect
-  useEffect(() => {
-    if (!notificationEnabled || !selection) return;
-    
-    // Only check for the actual current day's classes
-    const checkNotifications = () => {
-      // Get current day (1-7, where 1 is Monday, 7 is Sunday)
-      const dayIndex = new Date().getDay();
-      
-      // Only check weekdays (Monday through Friday) - indexes 1-5
-      if (dayIndex === 0 || dayIndex === 6) return; 
-      
-      // Convert to our day format
-      const days = ['', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', ''];
-      const currentDay = days[dayIndex];
-      
-      // Get current time in minutes
-      const now = new Date();
-      const currentMinutes = now.getHours() * 60 + now.getMinutes();
-      
-      // Get timetable data
-      let data = {};
-      if (selection.timetable) {
-        data = selection.timetable;
-      } else if (selection.passtimetable) {
-        data = selection.passtimetable;
-      }
-      
-      // Get today's classes
-      const todayClasses = data[currentDay] || [];
-      
-      // Check each class
-      todayClasses.forEach(classItem => {
-        // Skip if we've already notified for this class
-        const classId = `${currentDay}-${classItem.course}-${classItem.start}`;
-        if (notifiedClassesRef.current.has(classId)) return;
-        
-        // Parse start time
-        const timeMatch = classItem.start.match(/(\d{1,2}):(\d{2})/);
-        if (!timeMatch) return;
-        
-        let hours = parseInt(timeMatch[1], 10);
-        const minutes = parseInt(timeMatch[2], 10);
-        
-        if (hours >= 1 && hours < 8 && hours !== 12) {
-          // This is likely a PM time (1:00-7:59 PM)
-          hours += 12;
-        }
-        
-        const startMinutes = hours * 60 + minutes;
-        
-        // Check if class starts in exactly notificationMinutes minutes
-        const minutesUntilStart = startMinutes - currentMinutes;
-        
-        if (minutesUntilStart === notificationMinutes) {
-          // Send notification
-          sendNotification(`Class starting in ${notificationMinutes} minutes`, {
-            body: `${classItem.course} at ${classItem.start} in ${classItem.room}`,
-            icon: '/favicon.svg'
-          });
-          
-          // Mark as notified
-          notifiedClassesRef.current.add(classId);
-        }
-      });
-    };
-    
-    // Initial check when component mounts
-    checkNotifications();
-    
-    // Set interval to check every minute
-    const notificationTimer = setInterval(checkNotifications, 60000);
-    
-    return () => clearInterval(notificationTimer);
-  }, [notificationEnabled, selection, notificationMinutes]);
 
   // Get actual current day (for Header)
   const getActualCurrentDay = useCallback(() => {
