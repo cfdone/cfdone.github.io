@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Book, Zap } from 'lucide-react'
+import { Book, Zap, Settings } from 'lucide-react'
 import logo from '../../assets/logo.svg'
 import StepTrack from '../../components/Onboarding/StepTrack'
 import { useNavigate } from 'react-router-dom'
@@ -45,7 +45,7 @@ export default function StepOne() {
                     <div>
                       <div className="font-bold mb-2">Regular Student</div>
                       <div className="text-sm opacity-80">
-                        I want to view the complete timetable for my degree, semester, and section
+                        I Want To View The Complete Timetable For My Section
                       </div>
                     </div>
                     <div >
@@ -65,18 +65,45 @@ export default function StepOne() {
                                 `}
                   onClick={() => {
                     setStudentType('lagger')
-                    setSteps(5)
+                    setSteps(4)
                   }}
                 >
                   <div className="flex items-center justify-between">
                     <div>
                       <div className="font-bold mb-2">Lagger Student</div>
                       <div className="text-sm opacity-80">
-                        I need to resolve schedule conflicts and create a custom timetable
+                        I need to resolve schedule conflicts
                       </div>
                     </div>
                     <div className="text-2xl">
                       <Zap className={`${studentType === 'lagger' ? 'text-white' : 'text-accent'} w-8 h-8`} />
+                    </div>
+                  </div>
+                </button>
+
+                <button
+                  type="button"
+                  className={`p-4 rounded-xl font-product-sans text-lg border transition-all duration-200 text-left
+                                    ${
+                                      studentType === 'custom'
+                                        ? 'bg-accent text-white border-accent shadow-lg'
+                                        : 'bg-white/10 text-accent border-accent/10 hover:bg-accent/10 '
+                                    }
+                                `}
+                  onClick={() => {
+                    setStudentType('custom')
+                    setSteps(2)
+                  }}
+                >
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <div className="font-bold mb-2">Custom</div>
+                      <div className="text-sm opacity-80">
+                        I Want To Build My Own Custom Timetable
+                      </div>
+                    </div>
+                    <div className="text-2xl">
+                      <Settings className={`${studentType === 'custom' ? 'text-white' : 'text-accent'} w-8 h-8`} />
                     </div>
                   </div>
                 </button>
@@ -90,9 +117,22 @@ export default function StepOne() {
                             ${studentType ? 'bg-accent text-white' : 'bg-accent/40 text-white/60'}
                         `}
               disabled={!studentType}
-              onClick={
-                studentType === 'regular' ? () => navigate('/regular') : () => navigate('/lagger')
-              }
+              onClick={() => {
+                if (studentType === 'regular') {
+                  navigate('/regular');
+                } else if (studentType === 'lagger') {
+                  // Navigate to resolve with step='subject-selection' to start with subject selection UI
+                  navigate('/resolve', {
+                  state: {
+                    step: 'subject-selection',
+                    selectedSubjects: [],
+                    userPreferences: null,
+                  },
+                });
+                } else if (studentType === 'custom') {
+                  navigate('/resolved');
+                }
+              }}
             >
               Continue
             </button>

@@ -264,7 +264,7 @@ export default function Resolved() {
             <div className="flex flex-row gap-3 items-stretch justify-center w-full h-12">
               <button
                 className="font-product-sans px-4 rounded-xl h-full w-full text-[15px] transition shadow-md bg-white/10 border text-white border-accent/10 hover:bg-accent/10 flex items-center justify-center"
-                onClick={() => navigate('/lagger')}
+                onClick={() => navigate('/stepone')}
               >
                 Back
               </button>

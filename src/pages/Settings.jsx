@@ -14,6 +14,7 @@ import {
   ChevronRight,
   Clock,
   Bell,
+  Trash2,
 } from 'lucide-react'
 import Navbar from '../components/Navbar'
 import logo from '../assets/logo.svg'
@@ -22,6 +23,7 @@ import { requestNotificationPermission } from '../utils/notifications'
 export default function Settings() {
   const navigate = useNavigate()
   const [showResetConfirm, setShowResetConfirm] = useState(false)
+  const [showClearCacheConfirm, setShowClearCacheConfirm] = useState(false)
   const [showAboutModal, setShowAboutModal] = useState(false)
   const [showTermsModal, setShowTermsModal] = useState(false)
   const [showPrivacyModal, setShowPrivacyModal] = useState(false)
@@ -65,6 +67,27 @@ export default function Settings() {
       console.error('Error resetting onboarding:', error)
     }
   }, [navigate])
+  
+  const handleClearCache = useCallback(() => {
+    try {
+      // Clear application cache
+      if ('caches' in window) {
+        caches.keys().then(cacheNames => {
+          cacheNames.forEach(cacheName => {
+            caches.delete(cacheName);
+          });
+        });
+      }
+      
+      // Refresh the application
+      setTimeout(() => {
+        window.location.reload(true); // Force refresh from server, not from cache
+      }, 300);
+    } catch (error) {
+      console.error('Error clearing cache:', error);
+    }
+    setShowClearCacheConfirm(false);
+  }, [])
   
   const toggleNotifications = useCallback(async () => {
     try {
@@ -182,23 +205,43 @@ export default function Settings() {
                 <h2 className="text-white/50 text-xs font-product-sans uppercase tracking-wider mb-3 px-2">
                   Timetable
                 </h2>
-                <button
-                  onClick={() => setShowResetConfirm(true)}
-                  className="w-full bg-white/5 p-4 rounded-xl border border-accent/10 hover:bg-white/10 transition-colors text-left"
-                >
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center">
-                      <RefreshCw className="w-5 h-5 text-accent mr-3" />
-                      <div>
-                        <h4 className="text-white font-medium text-base mb-1">Reset Timetable</h4>
-                        <p className="text-white/70 text-sm font-product-sans">
-                          Clear current setup and start onboarding again
-                        </p>
+                <div className="space-y-2">
+                  <button
+                    onClick={() => setShowResetConfirm(true)}
+                    className="w-full bg-white/5 p-4 rounded-xl border border-accent/10 hover:bg-white/10 transition-colors text-left"
+                  >
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center">
+                        <RefreshCw className="w-5 h-5 text-accent mr-3" />
+                        <div>
+                          <h4 className="text-white font-medium text-base mb-1">Reset Timetable</h4>
+                          <p className="text-white/70 text-sm font-product-sans">
+                            Clear current setup and start onboarding again
+                          </p>
+                        </div>
                       </div>
+                      <ChevronRight className="w-5 h-5 text-white/30" />
                     </div>
-                    <ChevronRight className="w-5 h-5 text-white/30" />
-                  </div>
-                </button>
+                  </button>
+                  
+                  <button
+                    onClick={() => setShowClearCacheConfirm(true)}
+                    className="w-full bg-white/5 p-4 rounded-xl border border-accent/10 hover:bg-white/10 transition-colors text-left"
+                  >
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center">
+                        <Trash2 className="w-5 h-5 text-accent mr-3" />
+                        <div>
+                          <h4 className="text-white font-medium text-base mb-1">Clear Cache & Refresh</h4>
+                          <p className="text-white/70 text-sm font-product-sans">
+                            Delete cached data and refresh the application
+                          </p>
+                        </div>
+                      </div>
+                      <ChevronRight className="w-5 h-5 text-white/30" />
+                    </div>
+                  </button>
+                </div>
               </div>
               
               {/* Notifications Section */}
@@ -437,6 +480,37 @@ export default function Settings() {
                 className="flex-1 bg-red-500 text-white px-4 py-3 rounded-xl font-product-sans hover:bg-red-600 transition-colors"
               >
                 Reset
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+      
+      {/* Clear Cache Confirmation Modal */}
+      {showClearCacheConfirm && (
+        <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 px-4">
+          <div className="bg-black border border-accent/20 rounded-xl p-6 w-full max-w-sm">
+            <div className="text-center mb-4">
+              <h3 className="font-product-sans text-accent font-medium text-xl mb-2">
+                Clear Cache & Refresh?
+              </h3>
+              <p className="text-white/70 text-sm font-product-sans">
+                This will delete all cached data and refresh the application. This can help if you're experiencing display issues or outdated content.
+              </p>
+            </div>
+
+            <div className="flex gap-3">
+              <button
+                onClick={() => setShowClearCacheConfirm(false)}
+                className="flex-1 bg-white/10 text-white px-4 py-3 rounded-xl font-product-sans hover:bg-white/20 transition-colors"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleClearCache}
+                className="flex-1 bg-red-500 text-white px-4 py-3 rounded-xl font-product-sans hover:bg-red-600 transition-colors"
+              >
+                Clear & Refresh
               </button>
             </div>
           </div>

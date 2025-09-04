@@ -116,12 +116,11 @@ export default function Preferences() {
   }
 
   const handleContinue = () => {
-    // Go to resolution step with selected subjects and preferences
-    navigate('/resolve', {
+    // Go to preview step with selected subjects and preferences
+    navigate('/preview', {
       state: {
         selectedSubjects: selectedSubjects,
         userPreferences,
-        step: 'resolution',
       },
     })
   }
@@ -136,7 +135,7 @@ export default function Preferences() {
       {/* Fixed Header */}
       <div className="w-full justify-center flex flex-col gap-6 items-center flex-shrink-0">
         <img src={logo} alt="Logo" className="w-15 h-15 user-select-none mb-2" />
-        <StepTrack currentStep={4} totalSteps={5} />
+        <StepTrack currentStep={3} totalSteps={4} />
         <div className="text-center mb-6">
           <h3 className="font-product-sans text-accent font-black text-xl mb-2">
             Set Your Preferences

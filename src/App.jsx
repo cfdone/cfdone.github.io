@@ -2,10 +2,10 @@ import { Routes, Route } from 'react-router-dom'
 import Splash from './pages/Splash'
 import StepOne from './pages/Onboarding/StepOne'
 import Regular from './pages/Onboarding/Regular'
-import Lagger from './pages/Onboarding/Lagger'
 import Preferences from './pages/Onboarding/Preferences'
 import Resolved from './pages/Onboarding/Resolved'
 import Resolve from './pages/Onboarding/Resolve'
+import Preview from './pages/Onboarding/Preview'
 import Home from './pages/Home'
 import Settings from './pages/Settings'
 import UniHub from './pages/UniHub'
@@ -51,14 +51,7 @@ function App() {
           </OnboardingGuard>
         }
       />
-      <Route
-        path="/lagger"
-        element={
-          <OnboardingGuard>
-            <Lagger />
-          </OnboardingGuard>
-        }
-      />
+    
       <Route
         path="/preferences"
         element={
@@ -80,6 +73,14 @@ function App() {
         element={
           <OnboardingGuard>
             <Resolve />
+          </OnboardingGuard>
+        }
+      />
+      <Route
+        path="/preview"
+        element={
+          <OnboardingGuard>
+            <Preview />
           </OnboardingGuard>
         }
       />
