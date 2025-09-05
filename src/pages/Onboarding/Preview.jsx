@@ -3,6 +3,8 @@ import { useNavigate, useLocation } from 'react-router-dom'
 import { CheckCircle, AlertTriangle, Target, Book, MapPin } from 'lucide-react'
 import logo from '../../assets/logo.svg'
 import StepTrack from '../../components/Onboarding/StepTrack'
+import { timeToMinutes, timeRangesOverlap } from '../../utils/timeUtils'
+import TimeTable from '../../assets/timetable.json'
 
 export default function Preview() {
   const navigate = useNavigate()
@@ -34,24 +36,6 @@ export default function Preview() {
   const [isResolving] = useState(false)
   const [resolutionProgress] = useState(0)
 
-  // Helper function to convert time string to minutes (consistent with Home.jsx)
-  const timeToMinutes = useCallback((timeStr) => {
-    if (!timeStr || typeof timeStr !== 'string') return 0;
-    const timeMatch = timeStr.match(/(\d{1,2}):(\d{2})/);
-    if (!timeMatch) return 0;
-    
-    let hours = parseInt(timeMatch[1], 10);
-    const minutes = parseInt(timeMatch[2], 10);
-    
-    // Proper AM/PM handling - assume 1:00-7:59 are PM (add 12 hours)
-    // but 12:00-12:59 are already correct as noon
-    if (hours >= 1 && hours < 8 && hours !== 12) {
-      hours += 12;
-    }
-    
-    return hours * 60 + minutes;
-  }, []);
-  
   // Function to check for time conflicts in the timetable
   const detectTimeConflicts = useCallback((timetable) => {
     const conflicts = [];
@@ -65,28 +49,29 @@ export default function Preview() {
         timeToMinutes(a.start) - timeToMinutes(b.start)
       );
       
-      // Check for overlaps
+      // Check for overlaps using the new overlap detection
       for (let i = 0; i < sortedClasses.length - 1; i++) {
         const current = sortedClasses[i];
         const next = sortedClasses[i + 1];
         
-        const currentEndTime = timeToMinutes(current.end);
-        const nextStartTime = timeToMinutes(next.start);
-        
-        // If current class ends after next class starts, we have a conflict
-        if (currentEndTime > nextStartTime) {
-          if (!conflicts.includes(current.subject)) {
-            conflicts.push(current.subject);
+        // Use the improved overlap detection
+        if (timeRangesOverlap(current.start, current.end, next.start, next.end)) {
+          // Add both subjects to conflicts if they're not already there
+          const currentSubject = current.subject || current.course;
+          const nextSubject = next.subject || next.course;
+          
+          if (currentSubject && !conflicts.includes(currentSubject)) {
+            conflicts.push(currentSubject);
           }
-          if (!conflicts.includes(next.subject)) {
-            conflicts.push(next.subject);
+          if (nextSubject && !conflicts.includes(nextSubject)) {
+            conflicts.push(nextSubject);
           }
         }
       }
     });
     
     return conflicts;
-  }, [timeToMinutes]);
+  }, []);
 
   // Effect to get the resolved timetable from location state or generate it
   useEffect(() => {
@@ -115,7 +100,7 @@ export default function Preview() {
     }
   }, [location.state, selectedSubjects, userPreferences, detectTimeConflicts])
   
-  // Helper function to generate a mock timetable for preview
+  // Helper function to generate a realistic timetable for preview using actual timetable data
   const generateMockTimetable = (subjects, preferences) => {
     const timetable = {}
     const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
@@ -123,8 +108,8 @@ export default function Preview() {
       timetable[day] = []
     })
     
-    // For each subject, add it to the timetable on different days
-    subjects.forEach((subject, index) => {
+    // For each subject, find its actual schedule in the timetable data
+    subjects.forEach((subject) => {
       const preferredLocation = subject.locations.find(loc => 
         loc.degree === preferences.parentSection.degree &&
         loc.semester === preferences.parentSection.semester &&
@@ -132,29 +117,41 @@ export default function Preview() {
       ) || subject.locations[0]
       
       if (preferredLocation) {
-        // Add to timetable based on index (spread across days)
-        const day = days[index % days.length]
-        let startHour = 8 + Math.floor(index / days.length) * 2
+        // Get the actual timetable data for this degree/semester/section
+        const sectionData = TimeTable[preferredLocation.degree]?.[preferredLocation.semester]?.[preferredLocation.section];
         
-        // Format hours correctly for display (special handling for 12-hour format)
-        let startDisplay = `${startHour}:00`;
-        let endDisplay;
-        
-        // Handle end time calculation properly
-        let endHour = startHour + 1;
-        endDisplay = `${endHour}:30`;
-        
-        timetable[day].push({
-          subject: subject.name,
-          start: startDisplay,
-          end: endDisplay,
-          course: subject.name,
-          teacher: preferredLocation.teacher || 'TBD',
-          room: preferredLocation.room || 'TBD',
-          degree: preferredLocation.degree,
-          semester: preferredLocation.semester,
-          section: preferredLocation.section
-        })
+        if (sectionData) {
+          // Find the actual schedule for this subject
+          Object.entries(sectionData).forEach(([day, slots]) => {
+            slots.forEach(slot => {
+              if (slot.course === subject.name) {
+                timetable[day].push({
+                  ...slot,
+                  subject: subject.name,
+                  degree: preferredLocation.degree,
+                  semester: preferredLocation.semester,
+                  section: preferredLocation.section
+                });
+              }
+            });
+          });
+        } else {
+          // Fallback: if no actual data found, create a placeholder with realistic time
+          console.warn(`No timetable data found for ${preferredLocation.degree} S${preferredLocation.semester}-${preferredLocation.section}`);
+          
+          // Add a placeholder entry to Monday with a generic time
+          timetable['Monday'].push({
+            subject: subject.name,
+            start: "8:45",
+            end: "10:10", 
+            course: subject.name,
+            teacher: preferredLocation.teacher || 'TBD',
+            room: preferredLocation.room || 'TBD',
+            degree: preferredLocation.degree,
+            semester: preferredLocation.semester,
+            section: preferredLocation.section
+          });
+        }
       }
     })
     

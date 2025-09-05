@@ -36,15 +36,12 @@ export default function Settings() {
     }
   }, [navigate])
   
-  const handleClearCache = useCallback(() => {
+  const handleClearCache = useCallback(async () => {
     try {
       // Clear application cache
       if ('caches' in window) {
-        caches.keys().then(cacheNames => {
-          cacheNames.forEach(cacheName => {
-            caches.delete(cacheName);
-          });
-        });
+        const cacheNames = await caches.keys();
+        await Promise.all(cacheNames.map(cacheName => caches.delete(cacheName)));
       }
       
       // Refresh the application

@@ -11,6 +11,7 @@ import {
   ViewToggle,
   DaySelector,
 } from '../components/Home'
+import { timeToMinutes } from '../utils/timeUtils'
 
 export default function Home() {
   const location = useLocation()
@@ -92,21 +93,8 @@ export default function Home() {
     })
   }, [currentTime])
 
-  // Parse time string to minutes (handles both AM/PM and 24-hour format)
-  const timeToMinutes = useCallback(timeStr => {
-    if (!timeStr || typeof timeStr !== 'string') return 0
-    const timeMatch = timeStr.match(/(\d{1,2}):(\d{2})/)
-    if (!timeMatch) return 0
-    let hours = parseInt(timeMatch[1], 10)
-    const minutes = parseInt(timeMatch[2], 10)
-
-    if (hours >= 1 && hours < 8 && hours !== 12) {
-      // This is likely a PM time (1:00-7:59 PM)
-      hours += 12
-    }
-
-    return hours * 60 + minutes
-  }, [])
+  // Parse time string to minutes (using consistent utility)
+  // Note: timeToMinutes is imported from utils
 
   // Get current time in minutes
   const getCurrentMinutes = useCallback(() => {
@@ -130,7 +118,7 @@ export default function Home() {
       }
       return `${minutes}m remaining`
     },
-    [timeToMinutes, getCurrentMinutes]
+    [getCurrentMinutes]
   )
 
   // Calculate time until start
@@ -150,7 +138,7 @@ export default function Home() {
       }
       return `Starts in ${minutes}m`
     },
-    [timeToMinutes, getCurrentMinutes]
+    [getCurrentMinutes]
   )
 
   // Get timetable data
@@ -187,7 +175,7 @@ export default function Home() {
       ...classItem,
       day: getCurrentDay()
     })).sort((a, b) => timeToMinutes(a.start) - timeToMinutes(b.start))
-  }, [todayClasses, timeToMinutes, getCurrentDay])
+  }, [todayClasses, getCurrentDay])
 
   // Get actual today's classes for progress tracking and today's cards
   const actualTodayClasses = useMemo(() => {
@@ -201,7 +189,7 @@ export default function Home() {
       ...classItem,
       day: getActualCurrentDay()
     })).sort((a, b) => timeToMinutes(a.start) - timeToMinutes(b.start))
-  }, [actualTodayClasses, getActualCurrentDay, timeToMinutes])
+  }, [actualTodayClasses, getActualCurrentDay])
   
   // Calculate actual today's progress for header and get today's current/next classes
   const { actualTotalClasses, actualDoneClasses, actualCurrentClass, actualNextClass } = useMemo(() => {
@@ -234,7 +222,7 @@ export default function Home() {
       actualCurrentClass: current,
       actualNextClass: next
     };
-  }, [actualTodayClasses, getCurrentMinutes, timeToMinutes])
+  }, [actualTodayClasses, getCurrentMinutes])
 
   // We don't need to calculate this anymore since we're using actual values everywhere
 

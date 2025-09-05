@@ -10,15 +10,42 @@ export default defineConfig({
     tailwindcss(),
     VitePWA({
       registerType: 'autoUpdate',
+      workbox: {
+        globPatterns: ['**/*.{js,css,html,ico,png,svg,json}'],
+        runtimeCaching: [
+          {
+            urlPattern: /\.(?:png|jpg|jpeg|svg|gif|webp)$/,
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'images-cache',
+              expiration: {
+                maxEntries: 50,
+                maxAgeSeconds: 60 * 60 * 24 * 30 // 30 days
+              }
+            }
+          },
+          {
+            urlPattern: /\.(?:js|css)$/,
+            handler: 'StaleWhileRevalidate',
+            options: {
+              cacheName: 'static-resources',
+            }
+          }
+        ],
+        cleanupOutdatedCaches: true,
+        skipWaiting: true,
+        clientsClaim: true
+      },
       includeAssets: [
         '/favicon.ico',
         '/apple-touch-icon.png',
         '/android-chrome-192x192.png',
-        '/android-chrome-512x512.png',
+        '/android-chrome-512x512.png'
       ],
       manifest: {
         name: 'CFD ONE',
         short_name: 'CFD ONE',
+        description: 'A modern timetable app for FAST University students',
         start_url: '/cfdone/',
         scope: '/cfdone/',
         display: 'standalone',

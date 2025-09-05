@@ -4,6 +4,7 @@ import { BookOpen, GraduationCap, Calendar, Tag } from 'lucide-react'
 import TimeTable from '../../assets/timetable.json'
 import logo from '../../assets/logo.svg'
 import StepTrack from '../../components/Onboarding/StepTrack'
+import { timeToMinutes } from '../../utils/timeUtils'
 export default function Resolved() {
   const navigate = useNavigate()
   // Degree/Semester/Section/Subject selection logic (from DegreeSectionSelector & SubjectSelector)
@@ -106,15 +107,6 @@ export default function Resolved() {
     })
     Object.keys(timetable).forEach(day => {
       if (timetable[day].length > 1) {
-        const timeToMinutes = timeStr => {
-          if (!timeStr || typeof timeStr !== 'string') return 0
-          const timeMatch = timeStr.match(/(\d{1,2}):(\d{2})/)
-          if (!timeMatch) return 0
-          const hours = parseInt(timeMatch[1], 10)
-          const minutes = parseInt(timeMatch[2], 10)
-          if (hours < 0 || hours > 23 || minutes < 0 || minutes > 59) return 0
-          return hours * 60 + minutes
-        }
         timetable[day].sort((a, b) => {
           const timeA = timeToMinutes(a.start)
           const timeB = timeToMinutes(b.start)
