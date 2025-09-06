@@ -10,19 +10,13 @@ export default function Login() {
   const [isSigningIn, setIsSigningIn] = useState(false)
   const [error, setError] = useState(null)
 
-  // Redirect to onboarding if authenticated and no timetable data
+  // Simple redirect - let RouteGuards handle the complex logic
   useEffect(() => {
+    console.log('Login useEffect:', { loading, user: !!user })
     if (!loading && user) {
-      const isOnboardingComplete = localStorage.getItem('onboardingComplete')
-      const savedTimetableData = localStorage.getItem('timetableData')
-      
-      if (isOnboardingComplete === 'true' && savedTimetableData) {
-        // User has completed onboarding, go to home
-        navigate('/home', { replace: true })
-      } else {
-        // User is authenticated but hasn't completed onboarding, go to stepone
-        navigate('/stepone', { replace: true })
-      }
+      // Just redirect to home - ProtectedRoute will handle the rest
+      console.log('Login - User authenticated, redirecting to /home')
+      navigate('/home', { replace: true })
     }
   }, [user, loading, navigate])
 

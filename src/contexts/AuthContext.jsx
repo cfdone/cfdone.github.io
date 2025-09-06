@@ -6,6 +6,13 @@ export default function AuthProvider({ children }) {
   const [user, setUser] = useState(null)
   const [loading, setLoading] = useState(true)
 
+  // Clear local storage on logout
+  const clearLocalData = () => {
+    localStorage.removeItem('timetableData')
+    localStorage.removeItem('onboardingMode')
+    localStorage.removeItem('syncStatus')
+  }
+
   useEffect(() => {
     // Get initial session
     const getSession = async () => {
@@ -24,6 +31,12 @@ export default function AuthProvider({ children }) {
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       async (event, session) => {
         console.log('Auth state changed:', event, session)
+        
+        if (event === 'SIGNED_OUT') {
+          // Clear local storage when user signs out
+          clearLocalData()
+        }
+        
         setUser(session?.user || null)
         setLoading(false)
       }
@@ -43,6 +56,9 @@ export default function AuthProvider({ children }) {
   }
 
   const signOut = async () => {
+    // Clear local storage before signing out
+    clearLocalData()
+    
     const { error } = await supabase.auth.signOut()
     if (error) {
       console.error('Error signing out:', error)

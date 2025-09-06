@@ -1,10 +1,14 @@
 import { Clock, MapPin } from 'lucide-react'
+import TimetableSyncStatus from '../TimetableSyncStatus'
 
 export default function CurrentClassCard({
   currentClass,
   sortedTodayClasses,
   totalClasses,
   calculateRemainingTime,
+  syncStatus,
+  isOnline,
+  onRetrySync,
 }) {
   if (!currentClass) return null
 
@@ -16,6 +20,12 @@ export default function CurrentClassCard({
           ● LIVE NOW
         </span>
         <div className="flex-1"></div>
+        <TimetableSyncStatus 
+          syncStatus={syncStatus} 
+          isOnline={isOnline} 
+          onRetry={onRetrySync}
+          compact={true}
+        />
         <div className="text-red-400/80 font-product-sans text-xs">
           Class {sortedTodayClasses.findIndex(c => c === currentClass) + 1} of {totalClasses}
         </div>

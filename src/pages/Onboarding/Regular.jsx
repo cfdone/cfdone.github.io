@@ -4,9 +4,11 @@ import { Tag, GraduationCap, Calendar } from 'lucide-react'
 import TimeTable from '../../assets/timetable.json'
 import logo from '../../assets/logo.svg'
 import StepTrack from '../../components/Onboarding/StepTrack'
+import useTimetableSync from '../../hooks/useTimetableSync'
 
 export default function Regular() {
   const navigate = useNavigate()
+  const { saveTimetable } = useTimetableSync()
   const [selectedDegree, setSelectedDegree] = useState('')
   const [selectedSemester, setSelectedSemester] = useState('')
   const [selectedSection, setSelectedSection] = useState('')
@@ -53,22 +55,24 @@ export default function Regular() {
       }
 
       try {
-        // Save to localStorage
+        // Save using the sync hook
+        await saveTimetable(timetableData, 'regular')
+        
+        // Legacy localStorage for compatibility
         localStorage.setItem('onboardingComplete', 'true')
-        localStorage.setItem('timetableData', JSON.stringify(timetableData))
+        
+        navigate('/home', {
+          state: timetableData,
+        })
       } catch (error) {
-        console.error('Error saving to localStorage:', error)
+        console.error('Error saving timetable:', error)
+        setIsCreating(false)
       }
-
-      navigate('/home', {
-        state: timetableData,
-      })
     }
   }
 
   return (
-    <>
-      <div className="h-screen bg-black flex flex-col justify-between items-center px-2 pt-safe-offset-8 pb-safe">
+    <div className="h-screen bg-black flex flex-col items-center px-2 pt-safe-offset-8 pb-safe">
         <div className="w-full justify-center flex flex-col gap-6 items-center">
           <img src={logo} alt="Logo" className="w-15 h-15 user-select-none mb-2" />
           <StepTrack currentStep={2} totalSteps={2} />
@@ -218,6 +222,5 @@ export default function Regular() {
           </div>
         </div>
       </div>
-    </>
   )
 }

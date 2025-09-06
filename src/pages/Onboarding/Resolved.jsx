@@ -5,8 +5,12 @@ import TimeTable from '../../assets/timetable.json'
 import logo from '../../assets/logo.svg'
 import StepTrack from '../../components/Onboarding/StepTrack'
 import { timeToMinutes } from '../../utils/timeUtils'
+import useTimetableSync from '../../hooks/useTimetableSync'
+
 export default function Resolved() {
   const navigate = useNavigate()
+  const { saveTimetable } = useTimetableSync()
+  
   // Degree/Semester/Section/Subject selection logic (from DegreeSectionSelector & SubjectSelector)
   const [selectedSubjects, setSelectedSubjects] = useState([])
   const [currentDegree, setCurrentDegree] = useState('')
@@ -151,8 +155,7 @@ export default function Resolved() {
   }
 
   return (
-    <>
-      <div className="h-screen bg-black flex flex-col items-center px-2 pt-safe-offset-8 pb-safe">
+    <div className="h-screen bg-black flex flex-col items-center px-2 pt-safe-offset-8 pb-safe">
         {/* Fixed Header */}
         <div className="w-full justify-center flex flex-col gap-6 items-center flex-shrink-0">
           <img src={logo} alt="Logo" className="w-15 h-15 user-select-none mb-2" />
@@ -293,16 +296,19 @@ export default function Resolved() {
                     }
 
                     try {
-                      // Save to localStorage
+                      // Save using the sync hook
+                      await saveTimetable(timetableData, 'lagger')
+                      
+                      // Legacy localStorage for compatibility
                       localStorage.setItem('onboardingComplete', 'true')
-                      localStorage.setItem('timetableData', JSON.stringify(timetableData))
+                      
+                      navigate('/home', {
+                        state: timetableData,
+                      })
                     } catch (error) {
-                      console.error('Error saving to localStorage:', error)
+                      console.error('Error saving timetable:', error)
+                      setIsCreating(false)
                     }
-
-                    navigate('/home', {
-                      state: timetableData,
-                    })
                   }
                 }}
               >
@@ -533,6 +539,5 @@ export default function Resolved() {
           </div>
         )}
       </div>
-    </>
   )
 }

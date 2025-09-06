@@ -5,10 +5,12 @@ import logo from '../../assets/logo.svg'
 import StepTrack from '../../components/Onboarding/StepTrack'
 import { timeToMinutes, timeRangesOverlap } from '../../utils/timeUtils'
 import TimeTable from '../../assets/timetable.json'
+import useTimetableSync from '../../hooks/useTimetableSync'
 
 export default function Preview() {
   const navigate = useNavigate()
   const location = useLocation()
+  const { saveTimetable } = useTimetableSync()
 
   // Get selected subjects and user preferences from location state
   const selectedSubjects = useMemo(() => {
@@ -395,19 +397,23 @@ export default function Preview() {
                     hasConflicts: conflictSubjects.length > 0,
                     conflictSubjects: conflictSubjects,
                     resolutionSuggestions: resolutionSuggestions,
-                    studentType: 'lagger',
+                    studentType: 'regular',
                   }
 
                   try {
+                    // Save using the sync hook
+                    await saveTimetable(timetableData, 'regular')
+                    
+                    // Legacy localStorage for compatibility
                     localStorage.setItem('onboardingComplete', 'true')
-                    localStorage.setItem('timetableData', JSON.stringify(timetableData))
+                    
+                    navigate('/home', {
+                      state: timetableData,
+                    })
                   } catch (error) {
-                    console.error('Error saving to localStorage:', error)
+                    console.error('Error saving timetable:', error)
+                    setIsCreating(false)
                   }
-
-                  navigate('/home', {
-                    state: timetableData,
-                  })
                 }
               }}
             >

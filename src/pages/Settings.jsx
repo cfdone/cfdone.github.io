@@ -15,32 +15,48 @@ import {
 } from 'lucide-react'
 import Navbar from '../components/Navbar'
 import { useAuth } from '../hooks/useAuth'
+import useTimetableSync from '../hooks/useTimetableSync'
+import TimetableSyncStatus from '../components/TimetableSyncStatus'
+import { LoadingOverlay } from '../components/Loading'
 import logo from '../assets/logo.svg'
 
 export default function Settings() {
   const navigate = useNavigate()
   const { user, signOut } = useAuth()
+  const { 
+    syncStatus, 
+    isOnline, 
+    hasTimetable, 
+    resetTimetable, 
+    retrySyncAction,
+    loading: syncLoading 
+  } = useTimetableSync()
+  
   const [showResetConfirm, setShowResetConfirm] = useState(false)
   const [showClearCacheConfirm, setShowClearCacheConfirm] = useState(false)
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false)
   const [expandedAccordion, setExpandedAccordion] = useState(null)
+  const [isResetting, setIsResetting] = useState(false)
 
   const toggleAccordion = (accordion) => {
     setExpandedAccordion(expandedAccordion === accordion ? null : accordion)
   }
 
-  const handleResetOnboarding = useCallback(() => {
+  const handleResetOnboarding = useCallback(async () => {
+    setIsResetting(true)
     try {
-      // Clear localStorage
-      localStorage.removeItem('onboardingComplete')
-      localStorage.removeItem('timetableData')
+      // Reset using the sync hook (will clear both local and remote data)
+      await resetTimetable()
 
       // Navigate back to splash/onboarding
-      navigate('/splash', { replace: true })
+      navigate('/stepone', { replace: true })
     } catch (error) {
       console.error('Error resetting onboarding:', error)
+    } finally {
+      setIsResetting(false)
+      setShowResetConfirm(false)
     }
-  }, [navigate])
+  }, [navigate, resetTimetable, setIsResetting])
   
   const handleClearCache = useCallback(async () => {
     try {
@@ -104,7 +120,13 @@ export default function Settings() {
   }, [])
 
   return (
-    <div className="fixed inset-0 bg-black">
+    <>
+      {(syncLoading || isResetting) && (
+        <LoadingOverlay 
+          message={isResetting ? "Resetting timetable..." : "Syncing..."} 
+        />
+      )}
+      <div className="fixed inset-0 bg-black">
       {/* Simplified background decoration - same as Home.jsx */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute top-20 right-10 w-48 h-48 bg-accent/3 rounded-full blur-3xl"></div>
@@ -190,9 +212,28 @@ export default function Settings() {
                   Timetable
                 </h2>
                 <div className="space-y-2">
+                  {/* Sync Status Display */}
+                  {hasTimetable() && (
+                    <div className="w-full bg-white/5 p-4 rounded-xl border border-accent/10">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center">
+                          <div className="mr-3">
+                            <TimetableSyncStatus 
+                              syncStatus={syncStatus} 
+                              isOnline={isOnline} 
+                              onRetry={retrySyncAction}
+                              compact={false}
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                  
                   <button
                     onClick={() => setShowResetConfirm(true)}
-                    className="w-full bg-white/5 p-4 rounded-xl border border-accent/10 hover:bg-white/10 transition-colors text-left"
+                    disabled={isResetting}
+                    className="w-full bg-white/5 p-4 rounded-xl border border-accent/10 hover:bg-white/10 transition-colors text-left disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     <div className="flex items-center justify-between">
                       <div className="flex items-center">
@@ -566,7 +607,8 @@ export default function Settings() {
           </div>
         </div>
       )}
-    </div>
+      </div>
+    </>
   )
 }
   

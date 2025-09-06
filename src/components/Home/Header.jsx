@@ -15,6 +15,9 @@ export default function Header({
   sortedTodayClasses,
   calculateTimeUntilStart,
   calculateRemainingTime,
+  syncStatus,
+  isOnline,
+  onRetrySync,
 }) {
   const [showCards, setShowCards] = useState(false)
 
@@ -96,6 +99,9 @@ export default function Header({
               sortedTodayClasses={sortedTodayClasses}
               totalClasses={totalClasses}
               calculateRemainingTime={calculateRemainingTime}
+              syncStatus={syncStatus}
+              isOnline={isOnline}
+              onRetrySync={onRetrySync}
             />
           )}
           

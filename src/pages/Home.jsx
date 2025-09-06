@@ -12,17 +12,29 @@ import {
   DaySelector,
 } from '../components/Home'
 import { timeToMinutes } from '../utils/timeUtils'
-
+import useTimetableSync from '../hooks/useTimetableSync'
+import TimetableSyncStatus from '../components/TimetableSyncStatus'
 export default function Home() {
   const location = useLocation()
+  const { 
+    timetableData: syncedTimetableData, 
+   
+    syncStatus, 
+    isOnline, 
+    hasTimetable,
+    retrySyncAction 
+  } = useTimetableSync()
+  
   const [selection, setSelection] = useState(location.state || null)
   const [currentTime, setCurrentTime] = useState(new Date())
   const [viewWeekly, setViewWeekly] = useState(false)
   const [selectedDay, setSelectedDay] = useState('')
 
-  // Load data from localStorage if not provided via location state
+  // Load data from timetable sync hook or localStorage fallback
   useEffect(() => {
-    if (!selection) {
+    if (hasTimetable() && syncedTimetableData) {
+      setSelection(syncedTimetableData)
+    } else if (!selection) {
       try {
         const savedTimetableData = localStorage.getItem('timetableData')
         if (savedTimetableData) {
@@ -33,7 +45,7 @@ export default function Home() {
         console.error('Error loading timetable data from localStorage:', error)
       }
     }
-  }, [selection])
+  }, [selection, syncedTimetableData, hasTimetable])
 
   // Update time every minute
   useEffect(() => {
@@ -237,6 +249,9 @@ export default function Home() {
           sortedTodayClasses={sortedActualTodayClasses}
           calculateTimeUntilStart={calculateTimeUntilStart}
           calculateRemainingTime={calculateRemainingTime}
+          syncStatus={syncStatus}
+          isOnline={isOnline}
+          onRetrySync={retrySyncAction}
         />
 
         {/* Status Card in Header */}
@@ -301,6 +316,8 @@ export default function Home() {
           <Navbar currentPage="home" />
         </div>
       </div>
+      
+      
     </div>
   )
 }
