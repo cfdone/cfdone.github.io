@@ -6,10 +6,10 @@ import {
   FileText,
   Shield,
   ExternalLink,
-  Github,
   Mail,
   Heart,
   ChevronRight,
+  ChevronDown,
   Trash2,
   LogOut,
 } from 'lucide-react'
@@ -23,9 +23,11 @@ export default function Settings() {
   const [showResetConfirm, setShowResetConfirm] = useState(false)
   const [showClearCacheConfirm, setShowClearCacheConfirm] = useState(false)
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false)
-  const [showAboutModal, setShowAboutModal] = useState(false)
-  const [showTermsModal, setShowTermsModal] = useState(false)
-  const [showPrivacyModal, setShowPrivacyModal] = useState(false)
+  const [expandedAccordion, setExpandedAccordion] = useState(null)
+
+  const toggleAccordion = (accordion) => {
+    setExpandedAccordion(expandedAccordion === accordion ? null : accordion)
+  }
 
   const handleResetOnboarding = useCallback(() => {
     try {
@@ -126,13 +128,13 @@ export default function Settings() {
         {/* Scrollable Content Container */}
         <div className="flex-1 overflow-hidden">
           <div className="h-full overflow-y-auto no-scrollbar p-4 max-w-md mx-auto text-white">
-            {/* User Info */}
+            {/* Account Section */}
             {user && (
               <div className="mb-6">
+                <h2 className="text-white/50 text-xs font-product-sans uppercase tracking-wider mb-3 px-2">
+                  Account
+                </h2>
                 <div className="bg-white/5 p-4 rounded-xl border border-accent/10">
-                  <h3 className="font-product-sans text-accent font-medium text-lg mb-2">
-                    Account
-                  </h3>
                   <div className="flex items-center justify-between">
                     <div className="flex items-center">
                       {user.user_metadata?.avatar_url ? (
@@ -166,20 +168,20 @@ export default function Settings() {
               </div>
             )}
 
-              {/* Current Timetable Info */}
-          <div className="mb-6">
-            <div className="bg-white/5 p-4 rounded-xl border border-accent/10">
-              <h3 className="font-product-sans text-accent font-medium text-lg mb-2">
+            {/* Current Timetable Section */}
+            <div className="mb-6">
+              <h2 className="text-white/50 text-xs font-product-sans uppercase tracking-wider mb-3 px-2">
                 Current Timetable
-              </h3>
-              <div className="max-h-32 overflow-y-auto pr-2 custom-scrollbar">
-                <p className="text-white/70 text-sm font-product-sans mb-2">{getTimetableInfo()}</p>
-                <div className="text-xs text-white/50 mb-1">
-                  You can change your timetable setup anytime by resetting onboarding
+              </h2>
+              <div className="bg-white/5 p-4 rounded-xl border border-accent/10">
+                <div className="max-h-32 overflow-y-auto pr-2 custom-scrollbar">
+                  <p className="text-white/70 text-sm font-product-sans mb-2">{getTimetableInfo()}</p>
+                  <div className="text-xs text-white/50 mb-1">
+                    You can change your timetable setup anytime by resetting onboarding
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
             {/* Settings Options */}
             <div className="space-y-3">
               {/* Timetable Section */}
@@ -232,53 +234,189 @@ export default function Settings() {
                   Information
                 </h2>
                 <div className="space-y-2">
-                  <button
-                    onClick={() => setShowAboutModal(true)}
-                    className="w-full bg-white/5 p-4 rounded-xl border border-accent/10 hover:bg-white/10 transition-colors text-left"
-                  >
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center">
-                        <Info className="w-5 h-5 text-accent mr-3" />
-                        <div>
-                          <h4 className="text-white font-medium text-base mb-1">About CFDONE</h4>
-                          <p className="text-white/70 text-sm font-product-sans">
-                            App information and version details
-                          </p>
+                  {/* About Accordion */}
+                  <div className="bg-white/5 rounded-xl border border-accent/10 overflow-hidden">
+                    <button
+                      onClick={() => toggleAccordion('about')}
+                      className="w-full p-4 hover:bg-white/10 transition-colors text-left"
+                    >
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center">
+                          <Info className="w-5 h-5 text-accent mr-3" />
+                          <div>
+                            <h4 className="text-white font-medium text-base mb-1">About CFDONE</h4>
+                            <p className="text-white/70 text-sm font-product-sans">
+                              App information and version details
+                            </p>
+                          </div>
+                        </div>
+                        {expandedAccordion === 'about' ? (
+                          <ChevronDown className="w-5 h-5 text-white/30" />
+                        ) : (
+                          <ChevronRight className="w-5 h-5 text-white/30" />
+                        )}
+                      </div>
+                    </button>
+                    {expandedAccordion === 'about' && (
+                      <div className="px-4 pb-4 border-t border-white/10">
+                        <div className="pt-4">
+                          <div className="text-center mb-4">
+                            <img src={logo} alt="" className="h-16 w-16 mx-auto mb-4" />
+                            <h3 className="font-product-sans text-accent font-medium text-xl mb-2">CFDONE</h3>
+                            <p className="text-white/70 text-sm font-product-sans mb-4">
+                              A modern timetable app for FAST University students
+                            </p>
+                            <div className="text-white/50 text-xs font-product-sans space-y-1">
+                              <p>Version 1.0.0</p>
+                              <p>Built with React & Vite</p>
+                              <p>Developed by Ajmal Razaq</p>
+                            </div>
+                          </div>
                         </div>
                       </div>
-                      <ChevronRight className="w-5 h-5 text-white/30" />
-                    </div>
-                  </button>
+                    )}
+                  </div>
 
-                  <button
-                    onClick={() => setShowTermsModal(true)}
-                    className="w-full bg-white/5 p-4 rounded-xl border border-accent/10 hover:bg-white/10 transition-colors text-left"
-                  >
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center">
-                        <FileText className="w-5 h-5 text-accent mr-3" />
-                        <div>
-                          <h4 className="text-white font-medium text-base">Terms & Conditions</h4>
+                  {/* Terms & Conditions Accordion */}
+                  <div className="bg-white/5 rounded-xl border border-accent/10 overflow-hidden">
+                    <button
+                      onClick={() => toggleAccordion('terms')}
+                      className="w-full p-4 hover:bg-white/10 transition-colors text-left"
+                    >
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center">
+                          <FileText className="w-5 h-5 text-accent mr-3" />
+                          <div>
+                            <h4 className="text-white font-medium text-base">Terms & Conditions</h4>
+                          </div>
+                        </div>
+                        {expandedAccordion === 'terms' ? (
+                          <ChevronDown className="w-5 h-5 text-white/30" />
+                        ) : (
+                          <ChevronRight className="w-5 h-5 text-white/30" />
+                        )}
+                      </div>
+                    </button>
+                    {expandedAccordion === 'terms' && (
+                      <div className="px-4 pb-4 border-t border-white/10">
+                        <div className="pt-4 max-h-64 overflow-y-auto no-scrollbar">
+                          <div className="text-white/70 text-sm font-product-sans space-y-4">
+                            <p>
+                              By using CFDONE, you agree to these terms and conditions. This app is designed
+                              specifically for FAST University students to manage their timetables.
+                            </p>
+                            <p>
+                              <strong className="text-white">Google Authentication:</strong> When you sign in with Google, 
+                              we only access your basic profile information (name, email, profile picture) to provide 
+                              authentication services. We do not access your Google Drive, Gmail, or other Google services.
+                            </p>
+                            <p>
+                              <strong className="text-white">Usage:</strong> This app is provided as-is for
+                              educational purposes. We are not responsible for any scheduling conflicts or missed
+                              classes.
+                            </p>
+                            <p>
+                              <strong className="text-white">Data:</strong> All timetable data is stored locally
+                              on your device. We do not collect or store any personal information on external
+                              servers beyond what's necessary for authentication.
+                            </p>
+                            <p>
+                              <strong className="text-white">Account Information:</strong> Your Google account information 
+                              is used solely for authentication and personalization purposes. You can revoke access at 
+                              any time through your Google account settings.
+                            </p>
+                            <p>
+                              <strong className="text-white">Updates:</strong> The app may receive updates to
+                              improve functionality and fix bugs. Continued use implies acceptance of updated
+                              terms.
+                            </p>
+                            <p>
+                              <strong className="text-white">Contact:</strong> For any issues or questions,
+                              please contact the developer through the provided channels.
+                            </p>
+                          </div>
                         </div>
                       </div>
-                      <ChevronRight className="w-5 h-5 text-white/30" />
-                    </div>
-                  </button>
+                    )}
+                  </div>
 
-                  <button
-                    onClick={() => setShowPrivacyModal(true)}
-                    className="w-full bg-white/5 p-4 rounded-xl border border-accent/10 hover:bg-white/10 transition-colors text-left"
-                  >
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center">
-                        <Shield className="w-5 h-5 text-accent mr-3" />
-                        <div>
-                          <h4 className="text-white font-medium text-base">Privacy Policy</h4>
+                  {/* Privacy Policy Accordion */}
+                  <div className="bg-white/5 rounded-xl border border-accent/10 overflow-hidden">
+                    <button
+                      onClick={() => toggleAccordion('privacy')}
+                      className="w-full p-4 hover:bg-white/10 transition-colors text-left"
+                    >
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center">
+                          <Shield className="w-5 h-5 text-accent mr-3" />
+                          <div>
+                            <h4 className="text-white font-medium text-base">Privacy Policy</h4>
+                          </div>
+                        </div>
+                        {expandedAccordion === 'privacy' ? (
+                          <ChevronDown className="w-5 h-5 text-white/30" />
+                        ) : (
+                          <ChevronRight className="w-5 h-5 text-white/30" />
+                        )}
+                      </div>
+                    </button>
+                    {expandedAccordion === 'privacy' && (
+                      <div className="px-4 pb-4 border-t border-white/10">
+                        <div className="pt-4 max-h-64 overflow-y-auto no-scrollbar">
+                          <div className="text-white/70 text-sm font-product-sans space-y-4">
+                            <p>
+                              Your privacy is important to us. This policy explains how CFDONE handles your
+                              information.
+                            </p>
+                            <p>
+                              <strong className="text-white">Google Sign-In:</strong> When you use Google Sign-In, 
+                              we receive and store only your basic profile information (name, email address, and 
+                              profile picture). This information is used for authentication and personalization purposes only.
+                            </p>
+                            <p>
+                              <strong className="text-white">Data Collection:</strong> Beyond Google authentication data, 
+                              we do not collect, store, or transmit any additional personal data to external servers. 
+                              All timetable information remains on your device.
+                            </p>
+                            <p>
+                              <strong className="text-white">Local Storage:</strong> Your timetable preferences
+                              and settings are stored locally using your browser's localStorage feature. This data 
+                              never leaves your device.
+                            </p>
+                            <p>
+                              <strong className="text-white">Google Data Usage:</strong> We do not access your Google Drive, 
+                              Gmail, calendar, or any other Google services. We only use the minimal profile information 
+                              necessary for authentication.
+                            </p>
+                            <p>
+                              <strong className="text-white">Third-Party Services:</strong> We use Supabase for authentication 
+                              services, which handles your Google sign-in securely. No other third-party tracking or analytics 
+                              services are used.
+                            </p>
+                            <p>
+                              <strong className="text-white">Data Retention:</strong> Your authentication data is retained 
+                              only as long as you maintain an account. You can delete your account and all associated data 
+                              at any time.
+                            </p>
+                            <p>
+                              <strong className="text-white">Data Security:</strong> All authentication is handled through 
+                              secure, encrypted connections. Local data is under your full control and can be cleared 
+                              anytime by resetting the app.
+                            </p>
+                            <p>
+                              <strong className="text-white">Your Rights:</strong> You can access, modify, or delete your 
+                              account information at any time. You can also revoke app access through your Google account 
+                              settings.
+                            </p>
+                            <p>
+                              <strong className="text-white">Changes:</strong> Any changes to this privacy policy
+                              will be reflected in app updates and communicated to users.
+                            </p>
+                          </div>
                         </div>
                       </div>
-                      <ChevronRight className="w-5 h-5 text-white/30" />
-                    </div>
-                  </button>
+                    )}
+                  </div>
                 </div>
               </div>
 
@@ -288,24 +426,6 @@ export default function Settings() {
                   Developer
                 </h2>
                 <div className="space-y-2">
-                  <button
-                    onClick={() => handleExternalLink('https://github.com/theajmalrazaq')}
-                    className="w-full bg-white/5 p-4 rounded-xl border border-accent/10 hover:bg-white/10 transition-colors text-left"
-                  >
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center">
-                        <Github className="w-5 h-5 text-accent mr-3" />
-                        <div>
-                          <h4 className="text-white font-medium text-base mb-1">GitHub</h4>
-                          <p className="text-white/70 text-sm font-product-sans">
-                            View source code and contribute
-                          </p>
-                        </div>
-                      </div>
-                      <ExternalLink className="w-4 h-4 text-white/30" />
-                    </div>
-                  </button>
-
                   <button
                     onClick={() => handleExternalLink('mailto:theajmalrazaq@gmail.com')}
                     className="w-full bg-white/5 p-4 rounded-xl border border-accent/10 hover:bg-white/10 transition-colors text-left"
@@ -335,9 +455,9 @@ export default function Settings() {
                   <div className="flex items-center">
                     <Heart className="w-5 h-5 text-red-500 mr-3" />
                     <div>
-                      <h4 className="text-white font-medium text-base mb-1">Made with ❤️ for FAST</h4>
+                      <h4 className="text-white font-medium text-base mb-1">Made with frustration by Ajmal Razaq Bhatti</h4>
                       <p className="text-white/70 text-sm font-product-sans">
-                        If this app helped you, consider starring it on GitHub!
+                        Sometimes the best apps come from the most frustrating experiences!
                       </p>
                     </div>
                   </div>
@@ -441,132 +561,6 @@ export default function Settings() {
                 className="flex-1 bg-red-500 text-white px-4 py-3 rounded-xl font-product-sans hover:bg-red-600 transition-colors"
               >
                 Sign Out
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* About Modal */}
-      {showAboutModal && (
-        <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 px-4">
-          <div className="bg-black border border-accent/20 rounded-xl p-6 w-full max-w-sm max-h-[80vh] overflow-y-auto">
-            <div className="text-center mb-4">
-              <img src={logo} alt="" className="h-16 w-16 mx-auto mb-4" />
-              <h3 className="font-product-sans text-accent font-medium text-xl mb-2">CFDONE</h3>
-              <p className="text-white/70 text-sm font-product-sans mb-4">
-                A modern timetable app for FAST University students
-              </p>
-              <div className="text-white/50 text-xs font-product-sans space-y-1">
-                <p>Version 1.0.0</p>
-                <p>Built with React & Vite</p>
-                <p>Developed by Ajmal Razaq</p>
-              </div>
-            </div>
-
-            <div className="text-center">
-              <button
-                onClick={() => setShowAboutModal(false)}
-                className="bg-accent text-black px-4 py-2 rounded-lg text-sm font-product-sans hover:bg-accent/90 transition-colors"
-              >
-                Close
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Terms Modal */}
-      {showTermsModal && (
-        <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 px-4">
-          <div className="bg-black border border-accent/20 rounded-xl p-6 w-full max-w-md max-h-[80vh] overflow-y-auto">
-            <div className="mb-4">
-              <h3 className="font-product-sans text-accent font-medium text-xl mb-4">
-                Terms & Conditions
-              </h3>
-              <div className="text-white/70 text-sm font-product-sans space-y-4">
-                <p>
-                  By using CFDONE, you agree to these terms and conditions. This app is designed
-                  specifically for FAST University students to manage their timetables.
-                </p>
-                <p>
-                  <strong className="text-white">Usage:</strong> This app is provided as-is for
-                  educational purposes. We are not responsible for any scheduling conflicts or missed
-                  classes.
-                </p>
-                <p>
-                  <strong className="text-white">Data:</strong> All timetable data is stored locally
-                  on your device. We do not collect or store any personal information on external
-                  servers.
-                </p>
-                <p>
-                  <strong className="text-white">Updates:</strong> The app may receive updates to
-                  improve functionality and fix bugs. Continued use implies acceptance of updated
-                  terms.
-                </p>
-                <p>
-                  <strong className="text-white">Contact:</strong> For any issues or questions,
-                  please contact the developer through the provided channels.
-                </p>
-              </div>
-            </div>
-
-            <div className="text-center">
-              <button
-                onClick={() => setShowTermsModal(false)}
-                className="bg-accent text-black px-4 py-2 rounded-lg text-sm font-product-sans hover:bg-accent/90 transition-colors"
-              >
-                Close
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Privacy Policy Modal */}
-      {showPrivacyModal && (
-        <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 px-4">
-          <div className="bg-black border border-accent/20 rounded-xl p-6 w-full max-w-md max-h-[80vh] overflow-y-auto">
-            <div className="mb-4">
-              <h3 className="font-product-sans text-accent font-medium text-xl mb-4">
-                Privacy Policy
-              </h3>
-              <div className="text-white/70 text-sm font-product-sans space-y-4">
-                <p>
-                  Your privacy is important to us. This policy explains how CFDONE handles your
-                  information.
-                </p>
-                <p>
-                  <strong className="text-white">Data Collection:</strong> We do not collect, store,
-                  or transmit any personal data to external servers. All information remains on your
-                  device.
-                </p>
-                <p>
-                  <strong className="text-white">Local Storage:</strong> Your timetable preferences
-                  and settings are stored locally using your browser's localStorage feature.
-                </p>
-                <p>
-                  <strong className="text-white">No Tracking:</strong> We do not use analytics,
-                  tracking cookies, or any third-party services that collect user data.
-                </p>
-                <p>
-                  <strong className="text-white">Data Security:</strong> Since all data is stored
-                  locally, you have full control over your information. You can clear it anytime by
-                  resetting the app or clearing browser data.
-                </p>
-                <p>
-                  <strong className="text-white">Changes:</strong> Any changes to this privacy policy
-                  will be reflected in app updates.
-                </p>
-              </div>
-            </div>
-
-            <div className="text-center">
-              <button
-                onClick={() => setShowPrivacyModal(false)}
-                className="bg-accent text-black px-4 py-2 rounded-lg text-sm font-product-sans hover:bg-accent/90 transition-colors"
-              >
-                Close
               </button>
             </div>
           </div>
