@@ -5,7 +5,7 @@ export default function Navbar({ currentPage = 'home' }) {
 
 
   const menuItems = [
-    { id: 'home', label: 'Home', Icon: Home, path: '/' },
+    { id: 'home', label: 'Home', Icon: Home, path: '/home' },
     { id: 'unihub', label: 'UniHub', Icon: GraduationCap, path: '/unihub' },
     { id: 'settings', label: 'Settings', Icon: Settings, path: '/settings' },
   ]

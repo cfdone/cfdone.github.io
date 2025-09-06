@@ -60,7 +60,7 @@ export default function Regular() {
         console.error('Error saving to localStorage:', error)
       }
 
-      navigate('/', {
+      navigate('/home', {
         state: timetableData,
       })
     }

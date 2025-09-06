@@ -45,34 +45,24 @@ export default function Home() {
 
   // Get actual current day (for Header)
   const getActualCurrentDay = useCallback(() => {
-    // Only weekdays (Monday through Friday)
-    const days = ['', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', ''];
+    // All days of the week
+    const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     const dayIndex = currentTime.getDay();
-    
-    // For weekends, display "Friday" in the header as the last working day
-    if (dayIndex === 0 || dayIndex === 6) {
-      return 'Friday'; // Show Friday for weekends
-    }
-    
     return days[dayIndex];
   }, [currentTime])
 
   // Get selected day for schedule display
   const getCurrentDay = useCallback(() => {
-    // Only weekdays (Monday through Friday)
-    const days = ['', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', ''];
+    // All days of the week
+    const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     
     // If a specific day is selected, use that
     if (selectedDay) {
       return selectedDay;
     }
     
-    // For weekends, default to showing Monday's schedule
+    // Otherwise use current day
     const dayIndex = currentTime.getDay();
-    if (dayIndex === 0 || dayIndex === 6) {
-      return 'Monday'; // Default to Monday for weekends
-    }
-    
     return days[dayIndex];
   }, [currentTime, selectedDay])
 
@@ -154,13 +144,8 @@ export default function Home() {
       data = selection.passtimetable
     }
 
-    // Filter out weekend days
-    const filteredData = { ...data }
-    // Remove weekend days from the data
-    delete filteredData['Saturday']
-    delete filteredData['Sunday']
-
-    return filteredData
+    // Return all data including weekends
+    return data
   }, [selection])
 
   const todayClasses = useMemo(() => {
@@ -304,6 +289,7 @@ export default function Home() {
                   selection={selection}
                   calculateRemainingTime={calculateRemainingTime}
                   calculateTimeUntilStart={calculateTimeUntilStart}
+                  selectedDay={getCurrentDay()}
                 />
               )}
             </div>

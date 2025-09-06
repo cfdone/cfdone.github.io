@@ -11,14 +11,18 @@ import {
   Heart,
   ChevronRight,
   Trash2,
+  LogOut,
 } from 'lucide-react'
 import Navbar from '../components/Navbar'
+import { useAuth } from '../hooks/useAuth'
 import logo from '../assets/logo.svg'
 
 export default function Settings() {
   const navigate = useNavigate()
+  const { user, signOut } = useAuth()
   const [showResetConfirm, setShowResetConfirm] = useState(false)
   const [showClearCacheConfirm, setShowClearCacheConfirm] = useState(false)
+  const [showLogoutConfirm, setShowLogoutConfirm] = useState(false)
   const [showAboutModal, setShowAboutModal] = useState(false)
   const [showTermsModal, setShowTermsModal] = useState(false)
   const [showPrivacyModal, setShowPrivacyModal] = useState(false)
@@ -30,7 +34,7 @@ export default function Settings() {
       localStorage.removeItem('timetableData')
 
       // Navigate back to splash/onboarding
-      navigate('/', { replace: true })
+      navigate('/splash', { replace: true })
     } catch (error) {
       console.error('Error resetting onboarding:', error)
     }
@@ -53,6 +57,16 @@ export default function Settings() {
     }
     setShowClearCacheConfirm(false);
   }, [])
+
+  const handleLogout = useCallback(async () => {
+    try {
+      await signOut()
+      navigate('/login', { replace: true })
+    } catch (error) {
+      console.error('Error signing out:', error)
+    }
+    setShowLogoutConfirm(false)
+  }, [signOut, navigate])
 
   const getTimetableInfo = useCallback(() => {
     try {
@@ -112,6 +126,46 @@ export default function Settings() {
         {/* Scrollable Content Container */}
         <div className="flex-1 overflow-hidden">
           <div className="h-full overflow-y-auto no-scrollbar p-4 max-w-md mx-auto text-white">
+            {/* User Info */}
+            {user && (
+              <div className="mb-6">
+                <div className="bg-white/5 p-4 rounded-xl border border-accent/10">
+                  <h3 className="font-product-sans text-accent font-medium text-lg mb-2">
+                    Account
+                  </h3>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center">
+                      {user.user_metadata?.avatar_url ? (
+                        <img 
+                          src={user.user_metadata.avatar_url} 
+                          alt="Profile" 
+                          className="w-10 h-10 rounded-full mr-3"
+                        />
+                      ) : (
+                        <div className="w-10 h-10 bg-accent/20 rounded-full mr-3 flex items-center justify-center">
+                          <span className="text-accent font-medium">
+                            {user.email?.charAt(0).toUpperCase()}
+                          </span>
+                        </div>
+                      )}
+                      <div>
+                        <p className="text-white font-medium">
+                          {user.user_metadata?.full_name || user.email}
+                        </p>
+                        <p className="text-white/70 text-sm">{user.email}</p>
+                      </div>
+                    </div>
+                    <button
+                      onClick={() => setShowLogoutConfirm(true)}
+                      className="p-2 hover:bg-white/10 rounded-lg transition-colors"
+                    >
+                      <LogOut className="w-5 h-5 text-white/70" />
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
+
               {/* Current Timetable Info */}
           <div className="mb-6">
             <div className="bg-white/5 p-4 rounded-xl border border-accent/10">
@@ -356,6 +410,37 @@ export default function Settings() {
                 className="flex-1 bg-red-500 text-white px-4 py-3 rounded-xl font-product-sans hover:bg-red-600 transition-colors"
               >
                 Clear & Refresh
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Logout Confirmation Modal */}
+      {showLogoutConfirm && (
+        <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 px-4">
+          <div className="bg-black border border-accent/20 rounded-xl p-6 w-full max-w-sm">
+            <div className="text-center mb-4">
+              <h3 className="font-product-sans text-accent font-medium text-xl mb-2">
+                Sign Out?
+              </h3>
+              <p className="text-white/70 text-sm font-product-sans">
+                You will be signed out of your account. Your timetable data will remain saved locally.
+              </p>
+            </div>
+
+            <div className="flex gap-3">
+              <button
+                onClick={() => setShowLogoutConfirm(false)}
+                className="flex-1 bg-white/10 text-white px-4 py-3 rounded-xl font-product-sans hover:bg-white/20 transition-colors"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleLogout}
+                className="flex-1 bg-red-500 text-white px-4 py-3 rounded-xl font-product-sans hover:bg-red-600 transition-colors"
+              >
+                Sign Out
               </button>
             </div>
           </div>

@@ -10,10 +10,11 @@ export default function TodaySchedule({
   selection,
   calculateRemainingTime,
   calculateTimeUntilStart,
+  selectedDay,
 }) {
   const currentDayName = new Date().toLocaleDateString('en-US', { weekday: 'long' });
-  // Get the day name from the current day or use the selected day
-  const displayDay = sortedTodayClasses[0]?.day || currentDayName;
+  // Use the selectedDay prop first, then fall back to class day or current day
+  const displayDay = selectedDay || sortedTodayClasses[0]?.day || currentDayName;
   const isToday = displayDay === currentDayName;
   
   if (sortedTodayClasses.length === 0) {

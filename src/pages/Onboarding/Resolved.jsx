@@ -300,7 +300,7 @@ export default function Resolved() {
                       console.error('Error saving to localStorage:', error)
                     }
 
-                    navigate('/', {
+                    navigate('/home', {
                       state: timetableData,
                     })
                   }

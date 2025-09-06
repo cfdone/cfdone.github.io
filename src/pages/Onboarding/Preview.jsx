@@ -405,7 +405,7 @@ export default function Preview() {
                     console.error('Error saving to localStorage:', error)
                   }
 
-                  navigate('/', {
+                  navigate('/home', {
                     state: timetableData,
                   })
                 }

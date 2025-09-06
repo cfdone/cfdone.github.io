@@ -18,11 +18,11 @@ export default function StepOne() {
           <div className="flex flex-col items-center gap-4 px-2 py-4 w-full max-w-md mx-auto overflow-y-auto flex-1">
             <div className="w-full">
               <div className="text-center mb-6">
-                <h3 className=" font-product-sans text-accent font-black text-xl mb-2">
-                  Select Student Type
+                <h3 className=" font-product-sans text-accent font-black text-2xl mb-2">
+                  Choose Your Student Type
                 </h3>
-                <p className="text-white/70 text-sm font-product-sans">
-                  Choose the option that best describes your situation
+                <p className="text-white/70 text-base font-product-sans">
+                  Select the option that best describes your current situation
                 </p>
               </div>
 
@@ -45,7 +45,7 @@ export default function StepOne() {
                     <div>
                       <div className="font-bold mb-2">Regular Student</div>
                       <div className="text-sm opacity-80">
-                        I Want To View The Complete Timetable For My Section
+                        View the complete timetable for my section
                       </div>
                     </div>
                     <div >

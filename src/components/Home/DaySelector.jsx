@@ -6,16 +6,19 @@ export default function DaySelector({ onDaySelect, currentDay }) {
   useEffect(() => {
     const days = []
     const today = new Date()
-    const startDay = new Date(today)
-    const fullNames = ['', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', '']
-    const shortNames = ['', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', '']
+    const fullNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+    const shortNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
     
-    for (let i = 0, count = 0; count < 5 && i < 10; i++) {
-      const day = new Date(startDay)
-      day.setDate(startDay.getDate() + i)
+    // Get the start of the current week (Sunday)
+    const startOfWeek = new Date(today)
+    const dayOfWeek = today.getDay()
+    startOfWeek.setDate(today.getDate() - dayOfWeek)
+    
+    // Generate all 7 days of the week
+    for (let i = 0; i < 7; i++) {
+      const day = new Date(startOfWeek)
+      day.setDate(startOfWeek.getDate() + i)
       const dayNum = day.getDay()
-      
-      if (dayNum === 0 || dayNum === 6) continue // Skip weekends
       
       const isToday = day.toDateString() === today.toDateString();
       const dayInfo = {
@@ -27,11 +30,9 @@ export default function DaySelector({ onDaySelect, currentDay }) {
       };
       
       days.push(dayInfo)
-      
-      count++
     }
     setWeekDays(days)
-    setSelectedDay(currentDay || days[0]?.fullName)
+    setSelectedDay(currentDay || days.find(d => d.isToday)?.fullName || days[0]?.fullName)
   }, [currentDay])
 
   const handleDayClick = (dayName) => {
@@ -53,11 +54,11 @@ export default function DaySelector({ onDaySelect, currentDay }) {
             <button
               key={index}
               onClick={() => handleDayClick(day.fullName)}
-              className={`flex-shrink-0 flex flex-col items-center p-1.5 rounded-lg border min-w-[60px] transition-all ${dayClasses}`}
+              className={`flex-shrink-0 flex flex-col items-center p-1 rounded-lg border min-w-[50px] transition-all ${dayClasses}`}
             >
               <span className="text-xs font-medium">{day.shortName}</span>
-              <span className={`text-base font-bold ${day.isToday ? 'text-accent' : ''}`}>{day.date}</span>
-              <span className="text-[10px] text-accent/80">{day.isToday ? 'Today' : day.month}</span>
+              <span className={`text-sm font-bold ${day.isToday ? 'text-accent' : ''}`}>{day.date}</span>
+              <span className="text-[9px] text-accent/80">{day.isToday ? 'Today' : day.month}</span>
             </button>
           );
         })}
