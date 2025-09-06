@@ -11,8 +11,6 @@ import Home from './pages/Home'
 import Settings from './pages/Settings'
 import UniHub from './pages/UniHub'
 import { ProtectedRoute, OnboardingGuard, AuthGuard } from './components/RouteGuard'
-import SyncDebugPanel from './components/SyncDebugPanel'
-import SupabaseConnectionTest from './components/SupabaseConnectionTest'
 
 function App() {
   return (
@@ -103,9 +101,6 @@ function App() {
           } 
         />
       </Routes>
-      
-      {/* Debug panel for development */}
-      <SyncDebugPanel />
     </AuthProvider>
   )
 }

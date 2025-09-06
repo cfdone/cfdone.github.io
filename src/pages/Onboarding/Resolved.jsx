@@ -305,8 +305,7 @@ export default function Resolved() {
                       navigate('/home', {
                         state: timetableData,
                       })
-                    } catch (error) {
-                      console.error('Error saving timetable:', error)
+                    } catch {
                       setIsCreating(false)
                     }
                   }

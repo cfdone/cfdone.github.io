@@ -41,8 +41,8 @@ export default function Home() {
           const parsedData = JSON.parse(savedTimetableData)
           setSelection(parsedData)
         }
-      } catch (error) {
-        console.error('Error loading timetable data from localStorage:', error)
+      } catch {
+        // Error loading data
       }
     }
   }, [selection, syncedTimetableData, hasTimetable])

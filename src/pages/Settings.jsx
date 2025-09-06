@@ -50,8 +50,8 @@ export default function Settings() {
 
       // Navigate back to splash/onboarding
       navigate('/stepone', { replace: true })
-    } catch (error) {
-      console.error('Error resetting onboarding:', error)
+    } catch {
+      // Error handling
     } finally {
       setIsResetting(false)
       setShowResetConfirm(false)
@@ -70,8 +70,8 @@ export default function Settings() {
       setTimeout(() => {
         window.location.reload(true); // Force refresh from server, not from cache
       }, 300);
-    } catch (error) {
-      console.error('Error clearing cache:', error);
+    } catch {
+      // Error handling
     }
     setShowClearCacheConfirm(false);
   }, [])
@@ -80,8 +80,8 @@ export default function Settings() {
     try {
       await signOut()
       navigate('/login', { replace: true })
-    } catch (error) {
-      console.error('Error signing out:', error)
+    } catch {
+      // Error handling
     }
     setShowLogoutConfirm(false)
   }, [signOut, navigate])

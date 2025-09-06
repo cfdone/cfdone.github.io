@@ -139,7 +139,6 @@ export default function Preview() {
           });
         } else {
           // Fallback: if no actual data found, create a placeholder with realistic time
-          console.warn(`No timetable data found for ${preferredLocation.degree} S${preferredLocation.semester}-${preferredLocation.section}`);
           
           // Add a placeholder entry to Monday with a generic time
           timetable['Monday'].push({
@@ -410,8 +409,7 @@ export default function Preview() {
                     navigate('/home', {
                       state: timetableData,
                     })
-                  } catch (error) {
-                    console.error('Error saving timetable:', error)
+                  } catch {
                     setIsCreating(false)
                   }
                 }

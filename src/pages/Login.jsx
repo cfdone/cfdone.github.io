@@ -12,10 +12,8 @@ export default function Login() {
 
   // Simple redirect - let RouteGuards handle the complex logic
   useEffect(() => {
-    console.log('Login useEffect:', { loading, user: !!user })
     if (!loading && user) {
       // Just redirect to home - ProtectedRoute will handle the rest
-      console.log('Login - User authenticated, redirecting to /home')
       navigate('/home', { replace: true })
     }
   }, [user, loading, navigate])

@@ -18,7 +18,7 @@ export default function AuthProvider({ children }) {
     const getSession = async () => {
       const { data: { session }, error } = await supabase.auth.getSession()
       if (error) {
-        console.error('Error getting session:', error)
+        // Error getting session
       } else {
         setUser(session?.user || null)
       }
@@ -30,7 +30,6 @@ export default function AuthProvider({ children }) {
     // Listen for auth changes
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       async (event, session) => {
-        console.log('Auth state changed:', event, session)
         
         if (event === 'SIGNED_OUT') {
           // Clear local storage when user signs out
@@ -61,7 +60,7 @@ export default function AuthProvider({ children }) {
     
     const { error } = await supabase.auth.signOut()
     if (error) {
-      console.error('Error signing out:', error)
+      // Error signing out
     }
     return { error }
   }
