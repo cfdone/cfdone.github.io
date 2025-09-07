@@ -10,15 +10,12 @@ export default function Login() {
   const [isSigningIn, setIsSigningIn] = useState(false)
   const [error, setError] = useState(null)
 
-  // Simple redirect - let RouteGuards handle the complex logic
   useEffect(() => {
     if (!loading && user) {
-      // Just redirect to home - ProtectedRoute will handle the rest
       navigate('/home', { replace: true })
     }
   }, [user, loading, navigate])
 
-  // Show loading while auth state is being determined
   if (loading) {
   return <LoadingPulseOverlay />;
   }
@@ -42,26 +39,26 @@ export default function Login() {
     <>
       <div className="h-screen bg-black flex flex-col justify-between items-center px-4 pt-safe-offset-8 pb-safe">
         <div className="flex flex-col items-center gap-6 px-4 py-6 w-full max-w-md mx-auto">
-          <h1 className="font-product-sans text-accent font-semibold text-2xl mb-2 text-center">
+          <h1 className=" text-white font-semibold text-2xl mb-2 text-center">
             Fast Timetable <span className="text-accent">Sucks?</span>
             <br />
-            <span className="text-sm font-light font-product-sans text-neutral-200">Yeah, we feel your pain!</span>
+            <span className="text-sm font-medium  text-neutral-200">Yeah, we feel your pain!</span>
           </h1>
         </div>
         <img src={logo} alt="Logo" className="w-54 h-54 user-select-none mb-2" />
         <div className="flex flex-col gap-3 items-center justify-center w-full max-w-md mx-auto px-2 pb-6">
-          <p className="text-white font-product-sans">Let's fix this mess in 2 minutes flat!</p>
+          <p className="text-white ">Let's fix this mess in 2 minutes flat!</p>
           
           {error && (
             <div className="bg-red-500/10 border border-red-500/20 text-red-300 px-4 py-3 rounded-xl mb-2 w-full">
-              <p className="text-sm font-product-sans text-center">{error}</p>
+              <p className="text-sm  text-center">{error}</p>
             </div>
           )}
           
           <button
             onClick={handleGoogleSignIn}
             disabled={isSigningIn}
-            className="bg-accent font-product-sans text-white px-4 py-3 rounded-xl w-full text-[15px] transition shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
+            className="bg-accent  text-white px-4 py-3 rounded-xl w-full text-[15px] transition shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {isSigningIn ? (
               <div className="flex items-center justify-center">

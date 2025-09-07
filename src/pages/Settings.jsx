@@ -53,13 +53,16 @@ export default function Settings() {
     try {
       // Reset using the sync hook (will clear both local and remote data)
       await resetTimetable();
-      // Navigate back to splash/onboarding
-      navigate('/stepone', { replace: true });
+      // Show loading for 2 seconds before redirect
+      setTimeout(() => {
+        navigate('/stepone', { replace: true });
+        setIsResetting(false);
+        setShowResetConfirm(false);
+      }, 2000);
     } catch {
-      // Error handling
-    } finally {
       setIsResetting(false);
       setShowResetConfirm(false);
+      // Error handling
     }
   }, [navigate, resetTimetable]);
   
@@ -82,13 +85,20 @@ export default function Settings() {
   }, [])
 
   const handleLogout = useCallback(async () => {
+    setIsResetting(true);
     try {
-      await signOut()
-      navigate('/login', { replace: true })
+      await signOut();
+      // Show loading for 2 seconds before redirect
+      setTimeout(() => {
+        navigate('/login', { replace: true });
+        setIsResetting(false);
+        setShowLogoutConfirm(false);
+      }, 2000);
     } catch {
+      setIsResetting(false);
+      setShowLogoutConfirm(false);
       // Error handling
     }
-    setShowLogoutConfirm(false)
   }, [signOut, navigate])
 
   const getTimetableInfo = useCallback(() => {
@@ -149,8 +159,8 @@ export default function Settings() {
           <div className="flex-shrink-0 p-4 pt-12 max-w-md mx-auto w-full">
             <div className="flex items-center justify-between mb-6">
               <div>
-                <h1 className="font-product-sans text-white text-2xl font-medium mb-1">Settings</h1>
-                <p className="text-accent font-product-sans">Manage your preferences</p>
+                <h1 className=" text-white text-2xl font-medium mb-1">Settings</h1>
+                <p className="text-accent ">Manage your preferences</p>
               </div>
               <img src={logo} alt="" className="h-10 w-10" />
             </div>
@@ -162,7 +172,7 @@ export default function Settings() {
               {/* Account Section */}
               {user && (
                 <div className="mb-6">
-                  <h2 className="text-white/50 text-xs font-product-sans uppercase tracking-wider mb-3 px-2">
+                  <h2 className="text-white/50 text-xs  uppercase tracking-wider mb-3 px-2">
                     Account
                   </h2>
                   <div className="bg-white/5 p-4 rounded-xl border border-accent/10">
@@ -201,14 +211,14 @@ export default function Settings() {
 
               {/* Current Timetable Section */}
               <div className="mb-6">
-                <h2 className="text-white/50 text-xs font-product-sans uppercase tracking-wider mb-3 px-2">
+                <h2 className="text-white/50 text-xs  uppercase tracking-wider mb-3 px-2">
                   Current Timetable
                 </h2>
                 <div className="bg-white/5 p-4 rounded-xl border border-accent/10">
                   <div className="max-h-32 overflow-y-auto pr-2 no-scrollbar">
-                    <p className="text-white/70 text-sm font-product-sans mb-2">{getTimetableInfo()}</p>
+                    <p className="text-white/70 text-sm  mb-2">{getTimetableInfo()}</p>
                     <div className="text-xs text-white/50 mb-1">
-                      You can change your timetable setup anytime by resetting onboarding
+                      You can change your timetable setup anytime by resetting timetable
                     </div>
                   </div>
                 </div>
@@ -217,7 +227,7 @@ export default function Settings() {
               <div className="space-y-3">
                 {/* Timetable Section */}
                 <div className="mb-6">
-                  <h2 className="text-white/50 text-xs font-product-sans uppercase tracking-wider mb-3 px-2">
+                  <h2 className="text-white/50 text-xs  uppercase tracking-wider mb-3 px-2">
                     Timetable
                   </h2>
                   <div className="space-y-2">
@@ -240,7 +250,7 @@ export default function Settings() {
                   )}
                   
                   <button
-                    onClick={() => setShowResetConfirm(true)}
+                    onClick={handleResetOnboarding}
                     disabled={isResetting}
                     className="w-full bg-white/5 p-4 rounded-xl border border-accent/10 hover:bg-white/10 transition-colors text-left disabled:opacity-50 disabled:cursor-not-allowed"
                   >
@@ -249,8 +259,11 @@ export default function Settings() {
                         <RefreshCw className="w-5 h-5 text-accent mr-3" />
                         <div>
                           <h4 className="text-white font-medium text-base mb-1">Reset Timetable</h4>
-                          <p className="text-white/70 text-sm font-product-sans">
+                          <p className="text-white/70 text-sm ">
                             Clear current setup and start onboarding again
+                          </p>
+                          <p className="text-red-400 text-xs mt-1 font-semibold">
+                            Warning: All your timetable data will be lost!
                           </p>
                         </div>
                       </div>
@@ -267,7 +280,7 @@ export default function Settings() {
                         <Trash2 className="w-5 h-5 text-accent mr-3" />
                         <div>
                           <h4 className="text-white font-medium text-base mb-1">Clear Cache & Refresh</h4>
-                          <p className="text-white/70 text-sm font-product-sans">
+                          <p className="text-white/70 text-sm ">
                             Delete cached data and refresh the application
                           </p>
                         </div>
@@ -280,7 +293,7 @@ export default function Settings() {
 
               {/* About Section */}
               <div className="mb-6">
-                <h2 className="text-white/50 text-xs font-product-sans uppercase tracking-wider mb-3 px-2">
+                <h2 className="text-white/50 text-xs  uppercase tracking-wider mb-3 px-2">
                   Information
                 </h2>
                 <div className="space-y-2">
@@ -295,7 +308,7 @@ export default function Settings() {
                           <Info className="w-5 h-5 text-accent mr-3" />
                           <div>
                             <h4 className="text-white font-medium text-base mb-1">About CFDONE</h4>
-                            <p className="text-white/70 text-sm font-product-sans">
+                            <p className="text-white/70 text-sm ">
                               App information and version details
                             </p>
                           </div>
@@ -312,11 +325,11 @@ export default function Settings() {
                         <div className="pt-4">
                           <div className="text-center mb-4">
                             <img src={logo} alt="" className="h-16 w-16 mx-auto mb-4" />
-                            <h3 className="font-product-sans text-accent font-medium text-xl mb-2">CFDONE</h3>
-                            <p className="text-white/70 text-sm font-product-sans mb-4">
+                            <h3 className=" text-accent font-medium text-xl mb-2">CFDONE</h3>
+                            <p className="text-white/70 text-sm  mb-4">
                               A modern timetable app for FAST University students
                             </p>
-                            <div className="text-white/50 text-xs font-product-sans space-y-1">
+                            <div className="text-white/50 text-xs  space-y-1">
                               <p>Version 1.0.0</p>
                               <p>Built with React & Vite</p>
                               <p>Developed by Ajmal Razaq</p>
@@ -350,7 +363,7 @@ export default function Settings() {
                     {expandedAccordion === 'terms' && (
                       <div className="px-4 pb-4 border-t border-white/10">
                         <div className="pt-4 max-h-64 overflow-y-auto no-scrollbar">
-                          <div className="text-white/70 text-sm font-product-sans space-y-4">
+                          <div className="text-white/70 text-sm  space-y-4">
                             <p>
                               By using CFDONE, you agree to these terms and conditions. This app is designed
                               specifically for FAST University students to manage their timetables.
@@ -413,7 +426,7 @@ export default function Settings() {
                     {expandedAccordion === 'privacy' && (
                       <div className="px-4 pb-4 border-t border-white/10">
                         <div className="pt-4 max-h-64 overflow-y-auto no-scrollbar">
-                          <div className="text-white/70 text-sm font-product-sans space-y-4">
+                          <div className="text-white/70 text-sm  space-y-4">
                             <p>
                               Your privacy is important to us. This policy explains how CFDONE handles your
                               information.
@@ -472,7 +485,7 @@ export default function Settings() {
 
               {/* Developer Section */}
               <div className="mb-6">
-                <h2 className="text-white/50 text-xs font-product-sans uppercase tracking-wider mb-3 px-2">
+                <h2 className="text-white/50 text-xs  uppercase tracking-wider mb-3 px-2">
                   Developer
                 </h2>
                 <div className="space-y-2">
@@ -485,7 +498,7 @@ export default function Settings() {
                         <Mail className="w-5 h-5 text-accent mr-3" />
                         <div>
                           <h4 className="text-white font-medium text-base mb-1">Contact Developer</h4>
-                          <p className="text-white/70 text-sm font-product-sans">
+                          <p className="text-white/70 text-sm ">
                             Report bugs or suggest features
                           </p>
                         </div>
@@ -498,7 +511,7 @@ export default function Settings() {
 
               {/* Support Section */}
               <div className="mb-20">
-                <h2 className="text-white/50 text-xs font-product-sans uppercase tracking-wider mb-3 px-2">
+                <h2 className="text-white/50 text-xs  uppercase tracking-wider mb-3 px-2">
                   Support
                 </h2>
                 <div className="bg-white/5 p-4 rounded-xl border border-accent/10">
@@ -506,7 +519,7 @@ export default function Settings() {
                     <Heart className="w-5 h-5 text-red-500 mr-3" />
                     <div>
                       <h4 className="text-white font-medium text-base mb-1">Made with frustration by Ajmal Razaq Bhatti</h4>
-                      <p className="text-white/70 text-sm font-product-sans">
+                      <p className="text-white/70 text-sm ">
                         Sometimes the best apps come from the most frustrating experiences!
                       </p>
                     </div>
@@ -528,10 +541,10 @@ export default function Settings() {
         <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 px-4">
           <div className="bg-black border border-accent/20 rounded-xl p-6 w-full max-w-sm">
             <div className="text-center mb-4">
-              <h3 className="font-product-sans text-accent font-medium text-xl mb-2">
+              <h3 className=" text-accent font-medium text-xl mb-2">
                 Reset Timetable?
               </h3>
-              <p className="text-white/70 text-sm font-product-sans">
+              <p className="text-white/70 text-sm ">
                 This will clear your current timetable setup and take you back to onboarding. You'll
                 need to set up your timetable again.
               </p>
@@ -540,13 +553,13 @@ export default function Settings() {
             <div className="flex gap-3">
               <button
                 onClick={() => setShowResetConfirm(false)}
-                className="flex-1 bg-white/10 text-white px-4 py-3 rounded-xl font-product-sans hover:bg-white/20 transition-colors"
+                className="flex-1 bg-white/10 text-white px-4 py-3 rounded-xl  hover:bg-white/20 transition-colors"
               >
                 Cancel
               </button>
               <button
                 onClick={handleResetOnboarding}
-                className="flex-1 bg-red-500 text-white px-4 py-3 rounded-xl font-product-sans hover:bg-red-600 transition-colors"
+                className="flex-1 bg-red-500 text-white px-4 py-3 rounded-xl  hover:bg-red-600 transition-colors"
               >
                 Reset
               </button>
@@ -560,10 +573,10 @@ export default function Settings() {
         <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 px-4">
           <div className="bg-black border border-accent/20 rounded-xl p-6 w-full max-w-sm">
             <div className="text-center mb-4">
-              <h3 className="font-product-sans text-accent font-medium text-xl mb-2">
+              <h3 className=" text-accent font-medium text-xl mb-2">
                 Clear Cache & Refresh?
               </h3>
-              <p className="text-white/70 text-sm font-product-sans">
+              <p className="text-white/70 text-sm ">
                 This will delete all cached data and refresh the application. This can help if you're experiencing display issues or outdated content.
               </p>
             </div>
@@ -571,13 +584,13 @@ export default function Settings() {
             <div className="flex gap-3">
               <button
                 onClick={() => setShowClearCacheConfirm(false)}
-                className="flex-1 bg-white/10 text-white px-4 py-3 rounded-xl font-product-sans hover:bg-white/20 transition-colors"
+                className="flex-1 bg-white/10 text-white px-4 py-3 rounded-xl  hover:bg-white/20 transition-colors"
               >
                 Cancel
               </button>
               <button
                 onClick={handleClearCache}
-                className="flex-1 bg-red-500 text-white px-4 py-3 rounded-xl font-product-sans hover:bg-red-600 transition-colors"
+                className="flex-1 bg-red-500 text-white px-4 py-3 rounded-xl  hover:bg-red-600 transition-colors"
               >
                 Clear & Refresh
               </button>
@@ -591,10 +604,10 @@ export default function Settings() {
         <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 px-4">
           <div className="bg-black border border-accent/20 rounded-xl p-6 w-full max-w-sm">
             <div className="text-center mb-4">
-              <h3 className="font-product-sans text-accent font-medium text-xl mb-2">
+              <h3 className=" text-accent font-medium text-xl mb-2">
                 Sign Out?
               </h3>
-              <p className="text-white/70 text-sm font-product-sans">
+              <p className="text-white/70 text-sm ">
                 You will be signed out of your account. Your timetable data will remain saved locally.
               </p>
             </div>
@@ -602,13 +615,13 @@ export default function Settings() {
             <div className="flex gap-3">
               <button
                 onClick={() => setShowLogoutConfirm(false)}
-                className="flex-1 bg-white/10 text-white px-4 py-3 rounded-xl font-product-sans hover:bg-white/20 transition-colors"
+                className="flex-1 bg-white/10 text-white px-4 py-3 rounded-xl  hover:bg-white/20 transition-colors"
               >
                 Cancel
               </button>
               <button
                 onClick={handleLogout}
-                className="flex-1 bg-red-500 text-white px-4 py-3 rounded-xl font-product-sans hover:bg-red-600 transition-colors"
+                className="flex-1 bg-red-500 text-white px-4 py-3 rounded-xl  hover:bg-red-600 transition-colors"
               >
                 Sign Out
               </button>

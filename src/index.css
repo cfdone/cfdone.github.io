@@ -65,7 +65,7 @@ button{
   background-image: linear-gradient(135deg,#a980ff,#182fff99) 0 0/200% 200%;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1, h2 {
   color: #fff;
   margin-bottom: .2rem;
   letter-spacing: -1px;

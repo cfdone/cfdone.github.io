@@ -30,7 +30,7 @@ export default function Navbar({ currentPage = 'home' }) {
                 }`}
               >
                 <IconComponent className="w-5 h-5 mb-1 mr-1" />
-                <span className="text-xs font-product-sans">{item.label}</span>
+                <span className="text-xs ">{item.label}</span>
               </Link>
             )
           })}

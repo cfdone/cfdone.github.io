@@ -9,12 +9,12 @@ export default function ViewToggle({ viewWeekly, setViewWeekly, onResetDay }) {
 
   return (
     <div className="flex items-center justify-between mb-4">
-      <h2 className="text-white text-lg font-product-sans font-semibold">
+      <h2 className="text-white text-lg  font-semibold">
         {viewWeekly ? 'Weekly Schedule' : "Day Schedule"}
       </h2>
       <button
         onClick={handleViewToggle}
-        className="bg-white/5 px-3 py-1.5 rounded-lg border border-accent/10 text-accent font-product-sans text-sm hover:bg-accent/10 transition-all duration-200"
+        className="bg-white/5 px-3 py-1.5 rounded-lg border border-accent/10 text-accent  text-sm hover:bg-accent/10 transition-all duration-200"
       >
         {viewWeekly ? 'Day' : 'Weekly'}
       </button>

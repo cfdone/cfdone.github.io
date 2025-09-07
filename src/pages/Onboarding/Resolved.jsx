@@ -166,10 +166,10 @@ export default function Resolved() {
           <img src={logo} alt="Logo" className="w-15 h-15 user-select-none mb-2" />
           <StepTrack currentStep={3} totalSteps={3} />
           <div className="text-center mb-6">
-            <h3 className=" font-product-sans text-accent font-semibold text-xl mb-2">
+            <h1 className="  text-accent font-semibold text-xl mb-2">
               Build Custom Timetable
-            </h3>
-            <p className="text-white/70 text-sm font-product-sans">
+            </h1>
+            <p className="text-white/70 text-sm ">
               Select subjects from any degree, semester, and section
             </p>
           </div>
@@ -185,7 +185,7 @@ export default function Resolved() {
                   <div className="text-center">
                     <button
                       onClick={handleAddMore}
-                      className="p-6 rounded-xl font-product-sans text-lg border transition-all duration-200 text-left w-full bg-white/10 text-accent border-accent/10 hover:bg-accent/10"
+                      className="p-6 rounded-xl  text-lg border transition-all duration-200 text-left w-full bg-white/10 text-accent border-accent/10 hover:bg-accent/10"
                     >
                       <div className="flex items-center justify-between">
                         <div>
@@ -218,7 +218,7 @@ export default function Resolved() {
                     {selectedSubjects.map((subject, idx) => (
                       <div
                         key={idx}
-                        className="p-4 rounded-xl font-product-sans text-lg border transition-all duration-200 text-left bg-accent/10 text-accent border-accent/10 hover:bg-accent/20"
+                        className="p-4 rounded-xl  text-lg border transition-all duration-200 text-left bg-accent/10 text-accent border-accent/10 hover:bg-accent/20"
                       >
                         <div className="flex items-center justify-between">
                           <div>
@@ -252,7 +252,7 @@ export default function Resolved() {
               <button
                 onClick={handleAddMore}
                 disabled={selectedSubjects.length >= 10}
-                className={`w-full p-3 rounded-xl font-product-sans text-[15px] border transition-all duration-200 ${
+                className={`w-full p-3 rounded-xl  text-[15px] border transition-all duration-200 ${
                   selectedSubjects.length >= 10 
                   ? 'bg-white/5 text-accent/50 border-accent/5 cursor-not-allowed' 
                   : 'bg-white/10 text-accent border-accent/10 hover:bg-accent/10'
@@ -268,13 +268,13 @@ export default function Resolved() {
             {/* Navigation buttons */}
             <div className="flex flex-row gap-3 items-stretch justify-center w-full h-12">
               <button
-                className="font-product-sans px-4 rounded-xl h-full w-full text-[15px] transition shadow-md bg-white/10 border text-white border-accent/10 hover:bg-accent/10 flex items-center justify-center"
+                className=" px-4 rounded-xl h-full w-full text-[15px] transition shadow-md bg-white/10 border text-white border-accent/10 hover:bg-accent/10 flex items-center justify-center"
                 onClick={() => navigate('/stepone')}
               >
                 Back
               </button>
               <button
-                className={`font-product-sans px-4 rounded-xl w-full h-full text-[15px] transition shadow-md flex items-center justify-center
+                className={` px-4 rounded-xl w-full h-full text-[15px] transition shadow-md flex items-center justify-center
                                 ${
                                   selectedSubjects.length > 0
                                     ? 'bg-accent text-white'
@@ -343,7 +343,7 @@ export default function Resolved() {
           <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 px-4">
             <div className="bg-black border border-accent/20 rounded-xl p-4 w-full max-w-sm max-h-[70vh] overflow-y-auto no-scrollbar">
               <div className="flex items-center justify-between mb-3">
-                <h3 className=" font-product-sans text-accent font-semibold text-lg mb-2">
+                <h3 className="  text-accent font-semibold text-lg mb-2">
                   Select Degree
                 </h3>
                 <button
@@ -359,7 +359,7 @@ export default function Resolved() {
                   <button
                     key={deg}
                     type="button"
-                    className="p-3 rounded-xl font-product-sans text-base border transition-all duration-200 text-left w-full bg-white/10 text-accent border-accent/10 hover:bg-accent/10"
+                    className="p-3 rounded-xl  text-base border transition-all duration-200 text-left w-full bg-white/10 text-accent border-accent/10 hover:bg-accent/10"
                     onClick={() => handleDegreeSelect(deg)}
                   >
                     <div className="flex items-center justify-between">
@@ -383,7 +383,7 @@ export default function Resolved() {
           <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 px-4">
             <div className="bg-black border border-accent/20 rounded-xl p-4 w-full max-w-sm max-h-[70vh] overflow-y-auto no-scrollbar">
               <div className="flex items-center justify-between mb-3">
-                <h3 className=" font-product-sans text-accent font-semibold text-lg mb-2">
+                <h3 className="  text-accent font-semibold text-lg mb-2">
                   Select Semester
                 </h3>
                 <button
@@ -400,7 +400,7 @@ export default function Resolved() {
                   <button
                     key={sem}
                     type="button"
-                    className="p-3 rounded-xl font-product-sans text-base border transition-all duration-200 text-left w-full bg-white/10 text-accent border-accent/10 hover:bg-accent/10"
+                    className="p-3 rounded-xl  text-base border transition-all duration-200 text-left w-full bg-white/10 text-accent border-accent/10 hover:bg-accent/10"
                     onClick={() => handleSemesterSelect(sem)}
                   >
                     <div className="flex items-center justify-between">
@@ -424,7 +424,7 @@ export default function Resolved() {
           <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 px-4">
             <div className="bg-black border border-accent/20 rounded-xl p-4 w-full max-w-sm max-h-[70vh] overflow-y-auto no-scrollbar">
               <div className="flex items-center justify-between mb-3">
-                <h3 className=" font-product-sans text-accent font-semibold text-lg mb-2">
+                <h3 className="  text-accent font-semibold text-lg mb-2">
                   Select Section
                 </h3>
                 <button
@@ -443,7 +443,7 @@ export default function Resolved() {
                   <button
                     key={sec}
                     type="button"
-                    className="p-3 rounded-xl font-product-sans text-base border transition-all duration-200 text-left w-full bg-white/10 text-accent border-accent/10 hover:bg-accent/10"
+                    className="p-3 rounded-xl  text-base border transition-all duration-200 text-left w-full bg-white/10 text-accent border-accent/10 hover:bg-accent/10"
                     onClick={() => handleSectionSelect(sec)}
                   >
                     <div className="flex items-center justify-between">
@@ -465,7 +465,7 @@ export default function Resolved() {
           <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 px-4">
             <div className="bg-black border border-accent/20 rounded-xl p-4 w-full max-w-sm max-h-[70vh] overflow-y-auto no-scrollbar">
               <div className="flex items-center justify-between mb-3">
-                <h3 className=" font-product-sans text-accent font-semibold text-lg mb-2">
+                <h3 className="  text-accent font-semibold text-lg mb-2">
                   Select Subjects
                 </h3>
                 <button
@@ -496,7 +496,7 @@ export default function Resolved() {
                       key={subject}
                       type="button"
                       disabled={isFromOtherSection}
-                      className={`p-3 rounded-xl font-product-sans text-base border transition-all duration-200 text-left w-full
+                      className={`p-3 rounded-xl  text-base border transition-all duration-200 text-left w-full
                                             ${
                                               isFromOtherSection
                                                 ? 'bg-gray-500/20 text-gray-400 border-gray-500/20 cursor-not-allowed opacity-50'

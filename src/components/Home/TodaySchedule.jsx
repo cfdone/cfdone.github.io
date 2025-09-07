@@ -23,10 +23,10 @@ export default function TodaySchedule({
         <div className="mb-3 flex justify-center">
           <Sun className="w-10 h-10 text-accent" />
         </div>
-        <h3 className="text-white font-product-sans text-lg font-semibold mb-2">
+        <h3 className="text-white  text-lg font-semibold mb-2">
           No Classes on {displayDay}
         </h3>
-        <p className="text-accent/80 font-product-sans text-sm">
+        <p className="text-accent/80  text-sm">
           {isToday ? "Enjoy your free day!" : "This day is free."}
         </p>
       </div>

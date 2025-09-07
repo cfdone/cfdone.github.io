@@ -141,10 +141,10 @@ export default function Resolve() {
         <img src={logo} alt="Logo" className="w-15 h-15 user-select-none mb-2" />
         <StepTrack currentStep={2} totalSteps={4} />
         <div className="text-center mb-4">
-          <h3 className="font-product-sans text-accent font-semibold text-xl mb-2">
+          <h1 className=" text-accent font-semibold text-xl mb-2">
             Select Your Subjects ({selectedSubjects.length}/10)
-          </h3>
-          <p className="text-white/70 text-sm font-product-sans">
+          </h1>
+          <p className="text-white/70 text-sm ">
             Choose up to 10 subjects for your timetable
           </p>
         </div>
@@ -194,7 +194,7 @@ export default function Resolve() {
               <button
                 key={subject.name}
                 type="button"
-                className={`p-4 rounded-xl font-product-sans text-base border transition-all duration-200 text-left w-full
+                className={`p-4 rounded-xl  text-base border transition-all duration-200 text-left w-full
                             ${
                               isSelected
                                 ? 'bg-accent text-white border-accent shadow-lg'
@@ -258,13 +258,13 @@ export default function Resolve() {
       <div className="flex-shrink-0 w-full max-w-md mx-auto px-2 pt-4 pb-6">
         <div className="flex flex-row gap-3 items-center justify-center w-full">
           <button
-            className="font-product-sans px-4 py-3 rounded-xl w-full text-[15px] transition shadow-md bg-white/10 border text-white border-accent/10 hover:bg-accent/10"
+            className=" px-4 py-3 rounded-xl w-full text-[15px] transition shadow-md bg-white/10 border text-white border-accent/10 hover:bg-accent/10"
             onClick={() => navigate('/stepone')}
           >
             Back
           </button>
           <button
-            className={`font-product-sans px-4 py-3 rounded-xl w-full h-full text-[15px] transition shadow-md
+            className={` px-4 py-3 rounded-xl w-full h-full text-[15px] transition shadow-md
                           ${
                             selectedSubjects.length > 0
                               ? 'bg-accent text-white hover:bg-accent/80'

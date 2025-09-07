@@ -231,9 +231,9 @@ export default function Preview() {
                   <div className="p-3 border-b border-accent/10 bg-white/5">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2">
-                        <h3 className="text-white font-product-sans font-semibold">{day}</h3>
+                        <h3 className="text-white  font-semibold">{day}</h3>
                       </div>
-                      <div className="text-white/80 text-sm font-product-sans">
+                      <div className="text-white/80 text-sm ">
                         {classes.length} {classes.length === 1 ? 'class' : 'classes'}
                       </div>
                     </div>
@@ -244,7 +244,7 @@ export default function Preview() {
                         <div className="mb-2 flex justify-center">
                           <Star className="w-6 h-6 text-accent/60" />
                         </div>
-                        <div className="text-accent/60 font-product-sans text-sm">
+                        <div className="text-accent/60  text-sm">
                           No classes scheduled
                         </div>
                       </div>
@@ -263,34 +263,32 @@ export default function Preview() {
                                 <div className="flex-1 pr-4">
                                   <div className="flex items-center gap-2 mb-2">
                                     <div className={`w-2 h-2 rounded-full flex-shrink-0 ${isConflict ? 'bg-yellow-400 animate-pulse' : 'bg-accent/40'}`}></div>
-                                    <h4 className={`font-product-sans font-semibold text-sm ${isConflict ? 'text-yellow-400' : 'text-white'}`}>{cls.subject || cls.course}
-                                      {cls.section && (
-                                        <span className="text-xs text-white/60 ml-1">(Section {cls.section})</span>
-                                      )}
+                                    <h4 className={` font-semibold text-sm ${isConflict ? 'text-yellow-400' : 'text-white'}`}>{cls.subject || cls.course}
+                                      
                                     </h4>
                                     {isConflict && (
-                                      <span className="bg-yellow-500/20 text-yellow-400 px-2 py-0.5 rounded-full text-xs font-product-sans font-semibold">Conflict</span>
+                                      <span className="bg-yellow-500/20 text-yellow-400 px-2 py-0.5 rounded-full text-xs  font-semibold">Conflict</span>
                                     )}
                                   </div>
                                   <div className="space-y-1">
-                                    <div className="flex items-center gap-2 text-xs font-product-sans text-accent/80">
+                                    <div className="flex items-center gap-2 text-xs  text-accent/80">
                                       <MapPin className="w-3 h-3" />
                                       <span>{cls.room || 'Room TBD'}</span>
                                     </div>
-                                    <div className="text-xs font-product-sans text-accent/70">
+                                    <div className="text-xs  text-accent/70">
                                       {cls.teacher || 'Teacher TBD'}
                                     </div>
-                                    <div className="text-xs font-product-sans text-accent/50">
+                                    <div className="text-xs  text-accent/50">
                                       {cls.degree || 'N/A'} • S{cls.semester || 'N/A'}-{cls.section || 'N/A'}
                                     </div>
                                   </div>
                                 </div>
                                 {/* Right: Time info */}
                                 <div className="text-right flex-shrink-0">
-                                  <div className="font-product-sans font-semibold text-base text-white">
+                                  <div className=" font-semibold text-base text-white">
                                     {cls.start}
                                   </div>
-                                  <div className="font-product-sans text-xs text-accent/60">
+                                  <div className=" text-xs text-accent/60">
                                     {cls.end}
                                   </div>
                                 </div>
@@ -315,10 +313,10 @@ export default function Preview() {
         <img src={logo} alt="Logo" className="w-15 h-15 user-select-none mb-2" />
         <StepTrack currentStep={4} totalSteps={4} />
         <div className="text-center mb-6">
-          <h3 className="font-product-sans text-accent font-semibold text-xl mb-2">
+          <h1 className=" text-accent font-semibold text-xl mb-2">
             Review Your Timetable
-          </h3>
-          <p className="text-white/70 text-sm font-product-sans">
+          </h1>
+          <p className="text-white/70 text-sm ">
             Review your schedule before creating the final timetable
           </p>
             {errorMsg && (
@@ -336,7 +334,7 @@ export default function Preview() {
               {/* Initial Add Subjects Button */}
               {selectedSubjects.length === 0 && (
                 <div className="text-center">
-                  <div className="p-6 rounded-xl font-product-sans text-lg border transition-all duration-200 text-left w-full bg-white/10 text-accent border-accent/10">
+                  <div className="p-6 rounded-xl  text-lg border transition-all duration-200 text-left w-full bg-white/10 text-accent border-accent/10">
                     <div className="flex items-center justify-between">
                       <div>
                         <div className="font-semibold mb-2">No Subjects Selected</div>
@@ -406,7 +404,7 @@ export default function Preview() {
 
                     {!isReverifying && !geminiSuggestions && (
                       <button
-                        className="px-3 py-1  text-white text-xs hover:bg-accent/80 transition rounded-full font-product-sans font-semibold"
+                        className="px-3 py-1  text-white text-xs hover:bg-accent/80 transition rounded-full  font-semibold"
                         style={{
                           background: 'linear-gradient(135deg, #a980ff, #182fff99) 0 0 / 200% 200%',
                         }}
@@ -519,7 +517,7 @@ export default function Preview() {
           {/* Navigation buttons */}
           <div className="flex flex-row gap-3 items-stretch justify-center w-full h-11">
             <button
-              className="font-product-sans px-4 rounded-xl h-full w-full text-[15px] transition shadow-md bg-white/10 border text-white border-accent/10 hover:bg-accent/10 flex items-center justify-center"
+              className=" px-4 rounded-xl h-full w-full text-[15px] transition shadow-md bg-white/10 border text-white border-accent/10 hover:bg-accent/10 flex items-center justify-center"
               onClick={() =>
                 navigate('/preferences', {
                   state: {
@@ -532,7 +530,7 @@ export default function Preview() {
               Back
             </button>
             <button
-              className={`font-product-sans px-4 rounded-xl w-full h-full text-[15px] transition shadow-md flex items-center justify-center
+              className={` px-4 rounded-xl w-full h-full text-[15px] transition shadow-md flex items-center justify-center
                 ${selectedSubjects.length > 0 ? 'bg-accent text-white' : 'bg-accent/40 text-white/60'}
             `}
               disabled={selectedSubjects.length === 0}
@@ -552,7 +550,10 @@ export default function Preview() {
                     await saveTimetable(timetableData, 'lagger');
                     localStorage.setItem('onboardingComplete', 'true');
                     navigate('/home', {
-                      state: timetableData,
+                      state: {
+                        ...timetableData,
+                        studentType: 'lagger',
+                      },
                     });
                   } catch {
                     setErrorMsg('Failed to create timetable. Please try again.');

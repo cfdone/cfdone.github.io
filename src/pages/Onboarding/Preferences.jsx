@@ -162,10 +162,10 @@ export default function Preferences() {
         <img src={logo} alt="Logo" className="w-15 h-15 user-select-none mb-2" />
         <StepTrack currentStep={3} totalSteps={4} />
         <div className="text-center mb-6">
-          <h3 className="font-product-sans text-accent font-semibold text-xl mb-2">
+          <h1 className=" text-accent font-semibold text-xl mb-2">
             Set Your Preferences
-          </h3>
-          <p className="text-white/70 text-sm font-product-sans">
+          </h1>
+          <p className="text-white/70 text-sm ">
             {selectedSubjects.length > 0
               ? 'Choose your parent section and seat availability preferences'
               : 'Set general preferences for automatic clash resolution'}
@@ -485,7 +485,7 @@ export default function Preferences() {
       <div className="flex-shrink-0 w-full max-w-md mx-auto px-2 pt-4 pb-6">
         <div className="flex flex-row gap-3 items-center justify-center w-full">
           <button
-            className="font-product-sans px-4 py-3 rounded-xl w-full text-[15px] transition shadow-md bg-white/10 border text-white border-accent/10 hover:bg-accent/10"
+            className=" px-4 py-3 rounded-xl w-full text-[15px] transition shadow-md bg-white/10 border text-white border-accent/10 hover:bg-accent/10"
             onClick={() =>
               navigate('/resolve', {
                 state: {
@@ -498,7 +498,7 @@ export default function Preferences() {
             Back
           </button>
           <button
-            className={`font-product-sans px-4 py-3 rounded-xl w-full text-[15px] transition shadow-md flex items-center justify-center
+            className={` px-4 py-3 rounded-xl w-full text-[15px] transition shadow-md flex items-center justify-center
                             ${
                               canContinue
                                 ? 'bg-accent text-white hover:bg-accent/80'

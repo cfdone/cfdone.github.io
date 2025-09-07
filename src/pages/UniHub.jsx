@@ -15,8 +15,8 @@ function UniHub() {
         <div className="flex-shrink-0 p-4 pt-12 max-w-md mx-auto w-full">
           <div className="flex items-center justify-between mb-6">
             <div>
-              <h1 className="font-product-sans text-white text-2xl font-semibold mb-1">Faculty Members</h1>
-              <p className="text-accent font-product-sans">Department of Computational Fluid Dynamics</p>
+              <h1 className=" text-white text-2xl font-semibold mb-1">Faculty Members</h1>
+              <p className="text-accent ">Department of Computational Fluid Dynamics</p>
             </div>
             <img src={logo} alt="" className="h-10 w-10" />
           </div>
@@ -29,7 +29,7 @@ function UniHub() {
             <div className="space-y-6 mb-20">
               {/* Professors & HODs */}
               <div>
-                <h2 className="text-white/50 text-xs font-product-sans uppercase tracking-wider mb-3 px-2">
+                <h2 className="text-white/50 text-xs  uppercase tracking-wider mb-3 px-2">
                   Professors & HODs
                 </h2>
                 <div className="grid grid-cols-1 gap-2">
@@ -73,7 +73,7 @@ function UniHub() {
 
               {/* Associate Professors */}
               <div>
-                <h2 className="text-white/50 text-xs font-product-sans uppercase tracking-wider mb-3 px-2">
+                <h2 className="text-white/50 text-xs  uppercase tracking-wider mb-3 px-2">
                   Associate Professors
                 </h2>
                 <div className="grid grid-cols-1 gap-2">
@@ -131,7 +131,7 @@ function UniHub() {
 
               {/* Lecturers */}
               <div>
-                <h2 className="text-white/50 text-xs font-product-sans uppercase tracking-wider mb-3 px-2">
+                <h2 className="text-white/50 text-xs  uppercase tracking-wider mb-3 px-2">
                   Lecturers
                 </h2>
                 <div className="grid grid-cols-1 gap-2">
@@ -208,7 +208,7 @@ function UniHub() {
 
               {/* Instructors */}
               <div>
-                <h2 className="text-white/50 text-xs font-product-sans uppercase tracking-wider mb-3 px-2">
+                <h2 className="text-white/50 text-xs  uppercase tracking-wider mb-3 px-2">
                   Instructors
                 </h2>
                 <div className="grid grid-cols-1 gap-2">

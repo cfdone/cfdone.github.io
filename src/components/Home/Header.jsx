@@ -41,16 +41,16 @@ export default function Header({
         <div className="flex flex-col w-full">
           <div className="flex justify-between items-center">
             <div>
-              <h1 className="font-product-sans text-white text-2xl font-semibold mb-1">{greeting}</h1>
+              <h1 className=" text-white text-2xl font-semibold mb-1">{greeting}</h1>
               <div className='flex gap-2  items-center'> 
-              <p className="text-white/90 text-lg font-product-sans font-semibold">{formattedTime}</p>
+              <p className="text-white/90 text-lg  font-semibold">{formattedTime}</p>
               <span className='h-1 w-1 bg-white rounded-full'></span>
-              <p className="text-accent font-product-sans text-base">{currentDay}</p>
+              <p className="text-accent  text-base">{currentDay}</p>
               </div>
              
               {/* Show degree/section info only for regular students */}
               {selection && selection.studentType === 'regular' && selection.degree && (
-                <p className="text-white/60 text-sm font-product-sans mt-1">
+                <p className="text-white/60 text-sm  mt-1">
                   {selection.degree} • S{selection.semester}-{selection.section}
                 </p>
               )}
@@ -88,11 +88,11 @@ export default function Header({
                 <div className="bg-gradient-to-r from-accent/10 to-accent/5 p-4 rounded-xl border border-accent/10 mt-3">
                   <div className="flex items-center justify-between mb-2">
                     <div className="flex items-center gap-2">
-                      <span className="text-accent font-product-sans font-semibold text-sm">
+                      <span className="text-accent  font-semibold text-sm">
                         Today's Schedule
                       </span>
                     </div>
-                    <div className="text-accent/80 font-product-sans text-sm">
+                    <div className="text-accent/80  text-sm">
                       {doneClasses} of {totalClasses} completed
                     </div>
                   </div>

@@ -18,10 +18,10 @@ export default function StepOne() {
           <div className="flex flex-col items-center gap-4 px-2 py-4 w-full max-w-md mx-auto overflow-y-auto flex-1">
             <div className="w-full">
               <div className="text-center mb-6">
-                <h3 className=" font-product-sans text-accent font-semibold text-2xl mb-2">
+                <h1 className="  text-accent font-semibold text-2xl mb-2">
                   Choose Your Student Type
-                </h3>
-                <p className="text-white/70 text-base font-product-sans">
+                </h1>
+                <p className="text-white/70 text-base ">
                   Select the option that best describes your current situation
                 </p>
               </div>
@@ -29,7 +29,7 @@ export default function StepOne() {
               <div className="flex flex-col gap-4 max-h-64">
                 <button
                   type="button"
-                  className={`p-4 rounded-xl font-product-sans text-lg border transition-all duration-200 text-left
+                  className={`p-4 rounded-xl  text-lg border transition-all duration-200 text-left
                                     ${
                                       studentType === 'regular'
                                         ? 'bg-accent text-white border-accent shadow-lg'
@@ -56,7 +56,7 @@ export default function StepOne() {
 
                 <button
                   type="button"
-                  className={`p-4 rounded-xl font-product-sans text-lg border transition-all duration-200 text-left
+                  className={`p-4 rounded-xl  text-lg border transition-all duration-200 text-left
                                     ${
                                       studentType === 'lagger'
                                         ? 'bg-accent text-white border-accent shadow-lg'
@@ -83,7 +83,7 @@ export default function StepOne() {
 
                 <button
                   type="button"
-                  className={`p-4 rounded-xl font-product-sans text-lg border transition-all duration-200 text-left
+                  className={`p-4 rounded-xl  text-lg border transition-all duration-200 text-left
                                     ${
                                       studentType === 'custom'
                                         ? 'bg-accent text-white border-accent shadow-lg'
@@ -113,7 +113,7 @@ export default function StepOne() {
 
           <div className="flex flex-row gap-3 items-center justify-center w-full max-w-md mx-auto px-2 pb-6">
             <button
-              className={`font-product-sans px-4 py-3 rounded-xl w-full text-[15px] transition shadow-md
+              className={` px-4 py-3 rounded-xl w-full text-[15px] transition shadow-md
                             ${studentType ? 'bg-accent text-white' : 'bg-accent/40 text-white/60'}
                         `}
               disabled={!studentType}

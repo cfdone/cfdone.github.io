@@ -42,21 +42,19 @@ export default function ClassCard({
             <div className="flex-1">
               <div className="flex items-center gap-2 mb-2">
                 <h3
-                  className={`font-product-sans font-semibold text-lg leading-tight ${
+                  className={` font-semibold text-lg leading-tight ${
                     isPastClass ? 'text-white/60' : 'text-white'
                   }`}
                 >
                   {classInfo.course}
-                  {classInfo.section && (
-                    <span className="text-xs text-white/60 ml-1">(Section {classInfo.section})</span>
-                  )}
+                 
                 </h3>
               
               </div>
 
               <div className="space-y-2">
                 <div
-                  className={`flex items-center gap-2 text-sm font-product-sans ${
+                  className={`flex items-center gap-2 text-sm  ${
                     isPastClass ? 'text-accent/50' : 'text-accent/80'
                   }`}
                 >
@@ -66,7 +64,7 @@ export default function ClassCard({
 
                 {classInfo.teacher && (
                   <div
-                    className={`text-sm font-product-sans ${
+                    className={`text-sm  ${
                       isPastClass ? 'text-accent/40' : 'text-accent/60'
                     }`}
                   >
@@ -77,7 +75,7 @@ export default function ClassCard({
                 {/* Show degree/section for lagger students */}
                 {selection && selection.studentType === 'lagger' && classInfo.degree && (
                   <div
-                    className={`text-xs font-product-sans ${
+                    className={`text-xs  ${
                       isPastClass ? 'text-accent/30' : 'text-accent/50'
                     }`}
                   >
@@ -91,7 +89,7 @@ export default function ClassCard({
           {/* Right: Time display */}
           <div className="text-right flex-shrink-0">
             <div
-              className={`font-product-sans font-semibold text-xl ${
+              className={` font-semibold text-xl ${
                 isPastClass
                   ? 'text-white/50'
                   : isCurrentClass
@@ -104,7 +102,7 @@ export default function ClassCard({
               {classInfo.start}
             </div>
             <div
-              className={`font-product-sans text-sm ${
+              className={` text-sm ${
                 isPastClass ? 'text-accent/40' : 'text-accent/60'
               }`}
             >
@@ -113,13 +111,13 @@ export default function ClassCard({
 
             {/* Dynamic status messages */}
             {isCurrentClass && (
-              <div className="text-red-300 font-product-sans text-sm font-semibold mt-2 bg-red-500/20 px-3 py-1.5 rounded-lg">
+              <div className="text-red-300  text-sm font-semibold mt-2 bg-red-500/20 px-3 py-1.5 rounded-lg">
                 {calculateRemainingTime(classInfo.end)}
               </div>
             )}
 
             {isNextClass && (
-              <div className="text-blue-300 font-product-sans text-sm font-semibold mt-2 bg-blue-500/20 px-3 py-1.5 rounded-lg">
+              <div className="text-blue-300  text-sm font-semibold mt-2 bg-blue-500/20 px-3 py-1.5 rounded-lg">
                 {calculateTimeUntilStart(classInfo.start)}
               </div>
             )}

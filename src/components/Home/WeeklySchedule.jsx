@@ -30,11 +30,11 @@ export default function WeeklySchedule({
                     {isToday && (
                       <div className="w-2 h-2 bg-accent rounded-full animate-pulse"></div>
                     )}
-                    <h3 className="text-white font-product-sans font-semibold">
+                    <h3 className="text-white  font-semibold">
                       {day} {isToday && <span className="text-accent text-sm">(Today)</span>}
                     </h3>
                   </div>
-                  <div className="text-white/80 text-sm font-product-sans">
+                  <div className="text-white/80 text-sm ">
                     {classes.length} {classes.length === 1 ? 'class' : 'classes'}
                   </div>
                 </div>
@@ -45,7 +45,7 @@ export default function WeeklySchedule({
                     <div className="mb-2 flex justify-center">
                       <Star className="w-6 h-6 text-accent/60" />
                     </div>
-                    <div className="text-accent/60 font-product-sans text-sm">
+                    <div className="text-accent/60  text-sm">
                       No classes scheduled
                     </div>
                   </div>
@@ -83,22 +83,20 @@ export default function WeeklySchedule({
                                   }`}
                                 ></div>
                                 <h4
-                                  className={`font-product-sans font-semibold text-sm ${
+                                  className={` font-semibold text-sm ${
                                     isPastToday ? 'text-white/60' : 'text-white'
                                   }`}
                                 >
                                   {classInfo.course}
-                                  {classInfo.section && (
-                                    <span className="text-xs text-white/60 ml-1">(Section {classInfo.section})</span>
-                                  )}
+                                 
                                 </h4>
                                 {isCurrentToday && (
-                                  <span className="bg-red-500/20 text-red-400 px-2 py-0.5 rounded-full text-xs font-product-sans font-semibold">
+                                  <span className="bg-red-500/20 text-red-400 px-2 py-0.5 rounded-full text-xs  font-semibold">
                                     Live
                                   </span>
                                 )}
                                 {isNextToday && (
-                                  <span className="bg-blue-500/20 text-blue-400 px-2 py-0.5 rounded-full text-xs font-product-sans font-semibold">
+                                  <span className="bg-blue-500/20 text-blue-400 px-2 py-0.5 rounded-full text-xs  font-semibold">
                                     Next
                                   </span>
                                 )}
@@ -106,7 +104,7 @@ export default function WeeklySchedule({
 
                               <div className="space-y-1">
                                 <div
-                                  className={`flex items-center gap-2 text-xs font-product-sans ${
+                                  className={`flex items-center gap-2 text-xs  ${
                                     isPastToday ? 'text-accent/50' : 'text-accent/80'
                                   }`}
                                 >
@@ -114,7 +112,7 @@ export default function WeeklySchedule({
                                   <span>{classInfo.room}</span>
                                 </div>
                                 <div
-                                  className={`text-xs font-product-sans ${
+                                  className={`text-xs  ${
                                     isPastToday ? 'text-accent/40' : 'text-accent/70'
                                   }`}
                                 >
@@ -125,7 +123,7 @@ export default function WeeklySchedule({
                                   selection.studentType === 'lagger' &&
                                   classInfo.degree && (
                                     <div
-                                      className={`text-xs font-product-sans ${
+                                      className={`text-xs  ${
                                         isPastToday ? 'text-accent/30' : 'text-accent/50'
                                       }`}
                                     >
@@ -138,14 +136,14 @@ export default function WeeklySchedule({
                             {/* Right: Time info */}
                             <div className="text-right flex-shrink-0">
                               <div
-                                className={`font-product-sans font-semibold text-base ${
+                                className={` font-semibold text-base ${
                                   isPastToday ? 'text-white/50' : 'text-white'
                                 }`}
                               >
                                 {classInfo.start}
                               </div>
                               <div
-                                className={`font-product-sans text-xs ${
+                                className={` text-xs ${
                                   isPastToday ? 'text-accent/30' : 'text-accent/60'
                                 }`}
                               >
@@ -154,12 +152,12 @@ export default function WeeklySchedule({
 
                               {/* Status messages for today's classes */}
                               {isCurrentToday && (
-                                <div className="text-red-400 font-product-sans text-xs font-semibold mt-1">
+                                <div className="text-red-400  text-xs font-semibold mt-1">
                                   {calculateRemainingTime(classInfo.end)}
                                 </div>
                               )}
                               {isNextToday && (
-                                <div className="text-blue-400 font-product-sans text-xs font-semibold mt-1">
+                                <div className="text-blue-400  text-xs font-semibold mt-1">
                                   {calculateTimeUntilStart(classInfo.start)}
                                 </div>
                               )}
