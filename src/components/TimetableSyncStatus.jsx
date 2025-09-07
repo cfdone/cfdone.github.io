@@ -1,6 +1,41 @@
 import React from 'react'
-import { SyncStatusIcon, SyncStatusDisplay } from './Loading'
-import { RefreshCw } from 'lucide-react'
+import { Loader2, Wifi, WifiOff, CheckCircle, AlertCircle, Clock, RefreshCw } from 'lucide-react'
+
+const LoadingSpinner = ({ size = 20, className = '' }) => (
+  <Loader2 className={`animate-spin ${className}`} size={size} />
+)
+
+const SyncStatusIcon = ({ status, size = 16, className = '' }) => {
+  const accentClass = 'text-accent';
+  const icons = {
+    synced: <CheckCircle className={`${accentClass} ${className}`} size={size} />,
+    syncing: <LoadingSpinner size={size} className={`${accentClass} ${className}`} />,
+    pending: <Clock className={`${accentClass} ${className}`} size={size} />,
+    error: <AlertCircle className={`${accentClass} ${className}`} size={size} />,
+    offline: <WifiOff className={`${accentClass} ${className}`} size={size} />,
+    online: <Wifi className={`${accentClass} ${className}`} size={size} />
+  }
+  return icons[status] || icons.offline
+}
+
+const SyncStatusDisplay = ({ status, message, className = '' }) => {
+  const statusMessages = {
+    synced: 'Synced',
+    syncing: 'Syncing...',
+    pending: 'Pending sync',
+    error: 'Sync failed',
+    offline: 'Offline',
+    online: 'Online'
+  }
+  return (
+    <div className={`flex items-center gap-2 ${className}`}>
+      <SyncStatusIcon status={status} />
+      <span className="text-sm text-gray-600">
+        {message || statusMessages[status] || 'Unknown'}
+      </span>
+    </div>
+  )
+}
 
 const TimetableSyncStatus = ({ 
   syncStatus, 
@@ -32,7 +67,6 @@ const TimetableSyncStatus = ({
         status={syncStatus} 
         className="text-xs"
       />
-      
       {syncStatus === 'error' && onRetry && (
         <button
           onClick={onRetry}
@@ -42,7 +76,6 @@ const TimetableSyncStatus = ({
           Retry sync
         </button>
       )}
-      
       {!isOnline && (
         <p className="text-xs text-gray-500">
           Will sync when online

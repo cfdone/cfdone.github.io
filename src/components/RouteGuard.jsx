@@ -1,14 +1,15 @@
 import { Navigate } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
 import useTimetableSync from '../hooks/useTimetableSync'
-import {LoadingOverlay } from './Loading'
+import LoadingPulseOverlay from './Loading'
+// ...existing code...
 
 // Component to protect routes that require authentication
 export function AuthGuard({ children }) {
   const { user, loading } = useAuth()
 
   if (loading) {
-    return <LoadingOverlay/>
+  return <LoadingPulseOverlay />;
   }
 
   if (!user) {
@@ -18,13 +19,12 @@ export function AuthGuard({ children }) {
   return children
 }
 
-// Component to protect routes based on localStorage data or synced data
 export function ProtectedRoute({ children }) {
   const { user, loading } = useAuth()
   const { hasTimetable, loading: timetableLoading, syncStatus } = useTimetableSync()
 
   if (loading) {
-    return <LoadingOverlay />
+  return <LoadingPulseOverlay />;
   }
 
   if (!user) {
@@ -33,7 +33,7 @@ export function ProtectedRoute({ children }) {
 
   // Wait for initial sync attempt to complete
   if (timetableLoading || syncStatus === 'syncing') {
-    return <LoadingOverlay  />
+  return <LoadingPulseOverlay />;
   }
 
   // Also check localStorage as fallback for immediate check
@@ -64,7 +64,7 @@ export function OnboardingGuard({ children }) {
 
   if (loading) {
     console.log('OnboardingGuard - Auth loading')
-    return <LoadingOverlay />
+  return <LoadingPulseOverlay />;
   }
 
   if (!user) {
@@ -75,7 +75,7 @@ export function OnboardingGuard({ children }) {
   // Wait for initial sync attempt to complete
   if (timetableLoading || syncStatus === 'syncing') {
     console.log('OnboardingGuard - Timetable loading or syncing')
-    return <LoadingOverlay/>
+  return <LoadingPulseOverlay />;
   }
 
   // Also check localStorage as fallback for immediate check

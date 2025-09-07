@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Navigate, useNavigate } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
-import { Loader2 } from 'lucide-react'
+import LoadingPulseOverlay from '../components/Loading'
 import logo from '../assets/logo.svg'
 
 export default function Login() {
@@ -20,14 +20,7 @@ export default function Login() {
 
   // Show loading while auth state is being determined
   if (loading) {
-    return (
-      <div className="min-h-screen bg-black flex items-center justify-center">
-        <div className="text-center">
-          <Loader2 className="h-12 w-12 text-accent animate-spin mx-auto" />
-          <p className="mt-6 text-white/80 font-product-sans text-base">Loading...</p>
-        </div>
-      </div>
-    )
+  return <LoadingPulseOverlay />;
   }
 
   const handleGoogleSignIn = async () => {

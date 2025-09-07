@@ -14,15 +14,16 @@ import {
 import { timeToMinutes } from '../utils/timeUtils'
 import useTimetableSync from '../hooks/useTimetableSync'
 import TimetableSyncStatus from '../components/TimetableSyncStatus'
+import LoadingPulseOverlay from '../components/Loading'
 export default function Home() {
   const location = useLocation()
   const { 
     timetableData: syncedTimetableData, 
-   
     syncStatus, 
     isOnline, 
     hasTimetable,
-    retrySyncAction 
+    retrySyncAction,
+    loading: timetableLoading
   } = useTimetableSync()
   
   const [selection, setSelection] = useState(location.state || null)
@@ -242,8 +243,11 @@ export default function Home() {
 
   // We don't need to calculate this anymore since we're using actual values everywhere
 
+  if (timetableLoading || syncStatus === 'syncing') {
+  return <LoadingPulseOverlay />;
+  }
   if (!selection) {
-    return <NoTimetableData />
+    return <NoTimetableData />;
   }
 
   return (

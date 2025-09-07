@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom'
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useEffect } from 'react'
 import {
   RefreshCw,
   Info,
@@ -14,49 +14,54 @@ import {
   LogOut,
 } from 'lucide-react'
 import Navbar from '../components/Navbar'
+import LoadingPulseOverlay from '../components/Loading';
 import { useAuth } from '../hooks/useAuth'
 import useTimetableSync from '../hooks/useTimetableSync'
 import TimetableSyncStatus from '../components/TimetableSyncStatus'
-import { LoadingOverlay } from '../components/Loading'
 import logo from '../assets/logo.svg'
 
 export default function Settings() {
   const navigate = useNavigate()
   const { user, signOut } = useAuth()
-  const { 
-    syncStatus, 
-    isOnline, 
-    hasTimetable, 
-    resetTimetable, 
+  const {
+    syncStatus,
+    isOnline,
+    hasTimetable,
+    resetTimetable,
     retrySyncAction,
-    loading: syncLoading 
   } = useTimetableSync()
-  
+
   const [showResetConfirm, setShowResetConfirm] = useState(false)
   const [showClearCacheConfirm, setShowClearCacheConfirm] = useState(false)
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false)
   const [expandedAccordion, setExpandedAccordion] = useState(null)
   const [isResetting, setIsResetting] = useState(false)
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Fake loader for 2 seconds on mount
+  useEffect(() => {
+    const timer = setTimeout(() => setIsLoading(false), 2000);
+    return () => clearTimeout(timer);
+  }, []);
 
   const toggleAccordion = (accordion) => {
     setExpandedAccordion(expandedAccordion === accordion ? null : accordion)
   }
 
   const handleResetOnboarding = useCallback(async () => {
-    setIsResetting(true)
+    setIsResetting(true);
     try {
       // Reset using the sync hook (will clear both local and remote data)
-      await resetTimetable()
-
+      await resetTimetable();
       // Navigate back to splash/onboarding
-      navigate('/stepone', { replace: true })
+      navigate('/stepone', { replace: true });
     } catch {
       // Error handling
     } finally {
-      setIsResetting(false)
-      setShowResetConfirm(false)
+      setIsResetting(false);
+      setShowResetConfirm(false);
     }
-  }, [navigate, resetTimetable, setIsResetting])
+  }, [navigate, resetTimetable]);
   
   const handleClearCache = useCallback(async () => {
     try {
@@ -131,100 +136,95 @@ export default function Settings() {
 
   return (
     <>
-      {(syncLoading || isResetting) && (
-        <LoadingOverlay
-        />
-      )}
+      {(isLoading || isResetting) && <LoadingPulseOverlay />}
       <div className="fixed inset-0 bg-black">
-      {/* Simplified background decoration - same as Home.jsx */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-20 right-10 w-48 h-48 bg-accent/3 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-40 left-10 w-64 h-64 bg-purple-500/2 rounded-full blur-3xl"></div>
-      </div>
-
-      <div className="flex flex-col h-full relative z-10">
-        {/* Fixed Header */}
-        <div className="flex-shrink-0 p-4 pt-12 max-w-md mx-auto w-full">
-          <div className="flex items-center justify-between mb-6">
-            <div>
-              <h1 className="font-product-sans text-white text-2xl font-medium mb-1">Settings</h1>
-              <p className="text-accent font-product-sans">Manage your preferences</p>
-            </div>
-            <img src={logo} alt="" className="h-10 w-10" />
-          </div>
-
-        
+        {/* Simplified background decoration - same as Home.jsx */}
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="absolute top-20 right-10 w-48 h-48 bg-accent/3 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-40 left-10 w-64 h-64 bg-purple-500/2 rounded-full blur-3xl"></div>
         </div>
 
-        {/* Scrollable Content Container */}
-        <div className="flex-1 overflow-hidden">
-          <div className="h-full overflow-y-auto no-scrollbar p-4 max-w-md mx-auto text-white">
-            {/* Account Section */}
-            {user && (
+        <div className="flex flex-col h-full relative z-10">
+          {/* Fixed Header */}
+          <div className="flex-shrink-0 p-4 pt-12 max-w-md mx-auto w-full">
+            <div className="flex items-center justify-between mb-6">
+              <div>
+                <h1 className="font-product-sans text-white text-2xl font-medium mb-1">Settings</h1>
+                <p className="text-accent font-product-sans">Manage your preferences</p>
+              </div>
+              <img src={logo} alt="" className="h-10 w-10" />
+            </div>
+          </div>
+
+          {/* Scrollable Content Container */}
+          <div className="flex-1 overflow-hidden">
+            <div className="h-full overflow-y-auto no-scrollbar p-4 max-w-md mx-auto text-white">
+              {/* Account Section */}
+              {user && (
+                <div className="mb-6">
+                  <h2 className="text-white/50 text-xs font-product-sans uppercase tracking-wider mb-3 px-2">
+                    Account
+                  </h2>
+                  <div className="bg-white/5 p-4 rounded-xl border border-accent/10">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center">
+                        {user.user_metadata?.avatar_url ? (
+                          <img 
+                            src={user.user_metadata.avatar_url} 
+                            alt="Profile" 
+                            className="w-10 h-10 rounded-full mr-3"
+                          />
+                        ) : (
+                          <div className="w-10 h-10 bg-accent/20 rounded-full mr-3 flex items-center justify-center">
+                            <span className="text-accent font-medium">
+                              {user.email?.charAt(0).toUpperCase()}
+                            </span>
+                          </div>
+                        )}
+                        <div>
+                          <p className="text-white font-medium">
+                            {user.user_metadata?.full_name || user.email}
+                          </p>
+                          <p className="text-white/70 text-sm">{user.email}</p>
+                        </div>
+                      </div>
+                      <button
+                        onClick={() => setShowLogoutConfirm(true)}
+                        className="p-2 hover:bg-white/10 rounded-lg transition-colors"
+                      >
+                        <LogOut className="w-5 h-5 text-white/70" />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Current Timetable Section */}
               <div className="mb-6">
                 <h2 className="text-white/50 text-xs font-product-sans uppercase tracking-wider mb-3 px-2">
-                  Account
+                  Current Timetable
                 </h2>
                 <div className="bg-white/5 p-4 rounded-xl border border-accent/10">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center">
-                      {user.user_metadata?.avatar_url ? (
-                        <img 
-                          src={user.user_metadata.avatar_url} 
-                          alt="Profile" 
-                          className="w-10 h-10 rounded-full mr-3"
-                        />
-                      ) : (
-                        <div className="w-10 h-10 bg-accent/20 rounded-full mr-3 flex items-center justify-center">
-                          <span className="text-accent font-medium">
-                            {user.email?.charAt(0).toUpperCase()}
-                          </span>
-                        </div>
-                      )}
-                      <div>
-                        <p className="text-white font-medium">
-                          {user.user_metadata?.full_name || user.email}
-                        </p>
-                        <p className="text-white/70 text-sm">{user.email}</p>
-                      </div>
+                  <div className="max-h-32 overflow-y-auto pr-2 no-scrollbar">
+                    <p className="text-white/70 text-sm font-product-sans mb-2">{getTimetableInfo()}</p>
+                    <div className="text-xs text-white/50 mb-1">
+                      You can change your timetable setup anytime by resetting onboarding
                     </div>
-                    <button
-                      onClick={() => setShowLogoutConfirm(true)}
-                      className="p-2 hover:bg-white/10 rounded-lg transition-colors"
-                    >
-                      <LogOut className="w-5 h-5 text-white/70" />
-                    </button>
                   </div>
                 </div>
               </div>
-            )}
-
-            {/* Current Timetable Section */}
-            <div className="mb-6">
-              <h2 className="text-white/50 text-xs font-product-sans uppercase tracking-wider mb-3 px-2">
-                Current Timetable
-              </h2>
-              <div className="bg-white/5 p-4 rounded-xl border border-accent/10">
-                <div className="max-h-32 overflow-y-auto pr-2 no-scrollbar">
-                  <p className="text-white/70 text-sm font-product-sans mb-2">{getTimetableInfo()}</p>
-                  <div className="text-xs text-white/50 mb-1">
-                    You can change your timetable setup anytime by resetting onboarding
-                  </div>
-                </div>
-              </div>
-            </div>
-            {/* Settings Options */}
-            <div className="space-y-3">
-              {/* Timetable Section */}
-              <div className="mb-6">
-                <h2 className="text-white/50 text-xs font-product-sans uppercase tracking-wider mb-3 px-2">
-                  Timetable
-                </h2>
-                <div className="space-y-2">
-                  {/* Sync Status Display */}
-                  {hasTimetable() && (
-                    <div className="w-full bg-white/5 p-4 rounded-xl border border-accent/10">
-                      <div className="flex items-center justify-between">
+              {/* Settings Options */}
+              <div className="space-y-3">
+                {/* Timetable Section */}
+                <div className="mb-6">
+                  <h2 className="text-white/50 text-xs font-product-sans uppercase tracking-wider mb-3 px-2">
+                    Timetable
+                  </h2>
+                  <div className="space-y-2">
+                    {/* Sync Status Display */}
+                    {hasTimetable() && (
+                      <div className="w-full bg-white/5 p-4 rounded-xl border border-accent/10">
+                        <div className="flex items-center justify-between">
                         <div className="flex items-center">
                           <div className="mr-3">
                             <TimetableSyncStatus 
@@ -617,7 +617,6 @@ export default function Settings() {
         </div>
       )}
       </div>
-    </>
+  </>
   )
 }
-  

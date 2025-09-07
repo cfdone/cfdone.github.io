@@ -1,4 +1,3 @@
-import React from 'react';
 import Navbar from '../components/Navbar';
 import logo from '../assets/logo.svg';
 
@@ -117,73 +116,10 @@ function UniHub() {
                     <div className="w-16 h-16 rounded-full overflow-hidden mr-4 flex-shrink-0">
                       <img 
                         src="https://cfd.nu.edu.pk/wp-content/uploads/2022/08/Dr-Usama-235x300.jpg" 
-                        alt="Dr. Muhammad Usama" 
+                        alt="Dr. Usama Khalid" 
                         className="w-full h-full object-cover"
                       />
-                    </div>
-                    <div>
-                      <h4 className="text-white font-semibold text-base mb-1">Dr. Muhammad Usama</h4>
-                      <h6 className="text-accent text-sm mb-2">Associate Professor</h6>
-                      <div className="text-white/70 text-sm">
-                        <p>m.usama@nu.edu.pk</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
 
-              {/* Assistant Professors */}
-              <div>
-                <h2 className="text-white/50 text-xs font-product-sans uppercase tracking-wider mb-3 px-2">
-                  Assistant Professors
-                </h2>
-                <div className="grid grid-cols-1 gap-2">
-                  <div className="bg-white/5 p-4 rounded-xl border border-accent/10 flex">
-                    <div className="w-16 h-16 rounded-full overflow-hidden mr-4 flex-shrink-0">
-                      <img 
-                        src="https://cfd.nu.edu.pk/wp-content/uploads/2019/09/hashim-235x300.jpg" 
-                        alt="Dr. Hashim Yasin" 
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                    <div>
-                      <h4 className="text-white font-semibold text-base mb-1">Dr. Hashim Yasin</h4>
-                      <h6 className="text-accent text-sm mb-2">Assistant Professor</h6>
-                      <div className="text-white/70 text-sm">
-                        <p>hashim.yasin@nu.edu.pk</p>
-                        <span className="inline-block bg-accent/20 text-accent text-xs py-1 px-2 rounded mt-2">HEC approved PhD Supervisor</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="bg-white/5 p-4 rounded-xl border border-accent/10 flex">
-                    <div className="w-16 h-16 rounded-full overflow-hidden mr-4 flex-shrink-0">
-                      <img 
-                        src="https://cfd.nu.edu.pk/wp-content/uploads/2023/12/6742.1-235x300.jpg" 
-                        alt="Dr. Iqra Muhammad" 
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                    <div>
-                      <h4 className="text-white font-semibold text-base mb-1">Dr. Iqra Muhammad</h4>
-                      <h6 className="text-accent text-sm mb-2">Assistant Professor</h6>
-                      <div className="text-white/70 text-sm">
-                        <p>Iqra.Muhammad@nu.edu.pk</p>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="bg-white/5 p-4 rounded-xl border border-accent/10 flex">
-                    <div className="w-16 h-16 rounded-full overflow-hidden mr-4 flex-shrink-0">
-                      <img 
-                        src="https://cfd.nu.edu.pk/wp-content/uploads/2019/09/Dr.-Rabia-Maqsood-235x300.jpg" 
-                        alt="Dr. Rabia Maqsood" 
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                    <div>
-                      <h4 className="text-white font-semibold text-base mb-1">Dr. Rabia Maqsood</h4>
-                      <h6 className="text-accent text-sm mb-2">Assistant Professor</h6>
                       <div className="text-white/70 text-sm">
                         <p>rabia.maqsood@nu.edu.pk</p>
                         <span className="inline-block bg-accent/20 text-accent text-xs py-1 px-2 rounded mt-2">HEC approved PhD Supervisor</span>
