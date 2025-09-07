@@ -11,17 +11,13 @@ export default function WeeklySchedule({
   calculateRemainingTime,
   calculateTimeUntilStart,
 }) {
-  // Only show weekdays (Monday-Friday)
-  const weekdaysOnly = (day) => {
-    // Only include Monday through Friday
-    return ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'].includes(day);
-  }
   
   return (
     <div className="space-y-3">
-      {Object.entries(timetableData)
-        .filter(([day]) => weekdaysOnly(day))
-        .map(([day, classes]) => {
+        {["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
+          .filter(day => Object.prototype.hasOwnProperty.call(timetableData, day))
+          .map(day => {
+            const classes = timetableData[day];
           const isToday = day === getCurrentDay()
           return (
             <div key={day}>
@@ -34,7 +30,7 @@ export default function WeeklySchedule({
                     {isToday && (
                       <div className="w-2 h-2 bg-accent rounded-full animate-pulse"></div>
                     )}
-                    <h3 className="text-white font-product-sans font-bold">
+                    <h3 className="text-white font-product-sans font-semibold">
                       {day} {isToday && <span className="text-accent text-sm">(Today)</span>}
                     </h3>
                   </div>
@@ -87,19 +83,22 @@ export default function WeeklySchedule({
                                   }`}
                                 ></div>
                                 <h4
-                                  className={`font-product-sans font-bold text-sm ${
+                                  className={`font-product-sans font-semibold text-sm ${
                                     isPastToday ? 'text-white/60' : 'text-white'
                                   }`}
                                 >
                                   {classInfo.course}
+                                  {classInfo.section && (
+                                    <span className="text-xs text-white/60 ml-1">(Section {classInfo.section})</span>
+                                  )}
                                 </h4>
                                 {isCurrentToday && (
-                                  <span className="bg-red-500/20 text-red-400 px-2 py-0.5 rounded-full text-xs font-product-sans font-medium">
+                                  <span className="bg-red-500/20 text-red-400 px-2 py-0.5 rounded-full text-xs font-product-sans font-semibold">
                                     Live
                                   </span>
                                 )}
                                 {isNextToday && (
-                                  <span className="bg-blue-500/20 text-blue-400 px-2 py-0.5 rounded-full text-xs font-product-sans font-medium">
+                                  <span className="bg-blue-500/20 text-blue-400 px-2 py-0.5 rounded-full text-xs font-product-sans font-semibold">
                                     Next
                                   </span>
                                 )}
@@ -139,7 +138,7 @@ export default function WeeklySchedule({
                             {/* Right: Time info */}
                             <div className="text-right flex-shrink-0">
                               <div
-                                className={`font-product-sans font-bold text-base ${
+                                className={`font-product-sans font-semibold text-base ${
                                   isPastToday ? 'text-white/50' : 'text-white'
                                 }`}
                               >
@@ -155,12 +154,12 @@ export default function WeeklySchedule({
 
                               {/* Status messages for today's classes */}
                               {isCurrentToday && (
-                                <div className="text-red-400 font-product-sans text-xs font-medium mt-1">
+                                <div className="text-red-400 font-product-sans text-xs font-semibold mt-1">
                                   {calculateRemainingTime(classInfo.end)}
                                 </div>
                               )}
                               {isNextToday && (
-                                <div className="text-blue-400 font-product-sans text-xs font-medium mt-1">
+                                <div className="text-blue-400 font-product-sans text-xs font-semibold mt-1">
                                   {calculateTimeUntilStart(classInfo.start)}
                                 </div>
                               )}

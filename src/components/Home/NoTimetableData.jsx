@@ -9,7 +9,7 @@ export default function NoTimetableData() {
           <div className="w-24 h-24 bg-gradient-to-br from-accent/20 to-purple-500/20 rounded-full flex items-center justify-center mx-auto mb-6">
             <BookOpen className="w-12 h-12 text-accent" />
           </div>
-          <h2 className="font-product-sans text-white font-bold text-2xl mb-4">
+          <h2 className="font-product-sans text-white font-semibold text-2xl mb-4">
             No Timetable Data
           </h2>
           <p className="text-white/70 font-product-sans text-center max-w-sm">

@@ -76,7 +76,7 @@ export default function Regular() {
           <img src={logo} alt="Logo" className="w-15 h-15 user-select-none mb-2" />
           <StepTrack currentStep={2} totalSteps={2} />
           <div className="text-center mb-6">
-            <h3 className=" font-product-sans text-accent font-black text-xl mb-2">
+            <h3 className=" font-product-sans text-accent font-semibold text-xl mb-2">
               Select Degree, Semester & Section
             </h3>
             <p className="text-white/70 text-sm font-product-sans">
@@ -90,7 +90,7 @@ export default function Regular() {
               <div className="flex flex-col gap-4 max-h-64">
                 {/* Degree Selection */}
                 <div>
-                  <div className="font-bold text-white mb-2">Degree</div>
+                  <div className="font-semibold text-white mb-2">Degree</div>
                   <div className="flex flex-col gap-3">
                     {degreeNames.map(deg => (
                       <button
@@ -111,7 +111,7 @@ export default function Regular() {
                       >
                         <div className="flex items-center justify-between">
                           <div>
-                            <div className="font-bold mb-2">{deg}</div>
+                            <div className="font-semibold mb-2">{deg}</div>
                             <div className="text-sm opacity-80">Degree</div>
                           </div>
                           <div className="text-2xl">
@@ -125,7 +125,7 @@ export default function Regular() {
                 {/* Semester Selection */}
                 {selectedDegree && (
                   <div>
-                    <div className="font-bold text-white mb-2">Semester</div>
+                    <div className="font-semibold text-white mb-2">Semester</div>
                     <div className="flex flex-col gap-3">
                       {semesterNames.map(sem => (
                         <button
@@ -145,7 +145,7 @@ export default function Regular() {
                         >
                           <div className="flex items-center justify-between">
                             <div>
-                              <div className="font-bold mb-2">{sem}</div>
+                              <div className="font-semibold mb-2">{sem}</div>
                               <div className="text-sm opacity-80">Semester</div>
                             </div>
                             <div className="text-2xl">
@@ -160,7 +160,7 @@ export default function Regular() {
                 {/* Section Selection */}
                 {selectedSemester && (
                   <div>
-                    <div className="font-bold text-white mb-2">Section</div>
+                    <div className="font-semibold text-white mb-2">Section</div>
                     <div className="flex flex-col gap-3">
                       {sectionNames.map(sec => (
                         <button
@@ -177,7 +177,7 @@ export default function Regular() {
                         >
                           <div className="flex items-center justify-between">
                             <div>
-                              <div className="font-bold mb-2">{sec}</div>
+                              <div className="font-semibold mb-2">{sec}</div>
                               <div className="text-sm opacity-80">Section</div>
                             </div>
                             <Tag className={`w-6 h-6 ${selectedSection === sec ? 'text-white' : 'text-accent'}`} />

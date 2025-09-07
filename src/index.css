@@ -1,3 +1,11 @@
+@font-face {
+  font-family: "Figtree";
+  src: url("https://fonts.gstatic.com/s/figtree/v8/_Xms-HUzqDCFdgfMm4S9DQ.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 300 900;
+  font-display: swap;
+  unicode-range: U+0-FF, U+131, U+152-153, U+2BB-2BC, U+2C6, U+2DA, U+2DC, U+304, U+308, U+329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
 @import 'tailwindcss';
 @import 'tailwindcss-safe-area';
 @font-face {
@@ -13,11 +21,12 @@
 @theme {
   --font-product-sans: 'Product Sans', sans-serif;
   --color-accent: #a098ff;
+  --font-figtree: 'Figtree', sans-serif;
 }
 
 /* Apply Product Sans globally to all elements */
 * {
-  font-family: 'Product Sans', sans-serif;
+  font-family: var(--font-figtree);
 }
 .user-select-none {
   user-select: none;
@@ -42,4 +51,29 @@
 }
 .no-scrollbar::-webkit-scrollbar-button {
   display: none;
+}
+
+.animate-shine{
+ animation: shine 5s linear infinite;
+}
+
+@keyframes shine {
+  0% { background-position: 100% }
+  100% { background-position: -100% }
+}
+button{
+  background-image: linear-gradient(135deg,#a980ff,#182fff99) 0 0/200% 200%;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: #fff;
+  margin-bottom: .2rem;
+  letter-spacing: -1px;
+  background: linear-gradient(135deg, #fff, #b3adff, #a098ff, #7c6fd6, #a098ff, #fff);
+    background-size: auto;
+    background-clip: border-box;
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }

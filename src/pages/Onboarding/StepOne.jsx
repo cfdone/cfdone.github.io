@@ -18,7 +18,7 @@ export default function StepOne() {
           <div className="flex flex-col items-center gap-4 px-2 py-4 w-full max-w-md mx-auto overflow-y-auto flex-1">
             <div className="w-full">
               <div className="text-center mb-6">
-                <h3 className=" font-product-sans text-accent font-black text-2xl mb-2">
+                <h3 className=" font-product-sans text-accent font-semibold text-2xl mb-2">
                   Choose Your Student Type
                 </h3>
                 <p className="text-white/70 text-base font-product-sans">
@@ -43,7 +43,7 @@ export default function StepOne() {
                 >
                   <div className="flex items-center justify-between">
                     <div>
-                      <div className="font-bold mb-2">Regular Student</div>
+                      <div className="font-semibold mb-2">Regular Student</div>
                       <div className="text-sm opacity-80">
                         View the complete timetable for my section
                       </div>
@@ -70,7 +70,7 @@ export default function StepOne() {
                 >
                   <div className="flex items-center justify-between">
                     <div>
-                      <div className="font-bold mb-2">Lagger Student</div>
+                      <div className="font-semibold mb-2">Lagger Student</div>
                       <div className="text-sm opacity-80">
                         I need to resolve schedule conflicts
                       </div>
@@ -97,7 +97,7 @@ export default function StepOne() {
                 >
                   <div className="flex items-center justify-between">
                     <div>
-                      <div className="font-bold mb-2">Custom</div>
+                      <div className="font-semibold mb-2">Custom</div>
                       <div className="text-sm opacity-80">
                         I Want To Build My Own Custom Timetable
                       </div>

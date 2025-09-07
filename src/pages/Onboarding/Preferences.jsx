@@ -126,7 +126,21 @@ export default function Preferences() {
     setExpandedSubjects(newExpanded)
   }
 
-  const handleContinue = () => {
+  // Loader state for button
+  const [isCreating, setIsCreating] = useState(false)
+  const [progress, setProgress] = useState(0)
+
+  const handleCreateTimetable = async () => {
+    setIsCreating(true)
+    setProgress(0)
+    let currentProgress = 0
+    const progressIncrement = 2
+    const intervalTime = 20
+    while (currentProgress < 100) {
+      currentProgress += progressIncrement
+      setProgress(Math.min(currentProgress, 100))
+      await new Promise(resolve => setTimeout(resolve, intervalTime))
+    }
     // Go to preview step with selected subjects and preferences
     navigate('/preview', {
       state: {
@@ -148,7 +162,7 @@ export default function Preferences() {
         <img src={logo} alt="Logo" className="w-15 h-15 user-select-none mb-2" />
         <StepTrack currentStep={3} totalSteps={4} />
         <div className="text-center mb-6">
-          <h3 className="font-product-sans text-accent font-black text-xl mb-2">
+          <h3 className="font-product-sans text-accent font-semibold text-xl mb-2">
             Set Your Preferences
           </h3>
           <p className="text-white/70 text-sm font-product-sans">
@@ -169,7 +183,7 @@ export default function Preferences() {
                 <Target className="w-8 h-8 text-accent" />
               </div>
               <div>
-                <h4 className="text-accent font-medium text-lg">Parent Section</h4>
+                <h4 className="text-accent font-semibold text-lg">Parent Section</h4>
                 <p className="text-white/60 text-sm">
                   Your main section for maximum subject placement
                 </p>
@@ -178,7 +192,7 @@ export default function Preferences() {
 
             {/* Degree Selection */}
             <div className="mb-4">
-              <label className="block text-white font-medium mb-3 text-sm">
+              <label className="block text-white font-semibold mb-3 text-sm">
                 Choose Your Degree <span className="text-red-400">*</span>
               </label>
               <div className="grid grid-cols-2 gap-2">
@@ -195,7 +209,7 @@ export default function Preferences() {
                         },
                       }))
                     }
-                    className={`p-2 rounded-lg border text-xs font-medium transition-all ${
+                    className={`p-2 rounded-lg border text-xs font-semibold transition-all ${
                       userPreferences.parentSection.degree === degree
                         ? 'bg-accent text-white border-accent shadow-lg'
                         : 'bg-white/5 text-white/70 border-white/10 hover:border-accent/30 hover:bg-accent/5'
@@ -210,7 +224,7 @@ export default function Preferences() {
             {/* Semester Selection */}
             {userPreferences.parentSection.degree && (
               <div className="mb-4">
-                <label className="block text-white font-medium mb-3 text-sm">
+                <label className="block text-white font-semibold mb-3 text-sm">
                   Choose Your Semester <span className="text-red-400">*</span>
                 </label>
                 <div className="grid grid-cols-4 gap-1.5">
@@ -227,7 +241,7 @@ export default function Preferences() {
                           },
                         }))
                       }
-                      className={`p-2 rounded-lg border text-xs font-medium transition-all ${
+                      className={`p-2 rounded-lg border text-xs font-semibold transition-all ${
                         userPreferences.parentSection.semester === semester
                           ? 'bg-accent text-white border-accent shadow-lg'
                           : 'bg-white/5 text-white/70 border-white/10 hover:border-accent/30 hover:bg-accent/5'
@@ -249,7 +263,7 @@ export default function Preferences() {
             {/* Section Selection */}
             {userPreferences.parentSection.degree && userPreferences.parentSection.semester && (
               <div className="mb-4">
-                <label className="block text-white font-medium mb-3 text-sm">
+                <label className="block text-white font-semibold mb-3 text-sm">
                   Choose Your Section <span className="text-red-400">*</span>
                 </label>
                 <div className="grid grid-cols-8 gap-1.5">
@@ -267,7 +281,7 @@ export default function Preferences() {
                           },
                         }))
                       }
-                      className={`p-2 rounded-lg border text-xs font-medium transition-all ${
+                      className={`p-2 rounded-lg border text-xs font-semibold transition-all ${
                         userPreferences.parentSection.section === section
                           ? 'bg-accent text-white border-accent shadow-lg'
                           : 'bg-white/5 text-white/70 border-white/10 hover:border-accent/30 hover:bg-accent/5'
@@ -289,11 +303,11 @@ export default function Preferences() {
               userPreferences.parentSection.semester &&
               userPreferences.parentSection.section && (
                 <div className="mt-4 p-3 bg-accent/20 border border-accent/30 rounded-lg">
-                  <div className="text-accent font-medium text-sm mb-1 flex items-center gap-2">
+                  <div className="text-accent font-semibold text-sm mb-1 flex items-center gap-2">
                     <CheckCircle className="w-4 h-4" />
                     Selected Parent Section:
                   </div>
-                  <div className="text-accent text-lg font-bold">
+                  <div className="text-accent text-lg font-semibold">
                     {userPreferences.parentSection.degree} • Semester{' '}
                     {userPreferences.parentSection.semester} • Section{' '}
                     {userPreferences.parentSection.section}
@@ -309,7 +323,7 @@ export default function Preferences() {
                 <Settings className="w-6 h-6 text-accent" />
               </div>
               <div>
-                <h4 className="text-white font-medium text-lg">Manual Seat Selection</h4>
+                <h4 className="text-white font-semibold text-lg">Manual Seat Selection</h4>
                 <p className="text-white/60 text-sm">
                   Specify exact seat availability for each subject-section combination
                 </p>
@@ -318,7 +332,7 @@ export default function Preferences() {
 
             {/* Manual Seat Selection Content */}
             <div className="mb-4">
-              <h4 className="text-white font-medium text-lg mb-2">
+              <h4 className="text-white font-semibold text-lg mb-2">
                 Subject-Specific Seat Availability
               </h4>
               <p className="text-white/60 text-sm">
@@ -341,7 +355,7 @@ export default function Preferences() {
                             <Book className="w-5 h-5 text-accent" />
                           </div>
                           <div>
-                            <div className="text-accent font-medium">{subject.name}</div>
+                            <div className="text-accent font-semibold">{subject.name}</div>
                             <div className="text-white/60 text-sm">
                               {subject.locations.length} sections available
                             </div>
@@ -378,7 +392,7 @@ export default function Preferences() {
                             >
                               <div className="flex items-center justify-between mb-2">
                                 <div>
-                                  <div className="text-white text-sm font-medium flex items-center gap-2">
+                                  <div className="text-white text-sm font-semibold flex items-center gap-2">
                                     {location.degree} • Semester {location.semester} • Section{' '}
                                     {location.section}
                                     {isParentSection && (
@@ -407,7 +421,7 @@ export default function Preferences() {
                                       },
                                     }))
                                   }
-                                  className={`flex-1 px-2 py-1.5 rounded-md text-xs font-medium transition-all flex items-center justify-center gap-1 ${
+                                  className={`flex-1 px-2 py-1.5 rounded-md text-xs font-semibold transition-all flex items-center justify-center gap-1 ${
                                     currentStatus === true
                                       ? 'bg-green-500 text-white'
                                       : 'bg-white/10 text-white/70 hover:bg-green-500/20'
@@ -426,7 +440,7 @@ export default function Preferences() {
                                       },
                                     }))
                                   }
-                                  className={`flex-1 px-2 py-1.5 rounded-md text-xs font-medium transition-all flex items-center justify-center gap-1 ${
+                                  className={`flex-1 px-2 py-1.5 rounded-md text-xs font-semibold transition-all flex items-center justify-center gap-1 ${
                                     currentStatus === false
                                       ? 'bg-red-500 text-white'
                                       : 'bg-white/10 text-white/70 hover:bg-red-500/20'
@@ -445,7 +459,7 @@ export default function Preferences() {
                                       }
                                     })
                                   }
-                                  className={`px-2 py-1.5 rounded-md text-xs font-medium transition-all ${
+                                  className={`px-2 py-1.5 rounded-md text-xs font-semibold transition-all ${
                                     currentStatus === undefined
                                       ? 'bg-yellow-500 text-black'
                                       : 'bg-white/10 text-white/70 hover:bg-yellow-500/20'
@@ -484,17 +498,28 @@ export default function Preferences() {
             Back
           </button>
           <button
-            className={`font-product-sans px-4 py-3 rounded-xl w-full text-[15px] transition shadow-md
+            className={`font-product-sans px-4 py-3 rounded-xl w-full text-[15px] transition shadow-md flex items-center justify-center
                             ${
                               canContinue
                                 ? 'bg-accent text-white hover:bg-accent/80'
                                 : 'bg-accent/40 text-white/60 cursor-not-allowed'
                             }
                         `}
-            disabled={!canContinue}
-            onClick={handleContinue}
+            disabled={!canContinue || isCreating}
+            onClick={handleCreateTimetable}
           >
-            Next
+            {isCreating ? (
+              <div className="flex flex-col items-center w-full">
+                <div className="w-full bg-white/20 rounded-full h-1.5">
+                  <div
+                    className="bg-white h-1.5 rounded-full transition-all duration-75 ease-out"
+                    style={{ width: `${progress}%` }}
+                  ></div>
+                </div>
+              </div>
+            ) : (
+              'Create Timetable'
+            )}
           </button>
         </div>
       </div>

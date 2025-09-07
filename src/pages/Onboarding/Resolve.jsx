@@ -72,6 +72,11 @@ export default function Resolve() {
       if (isSelected) {
         return prev.filter(s => s.name !== subject.name)
       } else {
+        // Enforce maximum 10 subjects limit
+        if (prev.length >= 10) {
+          alert('You can select a maximum of 10 subjects')
+          return prev
+        }
         return [...prev, subject]
       }
     })
@@ -136,11 +141,11 @@ export default function Resolve() {
         <img src={logo} alt="Logo" className="w-15 h-15 user-select-none mb-2" />
         <StepTrack currentStep={2} totalSteps={4} />
         <div className="text-center mb-4">
-          <h3 className="font-product-sans text-accent font-black text-xl mb-2">
-            Select Your Subjects
+          <h3 className="font-product-sans text-accent font-semibold text-xl mb-2">
+            Select Your Subjects ({selectedSubjects.length}/10)
           </h3>
           <p className="text-white/70 text-sm font-product-sans">
-            Choose the subjects you want to include in your timetable
+            Choose up to 10 subjects for your timetable
           </p>
         </div>
         
@@ -165,7 +170,7 @@ export default function Resolve() {
           {filteredSubjects.length === 0 ? (
             <div className="text-center p-6 text-white/70">
               <BookOpen className="w-12 h-12 mx-auto mb-2 text-accent/50" />
-              <p className="text-lg font-medium">No subjects found</p>
+              <p className="text-lg font-semibold">No subjects found</p>
               <p className="text-sm">Try a different search term</p>
             </div>
           ) : (
@@ -200,7 +205,7 @@ export default function Resolve() {
               >
                 <div className="flex items-start justify-between">
                   <div className="flex-1">
-                    <div className="font-bold mb-2 flex items-center gap-2">
+                    <div className="font-semibold mb-2 flex items-center gap-2">
                       {subject.name}
                       {showAbbreviation && (
                         <span className="text-xs px-2 py-0.5 bg-white/20 rounded text-white/90">
@@ -222,7 +227,7 @@ export default function Resolve() {
                       )}
                     </div>
                     <div className="text-sm opacity-80 space-y-1">
-                      <div className="font-medium">
+                      <div className="font-semibold">
                         Available in {subject.locations.length} section
                         {subject.locations.length > 1 ? 's' : ''}:
                       </div>
@@ -269,7 +274,7 @@ export default function Resolve() {
             disabled={selectedSubjects.length === 0}
             onClick={handleContinueToPreferences}
           >
-            Next ({selectedSubjects.length} selected)
+            Next ({selectedSubjects.length}/10 selected)
           </button>
         </div>
       </div>

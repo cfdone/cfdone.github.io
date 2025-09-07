@@ -1,35 +1,32 @@
 import React from 'react'
 import { Loader2, Wifi, WifiOff, CheckCircle, AlertCircle, Clock } from 'lucide-react'
-
 const LoadingSpinner = ({ size = 20, className = '' }) => (
   <Loader2 className={`animate-spin ${className}`} size={size} />
 )
 
 const SyncStatusIcon = ({ status, size = 16, className = '' }) => {
+  const accentClass = 'text-accent';
   const icons = {
-    synced: <CheckCircle className={`text-green-500 ${className}`} size={size} />,
-    syncing: <LoadingSpinner size={size} className={`text-blue-500 ${className}`} />,
-    pending: <Clock className={`text-yellow-500 ${className}`} size={size} />,
-    error: <AlertCircle className={`text-red-500 ${className}`} size={size} />,
-    offline: <WifiOff className={`text-gray-500 ${className}`} size={size} />,
-    online: <Wifi className={`text-green-500 ${className}`} size={size} />
+    synced: <CheckCircle className={`${accentClass} ${className}`} size={size} />,
+    syncing: <LoadingSpinner size={size} className={`${accentClass} ${className}`} />,
+    pending: <Clock className={`${accentClass} ${className}`} size={size} />,
+    error: <AlertCircle className={`${accentClass} ${className}`} size={size} />,
+    offline: <WifiOff className={`${accentClass} ${className}`} size={size} />,
+    online: <Wifi className={`${accentClass} ${className}`} size={size} />
   }
   
   return icons[status] || icons.offline
 }
 
-const LoadingOverlay = ({ message = 'Loading...' }) => (
+const LoadingOverlay = () => (
   <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-    <div className="bg-white rounded-lg p-6 flex flex-col items-center gap-3 max-w-sm mx-4">
-      <LoadingSpinner size={32} className="text-blue-500" />
-      <p className="text-gray-700 text-center">{message}</p>
-    </div>
+    <LoadingSpinner size={32} className="text-accent" />
   </div>
 )
 
 const InlineLoading = ({ message = 'Loading...', size = 16 }) => (
-  <div className="flex items-center gap-2 text-gray-600">
-    <LoadingSpinner size={size} />
+  <div className="flex items-center gap-2 text-accent">
+    <LoadingSpinner size={size} className="text-accent" />
     <span className="text-sm">{message}</span>
   </div>
 )
@@ -40,7 +37,7 @@ const ButtonLoading = ({ loading, children, ...props }) => (
     disabled={loading || props.disabled}
     className={`flex items-center justify-center gap-2 ${props.className || ''}`}
   >
-    {loading && <LoadingSpinner size={16} />}
+    {loading && <LoadingSpinner size={16} className="text-accent" />}
     {children}
   </button>
 )
@@ -73,3 +70,4 @@ export {
   ButtonLoading,
   SyncStatusDisplay
 }
+

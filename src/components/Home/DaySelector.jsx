@@ -8,18 +8,13 @@ export default function DaySelector({ onDaySelect, currentDay }) {
     const today = new Date()
     const fullNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
     const shortNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
-    
-    // Get the start of the current week (Sunday)
-    const startOfWeek = new Date(today)
-    const dayOfWeek = today.getDay()
-    startOfWeek.setDate(today.getDate() - dayOfWeek)
-    
-    // Generate all 7 days of the week
+
+    // Generate today and next 6 days
     for (let i = 0; i < 7; i++) {
-      const day = new Date(startOfWeek)
-      day.setDate(startOfWeek.getDate() + i)
+      const day = new Date(today)
+      day.setDate(today.getDate() + i)
       const dayNum = day.getDay()
-      
+
       const isToday = day.toDateString() === today.toDateString();
       const dayInfo = {
         fullName: fullNames[dayNum],
@@ -27,8 +22,7 @@ export default function DaySelector({ onDaySelect, currentDay }) {
         date: day.getDate(),
         month: day.toLocaleDateString('en-US', { month: 'short' }),
         isToday
-      };
-      
+      }
       days.push(dayInfo)
     }
     setWeekDays(days)
@@ -56,8 +50,8 @@ export default function DaySelector({ onDaySelect, currentDay }) {
               onClick={() => handleDayClick(day.fullName)}
               className={`flex-shrink-0 flex flex-col items-center p-1 rounded-lg border min-w-[50px] transition-all ${dayClasses}`}
             >
-              <span className="text-xs font-medium">{day.shortName}</span>
-              <span className={`text-sm font-bold ${day.isToday ? 'text-accent' : ''}`}>{day.date}</span>
+              <span className="text-xs font-semibold">{day.shortName}</span>
+              <span className={`text-sm font-semibold ${day.isToday ? 'text-accent' : ''}`}>{day.date}</span>
               <span className="text-[9px] text-accent/80">{day.isToday ? 'Today' : day.month}</span>
             </button>
           );

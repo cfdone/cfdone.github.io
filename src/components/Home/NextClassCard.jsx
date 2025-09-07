@@ -6,6 +6,7 @@ export default function NextClassCard({
   sortedTodayClasses,
   totalClasses,
   calculateTimeUntilStart,
+  referenceMinutes,
 }) {
   if (!nextClass || currentClass) return null
 
@@ -13,7 +14,7 @@ export default function NextClassCard({
     <div className="bg-gradient-to-r from-blue-900/40 to-blue-800/30 p-3 rounded-lg border border-blue-400/40 mb-3">
       <div className="flex items-center gap-2 mb-2">
         <div className="w-2 h-2 bg-blue-400 rounded-full"></div>
-        <span className="text-blue-400 font-product-sans font-bold text-xs uppercase tracking-wide">
+        <span className="text-blue-400 font-product-sans font-semibold text-xs uppercase tracking-wide">
           ↗ UP NEXT
         </span>
         <div className="flex-1"></div>
@@ -23,8 +24,11 @@ export default function NextClassCard({
       </div>
       <div className="flex items-center justify-between">
         <div className="flex-1">
-          <h3 className="text-white font-product-sans text-base font-bold mb-1">
+          <h3 className="text-white font-product-sans text-base font-semibold mb-1">
             {nextClass.course}
+            {nextClass.section && (
+              <span className="text-xs text-white/60 ml-1">(Section {nextClass.section})</span>
+            )}
           </h3>
           <div className="flex items-center gap-3 text-xs text-white/80">
             <span className="flex items-center gap-1">
@@ -38,8 +42,8 @@ export default function NextClassCard({
           </div>
         </div>
         <div className="text-right">
-          <div className="text-blue-300 font-bold text-sm">
-            {calculateTimeUntilStart(nextClass.start)}
+          <div className="text-blue-300 font-semibold text-sm">
+            {calculateTimeUntilStart(nextClass.start, referenceMinutes)}
           </div>
         </div>
       </div>

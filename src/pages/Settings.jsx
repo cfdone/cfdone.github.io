@@ -104,9 +104,19 @@ export default function Settings() {
           }
           return `${data.degree} • Semester ${data.semester} • Section ${data.section}\n${countClasses} classes per week`;
         } else if (data.studentType === 'lagger') {
-          // More detailed info for lagger students
-          const subjects = data.subjects || [];
-          return `Custom Timetable\n${subjects.length || 0} subjects selected\n${subjects.map(s => s.name).join('\n')}`;
+            // More detailed info for lagger students
+            const subjects = data.subjects || [];
+            return (
+              <>
+                <div className="font-bold text-accent text-base flex items-center gap-2 mb-1">
+                  <FileText className="w-5 h-5 text-accent" />
+                  <span>Custom Timetable</span>
+                </div>
+                <div className="text-white/80 text-sm mb-2">{subjects.length || 0} subjects selected</div>
+                <ul className="list-disc pl-5 text-white/70 text-sm space-y-1">
+                  {subjects.map(s => <li key={s.name}>{s.name}</li>)}
+                </ul></>
+            );
         }
       }
       return 'No timetable data'
@@ -122,8 +132,7 @@ export default function Settings() {
   return (
     <>
       {(syncLoading || isResetting) && (
-        <LoadingOverlay 
-          message={isResetting ? "Resetting timetable..." : "Syncing..."} 
+        <LoadingOverlay
         />
       )}
       <div className="fixed inset-0 bg-black">
@@ -196,7 +205,7 @@ export default function Settings() {
                 Current Timetable
               </h2>
               <div className="bg-white/5 p-4 rounded-xl border border-accent/10">
-                <div className="max-h-32 overflow-y-auto pr-2 custom-scrollbar">
+                <div className="max-h-32 overflow-y-auto pr-2 no-scrollbar">
                   <p className="text-white/70 text-sm font-product-sans mb-2">{getTimetableInfo()}</p>
                   <div className="text-xs text-white/50 mb-1">
                     You can change your timetable setup anytime by resetting onboarding

@@ -56,6 +56,11 @@ export default function Resolved() {
         // Remove the subject from all sections if it exists
         return prev.filter(s => s.name !== subject)
       } else {
+        // Enforce maximum 10 subjects limit
+        if (prev.length >= 10) {
+          alert('You can select a maximum of 10 subjects')
+          return prev
+        }
         // Add the subject from current selection
         return [
           ...prev,
@@ -161,7 +166,7 @@ export default function Resolved() {
           <img src={logo} alt="Logo" className="w-15 h-15 user-select-none mb-2" />
           <StepTrack currentStep={3} totalSteps={3} />
           <div className="text-center mb-6">
-            <h3 className=" font-product-sans text-accent font-black text-xl mb-2">
+            <h3 className=" font-product-sans text-accent font-semibold text-xl mb-2">
               Build Custom Timetable
             </h3>
             <p className="text-white/70 text-sm font-product-sans">
@@ -184,7 +189,7 @@ export default function Resolved() {
                     >
                       <div className="flex items-center justify-between">
                         <div>
-                          <div className="font-bold mb-2">Add Subjects</div>
+                          <div className="font-semibold mb-2">Add Subjects</div>
                           <div className="text-sm opacity-80">
                             Start building your custom timetable
                           </div>
@@ -199,8 +204,8 @@ export default function Resolved() {
                 {selectedSubjects.length > 0 && (
                   <div className="space-y-4">
                     <div className="flex items-center justify-between mb-3">
-                      <div className="font-bold text-white">
-                        Selected Subjects ({selectedSubjects.length})
+                      <div className="font-semibold text-white">
+                        Selected Subjects ({selectedSubjects.length}/10)
                       </div>
                       <button
                         onClick={clearAll}
@@ -217,7 +222,7 @@ export default function Resolved() {
                       >
                         <div className="flex items-center justify-between">
                           <div>
-                            <div className="font-bold mb-2">{subject.name}</div>
+                            <div className="font-semibold mb-2">{subject.name}</div>
                             <div className="text-sm opacity-80">
                               {subject.degree} • Semester {subject.semester} • Section{' '}
                               {subject.section}
@@ -246,11 +251,16 @@ export default function Resolved() {
             {selectedSubjects.length > 0 && (
               <button
                 onClick={handleAddMore}
-                className="w-full p-3 rounded-xl font-product-sans text-[15px] border transition-all duration-200 bg-white/10 text-accent border-accent/10 hover:bg-accent/10"
+                disabled={selectedSubjects.length >= 10}
+                className={`w-full p-3 rounded-xl font-product-sans text-[15px] border transition-all duration-200 ${
+                  selectedSubjects.length >= 10 
+                  ? 'bg-white/5 text-accent/50 border-accent/5 cursor-not-allowed' 
+                  : 'bg-white/10 text-accent border-accent/10 hover:bg-accent/10'
+                }`}
               >
                 <div className="flex items-center justify-center gap-2">
-                  <span>Add More Subjects</span>
-                  <span className="text-lg">+</span>
+                  <span>{selectedSubjects.length >= 10 ? 'Maximum Subjects Selected' : 'Add More Subjects'}</span>
+                  {selectedSubjects.length < 10 && <span className="text-lg">+</span>}
                 </div>
               </button>
             )}
@@ -333,7 +343,7 @@ export default function Resolved() {
           <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 px-4">
             <div className="bg-black border border-accent/20 rounded-xl p-4 w-full max-w-sm max-h-[70vh] overflow-y-auto no-scrollbar">
               <div className="flex items-center justify-between mb-3">
-                <h3 className=" font-product-sans text-accent font-medium text-lg mb-2">
+                <h3 className=" font-product-sans text-accent font-semibold text-lg mb-2">
                   Select Degree
                 </h3>
                 <button
@@ -354,7 +364,7 @@ export default function Resolved() {
                   >
                     <div className="flex items-center justify-between">
                       <div>
-                        <div className="font-bold mb-1">{deg}</div>
+                        <div className="font-semibold mb-1">{deg}</div>
                         <div className="text-sm opacity-80">Degree</div>
                       </div>
                       <div className="text-xl">
@@ -373,7 +383,7 @@ export default function Resolved() {
           <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 px-4">
             <div className="bg-black border border-accent/20 rounded-xl p-4 w-full max-w-sm max-h-[70vh] overflow-y-auto no-scrollbar">
               <div className="flex items-center justify-between mb-3">
-                <h3 className=" font-product-sans text-accent font-medium text-lg mb-2">
+                <h3 className=" font-product-sans text-accent font-semibold text-lg mb-2">
                   Select Semester
                 </h3>
                 <button
@@ -395,7 +405,7 @@ export default function Resolved() {
                   >
                     <div className="flex items-center justify-between">
                       <div>
-                        <div className="font-bold mb-1">Semester {sem}</div>
+                        <div className="font-semibold mb-1">Semester {sem}</div>
                         <div className="text-sm opacity-80">Academic semester</div>
                       </div>
                       <div className="text-xl">
@@ -414,7 +424,7 @@ export default function Resolved() {
           <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 px-4">
             <div className="bg-black border border-accent/20 rounded-xl p-4 w-full max-w-sm max-h-[70vh] overflow-y-auto no-scrollbar">
               <div className="flex items-center justify-between mb-3">
-                <h3 className=" font-product-sans text-accent font-medium text-lg mb-2">
+                <h3 className=" font-product-sans text-accent font-semibold text-lg mb-2">
                   Select Section
                 </h3>
                 <button
@@ -438,7 +448,7 @@ export default function Resolved() {
                   >
                     <div className="flex items-center justify-between">
                       <div>
-                        <div className="font-bold mb-1">Section {sec}</div>
+                        <div className="font-semibold mb-1">Section {sec}</div>
                         <div className="text-sm opacity-80">Class section</div>
                       </div>
                       <Tag className="w-6 h-6 text-accent" />
@@ -455,7 +465,7 @@ export default function Resolved() {
           <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 px-4">
             <div className="bg-black border border-accent/20 rounded-xl p-4 w-full max-w-sm max-h-[70vh] overflow-y-auto no-scrollbar">
               <div className="flex items-center justify-between mb-3">
-                <h3 className=" font-product-sans text-accent font-medium text-lg mb-2">
+                <h3 className=" font-product-sans text-accent font-semibold text-lg mb-2">
                   Select Subjects
                 </h3>
                 <button
@@ -499,7 +509,7 @@ export default function Resolved() {
                     >
                       <div className="flex items-center justify-between">
                         <div>
-                          <div className="font-bold mb-1">{subject}</div>
+                          <div className="font-semibold mb-1">{subject}</div>
                           <div className="text-sm opacity-80">
                             {isFromOtherSection
                               ? 'Already selected from another section'
@@ -530,7 +540,7 @@ export default function Resolved() {
 
               <button
                 onClick={() => setShowSubjectSelector(false)}
-                className="w-full mt-3 p-3 bg-accent text-white rounded-xl font-medium hover:bg-accent/80 transition-colors"
+                className="w-full mt-3 p-3 bg-accent text-white rounded-xl font-semibold hover:bg-accent/80 transition-colors"
               >
                 Done
               </button>

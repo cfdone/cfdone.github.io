@@ -1,11 +1,15 @@
 import { useState, useMemo, useEffect, useCallback } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { CheckCircle, AlertTriangle, Target, Book, MapPin } from 'lucide-react'
+import ShinyText from '../../components/ShinyText';
+  
 import logo from '../../assets/logo.svg'
 import StepTrack from '../../components/Onboarding/StepTrack'
 import { timeToMinutes, timeRangesOverlap } from '../../utils/timeUtils'
 import TimeTable from '../../assets/timetable.json'
 import useTimetableSync from '../../hooks/useTimetableSync'
+import { verifyTimetableWithGemini } from '../../utils/ai/geminiresolve'
+import { Sparkles } from 'lucide-react';
 
 export default function Preview() {
   const navigate = useNavigate()
@@ -32,11 +36,19 @@ export default function Preview() {
   const [resolutionSuggestions, setResolutionSuggestions] = useState([])
 
   // Loader states
-  const [isCreating, setIsCreating] = useState(false)
-  const [progress, setProgress] = useState(0)
+  // Removed unused isCreating and progress states
   // Add resolving state (not used in this component)
   const [isResolving] = useState(false)
   const [resolutionProgress] = useState(0)
+
+  // Error message for failed timetable creation
+  const [errorMsg, setErrorMsg] = useState('');
+
+  // Gemini verification states
+  // Removed unused geminiStatus state
+  const [geminiSuggestions, setGeminiSuggestions] = useState('');
+  const [isReverifying, setIsReverifying] = useState(false);
+  const [hasReverified, setHasReverified] = useState(false);
 
   // Function to check for time conflicts in the timetable
   const detectTimeConflicts = useCallback((timetable) => {
@@ -75,6 +87,33 @@ export default function Preview() {
     return conflicts;
   }, []);
 
+    // Function to generate resolution suggestions for conflicting subjects
+    const generateResolutionSuggestions = useCallback((conflicts, subjects) => {
+        // For each conflict, suggest alternate sections/times if available
+        return conflicts.map(conflictSubject => {
+          const subject = subjects.find(s => s.name === conflictSubject);
+          if (!subject || !subject.locations || !userPreferences?.parentSection) return null;
+          // Find alternative locations (sections) for this subject
+          const parentSection = userPreferences.parentSection;
+          const alternatives = subject.locations.filter(loc => {
+            // Only suggest if not in parent section
+            return (
+              loc.degree !== parentSection.degree ||
+              loc.semester !== parentSection.semester ||
+              loc.section !== parentSection.section
+            );
+          });
+          return {
+            subject: subject.name,
+            message:
+              alternatives.length > 0
+                ? 'Try selecting a different section or time slot for this subject to avoid conflicts.'
+                : 'No alternate sections available. Manual adjustment may be required.',
+            alternatives,
+          };
+        }).filter(Boolean);
+      }, [userPreferences]);
+
   // Effect to get the resolved timetable from location state or generate it
   useEffect(() => {
     if (location.state?.resolvedTimetable) {
@@ -101,63 +140,173 @@ export default function Preview() {
       setResolutionSuggestions(location.state.resolutionSuggestions);
     }
   }, [location.state, selectedSubjects, userPreferences, detectTimeConflicts])
+
+    // Effect to generate resolution suggestions when conflicts are detected
+    useEffect(() => {
+      if (conflictSubjects.length > 0 && selectedSubjects.length > 0) {
+        setResolutionSuggestions(generateResolutionSuggestions(conflictSubjects, selectedSubjects));
+      } else {
+        setResolutionSuggestions([]);
+      }
+    }, [conflictSubjects, selectedSubjects, generateResolutionSuggestions]);
   
   // Helper function to generate a realistic timetable for preview using actual timetable data
-  const generateMockTimetable = (subjects, preferences) => {
-    const timetable = {}
-    const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
-    days.forEach(day => {
-      timetable[day] = []
-    })
-    
-    // For each subject, find its actual schedule in the timetable data
-    subjects.forEach((subject) => {
-      const preferredLocation = subject.locations.find(loc => 
-        loc.degree === preferences.parentSection.degree &&
-        loc.semester === preferences.parentSection.semester &&
-        loc.section === preferences.parentSection.section
-      ) || subject.locations[0]
-      
-      if (preferredLocation) {
-        // Get the actual timetable data for this degree/semester/section
-        const sectionData = TimeTable[preferredLocation.degree]?.[preferredLocation.semester]?.[preferredLocation.section];
-        
-        if (sectionData) {
-          // Find the actual schedule for this subject
-          Object.entries(sectionData).forEach(([day, slots]) => {
-            slots.forEach(slot => {
-              if (slot.course === subject.name) {
-                timetable[day].push({
-                  ...slot,
-                  subject: subject.name,
-                  degree: preferredLocation.degree,
-                  semester: preferredLocation.semester,
-                  section: preferredLocation.section
-                });
-              }
+  const generateMockTimetable = (subjects) => {
+      const timetable = {};
+      const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
+      days.forEach(day => {
+        timetable[day] = [];
+      });
+      // For each subject, find its actual schedule in the timetable data
+      subjects.forEach((subject) => {
+        if (!subject.locations || subject.locations.length === 0) return;
+        let assigned = false;
+        for (const loc of subject.locations) {
+          if (!loc.degree || !loc.semester || !loc.section) continue;
+          const sectionData = TimeTable?.[loc.degree]?.[loc.semester]?.[loc.section];
+          if (sectionData) {
+            let foundSlot = false;
+            Object.entries(sectionData).forEach(([day, slots]) => {
+              slots.forEach(slot => {
+                if (slot.course === subject.name) {
+                  const hasConflict = timetable[day].some(existing =>
+                    timeRangesOverlap(existing.start, existing.end, slot.start, slot.end)
+                  );
+                  if (!hasConflict) {
+                    timetable[day].push({
+                      ...slot,
+                      subject: subject.name,
+                      degree: loc.degree,
+                      semester: loc.semester,
+                      section: loc.section
+                    });
+                    assigned = true;
+                    foundSlot = true;
+                  }
+                }
+              });
             });
-          });
-        } else {
-          // Fallback: if no actual data found, create a placeholder with realistic time
-          
-          // Add a placeholder entry to Monday with a generic time
-          timetable['Monday'].push({
-            subject: subject.name,
-            start: "8:45",
-            end: "10:10", 
-            course: subject.name,
-            teacher: preferredLocation.teacher || 'TBD',
-            room: preferredLocation.room || 'TBD',
-            degree: preferredLocation.degree,
-            semester: preferredLocation.semester,
-            section: preferredLocation.section
-          });
+            if (foundSlot) break;
+          }
         }
-      }
-    })
-    
-    return timetable
-  }
+        // If not assigned, fallback: add to first available day/time without conflict
+        if (!assigned) {
+          for (const day of days) {
+            const hasConflict = timetable[day].some(existing =>
+              timeRangesOverlap(existing.start, existing.end, "8:45", "10:10")
+            );
+            if (!hasConflict) {
+              timetable[day].push({
+                subject: subject.name,
+                start: "8:45",
+                end: "10:10",
+                course: subject.name,
+                teacher: subject.locations[0]?.teacher || 'TBD',
+                room: subject.locations[0]?.room || 'TBD',
+                degree: subject.locations[0]?.degree || 'TBD',
+                semester: subject.locations[0]?.semester || 'TBD',
+                section: subject.locations[0]?.section || 'TBD'
+              });
+              break;
+            }
+          }
+        }
+      });
+      return timetable;
+    }
+
+  // Weekly timetable preview styled like WeeklySchedule.jsx
+  const renderTimetableByDay = (timetable) => {
+    if (!timetable) return null;
+    const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
+    return (
+      <div className="space-y-3">
+        {days
+          .filter(day => Object.prototype.hasOwnProperty.call(timetable, day))
+          .map(day => {
+            const classes = timetable[day] || [];
+            return (
+              <div key={day}>
+                <div className="bg-white/5 rounded-xl border border-accent/10 overflow-hidden">
+                  <div className="p-3 border-b border-accent/10 bg-white/5">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <h3 className="text-white font-product-sans font-semibold">{day}</h3>
+                      </div>
+                      <div className="text-white/80 text-sm font-product-sans">
+                        {classes.length} {classes.length === 1 ? 'class' : 'classes'}
+                      </div>
+                    </div>
+                  </div>
+                  <div className="divide-y divide-accent/5">
+                    {classes.length === 0 ? (
+                      <div className="text-center py-6">
+                        <div className="mb-2 flex justify-center">
+                          <Star className="w-6 h-6 text-accent/60" />
+                        </div>
+                        <div className="text-accent/60 font-product-sans text-sm">
+                          No classes scheduled
+                        </div>
+                      </div>
+                    ) : (
+                      classes
+                        .sort((a, b) => timeToMinutes(a.start) - timeToMinutes(b.start))
+                        .map((cls, idx) => {
+                          const isConflict = conflictSubjects.includes(cls.subject || cls.course);
+                          return (
+                            <div
+                              key={idx}
+                              className={`p-4 transition-colors ${isConflict ? 'bg-yellow-500/10 border-l-4 border-yellow-500' : ''}`}
+                            >
+                              <div className="flex items-start justify-between">
+                                {/* Left: Course info */}
+                                <div className="flex-1 pr-4">
+                                  <div className="flex items-center gap-2 mb-2">
+                                    <div className={`w-2 h-2 rounded-full flex-shrink-0 ${isConflict ? 'bg-yellow-400 animate-pulse' : 'bg-accent/40'}`}></div>
+                                    <h4 className={`font-product-sans font-semibold text-sm ${isConflict ? 'text-yellow-400' : 'text-white'}`}>{cls.subject || cls.course}
+                                      {cls.section && (
+                                        <span className="text-xs text-white/60 ml-1">(Section {cls.section})</span>
+                                      )}
+                                    </h4>
+                                    {isConflict && (
+                                      <span className="bg-yellow-500/20 text-yellow-400 px-2 py-0.5 rounded-full text-xs font-product-sans font-semibold">Conflict</span>
+                                    )}
+                                  </div>
+                                  <div className="space-y-1">
+                                    <div className="flex items-center gap-2 text-xs font-product-sans text-accent/80">
+                                      <MapPin className="w-3 h-3" />
+                                      <span>{cls.room || 'Room TBD'}</span>
+                                    </div>
+                                    <div className="text-xs font-product-sans text-accent/70">
+                                      {cls.teacher || 'Teacher TBD'}
+                                    </div>
+                                    <div className="text-xs font-product-sans text-accent/50">
+                                      {cls.degree || 'N/A'} • S{cls.semester || 'N/A'}-{cls.section || 'N/A'}
+                                    </div>
+                                  </div>
+                                </div>
+                                {/* Right: Time info */}
+                                <div className="text-right flex-shrink-0">
+                                  <div className="font-product-sans font-semibold text-base text-white">
+                                    {cls.start}
+                                  </div>
+                                  <div className="font-product-sans text-xs text-accent/60">
+                                    {cls.end}
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          );
+                        })
+                    )}
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+      </div>
+    );
+  };
 
   return (
     <div className="h-screen bg-black flex flex-col items-center px-2 pt-safe-offset-8 pb-safe">
@@ -166,14 +315,18 @@ export default function Preview() {
         <img src={logo} alt="Logo" className="w-15 h-15 user-select-none mb-2" />
         <StepTrack currentStep={4} totalSteps={4} />
         <div className="text-center mb-6">
-          <h3 className="font-product-sans text-accent font-black text-xl mb-2">
+          <h3 className="font-product-sans text-accent font-semibold text-xl mb-2">
             Review Your Timetable
           </h3>
           <p className="text-white/70 text-sm font-product-sans">
             Review your schedule before creating the final timetable
           </p>
+            {errorMsg && (
+              <div className="text-red-500 mt-2 text-sm">{errorMsg}</div>
+            )}
         </div>
       </div>
+
 
       {/* Scrollable Content Area */}
       <div className="flex-1 w-full max-w-md mx-auto overflow-y-auto no-scrollbar min-h-0">
@@ -186,7 +339,7 @@ export default function Preview() {
                   <div className="p-6 rounded-xl font-product-sans text-lg border transition-all duration-200 text-left w-full bg-white/10 text-accent border-accent/10">
                     <div className="flex items-center justify-between">
                       <div>
-                        <div className="font-bold mb-2">No Subjects Selected</div>
+                        <div className="font-semibold mb-2">No Subjects Selected</div>
                         <div className="text-sm opacity-80">
                           Please go back to select your subjects and preferences
                         </div>
@@ -199,147 +352,162 @@ export default function Preview() {
                 </div>
               )}
 
-              {/* Selected Subjects and Resolution Status */}
-              {selectedSubjects.length > 0 && (
-                <div className="space-y-4">
-                  <div className="flex items-center justify-between mb-3">
-                    <div className="font-bold text-white flex items-center gap-2">
-                      Selected Subjects ({selectedSubjects.length})
-                      {isResolving && (
-                        <div className="w-3 h-3 border-2 border-accent/30 border-t-accent rounded-full animate-spin"></div>
-                      )}
+              {/* Move Conflict Card and Gemini Card to Top */}
+              {resolvedTimetable && !isResolving && (
+                <>
+                  <div
+                    className={`p-4 rounded-xl border ${
+                      conflictSubjects.length === 0
+                        ? 'bg-green-500/10 border-green-500/20 text-green-400'
+                        : 'bg-yellow-500/10 border-yellow-500/20 text-yellow-400'
+                    }`}
+                  >
+                    <div className="flex items-center gap-2 mb-2">
+                      <div>
+                        {conflictSubjects.length === 0 ? (
+                          <CheckCircle className="w-5 h-5 text-green-400" />
+                        ) : (
+                          <AlertTriangle className="w-5 h-5 text-yellow-400" />
+                        )}
+                      </div>
+                      <div className="font-semibold">
+                        {conflictSubjects.length === 0
+                          ? 'Parent Section Schedule Created!'
+                          : `${conflictSubjects.length} Subject${conflictSubjects.length > 1 ? 's' : ''} Need${conflictSubjects.length > 1 ? '' : 's'} Attention`}
+                      </div>
+                    </div>
+                    <div className="text-sm opacity-80">
+                      {conflictSubjects.length === 0
+                        ? `Perfect schedule optimized for your parent section: ${userPreferences.parentSection.degree} • Semester ${userPreferences.parentSection.semester} • Section ${userPreferences.parentSection.section}`
+                        : 'Schedule created with parent section optimization, but some subjects may need manual adjustment'}
+                    </div>
+                    {userPreferences.parentSection.degree && (
+                      <div className="mt-2 text-xs opacity-70 flex items-center gap-1">
+                        <Target className="w-3 h-3" /> Parent Section:{' '}
+                        {userPreferences.parentSection.degree} • Semester{' '}
+                        {userPreferences.parentSection.semester} • Section{' '}
+                        {userPreferences.parentSection.section}
+                        {Object.values(userPreferences.seatAvailability).filter(Boolean)
+                          .length > 0 &&
+                          ` • ${Object.values(userPreferences.seatAvailability).filter(Boolean).length} confirmed seats`}
+                      </div>
+                    )}
+                    {/* Prompt user to reverify timetable */}
+                    <div className="mt-2 text-xs text-yellow-300 font-semibold">
+                      Please reverify your timetable and class times for each day before proceeding.
                     </div>
                   </div>
+                  {/* XARVIN AI Review Card with Reverify Button */}
+                  <div className="mt-3 p-4 rounded-xl border bg-accent/10 border-accent/20 text-white">
+                    <div className='flex items-center justify-between'
 
-                  {/* Resolution Status */}
-                  {resolvedTimetable && !isResolving && (
-                    <div
-                      className={`p-4 rounded-xl border ${
-                        conflictSubjects.length === 0
-                          ? 'bg-green-500/10 border-green-500/20 text-green-400'
-                          : 'bg-yellow-500/10 border-yellow-500/20 text-yellow-400'
-                      }`}
                     >
-                      <div className="flex items-center gap-2 mb-2">
-                        <div>
-                          {conflictSubjects.length === 0 ? (
-                            <CheckCircle className="w-5 h-5 text-green-400" />
-                          ) : (
-                            <AlertTriangle className="w-5 h-5 text-yellow-400" />
-                          )}
-                        </div>
-                        <div className="font-bold">
-                          {conflictSubjects.length === 0
-                            ? 'Parent Section Schedule Created!'
-                            : `${conflictSubjects.length} Subject${conflictSubjects.length > 1 ? 's' : ''} Need${conflictSubjects.length > 1 ? '' : 's'} Attention`}
-                        </div>
-                      </div>
-                      <div className="text-sm opacity-80">
-                        {conflictSubjects.length === 0
-                          ? `Perfect schedule optimized for your parent section: ${userPreferences.parentSection.degree} • Semester ${userPreferences.parentSection.semester} • Section ${userPreferences.parentSection.section}`
-                          : 'Schedule created with parent section optimization, but some subjects may need manual adjustment'}
-                      </div>
-                      {userPreferences.parentSection.degree && (
-                        <div className="mt-2 text-xs opacity-70 flex items-center gap-1">
-                          <Target className="w-3 h-3" /> Parent Section:{' '}
-                          {userPreferences.parentSection.degree} • Semester{' '}
-                          {userPreferences.parentSection.semester} • Section{' '}
-                          {userPreferences.parentSection.section}
-                          {Object.values(userPreferences.seatAvailability).filter(Boolean)
-                            .length > 0 &&
-                            ` • ${Object.values(userPreferences.seatAvailability).filter(Boolean).length} confirmed seats`}
-                        </div>
-                      )}
-                    </div>
-                  )}
+                      XARVIN AI Review:
 
-                  {/* Resolution Progress */}
-                  {isResolving && (
-                    <div className="p-4 rounded-xl border bg-blue-500/10 border-blue-500/20 text-blue-400">
-                      <div className="flex items-center gap-2 mb-2">
-                        <div className="w-4 h-4 border-2 border-blue-400/30 border-t-blue-400 rounded-full animate-spin"></div>
-                        <div className="font-bold">Resolving Conflicts...</div>
-                        <div className="text-sm">({Math.round(resolutionProgress)}%)</div>
-                      </div>
-                      <div className="w-full bg-blue-400/20 rounded-full h-1.5 mb-2">
-                        <div
-                          className="bg-blue-400 h-1.5 rounded-full transition-all duration-200 ease-out"
-                          style={{ width: `${resolutionProgress}%` }}
-                        ></div>
-                      </div>
-                      <div className="text-sm opacity-80">
-                        Analyzing {selectedSubjects.length} subjects across all available
-                        sections...
-                      </div>
-                    </div>
-                  )}
+                    {!isReverifying && !geminiSuggestions && (
+                      <button
+                        className="px-3 py-1  text-white text-xs hover:bg-accent/80 transition rounded-full font-product-sans font-semibold"
+                        style={{
+                          background: 'linear-gradient(135deg, #a980ff, #182fff99) 0 0 / 200% 200%',
+                        }}
+                        disabled={hasReverified}
+                        onClick={async () => {
+                          setIsReverifying(true);
+                          setGeminiSuggestions('');
+                          setHasReverified(false);
+                          const geminiReply = await verifyTimetableWithGemini({
+                            timetable: resolvedTimetable,
+                            conflictSubjects,
+                            resolutionSuggestions,
+                            selectedSubjects,
+                          });
+                          setGeminiSuggestions(geminiReply);
+                          setIsReverifying(false);
+                          setHasReverified(true);
+                        }}
+                      >
+                        <Sparkles className="w-4 h-4 inline-block mr-1" />
+                        Reverify with AI
+                      </button>
+                    )}
 
-                  {/* Resolution Suggestions */}
-                  {resolutionSuggestions.length > 0 && (
-                    <div className="space-y-2">
-                      <div className="font-bold text-white text-sm mb-2">Suggestions:</div>
-                      {resolutionSuggestions.map((suggestion, idx) => (
-                        <div
-                          key={idx}
-                          className="p-3 rounded-lg bg-white/5 border border-white/10"
-                        >
-                          <div className="font-medium text-accent text-sm mb-1">
-                            {suggestion.subject}
-                          </div>
-                          <div className="text-white/70 text-sm">{suggestion.message}</div>
-                          {suggestion.alternatives.length > 0 && (
-                            <div className="mt-2 text-xs text-white/50">
-                              Available in:{' '}
-                              {suggestion.alternatives
-                                .map(alt => `${alt.degree} S${alt.semester}-${alt.section}`)
-                                .join(', ')}
-                            </div>
-                          )}
+                    </div>
+                   
+                    {/* Reasoning Animation */}
+                    {isReverifying && (
+                      <div className="flex items-center gap-2 mt-2">
+                        <div className="w-2 h-2 rounded-full bg-accent/50 animate-pulse flex justify-center items-center">
+                          <div className="w-1 h-1 rounded-full bg-accent"></div>
                         </div>
-                      ))}
-                    </div>
-                  )}
+                      <ShinyText 
+  text="Xarvin is analyzing your timetable..." 
+  disabled={false} 
+  speed={3} 
+  className='custom-class' 
+/>
+                      </div>
+                    )}
+                    {/* AI Response */}
+                    {geminiSuggestions && !isReverifying && (
+                      <div className="mt-2 text-sm whitespace-pre-line text-white/80">
+                        {geminiSuggestions}
+                      </div>
+                    )}
+                  </div>
+                </>
+              )}
 
-                  {/* Selected Subjects List */}
+              <div className="space-y-4">
+                {/* Timetable by Day */}
+                {resolvedTimetable && renderTimetableByDay(resolvedTimetable)}
+
+                {/* Resolution Progress */}
+                {isResolving && (
+                  <div className="p-4 rounded-xl border bg-blue-500/10 border-blue-500/20 text-blue-400">
+                    <div className="flex items-center gap-2 mb-2">
+                      <div className="w-4 h-4 border-2 border-blue-400/30 border-t-blue-400 rounded-full animate-spin"></div>
+                      <div className="font-semibold">Resolving Conflicts...</div>
+                      <div className="text-sm">({Math.round(resolutionProgress)}%)</div>
+                    </div>
+                    <div className="w-full bg-blue-400/20 rounded-full h-1.5 mb-2">
+                      <div
+                        className="bg-blue-400 h-1.5 rounded-full transition-all duration-200 ease-out"
+                        style={{ width: `${resolutionProgress}%` }}
+                      ></div>
+                    </div>
+                    <div className="text-sm opacity-80">
+                      Analyzing {selectedSubjects.length} subjects across all available
+                      sections...
+                    </div>
+                  </div>
+                )}
+
+                {/* Resolution Suggestions */}
+                {resolutionSuggestions.length > 0 && (
                   <div className="space-y-2">
-                    {selectedSubjects.map((subject, idx) => (
+                    <div className="font-semibold text-white text-sm mb-2">Suggestions:</div>
+                    {resolutionSuggestions.map((suggestion, idx) => (
                       <div
                         key={idx}
-                        className={`p-4 rounded-xl font-product-sans text-lg border transition-all duration-200 text-left ${
-                          conflictSubjects.includes(subject.name)
-                            ? 'bg-yellow-500/10 text-yellow-400 border-yellow-500/20'
-                            : 'bg-accent/10 text-accent border-accent/10 hover:bg-accent/20'
-                        }`}
+                        className="p-3 rounded-lg bg-white/5 border border-white/10"
                       >
-                        <div className="flex items-center justify-between">
-                          <div className="flex-1">
-                            <div className="font-bold mb-2 flex items-center gap-2">
-                              {subject.name}
-                              {conflictSubjects.includes(subject.name) && (
-                                <AlertTriangle className="w-3 h-3 text-yellow-400" />
-                              )}
-                            </div>
-                            <div className="text-sm opacity-80 space-y-1">
-                              <div className="font-medium">Available in:</div>
-                              {subject.locations.slice(0, 3).map((loc, locIdx) => (
-                                <div key={locIdx} className="text-xs opacity-70 flex items-center gap-1">
-                                  <MapPin className="w-3 h-3" />
-                                  {loc.degree} • Semester {loc.semester} • Section {loc.section}
-                                </div>
-                              ))}
-                              {subject.locations.length > 3 && (
-                                <div className="text-xs opacity-70">
-                                  +{subject.locations.length - 3} more sections...
-                                </div>
-                              )}
-                            </div>
-                          </div>
+                        <div className="font-semibold text-accent text-sm mb-1">
+                          {suggestion.subject}
                         </div>
+                        <div className="text-white/70 text-sm">{suggestion.message}</div>
+                        {suggestion.alternatives.length > 0 && (
+                          <div className="mt-2 text-xs text-white/50">
+                            Available in:{' '}
+                            {suggestion.alternatives
+                              .map(alt => `${alt.degree} S${alt.semester}-${alt.section}`)
+                              .join(', ')}
+                          </div>
+                        )}
                       </div>
                     ))}
                   </div>
-                </div>
-              )}
+                )}
+              </div>
             </div>
           </div>
         </div>
@@ -365,29 +533,11 @@ export default function Preview() {
             </button>
             <button
               className={`font-product-sans px-4 rounded-xl w-full h-full text-[15px] transition shadow-md flex items-center justify-center
-                ${
-                  selectedSubjects.length > 0
-                    ? 'bg-accent text-white'
-                    : 'bg-accent/40 text-white/60'
-                }
+                ${selectedSubjects.length > 0 ? 'bg-accent text-white' : 'bg-accent/40 text-white/60'}
             `}
-              disabled={selectedSubjects.length === 0 || isCreating}
+              disabled={selectedSubjects.length === 0}
               onClick={async () => {
                 if (selectedSubjects.length > 0 && resolvedTimetable) {
-                  setIsCreating(true)
-                  setProgress(0)
-
-                  // Simple progress simulation
-                  let currentProgress = 0
-                  const progressIncrement = 2
-                  const intervalTime = 20
-
-                  while (currentProgress < 100) {
-                    currentProgress += progressIncrement
-                    setProgress(Math.min(currentProgress, 100))
-                    await new Promise(resolve => setTimeout(resolve, intervalTime))
-                  }
-
                   const timetableData = {
                     subjects: selectedSubjects,
                     timetable: resolvedTimetable,
@@ -396,39 +546,21 @@ export default function Preview() {
                     hasConflicts: conflictSubjects.length > 0,
                     conflictSubjects: conflictSubjects,
                     resolutionSuggestions: resolutionSuggestions,
-                    studentType: 'regular',
-                  }
-
+                    studentType: 'lagger',
+                  };
                   try {
-                    // Save using the sync hook
-                    await saveTimetable(timetableData, 'regular')
-                    
-                    // Legacy localStorage for compatibility
-                    localStorage.setItem('onboardingComplete', 'true')
-                    
+                    await saveTimetable(timetableData, 'lagger');
+                    localStorage.setItem('onboardingComplete', 'true');
                     navigate('/home', {
                       state: timetableData,
-                    })
+                    });
                   } catch {
-                    setIsCreating(false)
+                    setErrorMsg('Failed to create timetable. Please try again.');
                   }
                 }
               }}
             >
-              {isCreating ? (
-                <div className="flex flex-col items-center w-full">
-                  <div className="w-full bg-white/20 rounded-full h-1.5">
-                    <div
-                      className="bg-white h-1.5 rounded-full transition-all duration-75 ease-out"
-                      style={{ width: `${progress}%` }}
-                    ></div>
-                  </div>
-                </div>
-              ) : conflictSubjects.length === 0 ? (
-                'Create Timetable'
-              ) : (
-                'Create with Conflicts'
-              )}
+              Done
             </button>
           </div>
         </div>

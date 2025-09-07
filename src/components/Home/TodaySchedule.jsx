@@ -23,7 +23,7 @@ export default function TodaySchedule({
         <div className="mb-3 flex justify-center">
           <Sun className="w-10 h-10 text-accent" />
         </div>
-        <h3 className="text-white font-product-sans text-lg font-bold mb-2">
+        <h3 className="text-white font-product-sans text-lg font-semibold mb-2">
           No Classes on {displayDay}
         </h3>
         <p className="text-accent/80 font-product-sans text-sm">
@@ -37,10 +37,15 @@ export default function TodaySchedule({
     <div className="space-y-3">
       {/* Individual Class Cards */}
       {sortedTodayClasses.map((classInfo, idx) => {
-        const isCurrentClass = currentClass && currentClass === classInfo
-        const isNextClass = nextClass && nextClass === classInfo
-        const isPastClass = getCurrentMinutes() >= timeToMinutes(classInfo.end)
-
+        let isCurrentClass = false;
+        let isNextClass = false;
+        let isPastClass = false;
+        if (isToday) {
+          isCurrentClass = currentClass && currentClass === classInfo;
+          isNextClass = nextClass && nextClass === classInfo;
+          isPastClass = getCurrentMinutes() >= timeToMinutes(classInfo.end);
+        }
+        // For non-today, all classes are shown in default style
         return (
           <ClassCard
             key={idx}
@@ -52,8 +57,8 @@ export default function TodaySchedule({
             calculateRemainingTime={calculateRemainingTime}
             calculateTimeUntilStart={calculateTimeUntilStart}
           />
-        )
+        );
       })}
     </div>
-  )
+  );
 }

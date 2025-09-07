@@ -9,7 +9,7 @@ export default function ViewToggle({ viewWeekly, setViewWeekly, onResetDay }) {
 
   return (
     <div className="flex items-center justify-between mb-4">
-      <h2 className="text-white text-lg font-product-sans font-bold">
+      <h2 className="text-white text-lg font-product-sans font-semibold">
         {viewWeekly ? 'Weekly Schedule' : "Day Schedule"}
       </h2>
       <button

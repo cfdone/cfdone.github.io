@@ -16,7 +16,7 @@ function UniHub() {
         <div className="flex-shrink-0 p-4 pt-12 max-w-md mx-auto w-full">
           <div className="flex items-center justify-between mb-6">
             <div>
-              <h1 className="font-product-sans text-white text-2xl font-medium mb-1">Faculty Members</h1>
+              <h1 className="font-product-sans text-white text-2xl font-semibold mb-1">Faculty Members</h1>
               <p className="text-accent font-product-sans">Department of Computational Fluid Dynamics</p>
             </div>
             <img src={logo} alt="" className="h-10 w-10" />
@@ -43,7 +43,7 @@ function UniHub() {
                       />
                     </div>
                     <div>
-                      <h4 className="text-white font-medium text-base mb-1">Dr. Muhammad Fayyaz</h4>
+                      <h4 className="text-white font-semibold text-base mb-1">Dr. Muhammad Fayyaz</h4>
                       <h6 className="text-accent text-sm mb-2">Associate Professor & HOD</h6>
                       <div className="text-white/70 text-sm">
                         <p>m.fayyaz@nu.edu.pk</p>
@@ -61,7 +61,7 @@ function UniHub() {
                       />
                     </div>
                     <div>
-                      <h4 className="text-white font-medium text-base mb-1">Dr. Muhammad Shahzad</h4>
+                      <h4 className="text-white font-semibold text-base mb-1">Dr. Muhammad Shahzad</h4>
                       <h6 className="text-accent text-sm mb-2">Professor</h6>
                       <div className="text-white/70 text-sm">
                         <p>shahzad.sarfraz@nu.edu.pk</p>
@@ -87,7 +87,7 @@ function UniHub() {
                       />
                     </div>
                     <div>
-                      <h4 className="text-white font-medium text-base mb-1">Dr. Ammar Rafiq</h4>
+                      <h4 className="text-white font-semibold text-base mb-1">Dr. Ammar Rafiq</h4>
                       <h6 className="text-accent text-sm mb-2">Associate Professor</h6>
                       <div className="text-white/70 text-sm">
                         <p>ammar.rafiq@nu.edu.pk</p>
@@ -104,7 +104,7 @@ function UniHub() {
                       />
                     </div>
                     <div>
-                      <h4 className="text-white font-medium text-base mb-1">Dr. Muhammad Umar</h4>
+                      <h4 className="text-white font-semibold text-base mb-1">Dr. Muhammad Umar</h4>
                       <h6 className="text-accent text-sm mb-2">Associate Professor</h6>
                       <div className="text-white/70 text-sm">
                         <p>umar.aftab@nu.edu.pk</p>
@@ -122,7 +122,7 @@ function UniHub() {
                       />
                     </div>
                     <div>
-                      <h4 className="text-white font-medium text-base mb-1">Dr. Muhammad Usama</h4>
+                      <h4 className="text-white font-semibold text-base mb-1">Dr. Muhammad Usama</h4>
                       <h6 className="text-accent text-sm mb-2">Associate Professor</h6>
                       <div className="text-white/70 text-sm">
                         <p>m.usama@nu.edu.pk</p>
@@ -147,7 +147,7 @@ function UniHub() {
                       />
                     </div>
                     <div>
-                      <h4 className="text-white font-medium text-base mb-1">Dr. Hashim Yasin</h4>
+                      <h4 className="text-white font-semibold text-base mb-1">Dr. Hashim Yasin</h4>
                       <h6 className="text-accent text-sm mb-2">Assistant Professor</h6>
                       <div className="text-white/70 text-sm">
                         <p>hashim.yasin@nu.edu.pk</p>
@@ -165,7 +165,7 @@ function UniHub() {
                       />
                     </div>
                     <div>
-                      <h4 className="text-white font-medium text-base mb-1">Dr. Iqra Muhammad</h4>
+                      <h4 className="text-white font-semibold text-base mb-1">Dr. Iqra Muhammad</h4>
                       <h6 className="text-accent text-sm mb-2">Assistant Professor</h6>
                       <div className="text-white/70 text-sm">
                         <p>Iqra.Muhammad@nu.edu.pk</p>
@@ -182,7 +182,7 @@ function UniHub() {
                       />
                     </div>
                     <div>
-                      <h4 className="text-white font-medium text-base mb-1">Dr. Rabia Maqsood</h4>
+                      <h4 className="text-white font-semibold text-base mb-1">Dr. Rabia Maqsood</h4>
                       <h6 className="text-accent text-sm mb-2">Assistant Professor</h6>
                       <div className="text-white/70 text-sm">
                         <p>rabia.maqsood@nu.edu.pk</p>
@@ -208,7 +208,7 @@ function UniHub() {
                       />
                     </div>
                     <div>
-                      <h4 className="text-white font-medium text-base mb-1">Mr. Ali Hamza</h4>
+                      <h4 className="text-white font-semibold text-base mb-1">Mr. Ali Hamza</h4>
                       <h6 className="text-accent text-sm mb-2">Lecturer</h6>
                       <div className="text-white/70 text-sm">
                         <p>ali.Hamza@nu.edu.pk</p>
@@ -225,7 +225,7 @@ function UniHub() {
                       />
                     </div>
                     <div>
-                      <h4 className="text-white font-medium text-base mb-1">Mr. Ali Raza</h4>
+                      <h4 className="text-white font-semibold text-base mb-1">Mr. Ali Raza</h4>
                       <h6 className="text-accent text-sm mb-2">Lecturer</h6>
                       <div className="text-white/70 text-sm">
                         <p>aliraza@nu.edu.pk</p>
@@ -242,7 +242,7 @@ function UniHub() {
                       />
                     </div>
                     <div>
-                      <h4 className="text-white font-medium text-base mb-1">Ms. Aliza Saeed</h4>
+                      <h4 className="text-white font-semibold text-base mb-1">Ms. Aliza Saeed</h4>
                       <h6 className="text-accent text-sm mb-2">Lecturer</h6>
                       <div className="text-white/70 text-sm">
                         <p>aliza.saeed@nu.edu.pk</p>
@@ -259,7 +259,7 @@ function UniHub() {
                       />
                     </div>
                     <div>
-                      <h4 className="text-white font-medium text-base mb-1">Ms. Ayesha Liaqat</h4>
+                      <h4 className="text-white font-semibold text-base mb-1">Ms. Ayesha Liaqat</h4>
                       <h6 className="text-accent text-sm mb-2">Lecturer</h6>
                       <div className="text-white/70 text-sm">
                         <p>ayesha.liaqat@nu.edu.pk</p>
@@ -285,7 +285,7 @@ function UniHub() {
                       />
                     </div>
                     <div>
-                      <h4 className="text-white font-medium text-base mb-1">Ms. Alisha Abid</h4>
+                      <h4 className="text-white font-semibold text-base mb-1">Ms. Alisha Abid</h4>
                       <h6 className="text-accent text-sm mb-2">Instructor</h6>
                       <div className="text-white/70 text-sm">
                         <p>alisha.abid@nu.edu.pk</p>
@@ -302,7 +302,7 @@ function UniHub() {
                       />
                     </div>
                     <div>
-                      <h4 className="text-white font-medium text-base mb-1">Ms. Amna Waheed</h4>
+                      <h4 className="text-white font-semibold text-base mb-1">Ms. Amna Waheed</h4>
                       <h6 className="text-accent text-sm mb-2">Instructor</h6>
                       <div className="text-white/70 text-sm">
                         <p>Amna.Waheed@nu.edu.pk</p>

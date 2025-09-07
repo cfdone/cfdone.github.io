@@ -80,8 +80,8 @@
           {
             "start": "1:45",
             "end": "2:45",
-            "course": "Dr Iqra Muhammad / IICT Seminar Momna Javaid / Amna Waheed / Maham Saleem /",
-            "teacher": "Areeba Waseem",
+            "course": "IICT Seminar",
+            "teacher": "Areeba Waseem,Dr Iqra Muhammad,Momna Javaid,Amna Waheed,Maham Saleem ",
             "room": "Audi"
           }
         ],
@@ -211,8 +211,8 @@
           {
             "start": "1:45",
             "end": "2:45",
-            "course": "Dr Iqra Muhammad / IICT Seminar Momna Javaid / Amna Waheed / Maham Saleem /",
-            "teacher": "Areeba Waseem",
+             "course": "IICT Seminar",
+            "teacher": "Areeba Waseem,Dr Iqra Muhammad,Momna Javaid,Amna Waheed,Maham Saleem ",
             "room": "Audi"
           },
           {
@@ -342,8 +342,8 @@
           {
             "start": "1:45",
             "end": "2:45",
-            "course": "Dr Iqra Muhammad / IICT Seminar Momna Javaid / Amna Waheed / Maham Saleem /",
-            "teacher": "Areeba Waseem",
+            "course": "IICT Seminar",
+            "teacher": "Areeba Waseem,Dr Iqra Muhammad,Momna Javaid,Amna Waheed,Maham Saleem ",
             "room": "Audi"
           },
           {
@@ -479,9 +479,8 @@
           },
           {
             "start": "1:45",
-            "end": "2:45",
-            "course": "Dr Iqra Muhammad / IICT Seminar Momna Javaid / Amna Waheed / Maham Saleem /",
-            "teacher": "Areeba Waseem",
+             "course": "IICT Seminar",
+            "teacher": "Areeba Waseem,Dr Iqra Muhammad,Momna Javaid,Amna Waheed,Maham Saleem ",
             "room": "Audi"
           },
           {
@@ -610,8 +609,8 @@
           {
             "start": "1:45",
             "end": "2:45",
-            "course": "Dr Iqra Muhammad IICT Seminar Momna Javaid Amna Waheed Maham Saleem",
-            "teacher": "Areeba Waseem",
+             "course": "IICT Seminar",
+            "teacher": "Areeba Waseem,Dr Iqra Muhammad,Momna Javaid,Amna Waheed,Maham Saleem ",
             "room": "Audi"
           },
           {
@@ -726,8 +725,8 @@
           {
             "start": "1:45",
             "end": "2:45",
-            "course": "Dr Iqra Muhammad / IICT Seminar Momna Javaid / Amna Waheed / Maham Saleem /",
-            "teacher": "Areeba Waseem",
+            "course": "IICT Seminar",
+            "teacher": "Areeba Waseem,Dr Iqra Muhammad,Momna Javaid,Amna Waheed,Maham Saleem ",
             "room": "Audi"
           }
         ],
@@ -3019,61 +3018,6 @@
             "course": "Compiler Construction",
             "teacher": "Faryal Saud",
             "room": "R-5"
-          }
-        ]
-      }
-    }
-  },
-  "MS/PhD": {
-    "UNKNOWN": {
-      "UNKNOWN": {
-        "Monday": [],
-        "Tuesday": [],
-        "Wednesday": [],
-        "Thursday": [
-          {
-            "start": "8:45",
-            "end": "10:10",
-            "course": "Advanced Computer Vision",
-            "teacher": "Dr Usman Ghous",
-            "room": "MS Research Room"
-          },
-          {
-            "start": "10:15",
-            "end": "11:40",
-            "course": "Advanced Computer Vision",
-            "teacher": "Dr Usman Ghous",
-            "room": "MS Research Room"
-          }
-        ],
-        "Friday": [
-          {
-            "start": "10:15",
-            "end": "11:40",
-            "course": "Research Methodology Prof Dr Muhammad Shahzad",
-            "teacher": "Sarfraz",
-            "room": "CS FYP Lab"
-          },
-          {
-            "start": "11:45",
-            "end": "1:10",
-            "course": "Research Methodology Prof Dr Muhammad Shahzad",
-            "teacher": "Sarfraz",
-            "room": "CS FYP Lab"
-          },
-          {
-            "start": "1:45",
-            "end": "3:10",
-            "course": "Advanced Operating Systems",
-            "teacher": "Dr Tayyeb Javed",
-            "room": "MS Research Room"
-          },
-          {
-            "start": "3:15",
-            "end": "4:40",
-            "course": "Advanced Operating Systems",
-            "teacher": "Dr Tayyeb Javed",
-            "room": "MS Research Room"
           }
         ]
       }

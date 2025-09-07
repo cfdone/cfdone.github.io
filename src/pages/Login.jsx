@@ -49,7 +49,7 @@ export default function Login() {
     <>
       <div className="h-screen bg-black flex flex-col justify-between items-center px-4 pt-safe-offset-8 pb-safe">
         <div className="flex flex-col items-center gap-6 px-4 py-6 w-full max-w-md mx-auto">
-          <h1 className="font-product-sans text-accent font-black text-2xl mb-2 text-center">
+          <h1 className="font-product-sans text-accent font-semibold text-2xl mb-2 text-center">
             Fast Timetable <span className="text-accent">Sucks?</span>
             <br />
             <span className="text-sm font-light font-product-sans text-neutral-200">Yeah, we feel your pain!</span>
@@ -99,7 +99,7 @@ export default function Login() {
                     d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
                   />
                 </svg>
-                <span className="text-[15px] font-medium">Sign in with Google</span>
+                <span className="text-[15px] font-semibold">Sign in with Google</span>
               </div>
             )}
           </button>
