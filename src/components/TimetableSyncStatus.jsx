@@ -6,14 +6,14 @@ const LoadingSpinner = ({ size = 20, className = '' }) => (
 )
 
 const SyncStatusIcon = ({ status, size = 16, className = '' }) => {
-  const accentClass = 'text-accent';
+  const accentClass = 'text-accent'
   const icons = {
     synced: <CheckCircle className={`${accentClass} ${className}`} size={size} />,
     syncing: <LoadingSpinner size={size} className={`${accentClass} ${className}`} />,
     pending: <Clock className={`${accentClass} ${className}`} size={size} />,
     error: <AlertCircle className={`${accentClass} ${className}`} size={size} />,
     offline: <WifiOff className={`${accentClass} ${className}`} size={size} />,
-    online: <Wifi className={`${accentClass} ${className}`} size={size} />
+    online: <Wifi className={`${accentClass} ${className}`} size={size} />,
   }
   return icons[status] || icons.offline
 }
@@ -25,7 +25,7 @@ const SyncStatusDisplay = ({ status, message, className = '' }) => {
     pending: 'Pending sync',
     error: 'Sync failed',
     offline: 'Offline',
-    online: 'Online'
+    online: 'Online',
   }
   return (
     <div className={`flex items-center gap-2 ${className}`}>
@@ -37,12 +37,12 @@ const SyncStatusDisplay = ({ status, message, className = '' }) => {
   )
 }
 
-const TimetableSyncStatus = ({ 
-  syncStatus, 
-  isOnline, 
-  onRetry, 
-  compact = false, 
-  className = '' 
+const TimetableSyncStatus = ({
+  syncStatus,
+  isOnline,
+  onRetry,
+  compact = false,
+  className = '',
 }) => {
   if (compact) {
     return (
@@ -63,10 +63,7 @@ const TimetableSyncStatus = ({
 
   return (
     <div className={`space-y-2 ${className}`}>
-      <SyncStatusDisplay 
-        status={syncStatus} 
-        className="text-xs"
-      />
+      <SyncStatusDisplay status={syncStatus} className="text-xs" />
       {syncStatus === 'error' && onRetry && (
         <button
           onClick={onRetry}
@@ -76,11 +73,7 @@ const TimetableSyncStatus = ({
           Retry sync
         </button>
       )}
-      {!isOnline && (
-        <p className="text-xs text-gray-500">
-          Will sync when online
-        </p>
-      )}
+      {!isOnline && <p className="text-xs text-gray-500">Will sync when online</p>}
     </div>
   )
 }

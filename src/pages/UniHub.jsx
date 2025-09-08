@@ -1,5 +1,5 @@
-import Navbar from '../components/Navbar';
-import logo from '../assets/logo.svg';
+import Navbar from '../components/Navbar'
+import logo from '../assets/logo.svg'
 
 function UniHub() {
   return (
@@ -35,36 +35,44 @@ function UniHub() {
                 <div className="grid grid-cols-1 gap-2">
                   <div className="bg-white/5 p-4 rounded-xl border border-accent/10 flex">
                     <div className="w-16 h-16 rounded-full overflow-hidden mr-4 flex-shrink-0">
-                      <img 
-                        src="https://cfd.nu.edu.pk/wp-content/uploads/2022/01/Profile-Pic-235x300.jpg" 
-                        alt="Dr. Muhammad Fayyaz" 
+                      <img
+                        src="https://cfd.nu.edu.pk/wp-content/uploads/2022/01/Profile-Pic-235x300.jpg"
+                        alt="Dr. Muhammad Fayyaz"
                         className="w-full h-full object-cover"
                       />
                     </div>
                     <div>
-                      <h4 className="text-white font-semibold text-base mb-1">Dr. Muhammad Fayyaz</h4>
+                      <h4 className="text-white font-semibold text-base mb-1">
+                        Dr. Muhammad Fayyaz
+                      </h4>
                       <h6 className="text-accent text-sm mb-2">Associate Professor & HOD</h6>
                       <div className="text-white/70 text-sm">
                         <p>m.fayyaz@nu.edu.pk</p>
-                        <span className="inline-block bg-accent/20 text-accent text-xs py-1 px-2 rounded mt-2">HEC approved PhD Supervisor</span>
+                        <span className="inline-block bg-accent/20 text-accent text-xs py-1 px-2 rounded mt-2">
+                          HEC approved PhD Supervisor
+                        </span>
                       </div>
                     </div>
                   </div>
 
                   <div className="bg-white/5 p-4 rounded-xl border border-accent/10 flex">
                     <div className="w-16 h-16 rounded-full overflow-hidden mr-4 flex-shrink-0">
-                      <img 
-                        src="https://cfd.nu.edu.pk/wp-content/uploads/2019/09/PSX_20240307_194751-1-1-235x300.jpg" 
-                        alt="Dr. Muhammad Shahzad" 
+                      <img
+                        src="https://cfd.nu.edu.pk/wp-content/uploads/2019/09/PSX_20240307_194751-1-1-235x300.jpg"
+                        alt="Dr. Muhammad Shahzad"
                         className="w-full h-full object-cover"
                       />
                     </div>
                     <div>
-                      <h4 className="text-white font-semibold text-base mb-1">Dr. Muhammad Shahzad</h4>
+                      <h4 className="text-white font-semibold text-base mb-1">
+                        Dr. Muhammad Shahzad
+                      </h4>
                       <h6 className="text-accent text-sm mb-2">Professor</h6>
                       <div className="text-white/70 text-sm">
                         <p>shahzad.sarfraz@nu.edu.pk</p>
-                        <span className="inline-block bg-accent/20 text-accent text-xs py-1 px-2 rounded mt-2">HEC approved PhD Supervisor</span>
+                        <span className="inline-block bg-accent/20 text-accent text-xs py-1 px-2 rounded mt-2">
+                          HEC approved PhD Supervisor
+                        </span>
                       </div>
                     </div>
                   </div>
@@ -79,9 +87,9 @@ function UniHub() {
                 <div className="grid grid-cols-1 gap-2">
                   <div className="bg-white/5 p-4 rounded-xl border border-accent/10 flex">
                     <div className="w-16 h-16 rounded-full overflow-hidden mr-4 flex-shrink-0">
-                      <img 
-                        src="https://cfd.nu.edu.pk/wp-content/uploads/2025/02/Dr.-Ammar-Rafiq-235x300.jpeg" 
-                        alt="Dr. Ammar Rafiq" 
+                      <img
+                        src="https://cfd.nu.edu.pk/wp-content/uploads/2025/02/Dr.-Ammar-Rafiq-235x300.jpeg"
+                        alt="Dr. Ammar Rafiq"
                         className="w-full h-full object-cover"
                       />
                     </div>
@@ -96,9 +104,9 @@ function UniHub() {
 
                   <div className="bg-white/5 p-4 rounded-xl border border-accent/10 flex">
                     <div className="w-16 h-16 rounded-full overflow-hidden mr-4 flex-shrink-0">
-                      <img 
-                        src="https://cfd.nu.edu.pk/wp-content/uploads/2020/09/5994-1-e1678168158795-235x300.png" 
-                        alt="Dr. Muhammad Umar" 
+                      <img
+                        src="https://cfd.nu.edu.pk/wp-content/uploads/2020/09/5994-1-e1678168158795-235x300.png"
+                        alt="Dr. Muhammad Umar"
                         className="w-full h-full object-cover"
                       />
                     </div>
@@ -107,22 +115,26 @@ function UniHub() {
                       <h6 className="text-accent text-sm mb-2">Associate Professor</h6>
                       <div className="text-white/70 text-sm">
                         <p>umar.aftab@nu.edu.pk</p>
-                        <span className="inline-block bg-accent/20 text-accent text-xs py-1 px-2 rounded mt-2">HEC approved PhD Supervisor</span>
+                        <span className="inline-block bg-accent/20 text-accent text-xs py-1 px-2 rounded mt-2">
+                          HEC approved PhD Supervisor
+                        </span>
                       </div>
                     </div>
                   </div>
 
                   <div className="bg-white/5 p-4 rounded-xl border border-accent/10 flex">
                     <div className="w-16 h-16 rounded-full overflow-hidden mr-4 flex-shrink-0">
-                      <img 
-                        src="https://cfd.nu.edu.pk/wp-content/uploads/2022/08/Dr-Usama-235x300.jpg" 
-                        alt="Dr. Usama Khalid" 
+                      <img
+                        src="https://cfd.nu.edu.pk/wp-content/uploads/2022/08/Dr-Usama-235x300.jpg"
+                        alt="Dr. Usama Khalid"
                         className="w-full h-full object-cover"
                       />
 
                       <div className="text-white/70 text-sm">
                         <p>rabia.maqsood@nu.edu.pk</p>
-                        <span className="inline-block bg-accent/20 text-accent text-xs py-1 px-2 rounded mt-2">HEC approved PhD Supervisor</span>
+                        <span className="inline-block bg-accent/20 text-accent text-xs py-1 px-2 rounded mt-2">
+                          HEC approved PhD Supervisor
+                        </span>
                       </div>
                     </div>
                   </div>
@@ -137,9 +149,9 @@ function UniHub() {
                 <div className="grid grid-cols-1 gap-2">
                   <div className="bg-white/5 p-4 rounded-xl border border-accent/10 flex">
                     <div className="w-16 h-16 rounded-full overflow-hidden mr-4 flex-shrink-0">
-                      <img 
-                        src="https://cfd.nu.edu.pk/wp-content/uploads/2023/08/IMG_6685-235x300.jpg" 
-                        alt="Mr. Ali Hamza" 
+                      <img
+                        src="https://cfd.nu.edu.pk/wp-content/uploads/2023/08/IMG_6685-235x300.jpg"
+                        alt="Mr. Ali Hamza"
                         className="w-full h-full object-cover"
                       />
                     </div>
@@ -154,9 +166,9 @@ function UniHub() {
 
                   <div className="bg-white/5 p-4 rounded-xl border border-accent/10 flex">
                     <div className="w-16 h-16 rounded-full overflow-hidden mr-4 flex-shrink-0">
-                      <img 
-                        src="https://cfd.nu.edu.pk/wp-content/uploads/2021/08/Mr.-Ali-Raza-scaled-e1689926748189-235x300.jpg" 
-                        alt="Mr. Ali Raza" 
+                      <img
+                        src="https://cfd.nu.edu.pk/wp-content/uploads/2021/08/Mr.-Ali-Raza-scaled-e1689926748189-235x300.jpg"
+                        alt="Mr. Ali Raza"
                         className="w-full h-full object-cover"
                       />
                     </div>
@@ -171,9 +183,9 @@ function UniHub() {
 
                   <div className="bg-white/5 p-4 rounded-xl border border-accent/10 flex">
                     <div className="w-16 h-16 rounded-full overflow-hidden mr-4 flex-shrink-0">
-                      <img 
-                        src="https://cfd.nu.edu.pk/wp-content/uploads/2019/09/5652-235x300.png" 
-                        alt="Ms. Aliza Saeed" 
+                      <img
+                        src="https://cfd.nu.edu.pk/wp-content/uploads/2019/09/5652-235x300.png"
+                        alt="Ms. Aliza Saeed"
                         className="w-full h-full object-cover"
                       />
                     </div>
@@ -188,9 +200,9 @@ function UniHub() {
 
                   <div className="bg-white/5 p-4 rounded-xl border border-accent/10 flex">
                     <div className="w-16 h-16 rounded-full overflow-hidden mr-4 flex-shrink-0">
-                      <img 
-                        src="https://cfd.nu.edu.pk/wp-content/uploads/2020/10/Ayesha-Liaqat-235x300.jpg" 
-                        alt="Ms. Ayesha Liaqat" 
+                      <img
+                        src="https://cfd.nu.edu.pk/wp-content/uploads/2020/10/Ayesha-Liaqat-235x300.jpg"
+                        alt="Ms. Ayesha Liaqat"
                         className="w-full h-full object-cover"
                       />
                     </div>
@@ -199,7 +211,9 @@ function UniHub() {
                       <h6 className="text-accent text-sm mb-2">Lecturer</h6>
                       <div className="text-white/70 text-sm">
                         <p>ayesha.liaqat@nu.edu.pk</p>
-                        <span className="inline-block bg-amber-500/20 text-amber-500 text-xs py-1 px-2 rounded mt-2">On Leave</span>
+                        <span className="inline-block bg-amber-500/20 text-amber-500 text-xs py-1 px-2 rounded mt-2">
+                          On Leave
+                        </span>
                       </div>
                     </div>
                   </div>
@@ -214,9 +228,9 @@ function UniHub() {
                 <div className="grid grid-cols-1 gap-2">
                   <div className="bg-white/5 p-4 rounded-xl border border-accent/10 flex">
                     <div className="w-16 h-16 rounded-full overflow-hidden mr-4 flex-shrink-0">
-                      <img 
-                        src="https://cfd.nu.edu.pk/wp-content/uploads/2025/08/Ms-Alisha-Abid-235x295.png" 
-                        alt="Ms. Alisha Abid" 
+                      <img
+                        src="https://cfd.nu.edu.pk/wp-content/uploads/2025/08/Ms-Alisha-Abid-235x295.png"
+                        alt="Ms. Alisha Abid"
                         className="w-full h-full object-cover"
                       />
                     </div>
@@ -231,9 +245,9 @@ function UniHub() {
 
                   <div className="bg-white/5 p-4 rounded-xl border border-accent/10 flex">
                     <div className="w-16 h-16 rounded-full overflow-hidden mr-4 flex-shrink-0">
-                      <img 
-                        src="https://cfd.nu.edu.pk/wp-content/uploads/2024/01/Ms-Amna-Waheed-235x300.jpg" 
-                        alt="Ms. Amna Waheed" 
+                      <img
+                        src="https://cfd.nu.edu.pk/wp-content/uploads/2024/01/Ms-Amna-Waheed-235x300.jpg"
+                        alt="Ms. Amna Waheed"
                         className="w-full h-full object-cover"
                       />
                     </div>
@@ -257,7 +271,7 @@ function UniHub() {
         </div>
       </div>
     </div>
-  );
+  )
 }
 
-export default UniHub;
+export default UniHub

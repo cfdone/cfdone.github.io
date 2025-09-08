@@ -17,15 +17,15 @@ import TimetableSyncStatus from '../components/TimetableSyncStatus'
 import LoadingPulseOverlay from '../components/Loading'
 export default function Home() {
   const location = useLocation()
-  const { 
-    timetableData: syncedTimetableData, 
-    syncStatus, 
-    isOnline, 
+  const {
+    timetableData: syncedTimetableData,
+    syncStatus,
+    isOnline,
     hasTimetable,
     retrySyncAction,
-    loading: timetableLoading
+    loading: timetableLoading,
   } = useTimetableSync()
-  
+
   const [selection, setSelection] = useState(location.state || null)
   const [currentTime, setCurrentTime] = useState(new Date())
   const [viewWeekly, setViewWeekly] = useState(false)
@@ -59,24 +59,24 @@ export default function Home() {
   // Get actual current day (for Header)
   const getActualCurrentDay = useCallback(() => {
     // All days of the week
-    const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-    const dayIndex = currentTime.getDay();
-    return days[dayIndex];
+    const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+    const dayIndex = currentTime.getDay()
+    return days[dayIndex]
   }, [currentTime])
 
   // Get selected day for schedule display
   const getCurrentDay = useCallback(() => {
     // All days of the week
-    const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-    
+    const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+
     // If a specific day is selected, use that
     if (selectedDay) {
-      return selectedDay;
+      return selectedDay
     }
-    
+
     // Otherwise use current day
-    const dayIndex = currentTime.getDay();
-    return days[dayIndex];
+    const dayIndex = currentTime.getDay()
+    return days[dayIndex]
   }, [currentTime, selectedDay])
 
   // Get greeting based on time
@@ -170,10 +170,12 @@ export default function Home() {
   // Sort today's classes by time (for the selected day)
   const sortedTodayClasses = useMemo(() => {
     // Add the current day to each class object
-    return [...todayClasses].map(classItem => ({
-      ...classItem,
-      day: getCurrentDay()
-    })).sort((a, b) => timeToMinutes(a.start) - timeToMinutes(b.start))
+    return [...todayClasses]
+      .map(classItem => ({
+        ...classItem,
+        day: getCurrentDay(),
+      }))
+      .sort((a, b) => timeToMinutes(a.start) - timeToMinutes(b.start))
   }, [todayClasses, getCurrentDay])
 
   // Get actual today's classes for progress tracking and today's cards
@@ -181,73 +183,86 @@ export default function Home() {
     const actualDay = getActualCurrentDay()
     return timetableData[actualDay] || []
   }, [timetableData, getActualCurrentDay])
-  
+
   // Sort actual today's classes (for the current/next class cards)
   const sortedActualTodayClasses = useMemo(() => {
-    return [...actualTodayClasses].map(classItem => ({
-      ...classItem,
-      day: getActualCurrentDay()
-    })).sort((a, b) => timeToMinutes(a.start) - timeToMinutes(b.start))
+    return [...actualTodayClasses]
+      .map(classItem => ({
+        ...classItem,
+        day: getActualCurrentDay(),
+      }))
+      .sort((a, b) => timeToMinutes(a.start) - timeToMinutes(b.start))
   }, [actualTodayClasses, getActualCurrentDay])
-  
+
   // Calculate actual today's progress for header and get today's current/next classes
-  const { actualTotalClasses, actualDoneClasses, actualCurrentClass, actualNextClass } = useMemo(() => {
-    const currentMinutes = getCurrentMinutes();
-    let done = 0;
-    let current = null;
-    let next = null;
+  const { actualTotalClasses, actualDoneClasses, actualCurrentClass, actualNextClass } =
+    useMemo(() => {
+      const currentMinutes = getCurrentMinutes()
+      let done = 0
+      let current = null
+      let next = null
 
-    // Sort actual today's classes
-    const sortedActualClasses = [...actualTodayClasses].sort(
-      (a, b) => timeToMinutes(a.start) - timeToMinutes(b.start)
-    );
+      // Sort actual today's classes
+      const sortedActualClasses = [...actualTodayClasses].sort(
+        (a, b) => timeToMinutes(a.start) - timeToMinutes(b.start)
+      )
 
-    for (const classInfo of sortedActualClasses) {
-      const startMinutes = timeToMinutes(classInfo.start);
-      const endMinutes = timeToMinutes(classInfo.end);
+      for (const classInfo of sortedActualClasses) {
+        const startMinutes = timeToMinutes(classInfo.start)
+        const endMinutes = timeToMinutes(classInfo.end)
 
-      if (currentMinutes >= startMinutes && currentMinutes < endMinutes) {
-        current = classInfo;
-      } else if (currentMinutes < startMinutes && !next) {
-        next = classInfo;
-      } else if (currentMinutes >= endMinutes) {
-        done++;
-      }
-    }
-
-    // If today is over and no next class, find next class in upcoming days
-    if (!next && !current) {
-      // Get all days in order starting from tomorrow
-      const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-      const todayIdx = currentTime.getDay();
-      for (let offset = 1; offset <= 7; offset++) {
-        const nextDayIdx = (todayIdx + offset) % 7;
-        const nextDayName = daysOfWeek[nextDayIdx];
-        const nextDayClasses = timetableData[nextDayName] || [];
-        if (nextDayClasses.length > 0) {
-          // Sort and pick first class
-          const sortedNextDayClasses = [...nextDayClasses].sort((a, b) => timeToMinutes(a.start) - timeToMinutes(b.start));
-          next = { ...sortedNextDayClasses[0], day: nextDayName };
-          break;
+        if (currentMinutes >= startMinutes && currentMinutes < endMinutes) {
+          current = classInfo
+        } else if (currentMinutes < startMinutes && !next) {
+          next = classInfo
+        } else if (currentMinutes >= endMinutes) {
+          done++
         }
       }
-    }
 
-    return {
-      actualTotalClasses: sortedActualClasses.length,
-      actualDoneClasses: done,
-      actualCurrentClass: current,
-      actualNextClass: next
-    };
-  }, [actualTodayClasses, getCurrentMinutes, timetableData, currentTime])
+      // If today is over and no next class, find next class in upcoming days
+      if (!next && !current) {
+        // Get all days in order starting from tomorrow
+        const daysOfWeek = [
+          'Sunday',
+          'Monday',
+          'Tuesday',
+          'Wednesday',
+          'Thursday',
+          'Friday',
+          'Saturday',
+        ]
+        const todayIdx = currentTime.getDay()
+        for (let offset = 1; offset <= 7; offset++) {
+          const nextDayIdx = (todayIdx + offset) % 7
+          const nextDayName = daysOfWeek[nextDayIdx]
+          const nextDayClasses = timetableData[nextDayName] || []
+          if (nextDayClasses.length > 0) {
+            // Sort and pick first class
+            const sortedNextDayClasses = [...nextDayClasses].sort(
+              (a, b) => timeToMinutes(a.start) - timeToMinutes(b.start)
+            )
+            next = { ...sortedNextDayClasses[0], day: nextDayName }
+            break
+          }
+        }
+      }
+
+      return {
+        actualTotalClasses: sortedActualClasses.length,
+        actualDoneClasses: done,
+        actualCurrentClass: current,
+        actualNextClass: next,
+      }
+    }, [actualTodayClasses, getCurrentMinutes, timetableData, currentTime])
 
   // We don't need to calculate this anymore since we're using actual values everywhere
 
   if (timetableLoading || syncStatus === 'syncing') {
-  return <LoadingPulseOverlay />;
+    return <LoadingPulseOverlay />
   }
   if (!selection) {
-    return <NoTimetableData />;
+    return <NoTimetableData />
   }
 
   return (
@@ -286,15 +301,15 @@ export default function Home() {
             doneClasses={actualDoneClasses}
           />
 
-          <ViewToggle 
-            viewWeekly={viewWeekly} 
-            setViewWeekly={setViewWeekly} 
+          <ViewToggle
+            viewWeekly={viewWeekly}
+            setViewWeekly={setViewWeekly}
             onResetDay={() => setSelectedDay('')}
           />
-          
+
           {!viewWeekly && (
-            <DaySelector 
-              onDaySelect={(day) => setSelectedDay(day)} 
+            <DaySelector
+              onDaySelect={day => setSelectedDay(day)}
               currentDay={getActualCurrentDay()}
             />
           )}
@@ -339,8 +354,6 @@ export default function Home() {
           <Navbar currentPage="home" />
         </div>
       </div>
-      
-      
     </div>
   )
 }

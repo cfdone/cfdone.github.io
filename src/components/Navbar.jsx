@@ -1,16 +1,12 @@
-import {  Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { Home, GraduationCap, Settings, Calendar } from 'lucide-react'
 
 export default function Navbar({ currentPage = 'home' }) {
-
-
   const menuItems = [
     { id: 'home', label: 'Home', Icon: Home, path: '/home' },
     { id: 'unihub', label: 'UniHub', Icon: GraduationCap, path: '/unihub' },
     { id: 'settings', label: 'Settings', Icon: Settings, path: '/settings' },
   ]
-
-
 
   return (
     <>

@@ -20,9 +20,7 @@ export default function StatusCard({ currentClass, nextClass, totalClasses, done
         {doneClasses === totalClasses ? (
           <>
             <Trophy className="w-5 h-5 text-accent" />
-            <span className="text-accent  text-sm font-semibold">
-              All Classes Complete!
-            </span>
+            <span className="text-accent  text-sm font-semibold">All Classes Complete!</span>
           </>
         ) : (
           <>

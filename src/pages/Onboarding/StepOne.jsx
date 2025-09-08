@@ -48,8 +48,10 @@ export default function StepOne() {
                         View the complete timetable for my section
                       </div>
                     </div>
-                    <div >
-                      <Book className={`${studentType === 'regular' ? 'text-white' : 'text-accent'} w-8 h-8`}/>
+                    <div>
+                      <Book
+                        className={`${studentType === 'regular' ? 'text-white' : 'text-accent'} w-8 h-8`}
+                      />
                     </div>
                   </div>
                 </button>
@@ -71,12 +73,12 @@ export default function StepOne() {
                   <div className="flex items-center justify-between">
                     <div>
                       <div className="font-semibold mb-2">Lagger Student</div>
-                      <div className="text-sm opacity-80">
-                        I need to resolve schedule conflicts
-                      </div>
+                      <div className="text-sm opacity-80">I need to resolve schedule conflicts</div>
                     </div>
                     <div className="text-2xl">
-                      <Zap className={`${studentType === 'lagger' ? 'text-white' : 'text-accent'} w-8 h-8`} />
+                      <Zap
+                        className={`${studentType === 'lagger' ? 'text-white' : 'text-accent'} w-8 h-8`}
+                      />
                     </div>
                   </div>
                 </button>
@@ -103,7 +105,9 @@ export default function StepOne() {
                       </div>
                     </div>
                     <div className="text-2xl">
-                      <Settings className={`${studentType === 'custom' ? 'text-white' : 'text-accent'} w-8 h-8`} />
+                      <Settings
+                        className={`${studentType === 'custom' ? 'text-white' : 'text-accent'} w-8 h-8`}
+                      />
                     </div>
                   </div>
                 </button>
@@ -119,18 +123,18 @@ export default function StepOne() {
               disabled={!studentType}
               onClick={() => {
                 if (studentType === 'regular') {
-                  navigate('/regular');
+                  navigate('/regular')
                 } else if (studentType === 'lagger') {
                   // Navigate to resolve with step='subject-selection' to start with subject selection UI
                   navigate('/resolve', {
-                  state: {
-                    step: 'subject-selection',
-                    selectedSubjects: [],
-                    userPreferences: null,
-                  },
-                });
+                    state: {
+                      step: 'subject-selection',
+                      selectedSubjects: [],
+                      userPreferences: null,
+                    },
+                  })
                 } else if (studentType === 'custom') {
-                  navigate('/resolved');
+                  navigate('/resolved')
                 }
               }}
             >

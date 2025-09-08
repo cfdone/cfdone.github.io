@@ -20,27 +20,27 @@ export default defineConfig({
               cacheName: 'images-cache',
               expiration: {
                 maxEntries: 50,
-                maxAgeSeconds: 60 * 60 * 24 * 30 // 30 days
-              }
-            }
+                maxAgeSeconds: 60 * 60 * 24 * 30, // 30 days
+              },
+            },
           },
           {
             urlPattern: /\.(?:js|css)$/,
             handler: 'StaleWhileRevalidate',
             options: {
               cacheName: 'static-resources',
-            }
-          }
+            },
+          },
         ],
         cleanupOutdatedCaches: true,
         skipWaiting: true,
-        clientsClaim: true
+        clientsClaim: true,
       },
       includeAssets: [
         '/favicon.ico',
         '/apple-touch-icon.png',
         '/android-chrome-192x192.png',
-        '/android-chrome-512x512.png'
+        '/android-chrome-512x512.png',
       ],
       manifest: {
         name: 'CFD ONE',

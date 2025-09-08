@@ -9,9 +9,7 @@ export default function NoTimetableData() {
           <div className="w-24 h-24 bg-gradient-to-br from-accent/20 to-purple-500/20 rounded-full flex items-center justify-center mx-auto mb-6">
             <BookOpen className="w-12 h-12 text-accent" />
           </div>
-          <h2 className=" text-white font-semibold text-2xl mb-4">
-            No Timetable Data
-          </h2>
+          <h2 className=" text-white font-semibold text-2xl mb-4">No Timetable Data</h2>
           <p className="text-white/70  text-center max-w-sm">
             Please go back and select your degree, semester, and section to view your class
             schedule.

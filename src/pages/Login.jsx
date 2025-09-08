@@ -17,7 +17,7 @@ export default function Login() {
   }, [user, loading, navigate])
 
   if (loading) {
-  return <LoadingPulseOverlay />;
+    return <LoadingPulseOverlay />
   }
 
   const handleGoogleSignIn = async () => {
@@ -48,13 +48,13 @@ export default function Login() {
         <img src={logo} alt="Logo" className="w-54 h-54 user-select-none mb-2" />
         <div className="flex flex-col gap-3 items-center justify-center w-full max-w-md mx-auto px-2 pb-6">
           <p className="text-white ">Let's fix this mess in 2 minutes flat!</p>
-          
+
           {error && (
             <div className="bg-red-500/10 border border-red-500/20 text-red-300 px-4 py-3 rounded-xl mb-2 w-full">
               <p className="text-sm  text-center">{error}</p>
             </div>
           )}
-          
+
           <button
             onClick={handleGoogleSignIn}
             disabled={isSigningIn}

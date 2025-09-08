@@ -13,7 +13,7 @@ export default function Resolve() {
   const [selectedSubjects, setSelectedSubjects] = useState(() => {
     return location.state?.selectedSubjects || []
   })
-  
+
   // State for search query
   const [searchQuery, setSearchQuery] = useState('')
 
@@ -66,7 +66,7 @@ export default function Resolve() {
   }, [])
 
   // Subject selection handlers
-  const handleSubjectToggle = (subject) => {
+  const handleSubjectToggle = subject => {
     setSelectedSubjects(prev => {
       const isSelected = prev.some(s => s.name === subject.name)
       if (isSelected) {
@@ -98,39 +98,39 @@ export default function Resolve() {
   // Filter subjects based on search query
   const filteredSubjects = useMemo(() => {
     if (!searchQuery.trim()) {
-      return allAvailableSubjects;
+      return allAvailableSubjects
     }
-    
-    const query = searchQuery.toLowerCase().trim();
-    
+
+    const query = searchQuery.toLowerCase().trim()
+
     return allAvailableSubjects.filter(subject => {
       // Check if query matches subject name
       if (subject.name.toLowerCase().includes(query)) {
-        return true;
+        return true
       }
-      
+
       // Generate abbreviation from subject name (e.g., "Object Oriented Programming" -> "OOP")
       // Ignore words like "and" when creating the abbreviation
-      const words = subject.name.split(' ');
+      const words = subject.name.split(' ')
       const abbreviation = words
         .filter(word => word.length > 0 && word.toLowerCase() !== 'and')
         .map(word => word[0])
         .join('')
-        .toLowerCase();
-      
+        .toLowerCase()
+
       // Check if query matches abbreviation
       if (abbreviation.includes(query)) {
-        return true;
+        return true
       }
-      
-      return false;
-    });
-  }, [allAvailableSubjects, searchQuery]);
+
+      return false
+    })
+  }, [allAvailableSubjects, searchQuery])
 
   // Handle search input changes
-  const handleSearchChange = (e) => {
-    setSearchQuery(e.target.value);
-  };
+  const handleSearchChange = e => {
+    setSearchQuery(e.target.value)
+  }
 
   // We'll remove the resolution code and focus solely on subject selection
 
@@ -144,11 +144,9 @@ export default function Resolve() {
           <h1 className=" text-accent font-semibold text-xl mb-2">
             Select Your Subjects ({selectedSubjects.length}/10)
           </h1>
-          <p className="text-white/70 text-sm ">
-            Choose up to 10 subjects for your timetable
-          </p>
+          <p className="text-white/70 text-sm ">Choose up to 10 subjects for your timetable</p>
         </div>
-        
+
         {/* Search Input */}
         <div className="relative w-full max-w-md mx-auto mb-4 px-2">
           <div className="relative">
@@ -175,81 +173,84 @@ export default function Resolve() {
             </div>
           ) : (
             filteredSubjects.map(subject => {
-            const isSelected = selectedSubjects.some(s => s.name === subject.name);
-            
-            // Generate abbreviation for highlighting if matching
-            // Ignore words like "and" when creating the abbreviation
-            const words = subject.name.split(' ');
-            const abbreviation = words
-              .filter(word => word.length > 0 && word.toLowerCase() !== 'and')
-              .map(word => word[0])
-              .join('');
-            
-            // Check if search matches abbreviation to show it
-            const showAbbreviation = searchQuery && 
-              abbreviation.toLowerCase().includes(searchQuery.toLowerCase()) &&
-              !subject.name.toLowerCase().startsWith(searchQuery.toLowerCase());
-              
-            return (
-              <button
-                key={subject.name}
-                type="button"
-                className={`p-4 rounded-xl  text-base border transition-all duration-200 text-left w-full
+              const isSelected = selectedSubjects.some(s => s.name === subject.name)
+
+              // Generate abbreviation for highlighting if matching
+              // Ignore words like "and" when creating the abbreviation
+              const words = subject.name.split(' ')
+              const abbreviation = words
+                .filter(word => word.length > 0 && word.toLowerCase() !== 'and')
+                .map(word => word[0])
+                .join('')
+
+              // Check if search matches abbreviation to show it
+              const showAbbreviation =
+                searchQuery &&
+                abbreviation.toLowerCase().includes(searchQuery.toLowerCase()) &&
+                !subject.name.toLowerCase().startsWith(searchQuery.toLowerCase())
+
+              return (
+                <button
+                  key={subject.name}
+                  type="button"
+                  className={`p-4 rounded-xl  text-base border transition-all duration-200 text-left w-full
                             ${
                               isSelected
                                 ? 'bg-accent text-white border-accent shadow-lg'
                                 : 'bg-white/10 text-accent border-accent/10 hover:bg-accent/10'
                             }
                         `}
-                onClick={() => handleSubjectToggle(subject)}
-              >
-                <div className="flex items-start justify-between">
-                  <div className="flex-1">
-                    <div className="font-semibold mb-2 flex items-center gap-2">
-                      {subject.name}
-                      {showAbbreviation && (
-                        <span className="text-xs px-2 py-0.5 bg-white/20 rounded text-white/90">
-                          {abbreviation}
-                        </span>
-                      )}
-                      {isSelected && (
-                        <svg
-                          className="w-4 h-4 text-white"
-                          fill="currentColor"
-                          viewBox="0 0 20 20"
-                        >
-                          <path
-                            fillRule="evenodd"
-                            d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                            clipRule="evenodd"
-                          />
-                        </svg>
-                      )}
-                    </div>
-                    <div className="text-sm opacity-80 space-y-1">
-                      <div className="font-semibold">
-                        Available in {subject.locations.length} section
-                        {subject.locations.length > 1 ? 's' : ''}:
+                  onClick={() => handleSubjectToggle(subject)}
+                >
+                  <div className="flex items-start justify-between">
+                    <div className="flex-1">
+                      <div className="font-semibold mb-2 flex items-center gap-2">
+                        {subject.name}
+                        {showAbbreviation && (
+                          <span className="text-xs px-2 py-0.5 bg-white/20 rounded text-white/90">
+                            {abbreviation}
+                          </span>
+                        )}
+                        {isSelected && (
+                          <svg
+                            className="w-4 h-4 text-white"
+                            fill="currentColor"
+                            viewBox="0 0 20 20"
+                          >
+                            <path
+                              fillRule="evenodd"
+                              d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                              clipRule="evenodd"
+                            />
+                          </svg>
+                        )}
                       </div>
-                      {subject.locations.slice(0, 2).map((loc, locIdx) => (
-                        <div key={locIdx} className="text-xs opacity-70 flex items-center gap-1">
-                          <MapPin className="w-3 h-3" />
-                          {loc.degree} • S{loc.semester}-{loc.section}{' '}
-                          {loc.teacher ? `• ${loc.teacher}` : ''}
+                      <div className="text-sm opacity-80 space-y-1">
+                        <div className="font-semibold">
+                          Available in {subject.locations.length} section
+                          {subject.locations.length > 1 ? 's' : ''}:
                         </div>
-                      ))}
-                      {subject.locations.length > 2 && (
-                        <div className="text-xs opacity-70">
-                          +{subject.locations.length - 2} more sections available
-                        </div>
-                      )}
+                        {subject.locations.slice(0, 2).map((loc, locIdx) => (
+                          <div key={locIdx} className="text-xs opacity-70 flex items-center gap-1">
+                            <MapPin className="w-3 h-3" />
+                            {loc.degree} • S{loc.semester}-{loc.section}{' '}
+                            {loc.teacher ? `• ${loc.teacher}` : ''}
+                          </div>
+                        ))}
+                        {subject.locations.length > 2 && (
+                          <div className="text-xs opacity-70">
+                            +{subject.locations.length - 2} more sections available
+                          </div>
+                        )}
+                      </div>
                     </div>
+                    <BookOpen
+                      className={`w-6 h-6 ml-3 ${isSelected ? 'text-white' : 'text-accent'}`}
+                    />
                   </div>
-                  <BookOpen className={`w-6 h-6 ml-3 ${isSelected ? 'text-white' : 'text-accent'}`} />
-                </div>
-              </button>
-            )
-          })
+                </button>
+              )
+            })
           )}
         </div>
       </div>

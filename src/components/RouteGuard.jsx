@@ -1,14 +1,13 @@
 import { Navigate } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
+import useTimetableSync from '../hooks/useTimetableSync'
 import LoadingPulseOverlay from './Loading'
-// ...existing code...
 
-// Component to protect routes that require authentication
 export function AuthGuard({ children }) {
   const { user, loading } = useAuth()
 
   if (loading) {
-  return <LoadingPulseOverlay />;
+    return <LoadingPulseOverlay />
   }
 
   if (!user) {
@@ -20,45 +19,57 @@ export function AuthGuard({ children }) {
 
 export function ProtectedRoute({ children }) {
   const { user, loading } = useAuth()
+  const { loading: syncLoading, hasTimetable } = useTimetableSync()
 
-  if (loading) {
-    return <LoadingPulseOverlay />;
+  if (loading || syncLoading) {
+    return <LoadingPulseOverlay />
   }
 
   if (!user) {
     return <Navigate to="/login" replace />
   }
 
-  // Use only localStorage for navigation decisions
-  const hasLocalData = localStorage.getItem('timetableData') && localStorage.getItem('onboardingMode')
+  // Check both localStorage and Supabase (via useTimetableSync)
+  const hasLocalData =
+    localStorage.getItem('timetableData') && localStorage.getItem('onboardingMode')
+  const hasRemoteData = hasTimetable()
 
-  // If no data exists in localStorage, redirect to stepone
-  if (!hasLocalData) {
+  if (!hasLocalData && !hasRemoteData) {
     return <Navigate to="/stepone" replace />
   }
 
   return children
 }
 
-// Component to prevent access to onboarding when data exists
 export function OnboardingGuard({ children }) {
   const { user, loading } = useAuth()
+  const {
+    loading: syncLoading,
+    hasTimetable,
+    timetableData,
+    onboardingMode,
+    syncStatus,
+  } = useTimetableSync()
 
-  if (loading) {
-    return <LoadingPulseOverlay />;
+  if (loading || syncLoading) {
+    return <LoadingPulseOverlay />
   }
 
   if (!user) {
     return <Navigate to="/login" replace />
   }
 
-  // Use only localStorage for navigation decisions
-  const hasLocalData = localStorage.getItem('timetableData') && localStorage.getItem('onboardingMode')
-
-  // If data exists in localStorage, redirect to home
-  if (hasLocalData) {
+  if (loading || syncLoading || syncStatus !== 'synced') {
+    return <LoadingPulseOverlay />
+  }
+  if (!user) {
+    return <Navigate to="/login" replace />
+  }
+  if (hasTimetable()) {
     return <Navigate to="/home" replace />
   }
-
+  if (!timetableData && !onboardingMode) {
+    return <Navigate to="/stepone" replace />
+  }
   return children
 }

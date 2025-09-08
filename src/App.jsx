@@ -18,7 +18,7 @@ function App() {
       <Routes>
         {/* Root route - redirect to login */}
         <Route path="/" element={<Navigate to="/login" replace />} />
-        
+
         {/* Login route - accessible when not authenticated */}
         <Route path="/login" element={<Login />} />
 
@@ -49,7 +49,7 @@ function App() {
             </OnboardingGuard>
           }
         />
-      
+
         <Route
           path="/preferences"
           element={
@@ -84,21 +84,21 @@ function App() {
         />
 
         {/* Settings route - requires authentication */}
-        <Route 
-          path="/settings" 
+        <Route
+          path="/settings"
           element={
             <AuthGuard>
               <Settings />
             </AuthGuard>
-          } 
+          }
         />
-        <Route 
-          path="/unihub" 
+        <Route
+          path="/unihub"
           element={
             <AuthGuard>
               <UniHub />
             </AuthGuard>
-          } 
+          }
         />
       </Routes>
     </AuthProvider>

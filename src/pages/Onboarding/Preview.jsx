@@ -1,15 +1,15 @@
 import { useState, useMemo, useEffect, useCallback } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { CheckCircle, AlertTriangle, Target, Book, MapPin } from 'lucide-react'
-import ShinyText from '../../components/ShinyText';
-  
+import ShinyText from '../../components/ShinyText'
+
 import logo from '../../assets/logo.svg'
 import StepTrack from '../../components/Onboarding/StepTrack'
 import { timeToMinutes, timeRangesOverlap } from '../../utils/timeUtils'
 import TimeTable from '../../assets/timetable.json'
 import useTimetableSync from '../../hooks/useTimetableSync'
 import { verifyTimetableWithGemini } from '../../utils/ai/geminiresolve'
-import { Sparkles } from 'lucide-react';
+import { Sparkles } from 'lucide-react'
 
 export default function Preview() {
   const navigate = useNavigate()
@@ -42,67 +42,69 @@ export default function Preview() {
   const [resolutionProgress] = useState(0)
 
   // Error message for failed timetable creation
-  const [errorMsg, setErrorMsg] = useState('');
+  const [errorMsg, setErrorMsg] = useState('')
 
   // Gemini verification states
   // Removed unused geminiStatus state
-  const [geminiSuggestions, setGeminiSuggestions] = useState('');
-  const [isReverifying, setIsReverifying] = useState(false);
-  const [hasReverified, setHasReverified] = useState(false);
+  const [geminiSuggestions, setGeminiSuggestions] = useState('')
+  const [isReverifying, setIsReverifying] = useState(false)
+  const [hasReverified, setHasReverified] = useState(false)
 
   // Function to check for time conflicts in the timetable
-  const detectTimeConflicts = useCallback((timetable) => {
-    const conflicts = [];
-    
+  const detectTimeConflicts = useCallback(timetable => {
+    const conflicts = []
+
     // Check for conflicts in each day's schedule
     Object.values(timetable).forEach(classes => {
-      if (classes.length < 2) return; // No conflicts possible with 0-1 classes
-      
+      if (classes.length < 2) return // No conflicts possible with 0-1 classes
+
       // Sort classes by start time
-      const sortedClasses = [...classes].sort((a, b) => 
-        timeToMinutes(a.start) - timeToMinutes(b.start)
-      );
-      
+      const sortedClasses = [...classes].sort(
+        (a, b) => timeToMinutes(a.start) - timeToMinutes(b.start)
+      )
+
       // Check for overlaps using the new overlap detection
       for (let i = 0; i < sortedClasses.length - 1; i++) {
-        const current = sortedClasses[i];
-        const next = sortedClasses[i + 1];
-        
+        const current = sortedClasses[i]
+        const next = sortedClasses[i + 1]
+
         // Use the improved overlap detection
         if (timeRangesOverlap(current.start, current.end, next.start, next.end)) {
           // Add both subjects to conflicts if they're not already there
-          const currentSubject = current.subject || current.course;
-          const nextSubject = next.subject || next.course;
-          
+          const currentSubject = current.subject || current.course
+          const nextSubject = next.subject || next.course
+
           if (currentSubject && !conflicts.includes(currentSubject)) {
-            conflicts.push(currentSubject);
+            conflicts.push(currentSubject)
           }
           if (nextSubject && !conflicts.includes(nextSubject)) {
-            conflicts.push(nextSubject);
+            conflicts.push(nextSubject)
           }
         }
       }
-    });
-    
-    return conflicts;
-  }, []);
+    })
 
-    // Function to generate resolution suggestions for conflicting subjects
-    const generateResolutionSuggestions = useCallback((conflicts, subjects) => {
-        // For each conflict, suggest alternate sections/times if available
-        return conflicts.map(conflictSubject => {
-          const subject = subjects.find(s => s.name === conflictSubject);
-          if (!subject || !subject.locations || !userPreferences?.parentSection) return null;
+    return conflicts
+  }, [])
+
+  // Function to generate resolution suggestions for conflicting subjects
+  const generateResolutionSuggestions = useCallback(
+    (conflicts, subjects) => {
+      // For each conflict, suggest alternate sections/times if available
+      return conflicts
+        .map(conflictSubject => {
+          const subject = subjects.find(s => s.name === conflictSubject)
+          if (!subject || !subject.locations || !userPreferences?.parentSection) return null
           // Find alternative locations (sections) for this subject
-          const parentSection = userPreferences.parentSection;
+          const parentSection = userPreferences.parentSection
           const alternatives = subject.locations.filter(loc => {
             // Only suggest if not in parent section
             return (
               loc.degree !== parentSection.degree ||
               loc.semester !== parentSection.semester ||
               loc.section !== parentSection.section
-            );
-          });
+            )
+          })
           return {
             subject: subject.name,
             message:
@@ -110,121 +112,124 @@ export default function Preview() {
                 ? 'Try selecting a different section or time slot for this subject to avoid conflicts.'
                 : 'No alternate sections available. Manual adjustment may be required.',
             alternatives,
-          };
-        }).filter(Boolean);
-      }, [userPreferences]);
+          }
+        })
+        .filter(Boolean)
+    },
+    [userPreferences]
+  )
 
   // Effect to get the resolved timetable from location state or generate it
   useEffect(() => {
     if (location.state?.resolvedTimetable) {
-      setResolvedTimetable(location.state.resolvedTimetable);
-      
+      setResolvedTimetable(location.state.resolvedTimetable)
+
       // If conflicts aren't provided in location state, detect them
       if (!location.state.conflictSubjects) {
-        const detectedConflicts = detectTimeConflicts(location.state.resolvedTimetable);
-        setConflictSubjects(detectedConflicts);
+        const detectedConflicts = detectTimeConflicts(location.state.resolvedTimetable)
+        setConflictSubjects(detectedConflicts)
       } else {
-        setConflictSubjects(location.state.conflictSubjects);
+        setConflictSubjects(location.state.conflictSubjects)
       }
     } else if (selectedSubjects.length > 0) {
       // Generate a simple mock timetable for preview
-      const mockTimetable = generateMockTimetable(selectedSubjects, userPreferences);
-      setResolvedTimetable(mockTimetable);
-      
+      const mockTimetable = generateMockTimetable(selectedSubjects, userPreferences)
+      setResolvedTimetable(mockTimetable)
+
       // Detect conflicts in the mock timetable
-      const detectedConflicts = detectTimeConflicts(mockTimetable);
-      setConflictSubjects(detectedConflicts);
+      const detectedConflicts = detectTimeConflicts(mockTimetable)
+      setConflictSubjects(detectedConflicts)
     }
-    
+
     if (location.state?.resolutionSuggestions) {
-      setResolutionSuggestions(location.state.resolutionSuggestions);
+      setResolutionSuggestions(location.state.resolutionSuggestions)
     }
   }, [location.state, selectedSubjects, userPreferences, detectTimeConflicts])
 
-    // Effect to generate resolution suggestions when conflicts are detected
-    useEffect(() => {
-      if (conflictSubjects.length > 0 && selectedSubjects.length > 0) {
-        setResolutionSuggestions(generateResolutionSuggestions(conflictSubjects, selectedSubjects));
-      } else {
-        setResolutionSuggestions([]);
-      }
-    }, [conflictSubjects, selectedSubjects, generateResolutionSuggestions]);
-  
-  // Helper function to generate a realistic timetable for preview using actual timetable data
-  const generateMockTimetable = (subjects) => {
-      const timetable = {};
-      const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
-      days.forEach(day => {
-        timetable[day] = [];
-      });
-      // For each subject, find its actual schedule in the timetable data
-      subjects.forEach((subject) => {
-        if (!subject.locations || subject.locations.length === 0) return;
-        let assigned = false;
-        for (const loc of subject.locations) {
-          if (!loc.degree || !loc.semester || !loc.section) continue;
-          const sectionData = TimeTable?.[loc.degree]?.[loc.semester]?.[loc.section];
-          if (sectionData) {
-            let foundSlot = false;
-            Object.entries(sectionData).forEach(([day, slots]) => {
-              slots.forEach(slot => {
-                if (slot.course === subject.name) {
-                  const hasConflict = timetable[day].some(existing =>
-                    timeRangesOverlap(existing.start, existing.end, slot.start, slot.end)
-                  );
-                  if (!hasConflict) {
-                    timetable[day].push({
-                      ...slot,
-                      subject: subject.name,
-                      degree: loc.degree,
-                      semester: loc.semester,
-                      section: loc.section
-                    });
-                    assigned = true;
-                    foundSlot = true;
-                  }
-                }
-              });
-            });
-            if (foundSlot) break;
-          }
-        }
-        // If not assigned, fallback: add to first available day/time without conflict
-        if (!assigned) {
-          for (const day of days) {
-            const hasConflict = timetable[day].some(existing =>
-              timeRangesOverlap(existing.start, existing.end, "8:45", "10:10")
-            );
-            if (!hasConflict) {
-              timetable[day].push({
-                subject: subject.name,
-                start: "8:45",
-                end: "10:10",
-                course: subject.name,
-                teacher: subject.locations[0]?.teacher || 'TBD',
-                room: subject.locations[0]?.room || 'TBD',
-                degree: subject.locations[0]?.degree || 'TBD',
-                semester: subject.locations[0]?.semester || 'TBD',
-                section: subject.locations[0]?.section || 'TBD'
-              });
-              break;
-            }
-          }
-        }
-      });
-      return timetable;
+  // Effect to generate resolution suggestions when conflicts are detected
+  useEffect(() => {
+    if (conflictSubjects.length > 0 && selectedSubjects.length > 0) {
+      setResolutionSuggestions(generateResolutionSuggestions(conflictSubjects, selectedSubjects))
+    } else {
+      setResolutionSuggestions([])
     }
+  }, [conflictSubjects, selectedSubjects, generateResolutionSuggestions])
+
+  // Helper function to generate a realistic timetable for preview using actual timetable data
+  const generateMockTimetable = subjects => {
+    const timetable = {}
+    const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
+    days.forEach(day => {
+      timetable[day] = []
+    })
+    // For each subject, find its actual schedule in the timetable data
+    subjects.forEach(subject => {
+      if (!subject.locations || subject.locations.length === 0) return
+      let assigned = false
+      for (const loc of subject.locations) {
+        if (!loc.degree || !loc.semester || !loc.section) continue
+        const sectionData = TimeTable?.[loc.degree]?.[loc.semester]?.[loc.section]
+        if (sectionData) {
+          let foundSlot = false
+          Object.entries(sectionData).forEach(([day, slots]) => {
+            slots.forEach(slot => {
+              if (slot.course === subject.name) {
+                const hasConflict = timetable[day].some(existing =>
+                  timeRangesOverlap(existing.start, existing.end, slot.start, slot.end)
+                )
+                if (!hasConflict) {
+                  timetable[day].push({
+                    ...slot,
+                    subject: subject.name,
+                    degree: loc.degree,
+                    semester: loc.semester,
+                    section: loc.section,
+                  })
+                  assigned = true
+                  foundSlot = true
+                }
+              }
+            })
+          })
+          if (foundSlot) break
+        }
+      }
+      // If not assigned, fallback: add to first available day/time without conflict
+      if (!assigned) {
+        for (const day of days) {
+          const hasConflict = timetable[day].some(existing =>
+            timeRangesOverlap(existing.start, existing.end, '8:45', '10:10')
+          )
+          if (!hasConflict) {
+            timetable[day].push({
+              subject: subject.name,
+              start: '8:45',
+              end: '10:10',
+              course: subject.name,
+              teacher: subject.locations[0]?.teacher || 'TBD',
+              room: subject.locations[0]?.room || 'TBD',
+              degree: subject.locations[0]?.degree || 'TBD',
+              semester: subject.locations[0]?.semester || 'TBD',
+              section: subject.locations[0]?.section || 'TBD',
+            })
+            break
+          }
+        }
+      }
+    })
+    return timetable
+  }
 
   // Weekly timetable preview styled like WeeklySchedule.jsx
-  const renderTimetableByDay = (timetable) => {
-    if (!timetable) return null;
-    const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
+  const renderTimetableByDay = timetable => {
+    if (!timetable) return null
+    const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
     return (
       <div className="space-y-3">
         {days
           .filter(day => Object.prototype.hasOwnProperty.call(timetable, day))
           .map(day => {
-            const classes = timetable[day] || [];
+            const classes = timetable[day] || []
             return (
               <div key={day}>
                 <div className="bg-white/5 rounded-xl border border-accent/10 overflow-hidden">
@@ -244,15 +249,13 @@ export default function Preview() {
                         <div className="mb-2 flex justify-center">
                           <Star className="w-6 h-6 text-accent/60" />
                         </div>
-                        <div className="text-accent/60  text-sm">
-                          No classes scheduled
-                        </div>
+                        <div className="text-accent/60  text-sm">No classes scheduled</div>
                       </div>
                     ) : (
                       classes
                         .sort((a, b) => timeToMinutes(a.start) - timeToMinutes(b.start))
                         .map((cls, idx) => {
-                          const isConflict = conflictSubjects.includes(cls.subject || cls.course);
+                          const isConflict = conflictSubjects.includes(cls.subject || cls.course)
                           return (
                             <div
                               key={idx}
@@ -262,12 +265,18 @@ export default function Preview() {
                                 {/* Left: Course info */}
                                 <div className="flex-1 pr-4">
                                   <div className="flex items-center gap-2 mb-2">
-                                    <div className={`w-2 h-2 rounded-full flex-shrink-0 ${isConflict ? 'bg-yellow-400 animate-pulse' : 'bg-accent/40'}`}></div>
-                                    <h4 className={` font-semibold text-sm ${isConflict ? 'text-yellow-400' : 'text-white'}`}>{cls.subject || cls.course}
-                                      
+                                    <div
+                                      className={`w-2 h-2 rounded-full flex-shrink-0 ${isConflict ? 'bg-yellow-400 animate-pulse' : 'bg-accent/40'}`}
+                                    ></div>
+                                    <h4
+                                      className={` font-semibold text-sm ${isConflict ? 'text-yellow-400' : 'text-white'}`}
+                                    >
+                                      {cls.subject || cls.course}
                                     </h4>
                                     {isConflict && (
-                                      <span className="bg-yellow-500/20 text-yellow-400 px-2 py-0.5 rounded-full text-xs  font-semibold">Conflict</span>
+                                      <span className="bg-yellow-500/20 text-yellow-400 px-2 py-0.5 rounded-full text-xs  font-semibold">
+                                        Conflict
+                                      </span>
                                     )}
                                   </div>
                                   <div className="space-y-1">
@@ -279,7 +288,8 @@ export default function Preview() {
                                       {cls.teacher || 'Teacher TBD'}
                                     </div>
                                     <div className="text-xs  text-accent/50">
-                                      {cls.degree || 'N/A'} • S{cls.semester || 'N/A'}-{cls.section || 'N/A'}
+                                      {cls.degree || 'N/A'} • S{cls.semester || 'N/A'}-
+                                      {cls.section || 'N/A'}
                                     </div>
                                   </div>
                                 </div>
@@ -288,23 +298,21 @@ export default function Preview() {
                                   <div className=" font-semibold text-base text-white">
                                     {cls.start}
                                   </div>
-                                  <div className=" text-xs text-accent/60">
-                                    {cls.end}
-                                  </div>
+                                  <div className=" text-xs text-accent/60">{cls.end}</div>
                                 </div>
                               </div>
                             </div>
-                          );
+                          )
                         })
                     )}
                   </div>
                 </div>
               </div>
-            );
+            )
           })}
       </div>
-    );
-  };
+    )
+  }
 
   return (
     <div className="h-screen bg-black flex flex-col items-center px-2 pt-safe-offset-8 pb-safe">
@@ -313,18 +321,13 @@ export default function Preview() {
         <img src={logo} alt="Logo" className="w-15 h-15 user-select-none mb-2" />
         <StepTrack currentStep={4} totalSteps={4} />
         <div className="text-center mb-6">
-          <h1 className=" text-accent font-semibold text-xl mb-2">
-            Review Your Timetable
-          </h1>
+          <h1 className=" text-accent font-semibold text-xl mb-2">Review Your Timetable</h1>
           <p className="text-white/70 text-sm ">
             Review your schedule before creating the final timetable
           </p>
-            {errorMsg && (
-              <div className="text-red-500 mt-2 text-sm">{errorMsg}</div>
-            )}
+          {errorMsg && <div className="text-red-500 mt-2 text-sm">{errorMsg}</div>}
         </div>
       </div>
-
 
       {/* Scrollable Content Area */}
       <div className="flex-1 w-full max-w-md mx-auto overflow-y-auto no-scrollbar min-h-0">
@@ -385,8 +388,8 @@ export default function Preview() {
                         {userPreferences.parentSection.degree} • Semester{' '}
                         {userPreferences.parentSection.semester} • Section{' '}
                         {userPreferences.parentSection.section}
-                        {Object.values(userPreferences.seatAvailability).filter(Boolean)
-                          .length > 0 &&
+                        {Object.values(userPreferences.seatAvailability).filter(Boolean).length >
+                          0 &&
                           ` • ${Object.values(userPreferences.seatAvailability).filter(Boolean).length} confirmed seats`}
                       </div>
                     )}
@@ -397,52 +400,49 @@ export default function Preview() {
                   </div>
                   {/* XARVIN AI Review Card with Reverify Button */}
                   <div className="mt-3 p-4 rounded-xl border bg-accent/10 border-accent/20 text-white">
-                    <div className='flex items-center justify-between'
-
-                    >
+                    <div className="flex items-center justify-between">
                       XARVIN AI Review:
-
-                    {!isReverifying && !geminiSuggestions && (
-                      <button
-                        className="px-3 py-1  text-white text-xs hover:bg-accent/80 transition rounded-full  font-semibold"
-                        style={{
-                          background: 'linear-gradient(135deg, #a980ff, #182fff99) 0 0 / 200% 200%',
-                        }}
-                        disabled={hasReverified}
-                        onClick={async () => {
-                          setIsReverifying(true);
-                          setGeminiSuggestions('');
-                          setHasReverified(false);
-                          const geminiReply = await verifyTimetableWithGemini({
-                            timetable: resolvedTimetable,
-                            conflictSubjects,
-                            resolutionSuggestions,
-                            selectedSubjects,
-                          });
-                          setGeminiSuggestions(geminiReply);
-                          setIsReverifying(false);
-                          setHasReverified(true);
-                        }}
-                      >
-                        <Sparkles className="w-4 h-4 inline-block mr-1" />
-                        Reverify with AI
-                      </button>
-                    )}
-
+                      {!isReverifying && !geminiSuggestions && (
+                        <button
+                          className="px-3 py-1  text-white text-xs hover:bg-accent/80 transition rounded-full  font-semibold"
+                          style={{
+                            background:
+                              'linear-gradient(135deg, #a980ff, #182fff99) 0 0 / 200% 200%',
+                          }}
+                          disabled={hasReverified}
+                          onClick={async () => {
+                            setIsReverifying(true)
+                            setGeminiSuggestions('')
+                            setHasReverified(false)
+                            const geminiReply = await verifyTimetableWithGemini({
+                              timetable: resolvedTimetable,
+                              conflictSubjects,
+                              resolutionSuggestions,
+                              selectedSubjects,
+                            })
+                            setGeminiSuggestions(geminiReply)
+                            setIsReverifying(false)
+                            setHasReverified(true)
+                          }}
+                        >
+                          <Sparkles className="w-4 h-4 inline-block mr-1" />
+                          Reverify with AI
+                        </button>
+                      )}
                     </div>
-                   
+
                     {/* Reasoning Animation */}
                     {isReverifying && (
                       <div className="flex items-center gap-2 mt-2">
                         <div className="w-2 h-2 rounded-full bg-accent/50 animate-pulse flex justify-center items-center">
                           <div className="w-1 h-1 rounded-full bg-accent"></div>
                         </div>
-                      <ShinyText 
-  text="Xarvin is analyzing your timetable..." 
-  disabled={false} 
-  speed={3} 
-  className='custom-class' 
-/>
+                        <ShinyText
+                          text="Xarvin is analyzing your timetable..."
+                          disabled={false}
+                          speed={3}
+                          className="custom-class"
+                        />
                       </div>
                     )}
                     {/* AI Response */}
@@ -474,8 +474,7 @@ export default function Preview() {
                       ></div>
                     </div>
                     <div className="text-sm opacity-80">
-                      Analyzing {selectedSubjects.length} subjects across all available
-                      sections...
+                      Analyzing {selectedSubjects.length} subjects across all available sections...
                     </div>
                   </div>
                 )}
@@ -485,10 +484,7 @@ export default function Preview() {
                   <div className="space-y-2">
                     <div className="font-semibold text-white text-sm mb-2">Suggestions:</div>
                     {resolutionSuggestions.map((suggestion, idx) => (
-                      <div
-                        key={idx}
-                        className="p-3 rounded-lg bg-white/5 border border-white/10"
-                      >
+                      <div key={idx} className="p-3 rounded-lg bg-white/5 border border-white/10">
                         <div className="font-semibold text-accent text-sm mb-1">
                           {suggestion.subject}
                         </div>
@@ -545,18 +541,18 @@ export default function Preview() {
                     conflictSubjects: conflictSubjects,
                     resolutionSuggestions: resolutionSuggestions,
                     studentType: 'lagger',
-                  };
+                  }
                   try {
-                    await saveTimetable(timetableData, 'lagger');
-                    localStorage.setItem('onboardingComplete', 'true');
+                    await saveTimetable(timetableData, 'lagger')
+                    localStorage.setItem('onboardingComplete', 'true')
                     navigate('/home', {
                       state: {
                         ...timetableData,
                         studentType: 'lagger',
                       },
-                    });
+                    })
                   } catch {
-                    setErrorMsg('Failed to create timetable. Please try again.');
+                    setErrorMsg('Failed to create timetable. Please try again.')
                   }
                 }
               }}

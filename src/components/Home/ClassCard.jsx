@@ -13,7 +13,7 @@ export default function ClassCard({
     <div
       className={`rounded-xl border overflow-hidden transition-all duration-200 ${
         isCurrentClass
-          ? 'bg-gradient-to-r from-red-500/20 to-red-600/10 border-red-400/40 shadow-lg shadow-red-500/20'
+          ? 'bg-gradient-to-r from-red-500/20 to-red-600/10 border-red-400/40'
           : isNextClass
             ? 'bg-gradient-to-r from-blue-500/20 to-blue-600/10 border-blue-400/40 '
             : isPastClass
@@ -29,9 +29,9 @@ export default function ClassCard({
             <div
               className={`w-3 h-3 rounded-full flex-shrink-0 mt-1 ${
                 isCurrentClass
-                  ? 'bg-red-400 animate-pulse shadow-lg shadow-red-400/50'
+                  ? 'bg-red-400 animate-pulse'
                   : isNextClass
-                    ? 'bg-blue-400 shadow-lg shadow-blue-400/50'
+                    ? 'bg-blue-400'
                     : isPastClass
                       ? 'bg-green-400'
                       : 'bg-accent/60'
@@ -47,9 +47,7 @@ export default function ClassCard({
                   }`}
                 >
                   {classInfo.course}
-                 
                 </h3>
-              
               </div>
 
               <div className="space-y-2">
@@ -63,22 +61,14 @@ export default function ClassCard({
                 </div>
 
                 {classInfo.teacher && (
-                  <div
-                    className={`text-sm  ${
-                      isPastClass ? 'text-accent/40' : 'text-accent/60'
-                    }`}
-                  >
+                  <div className={`text-sm  ${isPastClass ? 'text-accent/40' : 'text-accent/60'}`}>
                     {classInfo.teacher}
                   </div>
                 )}
 
                 {/* Show degree/section for lagger students */}
                 {selection && selection.studentType === 'lagger' && classInfo.degree && (
-                  <div
-                    className={`text-xs  ${
-                      isPastClass ? 'text-accent/30' : 'text-accent/50'
-                    }`}
-                  >
+                  <div className={`text-xs  ${isPastClass ? 'text-accent/30' : 'text-accent/50'}`}>
                     {classInfo.degree} • S{classInfo.semester}-{classInfo.section}
                   </div>
                 )}
@@ -88,16 +78,10 @@ export default function ClassCard({
 
           {/* Right: Time display */}
           <div className="text-right flex-shrink-0">
-            <div
-              className={` font-semibold text-xl text-white leading-tight`}
-            >
+            <div className={` font-semibold text-xl text-white leading-tight`}>
               {classInfo.start}
             </div>
-            <div
-              className={` text-sm ${
-                isPastClass ? 'text-accent/40' : 'text-accent/60'
-              }`}
-            >
+            <div className={` text-sm ${isPastClass ? 'text-accent/40' : 'text-accent/60'}`}>
               to {classInfo.end}
             </div>
 

@@ -20,9 +20,9 @@ export default function CurrentClassCard({
           ● LIVE NOW
         </span>
         <div className="flex-1"></div>
-        <TimetableSyncStatus 
-          syncStatus={syncStatus} 
-          isOnline={isOnline} 
+        <TimetableSyncStatus
+          syncStatus={syncStatus}
+          isOnline={isOnline}
           onRetry={onRetrySync}
           compact={true}
         />

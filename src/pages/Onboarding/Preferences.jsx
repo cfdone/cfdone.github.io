@@ -1,6 +1,15 @@
 import { useState, useMemo } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
-import { ChevronDown, ChevronRight, Target, Book, CheckCircle, Settings, Check, X } from 'lucide-react'
+import {
+  ChevronDown,
+  ChevronRight,
+  Target,
+  Book,
+  CheckCircle,
+  Settings,
+  Check,
+  X,
+} from 'lucide-react'
 import TimeTable from '../../assets/timetable.json'
 import logo from '../../assets/logo.svg'
 import StepTrack from '../../components/Onboarding/StepTrack'
@@ -84,13 +93,13 @@ export default function Preferences() {
     subjectsForPreferences.forEach(subject => {
       subject.locations.forEach(loc => {
         degrees.add(loc.degree)
-        
+
         // Group semesters by degree
         if (!semestersByDegree[loc.degree]) {
           semestersByDegree[loc.degree] = new Set()
         }
         semestersByDegree[loc.degree].add(loc.semester)
-        
+
         const key = `${loc.degree}-${loc.semester}`
         if (!sectionsByDegreeSem[key]) {
           sectionsByDegreeSem[key] = new Set()
@@ -162,9 +171,7 @@ export default function Preferences() {
         <img src={logo} alt="Logo" className="w-15 h-15 user-select-none mb-2" />
         <StepTrack currentStep={3} totalSteps={4} />
         <div className="text-center mb-6">
-          <h1 className=" text-accent font-semibold text-xl mb-2">
-            Set Your Preferences
-          </h1>
+          <h1 className=" text-accent font-semibold text-xl mb-2">Set Your Preferences</h1>
           <p className="text-white/70 text-sm ">
             {selectedSubjects.length > 0
               ? 'Choose your parent section and seat availability preferences'
@@ -228,30 +235,33 @@ export default function Preferences() {
                   Choose Your Semester <span className="text-red-400">*</span>
                 </label>
                 <div className="grid grid-cols-4 gap-1.5">
-                  {getAvailableOptions.semestersByDegree[userPreferences.parentSection.degree]?.map(semester => (
-                    <button
-                      key={semester}
-                      onClick={() =>
-                        setUserPreferences(prev => ({
-                          ...prev,
-                          parentSection: {
-                            ...prev.parentSection,
-                            semester,
-                            section: '',
-                          },
-                        }))
-                      }
-                      className={`p-2 rounded-lg border text-xs font-semibold transition-all ${
-                        userPreferences.parentSection.semester === semester
-                          ? 'bg-accent text-white border-accent shadow-lg'
-                          : 'bg-white/5 text-white/70 border-white/10 hover:border-accent/30 hover:bg-accent/5'
-                      }`}
-                    >
-                      Sem {semester}
-                    </button>
-                  ))}
-                  {(!getAvailableOptions.semestersByDegree[userPreferences.parentSection.degree] || 
-                    getAvailableOptions.semestersByDegree[userPreferences.parentSection.degree].length === 0) && (
+                  {getAvailableOptions.semestersByDegree[userPreferences.parentSection.degree]?.map(
+                    semester => (
+                      <button
+                        key={semester}
+                        onClick={() =>
+                          setUserPreferences(prev => ({
+                            ...prev,
+                            parentSection: {
+                              ...prev.parentSection,
+                              semester,
+                              section: '',
+                            },
+                          }))
+                        }
+                        className={`p-2 rounded-lg border text-xs font-semibold transition-all ${
+                          userPreferences.parentSection.semester === semester
+                            ? 'bg-accent text-white border-accent shadow-lg'
+                            : 'bg-white/5 text-white/70 border-white/10 hover:border-accent/30 hover:bg-accent/5'
+                        }`}
+                      >
+                        Sem {semester}
+                      </button>
+                    )
+                  )}
+                  {(!getAvailableOptions.semestersByDegree[userPreferences.parentSection.degree] ||
+                    getAvailableOptions.semestersByDegree[userPreferences.parentSection.degree]
+                      .length === 0) && (
                     <div className="col-span-4 text-white/50 text-sm text-center py-4">
                       No semesters available for this degree
                     </div>

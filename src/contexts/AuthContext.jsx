@@ -16,7 +16,10 @@ export default function AuthProvider({ children }) {
   useEffect(() => {
     // Get initial session
     const getSession = async () => {
-      const { data: { session }, error } = await supabase.auth.getSession()
+      const {
+        data: { session },
+        error,
+      } = await supabase.auth.getSession()
       if (error) {
         // Error getting session
       } else {
@@ -28,18 +31,17 @@ export default function AuthProvider({ children }) {
     getSession()
 
     // Listen for auth changes
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      async (event, session) => {
-        
-        if (event === 'SIGNED_OUT') {
-          // Clear local storage when user signs out
-          clearLocalData()
-        }
-        
-        setUser(session?.user || null)
-        setLoading(false)
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange(async (event, session) => {
+      if (event === 'SIGNED_OUT') {
+        // Clear local storage when user signs out
+        clearLocalData()
       }
-    )
+
+      setUser(session?.user || null)
+      setLoading(false)
+    })
 
     return () => subscription.unsubscribe()
   }, [])
@@ -48,8 +50,8 @@ export default function AuthProvider({ children }) {
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
-        redirectTo: `${window.location.origin}/`
-      }
+        redirectTo: `${window.location.origin}/`,
+      },
     })
     return { data, error }
   }
@@ -57,7 +59,7 @@ export default function AuthProvider({ children }) {
   const signOut = async () => {
     // Clear local storage before signing out
     clearLocalData()
-    
+
     const { error } = await supabase.auth.signOut()
     if (error) {
       // Error signing out
@@ -69,12 +71,8 @@ export default function AuthProvider({ children }) {
     user,
     loading,
     signInWithGoogle,
-    signOut
+    signOut,
   }
 
-  return (
-    <AuthContext.Provider value={value}>
-      {children}
-    </AuthContext.Provider>
-  )
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
 }

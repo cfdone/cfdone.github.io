@@ -1,16 +1,16 @@
 export default function ViewToggle({ viewWeekly, setViewWeekly, onResetDay }) {
   const handleViewToggle = () => {
-    setViewWeekly(!viewWeekly);
+    setViewWeekly(!viewWeekly)
     // Reset selected day when switching to weekly view
     if (!viewWeekly && onResetDay) {
-      onResetDay();
+      onResetDay()
     }
-  };
+  }
 
   return (
     <div className="flex items-center justify-between mb-4">
       <h2 className="text-white text-lg  font-semibold">
-        {viewWeekly ? 'Weekly Schedule' : "Day Schedule"}
+        {viewWeekly ? 'Weekly Schedule' : 'Day Schedule'}
       </h2>
       <button
         onClick={handleViewToggle}
