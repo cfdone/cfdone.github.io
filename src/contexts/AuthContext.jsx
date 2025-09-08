@@ -6,7 +6,6 @@ export default function AuthProvider({ children }) {
   const [user, setUser] = useState(null)
   const [loading, setLoading] = useState(true)
 
-  // Clear local storage on logout
   const clearLocalData = () => {
     localStorage.removeItem('timetableData')
     localStorage.removeItem('onboardingMode')
@@ -14,15 +13,12 @@ export default function AuthProvider({ children }) {
   }
 
   useEffect(() => {
-    // Get initial session
     const getSession = async () => {
       const {
         data: { session },
         error,
       } = await supabase.auth.getSession()
-      if (error) {
-        // Error getting session
-      } else {
+      if (!error) {
         setUser(session?.user || null)
       }
       setLoading(false)
@@ -30,12 +26,10 @@ export default function AuthProvider({ children }) {
 
     getSession()
 
-    // Listen for auth changes
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange(async (event, session) => {
       if (event === 'SIGNED_OUT') {
-        // Clear local storage when user signs out
         clearLocalData()
       }
 
@@ -50,20 +44,15 @@ export default function AuthProvider({ children }) {
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
-        redirectTo: `${window.location.origin}/`,
+        redirectTo: `${window.location.origin}/auth/callback`,
       },
     })
     return { data, error }
   }
 
   const signOut = async () => {
-    // Clear local storage before signing out
     clearLocalData()
-
     const { error } = await supabase.auth.signOut()
-    if (error) {
-      // Error signing out
-    }
     return { error }
   }
 

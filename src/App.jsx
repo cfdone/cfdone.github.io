@@ -1,5 +1,6 @@
 import { Routes, Route, Navigate } from 'react-router-dom'
 import AuthProvider from './contexts/AuthContext'
+import AuthCallback from './pages/AuthCallback'
 import Login from './pages/Login'
 import StepOne from './pages/Onboarding/StepOne'
 import Regular from './pages/Onboarding/Regular'
@@ -18,6 +19,9 @@ function App() {
       <Routes>
         {/* Root route - redirect to login */}
         <Route path="/" element={<Navigate to="/login" replace />} />
+
+        {/* Supabase OAuth callback route */}
+        <Route path="/auth/callback" element={<AuthCallback />} />
 
         {/* Login route - accessible when not authenticated */}
         <Route path="/login" element={<Login />} />
