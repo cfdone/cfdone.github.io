@@ -13,19 +13,17 @@ export default function StepOne() {
         <div className="w-full justify-center flex flex-col gap-6 items-center">
           <img src={logo} alt="Logo" className="w-15 h-15 user-select-none mb-2" />
           <StepTrack currentStep={1} totalSteps={steps} />
+          <div className="text-center mb-6">
+            <h1 className="  text-accent font-semibold text-xl mb-2">Choose Your Student Type</h1>
+            <p className="text-white/70 text-sm">
+              Select the option that best describes your current situation
+            </p>
+          </div>
         </div>
+
         <div className="h-full flex flex-col justify-between items-center w-full">
           <div className="flex flex-col items-center gap-4 px-2 py-4 w-full max-w-md mx-auto overflow-y-auto no-scrollbar flex-1">
             <div className="w-full">
-              <div className="text-center mb-6">
-                <h1 className="  text-accent font-semibold text-xl mb-2">
-                  Choose Your Student Type
-                </h1>
-                <p className="text-white/70 text-sm">
-                  Select the option that best describes your current situation
-                </p>
-              </div>
-
               <div className="flex flex-col gap-4 max-h-64">
                 <button
                   type="button"

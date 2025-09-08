@@ -28,8 +28,6 @@ export function ProtectedRoute({ children }) {
   if (!user) {
     return <Navigate to="/login" replace />
   }
-
-  // Check both localStorage and Supabase (via useTimetableSync)
   const hasLocalData =
     localStorage.getItem('timetableData') && localStorage.getItem('onboardingMode')
   const hasRemoteData = hasTimetable()
@@ -42,34 +40,24 @@ export function ProtectedRoute({ children }) {
 }
 
 export function OnboardingGuard({ children }) {
-  const { user, loading } = useAuth()
-  const {
-    loading: syncLoading,
-    hasTimetable,
-    timetableData,
-    onboardingMode,
-    syncStatus,
-  } = useTimetableSync()
+  const { user } = useAuth()
+  const { hasTimetable, timetableData, onboardingMode, syncStatus } = useTimetableSync()
 
-  if (loading || syncLoading) {
-    return <LoadingPulseOverlay />
+  if (!timetableData && !onboardingMode) {
+    return children
   }
 
   if (!user) {
     return <Navigate to="/login" replace />
   }
 
-  if (loading || syncLoading || syncStatus !== 'synced') {
+  if (syncStatus !== 'synced') {
     return <LoadingPulseOverlay />
   }
-  if (!user) {
-    return <Navigate to="/login" replace />
-  }
+
   if (hasTimetable()) {
     return <Navigate to="/home" replace />
   }
-  if (!timetableData && !onboardingMode) {
-    return <Navigate to="/stepone" replace />
-  }
+
   return children
 }

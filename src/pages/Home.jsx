@@ -197,26 +197,26 @@ export default function Home() {
   // Calculate actual today's progress for header and get today's current/next classes
   const { actualTotalClasses, actualDoneClasses, actualCurrentClass, actualNextClass } =
     useMemo(() => {
-      const currentMinutes = getCurrentMinutes();
-      let done = 0;
-      let current = null;
-      let next = null;
+      const currentMinutes = getCurrentMinutes()
+      let done = 0
+      let current = null
+      let next = null
 
       // Sort actual today's classes
       const sortedActualClasses = [...actualTodayClasses].sort(
         (a, b) => timeToMinutes(a.start) - timeToMinutes(b.start)
-      );
+      )
 
       for (const classInfo of sortedActualClasses) {
-        const startMinutes = timeToMinutes(classInfo.start);
-        const endMinutes = timeToMinutes(classInfo.end);
+        const startMinutes = timeToMinutes(classInfo.start)
+        const endMinutes = timeToMinutes(classInfo.end)
 
         if (currentMinutes >= startMinutes && currentMinutes < endMinutes) {
-          current = classInfo;
+          current = classInfo
         } else if (currentMinutes < startMinutes && !next) {
-          next = classInfo;
+          next = classInfo
         } else if (currentMinutes >= endMinutes) {
-          done++;
+          done++
         }
       }
 
@@ -228,8 +228,8 @@ export default function Home() {
         actualDoneClasses: done,
         actualCurrentClass: current,
         actualNextClass: next,
-      };
-    }, [actualTodayClasses, getCurrentMinutes]);
+      }
+    }, [actualTodayClasses, getCurrentMinutes])
 
   // We don't need to calculate this anymore since we're using actual values everywhere
 

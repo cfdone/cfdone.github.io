@@ -8,16 +8,14 @@ export default function DaySelector({ onDaySelect, currentDay }) {
     const fullNames = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
     const shortNames = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri']
     const days = []
-    // Find the next Monday from today
     let startDate = new Date(today)
     while (startDate.getDay() !== 1) {
       startDate.setDate(startDate.getDate() + 1)
     }
-    // Generate Monday to Friday
     for (let i = 0; i < 5; i++) {
       const day = new Date(startDate)
       day.setDate(startDate.getDate() + i)
-      const dayNum = day.getDay() - 1 // 0 for Monday
+      const dayNum = day.getDay() - 1
       const isToday = day.toDateString() === today.toDateString()
       const dayInfo = {
         fullName: fullNames[dayNum],

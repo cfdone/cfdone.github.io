@@ -31,7 +31,12 @@ export default function Preview() {
     )
   }, [location.state?.userPreferences])
 
-  const [resolvedTimetable, setResolvedTimetable] = useState(null)
+  // Store all possible timetables
+  const [allTimetables, setAllTimetables] = useState([])
+  // Index of selected timetable
+  const [selectedTimetableIdx, setSelectedTimetableIdx] = useState(0)
+  // Derived selected timetable
+  const resolvedTimetable = allTimetables[selectedTimetableIdx] || null
   const [conflictSubjects, setConflictSubjects] = useState([])
   const [resolutionSuggestions, setResolutionSuggestions] = useState([])
 
@@ -119,41 +124,115 @@ export default function Preview() {
     [userPreferences]
   )
 
-  // Effect to get the resolved timetable from location state or generate it
+  // Effect to get all possible timetables and set selected
   useEffect(() => {
-    if (location.state?.resolvedTimetable) {
-      setResolvedTimetable(location.state.resolvedTimetable)
-
-      // If conflicts aren't provided in location state, detect them
-      if (!location.state.conflictSubjects) {
-        const detectedConflicts = detectTimeConflicts(location.state.resolvedTimetable)
-        setConflictSubjects(detectedConflicts)
-      } else {
-        setConflictSubjects(location.state.conflictSubjects)
+    // Helper: generate all possible non-conflicting timetables
+    function generateAllTimetables(subjects) {
+      // For each subject, get all possible locations (sections)
+      const subjectOptions = subjects.map(subject => {
+        return subject.locations && subject.locations.length > 0
+          ? subject.locations.map(loc => ({ subject, loc }))
+          : [{ subject, loc: null }]
+      })
+      // Cartesian product of all subject options
+      function cartesian(arr) {
+        return arr.reduce((a, b) => a.flatMap(d => b.map(e => [...d, e])), [[]])
       }
-    } else if (selectedSubjects.length > 0) {
-      // Generate a simple mock timetable for preview
-      const mockTimetable = generateMockTimetable(selectedSubjects, userPreferences)
-      setResolvedTimetable(mockTimetable)
-
-      // Detect conflicts in the mock timetable
-      const detectedConflicts = detectTimeConflicts(mockTimetable)
-      setConflictSubjects(detectedConflicts)
+      const combinations = cartesian(subjectOptions)
+      // For each combination, build timetable
+      const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
+      const timetables = combinations.map(combo => {
+        const timetable = {}
+        days.forEach(day => {
+          timetable[day] = []
+        })
+        combo.forEach(({ subject, loc }) => {
+          if (!loc) return
+          const sectionData = TimeTable?.[loc.degree]?.[loc.semester]?.[loc.section]
+          if (sectionData) {
+            Object.entries(sectionData).forEach(([day, slots]) => {
+              slots.forEach(slot => {
+                if (slot.course === subject.name) {
+                  timetable[day].push({
+                    ...slot,
+                    subject: subject.name,
+                    degree: loc.degree,
+                    semester: loc.semester,
+                    section: loc.section,
+                  })
+                }
+              })
+            })
+          }
+        })
+        // Fallback: assign unassigned subjects to first available slot
+        combo.forEach(({ subject, loc }) => {
+          const alreadyAssigned = days.some(day =>
+            timetable[day].some(cls => cls.subject === subject.name)
+          )
+          if (!alreadyAssigned) {
+            for (const day of days) {
+              const hasConflict = timetable[day].some(existing =>
+                timeRangesOverlap(existing.start, existing.end, '8:45', '10:10')
+              )
+              if (!hasConflict) {
+                timetable[day].push({
+                  subject: subject.name,
+                  start: '8:45',
+                  end: '10:10',
+                  course: subject.name,
+                  teacher: loc?.teacher || 'TBD',
+                  room: loc?.room || 'TBD',
+                  degree: loc?.degree || 'TBD',
+                  semester: loc?.semester || 'TBD',
+                  section: loc?.section || 'TBD',
+                })
+                break
+              }
+            }
+          }
+        })
+        return timetable
+      })
+      // Filter out timetables with time conflicts
+      return timetables.filter(tt => detectTimeConflicts(tt).length === 0)
     }
 
+    let timetables = []
+    if (location.state?.resolvedTimetable) {
+      timetables = [location.state.resolvedTimetable]
+    } else if (selectedSubjects.length > 0) {
+      timetables = generateAllTimetables(selectedSubjects, userPreferences)
+      // If no class-free timetable, fallback to one with conflicts
+      if (timetables.length === 0) {
+        timetables = [generateMockTimetable(selectedSubjects, userPreferences)]
+      }
+    }
+    setAllTimetables(timetables)
+    setSelectedTimetableIdx(0)
+    // Set conflict subjects for first timetable
+    if (timetables.length > 0) {
+      setConflictSubjects(detectTimeConflicts(timetables[0]))
+    } else {
+      setConflictSubjects([])
+    }
     if (location.state?.resolutionSuggestions) {
       setResolutionSuggestions(location.state.resolutionSuggestions)
     }
   }, [location.state, selectedSubjects, userPreferences, detectTimeConflicts])
 
-  // Effect to generate resolution suggestions when conflicts are detected
+  // Update conflict subjects and suggestions when selected timetable changes
   useEffect(() => {
-    if (conflictSubjects.length > 0 && selectedSubjects.length > 0) {
-      setResolutionSuggestions(generateResolutionSuggestions(conflictSubjects, selectedSubjects))
-    } else {
-      setResolutionSuggestions([])
+    if (resolvedTimetable) {
+      const detectedConflicts = detectTimeConflicts(resolvedTimetable)
+      setConflictSubjects(detectedConflicts)
+      if (detectedConflicts.length > 0 && selectedSubjects.length > 0) {
+        setResolutionSuggestions(generateResolutionSuggestions(detectedConflicts, selectedSubjects))
+      } else {
+        setResolutionSuggestions([])
+      }
     }
-  }, [conflictSubjects, selectedSubjects, generateResolutionSuggestions])
+  }, [resolvedTimetable, selectedSubjects, generateResolutionSuggestions])
 
   // Helper function to generate a realistic timetable for preview using actual timetable data
   const generateMockTimetable = subjects => {
@@ -349,6 +428,33 @@ export default function Preview() {
                         <Book className="w-8 h-8 text-accent" />
                       </div>
                     </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Timetable selection UI */}
+              {allTimetables.length > 1 && (
+                <div className="mb-2">
+                  <div className="font-semibold text-white text-sm mb-1">
+                    Select a timetable combination:
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    {allTimetables.map((tt, idx) => (
+                      <button
+                        key={idx}
+                        className={`px-3 py-1 rounded-lg border text-xs font-semibold transition-all ${selectedTimetableIdx === idx ? 'bg-accent text-white border-accent' : 'bg-white/10 text-white/70 border-white/20 hover:bg-accent/20'}`}
+                        onClick={() => {
+                          setSelectedTimetableIdx(idx)
+                          setGeminiSuggestions('')
+                          setHasReverified(false)
+                        }}
+                      >
+                        Combo {idx + 1}
+                      </button>
+                    ))}
+                  </div>
+                  <div className="text-xs text-white/40 mt-1">
+                    Showing {allTimetables.length} possible combinations
                   </div>
                 </div>
               )}
