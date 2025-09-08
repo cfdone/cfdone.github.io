@@ -3,10 +3,9 @@ import react from '@vitejs/plugin-react'
 import { VitePWA } from 'vite-plugin-pwa'
 import tailwindcss from '@tailwindcss/vite'
 
-export default defineConfig(({ mode }) => {
-  const isProd = mode === 'production'
+export default defineConfig(() => {
   return {
-    base: isProd ? '/cfdone/' : '/',
+    base: '/',
     plugins: [
       react(),
       tailwindcss(),
