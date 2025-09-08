@@ -4,17 +4,20 @@ export default function DaySelector({ onDaySelect, currentDay }) {
   const [selectedDay, setSelectedDay] = useState(currentDay)
   const [weekDays, setWeekDays] = useState([])
   useEffect(() => {
-    const days = []
     const today = new Date()
-    const fullNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
-    const shortNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
-
-    // Generate today and next 6 days
-    for (let i = 0; i < 7; i++) {
-      const day = new Date(today)
-      day.setDate(today.getDate() + i)
-      const dayNum = day.getDay()
-
+    const fullNames = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
+    const shortNames = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri']
+    const days = []
+    // Find the next Monday from today
+    let startDate = new Date(today)
+    while (startDate.getDay() !== 1) {
+      startDate.setDate(startDate.getDate() + 1)
+    }
+    // Generate Monday to Friday
+    for (let i = 0; i < 5; i++) {
+      const day = new Date(startDate)
+      day.setDate(startDate.getDate() + i)
+      const dayNum = day.getDay() - 1 // 0 for Monday
       const isToday = day.toDateString() === today.toDateString()
       const dayInfo = {
         fullName: fullNames[dayNum],

@@ -197,64 +197,39 @@ export default function Home() {
   // Calculate actual today's progress for header and get today's current/next classes
   const { actualTotalClasses, actualDoneClasses, actualCurrentClass, actualNextClass } =
     useMemo(() => {
-      const currentMinutes = getCurrentMinutes()
-      let done = 0
-      let current = null
-      let next = null
+      const currentMinutes = getCurrentMinutes();
+      let done = 0;
+      let current = null;
+      let next = null;
 
       // Sort actual today's classes
       const sortedActualClasses = [...actualTodayClasses].sort(
         (a, b) => timeToMinutes(a.start) - timeToMinutes(b.start)
-      )
+      );
 
       for (const classInfo of sortedActualClasses) {
-        const startMinutes = timeToMinutes(classInfo.start)
-        const endMinutes = timeToMinutes(classInfo.end)
+        const startMinutes = timeToMinutes(classInfo.start);
+        const endMinutes = timeToMinutes(classInfo.end);
 
         if (currentMinutes >= startMinutes && currentMinutes < endMinutes) {
-          current = classInfo
+          current = classInfo;
         } else if (currentMinutes < startMinutes && !next) {
-          next = classInfo
+          next = classInfo;
         } else if (currentMinutes >= endMinutes) {
-          done++
+          done++;
         }
       }
 
-      // If today is over and no next class, find next class in upcoming days
-      if (!next && !current) {
-        // Get all days in order starting from tomorrow
-        const daysOfWeek = [
-          'Sunday',
-          'Monday',
-          'Tuesday',
-          'Wednesday',
-          'Thursday',
-          'Friday',
-          'Saturday',
-        ]
-        const todayIdx = currentTime.getDay()
-        for (let offset = 1; offset <= 7; offset++) {
-          const nextDayIdx = (todayIdx + offset) % 7
-          const nextDayName = daysOfWeek[nextDayIdx]
-          const nextDayClasses = timetableData[nextDayName] || []
-          if (nextDayClasses.length > 0) {
-            // Sort and pick first class
-            const sortedNextDayClasses = [...nextDayClasses].sort(
-              (a, b) => timeToMinutes(a.start) - timeToMinutes(b.start)
-            )
-            next = { ...sortedNextDayClasses[0], day: nextDayName }
-            break
-          }
-        }
-      }
+      // Only show next class for today, do NOT show next day's class
+      // If today is over and no next class, next stays null
 
       return {
         actualTotalClasses: sortedActualClasses.length,
         actualDoneClasses: done,
         actualCurrentClass: current,
         actualNextClass: next,
-      }
-    }, [actualTodayClasses, getCurrentMinutes, timetableData, currentTime])
+      };
+    }, [actualTodayClasses, getCurrentMinutes]);
 
   // We don't need to calculate this anymore since we're using actual values everywhere
 
