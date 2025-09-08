@@ -1,6 +1,5 @@
 import { Navigate } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
-import useTimetableSync from '../hooks/useTimetableSync'
 import LoadingPulseOverlay from './Loading'
 // ...existing code...
 
@@ -21,26 +20,20 @@ export function AuthGuard({ children }) {
 
 export function ProtectedRoute({ children }) {
   const { user, loading } = useAuth()
-  const { hasTimetable, loading: timetableLoading, syncStatus } = useTimetableSync()
 
   if (loading) {
-  return <LoadingPulseOverlay />;
+    return <LoadingPulseOverlay />;
   }
 
   if (!user) {
     return <Navigate to="/login" replace />
   }
 
-  // Wait for initial sync attempt to complete
-  if (timetableLoading || syncStatus === 'syncing') {
-  return <LoadingPulseOverlay />;
-  }
-
-  // Also check localStorage as fallback for immediate check
+  // Use only localStorage for navigation decisions
   const hasLocalData = localStorage.getItem('timetableData') && localStorage.getItem('onboardingMode')
-  
-  // If no data exists in either localStorage or synced data, redirect to stepone
-  if (!hasTimetable() && !hasLocalData) {
+
+  // If no data exists in localStorage, redirect to stepone
+  if (!hasLocalData) {
     return <Navigate to="/stepone" replace />
   }
 
@@ -50,43 +43,22 @@ export function ProtectedRoute({ children }) {
 // Component to prevent access to onboarding when data exists
 export function OnboardingGuard({ children }) {
   const { user, loading } = useAuth()
-  const { hasTimetable, loading: timetableLoading, syncStatus, timetableData, onboardingMode } = useTimetableSync()
-
-  console.log('OnboardingGuard - Debug:', {
-    user: !!user,
-    loading,
-    timetableLoading,
-    syncStatus,
-    hasTimetableResult: hasTimetable(),
-    hasTimetableData: !!timetableData,
-    hasOnboardingMode: !!onboardingMode
-  })
 
   if (loading) {
-    console.log('OnboardingGuard - Auth loading')
-  return <LoadingPulseOverlay />;
+    return <LoadingPulseOverlay />;
   }
 
   if (!user) {
-    console.log('OnboardingGuard - No user, redirecting to login')
     return <Navigate to="/login" replace />
   }
 
-  // Wait for initial sync attempt to complete
-  if (timetableLoading || syncStatus === 'syncing') {
-    console.log('OnboardingGuard - Timetable loading or syncing')
-  return <LoadingPulseOverlay />;
-  }
-
-  // Also check localStorage as fallback for immediate check
+  // Use only localStorage for navigation decisions
   const hasLocalData = localStorage.getItem('timetableData') && localStorage.getItem('onboardingMode')
 
-  // If data exists (either in localStorage or synced), redirect to home
-  if (hasTimetable() || hasLocalData) {
-    console.log('OnboardingGuard - Has timetable data, redirecting to home')
+  // If data exists in localStorage, redirect to home
+  if (hasLocalData) {
     return <Navigate to="/home" replace />
   }
 
-  console.log('OnboardingGuard - No timetable data, allowing access to onboarding')
   return children
 }

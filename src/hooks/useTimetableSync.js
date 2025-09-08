@@ -8,18 +8,20 @@ const SYNC_STATUS_KEY = 'syncStatus'
 
 const useTimetableSync = () => {
   const { user } = useAuth()
+  const SESSION_SYNC_KEY = 'timetableSynced'
   const [syncStatus, setSyncStatus] = useState('offline')
   const [isOnline, setIsOnline] = useState(navigator.onLine)
   const [timetableData, setTimetableData] = useState(null)
   const [onboardingMode, setOnboardingMode] = useState(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
+  const LAST_SYNC_KEY = 'lastSyncTime'
 
   const loadFromLocalStorage = useCallback(() => {
     try {
-      const storedTimetable = localStorage.getItem(TIMETABLE_STORAGE_KEY)
-      const storedMode = localStorage.getItem(ONBOARDING_MODE_KEY)
-      const storedStatus = localStorage.getItem(SYNC_STATUS_KEY)
+  const storedTimetable = localStorage.getItem(TIMETABLE_STORAGE_KEY)
+  const storedMode = localStorage.getItem(ONBOARDING_MODE_KEY)
+  const storedStatus = localStorage.getItem(SYNC_STATUS_KEY)
 
       if (storedTimetable) {
         setTimetableData(JSON.parse(storedTimetable))
@@ -32,6 +34,7 @@ const useTimetableSync = () => {
       } else if (storedStatus) {
         setSyncStatus(storedStatus)
       }
+      // Optionally, could expose storedLastSync if needed
     } catch {
       setError('Failed to load local data')
     }
@@ -79,6 +82,7 @@ const useTimetableSync = () => {
       if (!existingData || existingData.length === 0) {
         // No data found - this is ok for new users
         setSyncStatus('synced')
+        localStorage.setItem(LAST_SYNC_KEY, new Date().toISOString())
         setError(null)
       } else {
         // Data found in Supabase, update local storage
@@ -86,6 +90,7 @@ const useTimetableSync = () => {
         saveToLocalStorage(userData.timetable_data, userData.onboarding_mode)
         setSyncStatus('synced')
         localStorage.setItem(SYNC_STATUS_KEY, 'synced')
+        localStorage.setItem(LAST_SYNC_KEY, userData.updated_at || new Date().toISOString())
         setError(null)
       }
     } catch {
@@ -153,9 +158,10 @@ const useTimetableSync = () => {
         throw result.error
       }
 
-      setSyncStatus('synced')
-      localStorage.setItem(SYNC_STATUS_KEY, 'synced')
-      setError(null)
+  setSyncStatus('synced')
+  localStorage.setItem(SYNC_STATUS_KEY, 'synced')
+  localStorage.setItem(LAST_SYNC_KEY, new Date().toISOString())
+  setError(null)
     } catch (error) {
       setError(`Failed to sync to server: ${error.message}`)
       setSyncStatus('error')
@@ -168,10 +174,11 @@ const useTimetableSync = () => {
     localStorage.removeItem(TIMETABLE_STORAGE_KEY)
     localStorage.removeItem(ONBOARDING_MODE_KEY)
     localStorage.removeItem(SYNC_STATUS_KEY)
-    setTimetableData(null)
-    setOnboardingMode(null)
-    setSyncStatus('offline')
-    setError(null)
+  localStorage.removeItem(LAST_SYNC_KEY)
+  setTimetableData(null)
+  setOnboardingMode(null)
+  setSyncStatus('offline')
+  setError(null)
   }, [])
 
   // Monitor online status
@@ -205,9 +212,14 @@ const useTimetableSync = () => {
   // Sync when user changes
   useEffect(() => {
     if (user && isOnline) {
-      loadFromSupabase()
+      // Only sync once per session
+      if (!sessionStorage.getItem(SESSION_SYNC_KEY)) {
+        loadFromSupabase()
+        sessionStorage.setItem(SESSION_SYNC_KEY, 'true')
+      }
     } else if (!user) {
       clearLocalData()
+      sessionStorage.removeItem(SESSION_SYNC_KEY)
     }
   }, [user, isOnline, loadFromSupabase, clearLocalData])
 
@@ -253,13 +265,14 @@ const useTimetableSync = () => {
   }, [user, isOnline, syncStatus, syncToSupabase])
 
   return {
-    // State
-    timetableData,
-    onboardingMode,
-    syncStatus,
-    isOnline,
-    loading,
-    error,
+  // State
+  timetableData,
+  onboardingMode,
+  syncStatus,
+  isOnline,
+  loading,
+  error,
+  lastSyncTime: typeof window !== 'undefined' ? localStorage.getItem(LAST_SYNC_KEY) : null,
     
     // Actions
     saveTimetable,

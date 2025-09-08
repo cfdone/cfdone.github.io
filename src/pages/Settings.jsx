@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom'
-import { useState, useCallback, useEffect } from 'react'
+import { useState, useCallback } from 'react'
 import {
   RefreshCw,
   Info,
@@ -29,6 +29,7 @@ export default function Settings() {
     hasTimetable,
     resetTimetable,
     retrySyncAction,
+    lastSyncTime,
   } = useTimetableSync()
 
   const [showResetConfirm, setShowResetConfirm] = useState(false)
@@ -36,13 +37,7 @@ export default function Settings() {
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false)
   const [expandedAccordion, setExpandedAccordion] = useState(null)
   const [isResetting, setIsResetting] = useState(false)
-  const [isLoading, setIsLoading] = useState(true);
-
-  // Fake loader for 2 seconds on mount
-  useEffect(() => {
-    const timer = setTimeout(() => setIsLoading(false), 2000);
-    return () => clearTimeout(timer);
-  }, []);
+  const [isLoading] = useState(false);
 
   const toggleAccordion = (accordion) => {
     setExpandedAccordion(expandedAccordion === accordion ? null : accordion)
@@ -51,14 +46,10 @@ export default function Settings() {
   const handleResetOnboarding = useCallback(async () => {
     setIsResetting(true);
     try {
-      // Reset using the sync hook (will clear both local and remote data)
       await resetTimetable();
-      // Show loading for 2 seconds before redirect
-      setTimeout(() => {
-        navigate('/stepone', { replace: true });
-        setIsResetting(false);
-        setShowResetConfirm(false);
-      }, 2000);
+      navigate('/stepone', { replace: true });
+      setIsResetting(false);
+      setShowResetConfirm(false);
     } catch {
       setIsResetting(false);
       setShowResetConfirm(false);
@@ -73,13 +64,9 @@ export default function Settings() {
         const cacheNames = await caches.keys();
         await Promise.all(cacheNames.map(cacheName => caches.delete(cacheName)));
       }
-      
-      // Refresh the application
-      setTimeout(() => {
-        window.location.reload(true); // Force refresh from server, not from cache
-      }, 300);
+      window.location.reload(true);
     } catch {
-      // Error handling
+      console
     }
     setShowClearCacheConfirm(false);
   }, [])
@@ -88,12 +75,9 @@ export default function Settings() {
     setIsResetting(true);
     try {
       await signOut();
-      // Show loading for 2 seconds before redirect
-      setTimeout(() => {
-        navigate('/login', { replace: true });
-        setIsResetting(false);
-        setShowLogoutConfirm(false);
-      }, 2000);
+      navigate('/login', { replace: true });
+      setIsResetting(false);
+      setShowLogoutConfirm(false);
     } catch {
       setIsResetting(false);
       setShowLogoutConfirm(false);
@@ -235,19 +219,24 @@ export default function Settings() {
                     {hasTimetable() && (
                       <div className="w-full bg-white/5 p-4 rounded-xl border border-accent/10">
                         <div className="flex items-center justify-between">
-                        <div className="flex items-center">
-                          <div className="mr-3">
-                            <TimetableSyncStatus 
-                              syncStatus={syncStatus} 
-                              isOnline={isOnline} 
-                              onRetry={retrySyncAction}
-                              compact={false}
-                            />
+                          <div className="flex items-center">
+                            <div className="mr-3">
+                              <TimetableSyncStatus 
+                                syncStatus={syncStatus} 
+                                isOnline={isOnline} 
+                                onRetry={retrySyncAction}
+                                compact={false}
+                              />
+                              {lastSyncTime && (
+                                <div className="text-xs text-gray-400 mt-1">
+                                  Last sync: {new Date(lastSyncTime).toLocaleString()}
+                                </div>
+                              )}
+                            </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                  )}
+                    )}
                   
                   <button
                     onClick={handleResetOnboarding}

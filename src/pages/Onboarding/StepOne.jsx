@@ -15,13 +15,13 @@ export default function StepOne() {
           <StepTrack currentStep={1} totalSteps={steps} />
         </div>
         <div className="h-full flex flex-col justify-between items-center w-full">
-          <div className="flex flex-col items-center gap-4 px-2 py-4 w-full max-w-md mx-auto overflow-y-auto flex-1">
+          <div className="flex flex-col items-center gap-4 px-2 py-4 w-full max-w-md mx-auto overflow-y-auto no-scrollbar flex-1">
             <div className="w-full">
               <div className="text-center mb-6">
-                <h1 className="  text-accent font-semibold text-2xl mb-2">
+                <h1 className="  text-accent font-semibold text-xl mb-2">
                   Choose Your Student Type
                 </h1>
-                <p className="text-white/70 text-base ">
+                <p className="text-white/70 text-sm">
                   Select the option that best describes your current situation
                 </p>
               </div>

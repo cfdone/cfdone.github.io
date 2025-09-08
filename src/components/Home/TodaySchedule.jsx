@@ -41,8 +41,14 @@ export default function TodaySchedule({
         let isNextClass = false;
         let isPastClass = false;
         if (isToday) {
-          isCurrentClass = currentClass && currentClass === classInfo;
-          isNextClass = nextClass && nextClass === classInfo;
+            isCurrentClass = currentClass &&
+              currentClass.course === classInfo.course &&
+              currentClass.start === classInfo.start &&
+              currentClass.end === classInfo.end;
+              isNextClass = nextClass &&
+              nextClass.course === classInfo.course &&
+              nextClass.start === classInfo.start &&
+              nextClass.end === classInfo.end;
           isPastClass = getCurrentMinutes() >= timeToMinutes(classInfo.end);
         }
         // For non-today, all classes are shown in default style

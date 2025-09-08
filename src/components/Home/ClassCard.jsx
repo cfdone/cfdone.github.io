@@ -15,7 +15,7 @@ export default function ClassCard({
         isCurrentClass
           ? 'bg-gradient-to-r from-red-500/20 to-red-600/10 border-red-400/40 shadow-lg shadow-red-500/20'
           : isNextClass
-            ? 'bg-gradient-to-r from-blue-500/20 to-blue-600/10 border-blue-400/40 shadow-lg shadow-blue-500/20'
+            ? 'bg-gradient-to-r from-blue-500/20 to-blue-600/10 border-blue-400/40 '
             : isPastClass
               ? 'bg-white/5 border-green-400/20'
               : 'bg-white/5 border-accent/10'
@@ -89,15 +89,7 @@ export default function ClassCard({
           {/* Right: Time display */}
           <div className="text-right flex-shrink-0">
             <div
-              className={` font-semibold text-xl ${
-                isPastClass
-                  ? 'text-white/50'
-                  : isCurrentClass
-                    ? 'text-red-400'
-                    : isNextClass
-                      ? 'text-blue-400'
-                      : 'text-white'
-              }`}
+              className={` font-semibold text-xl text-white leading-tight`}
             >
               {classInfo.start}
             </div>

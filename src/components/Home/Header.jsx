@@ -61,14 +61,7 @@ export default function Header({
             </div>
           </div>
           
-          
-          
-          <div className={`flex flex-col gap-2.5 transition-all duration-300 ${showCards ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0 overflow-hidden'}`}>       
-
-            {/* Only show cards if there are classes today */}
-            {totalClasses > 0 && (
-              <>
-              <div className="flex items-center justify-center mt-3">
+           <div className="flex items-center justify-center mt-3">
             <button 
               onClick={toggleCards} 
               className="bg-accent/10 hover:bg-accent/20 text-accent rounded-full p-1 transition-all duration-200"
@@ -84,6 +77,13 @@ export default function Header({
               </svg>
             </button>
           </div>
+          
+          <div className={`flex flex-col gap-2.5 transition-all duration-300 ${showCards ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0 overflow-hidden'}`}>       
+
+            {/* Only show cards if there are classes today */}
+            {totalClasses > 0 && (
+              <>
+             
                 {/* Progress Summary in header */}
                 <div className="bg-gradient-to-r from-accent/10 to-accent/5 p-4 rounded-xl border border-accent/10 mt-3">
                   <div className="flex items-center justify-between mb-2">
