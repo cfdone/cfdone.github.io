@@ -5,7 +5,7 @@ import tailwindcss from '@tailwindcss/vite'
 
 export default defineConfig(() => {
   return {
-    base: '/',
+  base: '/',
     plugins: [
       react(),
       tailwindcss(),
@@ -47,8 +47,8 @@ export default defineConfig(() => {
           name: 'CFD ONE',
           short_name: 'CFD ONE',
           description: 'A modern timetable app for FAST University students',
-          start_url: '/cfdone/',
-          scope: '/cfdone/',
+          start_url: '/',
+          scope: '/',
           display: 'standalone',
           orientation: 'portrait',
           background_color: '#000000',
