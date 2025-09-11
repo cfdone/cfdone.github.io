@@ -230,6 +230,8 @@ const useTimetableSync = () => {
       clearLocalData()
       sessionStorage.removeItem(SESSION_SYNC_KEY)
       setSyncStatus('offline')
+    } else if (!isOnline) {
+      setSyncStatus('offline')
     }
   }, [user, isOnline, loadFromSupabase, clearLocalData])
 
