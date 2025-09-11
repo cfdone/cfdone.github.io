@@ -214,23 +214,27 @@ const useTimetableSync = () => {
 
   // Sync when user changes
   useEffect(() => {
-    if (user && isOnline) {
-      // Always check Supabase if no local data
-      const hasLocal =
-        localStorage.getItem(TIMETABLE_STORAGE_KEY) && localStorage.getItem(ONBOARDING_MODE_KEY)
-      if (!hasLocal) {
-        loadFromSupabase().finally(() => {
+    if (user) {
+      if (isOnline) {
+        // Always check Supabase if no local data
+        const hasLocal =
+          localStorage.getItem(TIMETABLE_STORAGE_KEY) && localStorage.getItem(ONBOARDING_MODE_KEY)
+        if (!hasLocal) {
+          loadFromSupabase().finally(() => {
+            setSyncStatus('synced')
+          })
+        } else {
           setSyncStatus('synced')
-        })
+        }
+        sessionStorage.setItem(SESSION_SYNC_KEY, 'true')
       } else {
-        setSyncStatus('synced')
+        // User is authenticated but offline, retain localStorage
+        setSyncStatus('offline')
       }
-      sessionStorage.setItem(SESSION_SYNC_KEY, 'true')
-    } else if (!user) {
+    } else {
+      // Only clear localStorage on explicit logout (user becomes null)
       clearLocalData()
       sessionStorage.removeItem(SESSION_SYNC_KEY)
-      setSyncStatus('offline')
-    } else if (!isOnline) {
       setSyncStatus('offline')
     }
   }, [user, isOnline, loadFromSupabase, clearLocalData])
