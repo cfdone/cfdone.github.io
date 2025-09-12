@@ -17,14 +17,12 @@ import Navbar from '../components/Navbar'
 import LoadingPulseOverlay from '../components/Loading'
 import { useAuth } from '../hooks/useAuth'
 import useTimetableSync from '../hooks/useTimetableSync'
-import TimetableSyncStatus from '../components/TimetableSyncStatus'
 import logo from '../assets/logo.svg'
 
 export default function Settings() {
   const navigate = useNavigate()
   const { user, signOut } = useAuth()
-  const { syncStatus, isOnline, hasTimetable, resetTimetable, retrySyncAction, lastSyncTime } =
-    useTimetableSync()
+  const { resetTimetable } = useTimetableSync()
 
   const [showResetConfirm, setShowResetConfirm] = useState(false)
   // Clear cache state removed
@@ -56,6 +54,7 @@ export default function Settings() {
   const handleLogout = useCallback(async () => {
     setIsResetting(true)
     try {
+      localStorage.clear()
       await signOut()
       navigate('/login', { replace: true })
       setIsResetting(false)
@@ -202,28 +201,7 @@ export default function Settings() {
                     Timetable
                   </h4>
                   <div className="space-y-2">
-                    {/* Sync Status Display */}
-                    {hasTimetable() && (
-                      <div className="w-full bg-white/5 p-4 rounded-xl border border-accent/10">
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center">
-                            <div className="mr-3">
-                              <TimetableSyncStatus
-                                syncStatus={syncStatus}
-                                isOnline={isOnline}
-                                onRetry={retrySyncAction}
-                                compact={false}
-                              />
-                              {lastSyncTime && (
-                                <div className="text-xs text-gray-400 mt-1">
-                                  Last sync: {new Date(lastSyncTime).toLocaleString()}
-                                </div>
-                              )}
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    )}
+                    {/* Sync Status Display removed */}
 
                     <button
                       onClick={handleResetOnboarding}

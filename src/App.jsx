@@ -36,7 +36,6 @@ function App() {
           }
         />
 
-        {/* Onboarding routes - redirect to home if data exists */}
         <Route
           path="/stepone"
           element={

@@ -1,20 +1,14 @@
-import React, { useState, useEffect } from 'react'
-import { Navigate, useNavigate } from 'react-router-dom'
+import { Navigate } from 'react-router-dom'
+// ...existing code...
+import React, { useState } from 'react'
 import { useAuth } from '../hooks/useAuth'
 import LoadingPulseOverlay from '../components/Loading'
 import logo from '../assets/logo.svg'
 
 export default function Login() {
-  const { user, signInWithGoogle, loading } = useAuth()
-  const navigate = useNavigate()
+  const { signInWithGoogle, loading } = useAuth()
   const [isSigningIn, setIsSigningIn] = useState(false)
   const [error, setError] = useState(null)
-
-  useEffect(() => {
-    if (!loading && user) {
-      navigate('/home', { replace: true })
-    }
-  }, [user, loading, navigate])
 
   if (loading) {
     return <LoadingPulseOverlay />
