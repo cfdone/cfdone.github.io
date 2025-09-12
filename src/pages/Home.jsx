@@ -3,7 +3,6 @@ import { useLocation } from 'react-router-dom'
 import Navbar from '../components/Navbar'
 import {
   Header,
-  CurrentClassCard,
   StatusCard,
   TodaySchedule,
   WeeklySchedule,
@@ -13,16 +12,12 @@ import {
 } from '../components/Home'
 import { timeToMinutes } from '../utils/timeUtils'
 import useTimetableSync from '../hooks/useTimetableSync'
-import TimetableSyncStatus from '../components/TimetableSyncStatus'
 import LoadingPulseOverlay from '../components/Loading'
 export default function Home() {
   const location = useLocation()
   const {
     timetableData: syncedTimetableData,
-    syncStatus,
-    isOnline,
     hasTimetable,
-    retrySyncAction,
     loading: timetableLoading,
   } = useTimetableSync()
 
@@ -233,7 +228,7 @@ export default function Home() {
 
   // We don't need to calculate this anymore since we're using actual values everywhere
 
-  if (timetableLoading || syncStatus === 'syncing') {
+  if (timetableLoading) {
     return <LoadingPulseOverlay />
   }
   if (!selection) {
@@ -242,12 +237,6 @@ export default function Home() {
 
   return (
     <div className="fixed inset-0 bg-black">
-      {/* Simplified background decoration */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-20 right-10 w-48 h-48 bg-accent/3 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-40 left-10 w-64 h-64 bg-purple-500/2 rounded-full blur-3xl"></div>
-      </div>
-
       <div className="flex flex-col h-full relative z-10">
         {/* Fixed Header with Current Class and Next Class */}
         <Header
@@ -262,9 +251,6 @@ export default function Home() {
           sortedTodayClasses={sortedActualTodayClasses}
           calculateTimeUntilStart={calculateTimeUntilStart}
           calculateRemainingTime={calculateRemainingTime}
-          syncStatus={syncStatus}
-          isOnline={isOnline}
-          onRetrySync={retrySyncAction}
         />
 
         {/* Status Card in Header */}
@@ -292,7 +278,7 @@ export default function Home() {
 
         {/* Scrollable Content Container */}
         <div className="flex-1 overflow-hidden">
-          <div className="h-full overflow-y-auto no-scrollbar p-4 max-w-md mx-auto text-white">
+          <div className="h-full overflow-y-auto no-scrollbar p-4 pb-22 max-w-md mx-auto text-white">
             {/* Enhanced Schedule Display */}
             <div>
               {viewWeekly ? (

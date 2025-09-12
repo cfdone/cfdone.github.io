@@ -1,12 +1,6 @@
 import logo from '../../assets/logo.svg'
 
-export default function Header({
-  greeting,
-  currentDay,
-  formattedTime,
-  selection,
-}) {
-
+export default function Header({ greeting, currentDay, formattedTime, selection }) {
   // Removed getReferenceMinutes helper (no longer needed)
   return (
     <div className="flex-shrink-0 bg-black/90 backdrop-blur-md p-4 pb-1 pt-8 max-w-md mx-auto w-full">

@@ -20,7 +20,7 @@ export default function WeeklySchedule({
           const isToday = day === getCurrentDay()
           return (
             <div key={day}>
-              <div className="bg-white/5 rounded-xl border border-accent/10 overflow-hidden">
+              <div className="bg-white/5 rounded-3xl border border-accent/10 overflow-hidden">
                 <div
                   className={`p-3 border-b border-accent/10 ${isToday ? 'bg-accent/10' : 'bg-white/5'}`}
                 >

@@ -119,10 +119,6 @@ export default function Settings() {
       {(isLoading || isResetting) && <LoadingPulseOverlay />}
       <div className="fixed inset-0 bg-black">
         {/* Simplified background decoration - same as Home.jsx */}
-        <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute top-20 right-10 w-48 h-48 bg-accent/3 rounded-full blur-3xl"></div>
-          <div className="absolute bottom-40 left-10 w-64 h-64 bg-purple-500/2 rounded-full blur-3xl"></div>
-        </div>
 
         <div className="flex flex-col h-full relative z-10">
           {/* Fixed Header */}
@@ -145,7 +141,7 @@ export default function Settings() {
                   <h4 className="text-white/50 text-xs  uppercase tracking-wider mb-3 px-2">
                     Account
                   </h4>
-                  <div className="bg-white/5 p-4 rounded-xl border border-accent/10">
+                  <div className="bg-white/5 p-4 rounded-3xl border border-accent/10">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center">
                         {user.user_metadata?.avatar_url ? (
@@ -184,7 +180,7 @@ export default function Settings() {
                 <h4 className="text-white/50 text-xs  uppercase tracking-wider mb-3 px-2">
                   Current Timetable
                 </h4>
-                <div className="bg-white/5 p-4 rounded-xl border border-accent/10">
+                <div className="bg-white/5 p-4 rounded-3xl border border-accent/10">
                   <div className="max-h-32 overflow-y-auto pr-2 no-scrollbar">
                     <p className="text-white/70 text-sm  mb-2">{getTimetableInfo()}</p>
                     <div className="text-xs text-white/50 mb-1">
@@ -206,7 +202,7 @@ export default function Settings() {
                     <button
                       onClick={handleResetOnboarding}
                       disabled={isResetting}
-                      className="w-full bg-white/5 p-4 rounded-xl border border-accent/10 hover:bg-white/10 transition-colors text-left disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="w-full bg-white/5 p-4 rounded-3xl border border-accent/10 hover:bg-white/10 transition-colors text-left disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                       <div className="flex items-center justify-between">
                         <div className="flex items-center">
@@ -236,7 +232,7 @@ export default function Settings() {
                   </h4>
                   <div className="space-y-2">
                     {/* About Accordion */}
-                    <div className="bg-white/5 rounded-xl border border-accent/10 overflow-hidden">
+                    <div className="bg-white/5 rounded-3xl border border-accent/10 overflow-hidden">
                       <button
                         onClick={() => toggleAccordion('about')}
                         className="w-full p-4 hover:bg-white/10 transition-colors text-left"
@@ -281,7 +277,7 @@ export default function Settings() {
                     </div>
 
                     {/* Terms & Conditions Accordion */}
-                    <div className="bg-white/5 rounded-xl border border-accent/10 overflow-hidden">
+                    <div className="bg-white/5 rounded-3xl border border-accent/10 overflow-hidden">
                       <button
                         onClick={() => toggleAccordion('terms')}
                         className="w-full p-4 hover:bg-white/10 transition-colors text-left"
@@ -293,6 +289,9 @@ export default function Settings() {
                               <h4 className="text-white font-medium text-base">
                                 Terms & Conditions
                               </h4>
+                              <p className="text-white/70 text-sm mb-1">
+                                Learn more about CFDONE terms and conditions
+                              </p>
                             </div>
                           </div>
                           {expandedAccordion === 'terms' ? (
@@ -352,7 +351,7 @@ export default function Settings() {
                     </div>
 
                     {/* Privacy Policy Accordion */}
-                    <div className="bg-white/5 rounded-xl border border-accent/10 overflow-hidden">
+                    <div className="bg-white/5 rounded-3xl border border-accent/10 overflow-hidden">
                       <button
                         onClick={() => toggleAccordion('privacy')}
                         className="w-full p-4 hover:bg-white/10 transition-colors text-left"
@@ -362,6 +361,9 @@ export default function Settings() {
                             <Shield className="w-5 h-5 text-accent mr-3" />
                             <div>
                               <h4 className="text-white font-medium text-base">Privacy Policy</h4>
+                              <p className="text-white/70 text-sm mb-1">
+                                Learn more about CFDONE privacy
+                              </p>
                             </div>
                           </div>
                           {expandedAccordion === 'privacy' ? (
@@ -447,7 +449,7 @@ export default function Settings() {
                   <div className="space-y-2">
                     <button
                       onClick={() => handleExternalLink('mailto:theajmalrazaq@gmail.com')}
-                      className="w-full bg-white/5 p-4 rounded-xl border border-accent/10 hover:bg-white/10 transition-colors text-left"
+                      className="w-full bg-white/5 p-4 rounded-3xl border border-accent/10 hover:bg-white/10 transition-colors text-left"
                     >
                       <div className="flex items-center justify-between">
                         <div className="flex items-center">
@@ -472,16 +474,13 @@ export default function Settings() {
                   <h4 className="text-white/50 text-xs  uppercase tracking-wider mb-3 px-2">
                     Support
                   </h4>
-                  <div className="bg-white/5 p-4 rounded-xl border border-accent/10">
+                  <div className="bg-white/5 p-4 rounded-3xl border border-accent/10">
                     <div className="flex items-center">
                       <Heart className="w-5 h-5 text-red-500 mr-3" />
                       <div>
                         <h4 className="text-white font-medium text-base mb-1">
-                          Made with frustration by Ajmal Razaq Bhatti
+                          With 💝 from Ajmal Razaq Bhatti
                         </h4>
-                        <p className="text-white/70 text-sm ">
-                          Sometimes the best apps come from the most frustrating experiences!
-                        </p>
                       </div>
                     </div>
                   </div>
@@ -499,7 +498,7 @@ export default function Settings() {
         {/* Reset Confirmation Modal */}
         {showResetConfirm && (
           <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 px-4">
-            <div className="bg-black border border-accent/20 rounded-xl p-6 w-full max-w-sm">
+            <div className="bg-black border border-accent/20 rounded-3xl p-6 w-full max-w-sm">
               <div className="text-center mb-4">
                 <h3 className=" text-accent font-medium text-xl mb-2">Reset Timetable?</h3>
                 <p className="text-white/70 text-sm ">
@@ -511,13 +510,13 @@ export default function Settings() {
               <div className="flex gap-3">
                 <button
                   onClick={() => setShowResetConfirm(false)}
-                  className="flex-1 bg-white/10 text-white px-4 py-3 rounded-xl  hover:bg-white/20 transition-colors"
+                  className="flex-1 bg-white/10 text-white px-4 py-3 rounded-3xl  hover:bg-white/20 transition-colors"
                 >
                   Cancel
                 </button>
                 <button
                   onClick={handleResetOnboarding}
-                  className="flex-1 bg-red-500 text-white px-4 py-3 rounded-xl  hover:bg-red-600 transition-colors"
+                  className="flex-1 bg-red-500 text-white px-4 py-3 rounded-3xl  hover:bg-red-600 transition-colors"
                 >
                   Reset
                 </button>
@@ -531,7 +530,7 @@ export default function Settings() {
         {/* Logout Confirmation Modal */}
         {showLogoutConfirm && (
           <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 px-4">
-            <div className="bg-black border border-accent/20 rounded-xl p-6 w-full max-w-sm">
+            <div className="bg-black border border-accent/20 rounded-3xl p-6 w-full max-w-sm">
               <div className="text-center mb-4">
                 <h3 className=" text-accent font-medium text-xl mb-2">Sign Out?</h3>
                 <p className="text-white/70 text-sm ">
@@ -543,13 +542,13 @@ export default function Settings() {
               <div className="flex gap-3">
                 <button
                   onClick={() => setShowLogoutConfirm(false)}
-                  className="flex-1 bg-white/10 text-white px-4 py-3 rounded-xl  hover:bg-white/20 transition-colors"
+                  className="flex-1 bg-white/10 text-white px-4 py-3 rounded-3xl  hover:bg-white/20 transition-colors"
                 >
                   Cancel
                 </button>
                 <button
                   onClick={handleLogout}
-                  className="flex-1 bg-red-500 text-white px-4 py-3 rounded-xl  hover:bg-red-600 transition-colors"
+                  className="flex-1 bg-red-500 text-white px-4 py-3 rounded-3xl  hover:bg-red-600 transition-colors"
                 >
                   Sign Out
                 </button>

@@ -1,23 +1,30 @@
-import { Trophy, Coffee, Sun } from 'lucide-react'
+import { Trophy, Coffee, Sun, Clock, CheckCircle2 } from 'lucide-react'
 
 export default function StatusCard({ currentClass, totalClasses, doneClasses }) {
-  // Show progress summary if there's an ongoing class
   if (currentClass) {
     return (
-      <div className="bg-gradient-to-r from-accent/10 to-accent/5 p-4 rounded-xl border border-accent/10 mb-3">
-        <div className="flex items-center justify-between mb-2">
-          <div className="flex items-center gap-2">
-            <span className="text-accent font-semibold text-sm">Today's Schedule</span>
+      <div className="relative overflow-hidden bg-white/5 p-6 rounded-2xl border border-accent/20 mb-4 backdrop-blur-sm shadow-lg hover:shadow-xl transition-all duration-300">
+        {/* Subtle animated background pattern */}
+        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -skew-x-12 animate-pulse"></div>
+        <div className="relative z-10">
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center gap-3">
+              <div className="p-2 bg-accent/20 rounded-full">
+                <Clock className="w-4 h-4 text-accent" />
+              </div>
+              <div>
+                <h3 className="text-accent font-semibold text-base">In Progress</h3>
+                <p className="text-accent/70 text-xs">Currently in session</p>
+              </div>
+            </div>
+            <div className="text-right">
+              <div className="text-accent font-bold text-lg">
+                {doneClasses}
+                <span className="text-accent/60">/{totalClasses}</span>
+              </div>
+              <div className="text-accent/60 text-xs">completed</div>
+            </div>
           </div>
-          <div className="text-accent/80 text-sm">
-            {doneClasses} of {totalClasses} completed
-          </div>
-        </div>
-        <div className="bg-white/10 rounded-full h-1.5">
-          <div
-            className="bg-accent rounded-full h-full transition-all duration-500"
-            style={{ width: `${totalClasses > 0 ? (doneClasses / totalClasses) * 100 : 0}%` }}
-          ></div>
         </div>
       </div>
     )
@@ -26,41 +33,44 @@ export default function StatusCard({ currentClass, totalClasses, doneClasses }) 
   // If no classes today
   if (totalClasses === 0) {
     return (
-      <div className="bg-white/5 p-3 rounded-lg border border-accent/10 text-center mb-3">
-        <div className="flex items-center justify-center gap-2 mb-2">
-          <Sun className="w-5 h-5 text-accent" />
-          <span className="text-accent text-sm font-semibold">No Classes Today</span>
-        </div>
-        <div className="text-accent/80 text-xs">0 of 0 completed</div>
-        <div className="bg-white/10 rounded-full h-1.5 mt-1">
-          <div className="bg-accent rounded-full h-full transition-all duration-500" style={{ width: '0%' }}></div>
+      <div className="bg-gradient-to-br from-white/8 to-white/3 p-6 rounded-2xl border border-accent/15 mb-4 backdrop-blur-sm hover:bg-white/10 transition-all duration-300">
+        <div className="text-center space-y-3">
+          <div className="inline-flex p-3 bg-accent/15 rounded-full">
+            <Sun className="w-6 h-6 text-accent" />
+          </div>
+          <div>
+            <h3 className="text-accent font-semibold text-lg mb-1">Free Day</h3>
+            <p className="text-accent/70 text-sm">No classes scheduled today</p>
+          </div>
         </div>
       </div>
     )
   }
 
-  // Otherwise, show status and progress
+  // All classes complete or free time
+  const isComplete = doneClasses === totalClasses
   return (
-    <div className="bg-white/5 p-3 rounded-lg border border-accent/10 text-center mb-3">
-      <div className="flex items-center justify-center gap-2 mb-2">
-        {doneClasses === totalClasses ? (
-          <>
+    <div
+      className={`p-4 rounded-3xl border mb-3 text-center transition-all duration-300 ${
+        isComplete ? 'bg-white/5 border-accent/10' : 'bg-white/8 border-accent/15'
+      }`}
+    >
+      <div className="flex items-center justify-center gap-2 mb-3">
+        <div className="p-2 bg-accent/20 rounded-full">
+          {isComplete ? (
             <Trophy className="w-5 h-5 text-accent" />
-            <span className="text-accent text-sm font-semibold">All Classes Complete!</span>
-          </>
-        ) : (
-          <>
+          ) : (
             <Coffee className="w-5 h-5 text-accent" />
-            <span className="text-accent text-sm font-semibold">Free Time</span>
-          </>
-        )}
+          )}
+        </div>
       </div>
-      <div className="text-accent/80 text-xs">{doneClasses} of {totalClasses} completed</div>
-      <div className="bg-white/10 rounded-full h-1.5 mt-1">
-        <div
-          className="bg-accent rounded-full h-full transition-all duration-500"
-          style={{ width: `${totalClasses > 0 ? (doneClasses / totalClasses) * 100 : 0}%` }}
-        ></div>
+      <div>
+        <h3 className="text-accent font-semibold text-base mb-1">
+          {isComplete ? 'All Complete!' : 'Break Time'}
+        </h3>
+        <p className="text-accent/70 text-sm mb-3">
+          {doneClasses} of {totalClasses} classes completed
+        </p>
       </div>
     </div>
   )

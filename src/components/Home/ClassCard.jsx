@@ -11,7 +11,7 @@ export default function ClassCard({
 }) {
   return (
     <div
-      className={`rounded-xl border overflow-hidden transition-all duration-200 ${
+      className={`rounded-3xl border overflow-hidden transition-all duration-200 ${
         isCurrentClass
           ? 'bg-gradient-to-r from-red-500/20 to-red-600/10 border-red-400/40'
           : isNextClass

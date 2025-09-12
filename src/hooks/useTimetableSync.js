@@ -85,7 +85,8 @@ const useTimetableSync = () => {
   // Fetch from Supabase only once after login if no local data
   useEffect(() => {
     if (user) {
-      const hasLocal = localStorage.getItem(TIMETABLE_STORAGE_KEY) && localStorage.getItem(ONBOARDING_MODE_KEY)
+      const hasLocal =
+        localStorage.getItem(TIMETABLE_STORAGE_KEY) && localStorage.getItem(ONBOARDING_MODE_KEY)
       if (!hasLocal) {
         fetchTimetableOnce()
       }
@@ -95,9 +96,12 @@ const useTimetableSync = () => {
   }, [user, fetchTimetableOnce, clearLocalData])
 
   // Save timetable only to localStorage
-  const saveTimetable = useCallback((data, mode) => {
-    saveToLocalStorage(data, mode)
-  }, [saveToLocalStorage])
+  const saveTimetable = useCallback(
+    (data, mode) => {
+      saveToLocalStorage(data, mode)
+    },
+    [saveToLocalStorage]
+  )
 
   const resetTimetable = useCallback(() => {
     clearLocalData()

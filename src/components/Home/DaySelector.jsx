@@ -5,17 +5,18 @@ export default function DaySelector({ onDaySelect, currentDay }) {
   const [weekDays, setWeekDays] = useState([])
   useEffect(() => {
     const today = new Date()
-    const fullNames = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
-    const shortNames = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri']
+    const fullNames = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+    const shortNames = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
     const days = []
     let startDate = new Date(today)
+    // Set startDate to Monday of the current week
     while (startDate.getDay() !== 1) {
-      startDate.setDate(startDate.getDate() + 1)
+      startDate.setDate(startDate.getDate() - 1)
     }
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < 7; i++) {
       const day = new Date(startDate)
       day.setDate(startDate.getDate() + i)
-      const dayNum = day.getDay() - 1
+      const dayNum = (day.getDay() + 6) % 7 // 0=Sunday, 1=Monday, ...
       const isToday = day.toDateString() === today.toDateString()
       const dayInfo = {
         fullName: fullNames[dayNum],
@@ -37,8 +38,8 @@ export default function DaySelector({ onDaySelect, currentDay }) {
 
   return (
     <div className="flex overflow-x-auto no-scrollbar w-full mb-2">
-      <div className="flex w-full justify-between space-x-1">
-        {weekDays.map((day, index) => {
+      <div className="flex w-full gap-4">
+        {weekDays.slice(0, 5).map((day, index) => {
           const dayClasses =
             selectedDay === day.fullName
               ? 'bg-accent/20 border-accent/30 text-white'
@@ -50,7 +51,7 @@ export default function DaySelector({ onDaySelect, currentDay }) {
             <button
               key={index}
               onClick={() => handleDayClick(day.fullName)}
-              className={`flex-shrink-0 flex flex-col items-center p-1 rounded-lg border min-w-[50px] transition-all ${dayClasses}`}
+              className={`flex-shrink-0 flex flex-col items-center p-1 rounded-xl border transition-all w-[70px] ${dayClasses}`}
             >
               <span className="text-xs font-semibold">{day.shortName}</span>
               <span className={`text-sm font-semibold ${day.isToday ? 'text-accent' : ''}`}>

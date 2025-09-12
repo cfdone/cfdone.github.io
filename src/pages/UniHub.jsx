@@ -5,10 +5,6 @@ function UniHub() {
   return (
     <div className="fixed inset-0 bg-black">
       {/* Background decoration - same as other pages */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-20 right-10 w-48 h-48 bg-accent/3 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-40 left-10 w-64 h-64 bg-purple-500/2 rounded-full blur-3xl"></div>
-      </div>
 
       <div className="flex flex-col h-full relative z-10">
         {/* Fixed Header */}
