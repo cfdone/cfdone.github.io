@@ -14,7 +14,7 @@ export default function ViewToggle({ viewWeekly, setViewWeekly, onResetDay }) {
       </h2>
       <button
         onClick={handleViewToggle}
-        className="bg-white/5 px-3 py-1.5 rounded-xl border border-accent/10 text-accent  text-sm hover:bg-accent/10 transition-all duration-200"
+        className="bg-white/2 px-3 py-1.5 rounded-3xl border border-accent/5 text-accent  text-sm hover:bg-accent/10 transition-all duration-200"
       >
         {viewWeekly ? 'Day' : 'Weekly'}
       </button>

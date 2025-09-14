@@ -160,7 +160,7 @@ export default function Settings() {
                   <h4 className="text-white/50 text-xs  uppercase tracking-wider mb-3 px-2">
                     Account
                   </h4>
-                  <div className="bg-white/5 p-4 rounded-3xl border border-accent/10">
+                  <div className="bg-white/2 p-4 rounded-3xl border border-accent/5">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center">
                         {user.user_metadata?.avatar_url ? (
@@ -193,7 +193,7 @@ export default function Settings() {
                       <button
                         onClick={() => isOnline && setShowLogoutConfirm(true)}
                         disabled={!isOnline}
-                        className={`p-2 hover:bg-white/10 rounded-lg transition-colors ${!isOnline ? 'opacity-50 cursor-not-allowed' : ''}`}
+                        className={`p-2 hover:bg-white/10 rounded-xl transition-colors ${!isOnline ? 'opacity-50 cursor-not-allowed' : ''}`}
                       >
                         <LogOut className="w-5 h-5 text-white/70" />
                       </button>
@@ -207,7 +207,7 @@ export default function Settings() {
                 <h4 className="text-white/50 text-xs  uppercase tracking-wider mb-3 px-2">
                   Current Timetable
                 </h4>
-                <div className="bg-white/5 p-4 rounded-3xl border border-accent/10">
+                <div className="bg-white/2 p-4 rounded-3xl border border-accent/5">
                   <div className="max-h-32 overflow-y-auto pr-2 no-scrollbar">
                     {/* Timetable info can be a string or JSX, so render accordingly */}
                     {typeof getTimetableInfo() === 'string' ? (
@@ -234,7 +234,7 @@ export default function Settings() {
                     <button
                         onClick={() => setShowResetConfirm(true)}
                         disabled={isResetting || !isOnline}
-                        className={`w-full bg-white/5 p-4 rounded-3xl border border-accent/10 hover:bg-white/10 transition-colors text-left ${isResetting || !isOnline ? 'opacity-50 cursor-not-allowed' : ''}`}
+                        className={`w-full bg-white/2 p-4 rounded-3xl border border-accent/5 hover:bg-white/10 transition-colors text-left ${isResetting || !isOnline ? 'opacity-50 cursor-not-allowed' : ''}`}
                     >
                       <div className="flex items-center justify-between">
                         <div className="flex items-center">
@@ -262,7 +262,7 @@ export default function Settings() {
                   </h4>
                   <div className="space-y-2">
                     {/* About Accordion */}
-                    <div className="bg-white/5 rounded-3xl border border-accent/10 overflow-hidden">
+                    <div className="bg-white/2 rounded-3xl border border-accent/5 overflow-hidden">
                       <button
                         onClick={() => toggleAccordion('about')}
                         className="w-full p-4 hover:bg-white/10 transition-colors text-left"
@@ -307,7 +307,7 @@ export default function Settings() {
                     </div>
 
                     {/* Terms & Conditions Accordion */}
-                    <div className="bg-white/5 rounded-3xl border border-accent/10 overflow-hidden">
+                    <div className="bg-white/2 rounded-3xl border border-accent/5 overflow-hidden">
                       <button
                         onClick={() => toggleAccordion('terms')}
                         className="w-full p-4 hover:bg-white/10 transition-colors text-left"
@@ -381,7 +381,7 @@ export default function Settings() {
                     </div>
 
                     {/* Privacy Policy Accordion */}
-                    <div className="bg-white/5 rounded-3xl border border-accent/10 overflow-hidden">
+                    <div className="bg-white/2 rounded-3xl border border-accent/5 overflow-hidden">
                       <button
                         onClick={() => toggleAccordion('privacy')}
                         className="w-full p-4 hover:bg-white/10 transition-colors text-left"
@@ -479,7 +479,7 @@ export default function Settings() {
                   <div className="space-y-2">
                     <button
                       onClick={() => handleExternalLink('mailto:theajmalrazaq@gmail.com')}
-                      className="w-full bg-white/5 p-4 rounded-3xl border border-accent/10 hover:bg-white/10 transition-colors text-left"
+                      className="w-full bg-white/2 p-4 rounded-3xl border border-accent/5 hover:bg-white/10 transition-colors text-left"
                     >
                       <div className="flex items-center justify-between">
                         <div className="flex items-center">
@@ -504,7 +504,7 @@ export default function Settings() {
                   <h4 className="text-white/50 text-xs  uppercase tracking-wider mb-3 px-2">
                     Support
                   </h4>
-                  <div className="bg-white/5 p-4 rounded-3xl border border-accent/10">
+                  <div className="bg-white/2 p-4 rounded-3xl border border-accent/5">
                     <div className="flex items-center">
                       <Heart className="w-5 h-5 text-red-500 mr-3" />
                       <div>

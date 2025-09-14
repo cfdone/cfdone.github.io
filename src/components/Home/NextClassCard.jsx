@@ -11,7 +11,7 @@ export default function NextClassCard({
   if (!nextClass || currentClass) return null
 
   return (
-    <div className="bg-gradient-to-r from-blue-900/40 to-blue-800/30 p-3 rounded-lg border border-blue-400/40 mb-3">
+    <div className="bg-gradient-to-r from-blue-900/40 to-blue-800/30 p-3 rounded-xl border border-blue-400/40 mb-3">
       <div className="flex items-center gap-2 mb-2">
         <div className="w-2 h-2 bg-blue-400 rounded-full"></div>
         <span className="text-blue-400  font-semibold text-xs uppercase tracking-wide">

@@ -15,7 +15,7 @@ export default function NoTimetableData() {
             schedule.
           </p>
           <div className="mt-8">
-            <div className="bg-white/5 p-4 rounded-xl border border-accent/10">
+            <div className="bg-white/2 p-4 rounded-3xl border border-accent/5">
               <p className="text-accent opacity-80 text-sm ">
                 Need help? Check the settings page for more options.
               </p>

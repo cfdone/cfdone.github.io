@@ -155,7 +155,7 @@ export default function Resolve() {
               placeholder="Search subjects or abbreviations (e.g. OOP)"
               value={searchQuery}
               onChange={handleSearchChange}
-              className="w-full px-4 py-3 pr-10 bg-white/10 border border-accent/10 rounded-xl text-white placeholder:text-white/50 focus:outline-none focus:border-accent/30"
+              className="w-full px-4 py-3 pr-10 bg-white/10 border border-accent/5 rounded-3xl text-white placeholder:text-white/50 focus:outline-none focus:border-accent/30"
             />
             <Search className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white/50 w-5 h-5" />
           </div>
@@ -190,14 +190,15 @@ export default function Resolve() {
                 !subject.name.toLowerCase().startsWith(searchQuery.toLowerCase())
 
               return (
+
                 <button
                   key={subject.name}
                   type="button"
-                  className={`p-4 rounded-xl  text-base border transition-all duration-200 text-left w-full
+                  className={`p-4 rounded-3xl  text-base border transition-all duration-200 text-left w-full
                             ${
                               isSelected
                                 ? 'bg-accent text-white border-accent shadow-lg'
-                                : 'bg-white/10 text-accent border-accent/10 hover:bg-accent/10'
+                                : 'bg-white/10 text-accent border-accent/5 hover:bg-accent/10'
                             }
                         `}
                   onClick={() => handleSubjectToggle(subject)}
@@ -259,13 +260,13 @@ export default function Resolve() {
       <div className="flex-shrink-0 w-full max-w-md mx-auto px-2 pt-4 pb-6">
         <div className="flex flex-row gap-3 items-center justify-center w-full">
           <button
-            className=" px-4 py-3 rounded-xl w-full text-[15px] transition shadow-md bg-white/10 border text-white border-accent/10 hover:bg-accent/10"
+            className=" px-4 py-3 rounded-3xl w-full text-[15px] transition shadow-md bg-white/10 border text-white border-accent/5 hover:bg-accent/10"
             onClick={() => navigate('/stepone')}
           >
             Back
           </button>
           <button
-            className={` px-4 py-3 rounded-xl w-full h-full text-[15px] transition shadow-md
+            className={` px-4 py-3 rounded-3xl w-full h-full text-[15px] transition shadow-md
                           ${
                             selectedSubjects.length > 0
                               ? 'bg-accent text-white hover:bg-accent/80'

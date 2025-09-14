@@ -114,11 +114,11 @@ export default function Regular() {
                     <button
                       key={deg}
                       type="button"
-                      className={`p-4 rounded-xl  text-lg border transition-all duration-200 text-left
+                      className={`p-4 rounded-3xl  text-lg border transition-all duration-200 text-left
                                                 ${
                                                   selectedDegree === deg
                                                     ? 'bg-accent text-white border-accent shadow-lg'
-                                                    : 'bg-white/10 text-accent border-accent/10 hover:bg-accent/10 '
+                                                    : 'bg-white/10 text-accent border-accent/5 hover:bg-accent/10 '
                                                 }
                                             `}
                       onClick={() => {
@@ -151,11 +151,11 @@ export default function Regular() {
                       <button
                         key={sem}
                         type="button"
-                        className={`p-4 rounded-xl  text-lg border transition-all duration-200 text-left
+                        className={`p-4 rounded-3xl  text-lg border transition-all duration-200 text-left
                                                     ${
                                                       selectedSemester === sem
                                                         ? 'bg-accent text-white border-accent shadow-lg'
-                                                        : 'bg-white/10 text-accent border-accent/10 hover:bg-accent/10 '
+                                                        : 'bg-white/10 text-accent border-accent/5 hover:bg-accent/10 '
                                                     }
                                                 `}
                         onClick={() => {
@@ -188,11 +188,11 @@ export default function Regular() {
                       <button
                         key={sec}
                         type="button"
-                        className={`p-4 rounded-xl  text-lg border transition-all duration-200 text-left
+                        className={`p-4 rounded-3xl  text-lg border transition-all duration-200 text-left
                                                     ${
                                                       selectedSection === sec
                                                         ? 'bg-accent text-white border-accent shadow-lg'
-                                                        : 'bg-white/10 text-accent border-accent/10 hover:bg-accent/10 '
+                                                        : 'bg-white/10 text-accent border-accent/5 hover:bg-accent/10 '
                                                     }
                                                 `}
                         onClick={() => setSelectedSection(sec)}
@@ -217,13 +217,13 @@ export default function Regular() {
 
         <div className="flex flex-row gap-3 items-stretch justify-center w-full max-w-md mx-auto px-2 pb-6 pt-2 bg-gradient-to-b from-transparent to-black h-20">
           <button
-            className=" px-4 rounded-xl w-full h-full text-[15px] transition shadow-md bg-white/10 border text-white border-accent/10 hover:bg-accent/10 flex items-center justify-center"
+            className=" px-4 rounded-3xl w-full h-full text-[15px] transition shadow-md bg-white/10 border text-white border-accent/5 hover:bg-accent/10 flex items-center justify-center"
             onClick={() => navigate('/stepone')}
           >
             Back
           </button>
           <button
-            className={` px-4 rounded-xl w-full h-full text-[15px] transition shadow-md flex items-center justify-center
+            className={` px-4 rounded-3xl w-full h-full text-[15px] transition shadow-md flex items-center justify-center
                             ${selectedDegree && selectedSemester && selectedSection ? 'bg-accent text-white' : 'bg-accent/40 text-white/60'}
                         `}
             disabled={!(selectedDegree && selectedSemester && selectedSection) || isCreating}

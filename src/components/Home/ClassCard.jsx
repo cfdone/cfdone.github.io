@@ -17,8 +17,8 @@ export default function ClassCard({
           : isNextClass
             ? 'bg-gradient-to-r from-blue-500/20 to-blue-600/10 border-blue-400/40 '
             : isPastClass
-              ? 'bg-white/5 border-green-400/20'
-              : 'bg-white/5 border-accent/10'
+              ? 'bg-white/2 border-green-400/20'
+              : 'bg-white/2 border-accent/5'
       }`}
     >
       <div className="p-4">
@@ -87,13 +87,13 @@ export default function ClassCard({
 
             {/* Dynamic status messages */}
             {isCurrentClass && (
-              <div className="text-red-300  text-sm font-semibold mt-2 bg-red-500/20 px-3 py-1.5 rounded-lg">
+              <div className="text-red-300  text-sm font-semibold mt-2 bg-red-500/20 px-3 py-1.5 rounded-xl">
                 {calculateRemainingTime(classInfo.end)}
               </div>
             )}
 
             {isNextClass && (
-              <div className="text-blue-300  text-sm font-semibold mt-2 bg-blue-500/20 px-3 py-1.5 rounded-lg">
+              <div className="text-blue-300  text-sm font-semibold mt-2 bg-blue-500/20 px-3 py-1.5 rounded-xl">
                 {calculateTimeUntilStart(classInfo.start)}
               </div>
             )}

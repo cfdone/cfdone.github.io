@@ -50,7 +50,7 @@ export default function Login() {
           <p className="text-white ">Let's fix this mess in 2 minutes flat!</p>
 
           {error && (
-            <div className="bg-red-500/10 border border-red-500/20 text-red-300 px-4 py-3 rounded-xl mb-2 w-full">
+            <div className="bg-red-500/10 border border-red-500/20 text-red-300 px-4 py-3 rounded-3xl mb-2 w-full">
               <p className="text-sm  text-center">{error}</p>
             </div>
           )}
@@ -58,7 +58,7 @@ export default function Login() {
           <button
             onClick={handleGoogleSignIn}
             disabled={isSigningIn}
-            className="bg-accent  text-white px-4 py-3 rounded-xl w-full text-[15px] transition shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
+            className="bg-accent  text-white px-4 py-3 rounded-3xl w-full text-[15px] transition shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {isSigningIn ? (
               <div className="flex items-center justify-center">

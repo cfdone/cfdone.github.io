@@ -39,8 +39,8 @@ export default function DaySelector({ onDaySelect, currentDay }) {
             selectedDay === day.fullName
               ? 'bg-accent/20 border-accent/30 text-white'
               : day.isToday
-                ? 'bg-white/10 border-white/20 text-white/80'
-                : 'bg-white/5 border-white/10 text-white/70'
+                ? 'bg-white/10 border-white/5 text-white/80'
+                : 'bg-white/2 border-white/5 text-white/70'
 
           return (
             <button

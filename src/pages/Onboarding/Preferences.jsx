@@ -184,7 +184,7 @@ export default function Preferences() {
       <div className="flex-1 w-full max-w-md mx-auto overflow-y-auto no-scrollbar min-h-0">
         <div className="flex flex-col gap-6 px-2 py-4 pb-8">
           {/* Parent Section Card */}
-          <div className="bg-gradient-to-r from-accent/10 to-blue-500/10 border border-accent/20 rounded-xl p-4">
+          <div className="bg-gradient-to-r from-accent/10 to-blue-500/10 border border-accent/20 rounded-3xl p-4">
             <div className="flex items-center gap-3 mb-4">
               <div className="text-2xl">
                 <Target className="w-8 h-8 text-accent" />
@@ -216,10 +216,10 @@ export default function Preferences() {
                         },
                       }))
                     }
-                    className={`p-2 rounded-lg border text-xs font-semibold transition-all ${
+                    className={`p-2 rounded-3xl border text-xs font-semibold transition-all ${
                       userPreferences.parentSection.degree === degree
                         ? 'bg-accent text-white border-accent shadow-lg'
-                        : 'bg-white/5 text-white/70 border-white/10 hover:border-accent/30 hover:bg-accent/5'
+                        : 'bg-white/2 text-white/70 border-white/10 hover:border-accent/30 hover:bg-accent/5'
                     }`}
                   >
                     {degree}
@@ -249,10 +249,10 @@ export default function Preferences() {
                             },
                           }))
                         }
-                        className={`p-2 rounded-lg border text-xs font-semibold transition-all ${
+                        className={`p-2 rounded-3xl border text-xs font-semibold transition-all ${
                           userPreferences.parentSection.semester === semester
                             ? 'bg-accent text-white border-accent shadow-lg'
-                            : 'bg-white/5 text-white/70 border-white/10 hover:border-accent/30 hover:bg-accent/5'
+                            : 'bg-white/2 text-white/70 border-white/10 hover:border-accent/30 hover:bg-accent/5'
                         }`}
                       >
                         Sem {semester}
@@ -291,10 +291,10 @@ export default function Preferences() {
                           },
                         }))
                       }
-                      className={`p-2 rounded-lg border text-xs font-semibold transition-all ${
+                      className={`p-2 rounded-3xl border text-xs font-semibold transition-all ${
                         userPreferences.parentSection.section === section
                           ? 'bg-accent text-white border-accent shadow-lg'
-                          : 'bg-white/5 text-white/70 border-white/10 hover:border-accent/30 hover:bg-accent/5'
+                          : 'bg-white/2 text-white/70 border-white/10 hover:border-accent/30 hover:bg-accent/5'
                       }`}
                     >
                       {section}
@@ -312,7 +312,7 @@ export default function Preferences() {
             {userPreferences.parentSection.degree &&
               userPreferences.parentSection.semester &&
               userPreferences.parentSection.section && (
-                <div className="mt-4 p-3 bg-accent/20 border border-accent/30 rounded-lg">
+                <div className="mt-4 p-3 bg-accent/20 border border-accent/30 rounded-3xl">
                   <div className="text-accent font-semibold text-sm mb-1 flex items-center gap-2">
                     <CheckCircle className="w-4 h-4" />
                     Selected Parent Section:
@@ -327,7 +327,7 @@ export default function Preferences() {
           </div>
 
           {/* Manual Seat Selection */}
-          <div className="bg-white/5 border border-white/10 rounded-xl p-4">
+          <div className="bg-white/2 border border-white/10 rounded-3xl p-4">
             <div className="flex items-center gap-3 mb-4">
               <div className="text-lg">
                 <Settings className="w-6 h-6 text-accent" />
@@ -354,10 +354,10 @@ export default function Preferences() {
               {subjectsForPreferences.map(subject => {
                 const isExpanded = expandedSubjects.has(subject.name)
                 return (
-                  <div key={subject.name} className="border border-white/10 rounded-lg">
+                  <div key={subject.name} className="border border-white/10 rounded-3xl">
                     <button
                       onClick={() => toggleSubjectExpansion(subject.name)}
-                      className="w-full p-3 text-left hover:bg-white/5 rounded-lg transition-all"
+                      className="w-full p-3 text-left hover:bg-white/2 rounded-3xl transition-all"
                     >
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-3">
@@ -394,10 +394,10 @@ export default function Preferences() {
                           return (
                             <div
                               key={idx}
-                              className={`p-3 rounded-lg ${
+                              className={`p-3 rounded-3xl ${
                                 isParentSection
                                   ? 'bg-accent/10 border border-accent/20'
-                                  : 'bg-white/5'
+                                  : 'bg-white/2'
                               }`}
                             >
                               <div className="flex items-center justify-between mb-2">
@@ -406,8 +406,8 @@ export default function Preferences() {
                                     {location.degree} • Semester {location.semester} • Section{' '}
                                     {location.section}
                                     {isParentSection && (
-                                      <span className="text-xs bg-accent text-white px-2 py-1 rounded flex items-center gap-1">
-                                        <Target className="w-3 h-3" /> PARENT
+                                      <span className="text-xs bg-accent text-white px-2 py-1 rounded-full flex items-center gap-1">
+                                        <Target className="w-3 h-3" /> Parent
                                       </span>
                                     )}
                                   </div>
@@ -431,7 +431,7 @@ export default function Preferences() {
                                       },
                                     }))
                                   }
-                                  className={`flex-1 px-2 py-1.5 rounded-md text-xs font-semibold transition-all flex items-center justify-center gap-1 ${
+                                  className={`flex-1 px-2 py-1.5 rounded-3xl text-xs font-semibold transition-all flex items-center justify-center gap-1 ${
                                     currentStatus === true
                                       ? 'bg-green-500 text-white'
                                       : 'bg-white/10 text-white/70 hover:bg-green-500/20'
@@ -450,7 +450,7 @@ export default function Preferences() {
                                       },
                                     }))
                                   }
-                                  className={`flex-1 px-2 py-1.5 rounded-md text-xs font-semibold transition-all flex items-center justify-center gap-1 ${
+                                  className={`flex-1 px-2 py-1.5 rounded-3xl text-xs font-semibold transition-all flex items-center justify-center gap-1 ${
                                     currentStatus === false
                                       ? 'bg-red-500 text-white'
                                       : 'bg-white/10 text-white/70 hover:bg-red-500/20'
@@ -469,7 +469,7 @@ export default function Preferences() {
                                       }
                                     })
                                   }
-                                  className={`px-2 py-1.5 rounded-md text-xs font-semibold transition-all ${
+                                  className={`px-2 py-1.5 rounded-3xl text-xs font-semibold transition-all ${
                                     currentStatus === undefined
                                       ? 'bg-yellow-500 text-black'
                                       : 'bg-white/10 text-white/70 hover:bg-yellow-500/20'
@@ -492,10 +492,9 @@ export default function Preferences() {
       </div>
 
       {/* Fixed Navigation Buttons */}
-      <div className="flex-shrink-0 w-full max-w-md mx-auto px-2 pt-4 pb-6">
-        <div className="flex flex-row gap-3 items-center justify-center w-full">
+        <div className="flex flex-row gap-3 items-stretch justify-center w-full max-w-md mx-auto px-2 pb-6 pt-2 bg-gradient-to-b from-transparent to-black h-20">
           <button
-            className=" px-4 py-3 rounded-xl w-full text-[15px] transition shadow-md bg-white/10 border text-white border-accent/10 hover:bg-accent/10"
+            className=" px-4 py-3 rounded-3xl w-full text-[15px] transition shadow-md bg-white/10 border text-white border-accent/5 hover:bg-accent/10"
             onClick={() =>
               navigate('/resolve', {
                 state: {
@@ -507,8 +506,9 @@ export default function Preferences() {
           >
             Back
           </button>
+         
           <button
-            className={` px-4 py-3 rounded-xl w-full text-[15px] transition shadow-md flex items-center justify-center
+            className={`px-4 rounded-3xl w-full h-full text-[15px] transition shadow-md flex items-center justify-center
                             ${
                               canContinue
                                 ? 'bg-accent text-white hover:bg-accent/80'
@@ -520,7 +520,7 @@ export default function Preferences() {
           >
             {isCreating ? (
               <div className="flex flex-col items-center w-full">
-                <div className="w-full bg-white/20 rounded-full h-1.5">
+                <div className="w-full  bg-white/20 rounded-full h-1.5">
                   <div
                     className="bg-white h-1.5 rounded-full transition-all duration-75 ease-out"
                     style={{ width: `${progress}%` }}
@@ -533,6 +533,6 @@ export default function Preferences() {
           </button>
         </div>
       </div>
-    </div>
+    
   )
 }

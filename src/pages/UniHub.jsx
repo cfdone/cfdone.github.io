@@ -29,7 +29,7 @@ function UniHub() {
                   Professors & HODs
                 </h2>
                 <div className="grid grid-cols-1 gap-2">
-                  <div className="bg-white/5 p-4 rounded-xl border border-accent/10 flex">
+                  <div className="bg-white/2 p-4 rounded-3xl border border-accent/5 flex">
                     <div className="w-16 h-16 rounded-full overflow-hidden mr-4 flex-shrink-0">
                       <img
                         src="https://cfd.nu.edu.pk/wp-content/uploads/2022/01/Profile-Pic-235x300.jpg"
@@ -51,7 +51,7 @@ function UniHub() {
                     </div>
                   </div>
 
-                  <div className="bg-white/5 p-4 rounded-xl border border-accent/10 flex">
+                  <div className="bg-white/2 p-4 rounded-3xl border border-accent/5 flex">
                     <div className="w-16 h-16 rounded-full overflow-hidden mr-4 flex-shrink-0">
                       <img
                         src="https://cfd.nu.edu.pk/wp-content/uploads/2019/09/PSX_20240307_194751-1-1-235x300.jpg"
@@ -81,7 +81,7 @@ function UniHub() {
                   Associate Professors
                 </h2>
                 <div className="grid grid-cols-1 gap-2">
-                  <div className="bg-white/5 p-4 rounded-xl border border-accent/10 flex">
+                  <div className="bg-white/2 p-4 rounded-3xl border border-accent/5 flex">
                     <div className="w-16 h-16 rounded-full overflow-hidden mr-4 flex-shrink-0">
                       <img
                         src="https://cfd.nu.edu.pk/wp-content/uploads/2025/02/Dr.-Ammar-Rafiq-235x300.jpeg"
@@ -98,7 +98,7 @@ function UniHub() {
                     </div>
                   </div>
 
-                  <div className="bg-white/5 p-4 rounded-xl border border-accent/10 flex">
+                  <div className="bg-white/2 p-4 rounded-3xl border border-accent/5 flex">
                     <div className="w-16 h-16 rounded-full overflow-hidden mr-4 flex-shrink-0">
                       <img
                         src="https://cfd.nu.edu.pk/wp-content/uploads/2020/09/5994-1-e1678168158795-235x300.png"
@@ -118,7 +118,7 @@ function UniHub() {
                     </div>
                   </div>
 
-                  <div className="bg-white/5 p-4 rounded-xl border border-accent/10 flex">
+                  <div className="bg-white/2 p-4 rounded-3xl border border-accent/5 flex">
                     <div className="w-16 h-16 rounded-full overflow-hidden mr-4 flex-shrink-0">
                       <img
                         src="https://cfd.nu.edu.pk/wp-content/uploads/2022/08/Dr-Usama-235x300.jpg"
@@ -143,7 +143,7 @@ function UniHub() {
                   Lecturers
                 </h2>
                 <div className="grid grid-cols-1 gap-2">
-                  <div className="bg-white/5 p-4 rounded-xl border border-accent/10 flex">
+                  <div className="bg-white/2 p-4 rounded-3xl border border-accent/5 flex">
                     <div className="w-16 h-16 rounded-full overflow-hidden mr-4 flex-shrink-0">
                       <img
                         src="https://cfd.nu.edu.pk/wp-content/uploads/2023/08/IMG_6685-235x300.jpg"
@@ -160,7 +160,7 @@ function UniHub() {
                     </div>
                   </div>
 
-                  <div className="bg-white/5 p-4 rounded-xl border border-accent/10 flex">
+                  <div className="bg-white/2 p-4 rounded-3xl border border-accent/5 flex">
                     <div className="w-16 h-16 rounded-full overflow-hidden mr-4 flex-shrink-0">
                       <img
                         src="https://cfd.nu.edu.pk/wp-content/uploads/2021/08/Mr.-Ali-Raza-scaled-e1689926748189-235x300.jpg"
@@ -177,7 +177,7 @@ function UniHub() {
                     </div>
                   </div>
 
-                  <div className="bg-white/5 p-4 rounded-xl border border-accent/10 flex">
+                  <div className="bg-white/2 p-4 rounded-3xl border border-accent/5 flex">
                     <div className="w-16 h-16 rounded-full overflow-hidden mr-4 flex-shrink-0">
                       <img
                         src="https://cfd.nu.edu.pk/wp-content/uploads/2019/09/5652-235x300.png"
@@ -194,7 +194,7 @@ function UniHub() {
                     </div>
                   </div>
 
-                  <div className="bg-white/5 p-4 rounded-xl border border-accent/10 flex">
+                  <div className="bg-white/2 p-4 rounded-3xl border border-accent/5 flex">
                     <div className="w-16 h-16 rounded-full overflow-hidden mr-4 flex-shrink-0">
                       <img
                         src="https://cfd.nu.edu.pk/wp-content/uploads/2020/10/Ayesha-Liaqat-235x300.jpg"
@@ -222,7 +222,7 @@ function UniHub() {
                   Instructors
                 </h2>
                 <div className="grid grid-cols-1 gap-2">
-                  <div className="bg-white/5 p-4 rounded-xl border border-accent/10 flex">
+                  <div className="bg-white/2 p-4 rounded-3xl border border-accent/5 flex">
                     <div className="w-16 h-16 rounded-full overflow-hidden mr-4 flex-shrink-0">
                       <img
                         src="https://cfd.nu.edu.pk/wp-content/uploads/2025/08/Ms-Alisha-Abid-235x295.png"
@@ -239,7 +239,7 @@ function UniHub() {
                     </div>
                   </div>
 
-                  <div className="bg-white/5 p-4 rounded-xl border border-accent/10 flex">
+                  <div className="bg-white/2 p-4 rounded-3xl border border-accent/5 flex">
                     <div className="w-16 h-16 rounded-full overflow-hidden mr-4 flex-shrink-0">
                       <img
                         src="https://cfd.nu.edu.pk/wp-content/uploads/2024/01/Ms-Amna-Waheed-235x300.jpg"

@@ -11,7 +11,7 @@ export default function CurrentClassCard({
   if (!currentClass) return null
 
   return (
-    <div className="bg-gradient-to-r from-red-900/40 to-red-800/30 p-3 rounded-lg border border-red-400/40 mb-3">
+    <div className="bg-gradient-to-r from-red-900/40 to-red-800/30 p-3 rounded-xl border border-red-400/40 mb-3">
       <div className="flex items-center gap-2 mb-2">
         <div className="w-2 h-2 bg-red-400 rounded-full animate-pulse"></div>
         <span className="text-red-400  font-semibold text-xs uppercase tracking-wide">

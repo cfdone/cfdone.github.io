@@ -27,11 +27,11 @@ export default function StepOne() {
               <div className="flex flex-col gap-4 max-h-64">
                 <button
                   type="button"
-                  className={`p-4 rounded-xl  text-lg border transition-all duration-200 text-left
+                  className={`p-4 rounded-3xl  text-lg border transition-all duration-200 text-left
                                     ${
                                       studentType === 'regular'
                                         ? 'bg-accent text-white border-accent shadow-lg'
-                                        : 'bg-white/10 text-accent border-accent/10 hover:bg-accent/10 '
+                                        : 'bg-white/10 text-accent border-accent/5 hover:bg-accent/10 '
                                     }
                                 `}
                   onClick={() => {
@@ -56,11 +56,11 @@ export default function StepOne() {
 
                 <button
                   type="button"
-                  className={`p-4 rounded-xl  text-lg border transition-all duration-200 text-left
+                  className={`p-4 rounded-3xl  text-lg border transition-all duration-200 text-left
                                     ${
                                       studentType === 'lagger'
                                         ? 'bg-accent text-white border-accent shadow-lg'
-                                        : 'bg-white/10 text-accent border-accent/10 hover:bg-accent/10 '
+                                        : 'bg-white/10 text-accent border-accent/5 hover:bg-accent/10 '
                                     }
                                 `}
                   onClick={() => {
@@ -83,11 +83,11 @@ export default function StepOne() {
 
                 <button
                   type="button"
-                  className={`p-4 rounded-xl  text-lg border transition-all duration-200 text-left
+                  className={`p-4 rounded-3xl  text-lg border transition-all duration-200 text-left
                                     ${
                                       studentType === 'custom'
                                         ? 'bg-accent text-white border-accent shadow-lg'
-                                        : 'bg-white/10 text-accent border-accent/10 hover:bg-accent/10 '
+                                        : 'bg-white/10 text-accent border-accent/5 hover:bg-accent/10 '
                                     }
                                 `}
                   onClick={() => {
@@ -115,7 +115,7 @@ export default function StepOne() {
 
           <div className="flex flex-row gap-3 items-center justify-center w-full max-w-md mx-auto px-2 pb-6">
             <button
-              className={` px-4 py-3 rounded-xl w-full text-[15px] transition shadow-md
+              className={` px-4 py-3 rounded-3xl w-full text-[15px] transition shadow-md
                             ${studentType ? 'bg-accent text-white' : 'bg-accent/40 text-white/60'}
                         `}
               disabled={!studentType}

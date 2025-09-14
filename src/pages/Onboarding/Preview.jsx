@@ -227,8 +227,8 @@ export default function Preview() {
             const classes = timetable[day] || []
             return (
               <div key={day}>
-                <div className="bg-white/5 rounded-xl border border-accent/10 overflow-hidden">
-                  <div className="p-3 border-b border-accent/10 bg-white/5">
+                <div className="bg-white/2 rounded-3xl border border-accent/5 overflow-hidden">
+                  <div className="p-3 border-b border-accent/5 bg-white/2">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2">
                         <h3 className="text-white  font-semibold">{day}</h3>
@@ -332,7 +332,7 @@ export default function Preview() {
               {/* Initial Add Subjects Button */}
               {selectedSubjects.length === 0 && (
                 <div className="text-center">
-                  <div className="p-6 rounded-xl  text-lg border transition-all duration-200 text-left w-full bg-white/10 text-accent border-accent/10">
+                  <div className="p-6 rounded-3xl  text-lg border transition-all duration-200 text-left w-full bg-white/10 text-accent border-accent/5">
                     <div className="flex items-center justify-between">
                       <div>
                         <div className="font-semibold mb-2">No Subjects Selected</div>
@@ -352,7 +352,7 @@ export default function Preview() {
               {resolvedTimetable && !isResolving && (
                 <>
                   <div
-                    className={`p-4 rounded-xl border ${
+                    className={`p-4 rounded-3xl border ${
                       conflictSubjects.length === 0
                         ? 'bg-green-500/10 border-green-500/20 text-green-400'
                         : 'bg-yellow-500/10 border-yellow-500/20 text-yellow-400'
@@ -395,17 +395,17 @@ export default function Preview() {
                     </div>
                   </div>
                   {/* XARVIN AI Review Card with Reverify Button */}
-                  <div className="mt-3 p-4 rounded-xl border bg-accent/10 border-accent/20 text-white">
+                  <div className="mt-3 p-4 rounded-3xl border bg-accent/10 border-accent/20 text-white">
                     <div className="flex items-center justify-between">
                       XARVIN AI Review:
-                      {!isReverifying && !geminiSuggestions && (
+                      {!isReverifying && (!geminiSuggestions || geminiSuggestions === 'Error verifying with GroqCloud.') && (
                         <button
                           className="px-3 py-1  text-white text-xs hover:bg-accent/80 transition rounded-full  font-semibold"
                           style={{
                             background:
                               'linear-gradient(135deg, #a980ff, #182fff99) 0 0 / 200% 200%',
                           }}
-                          disabled={hasReverified}
+                          disabled={hasReverified && geminiSuggestions !== 'Error verifying with GroqCloud.'}
                           onClick={async () => {
                             setIsReverifying(true)
                             setGeminiSuggestions('')
@@ -422,7 +422,7 @@ export default function Preview() {
                           }}
                         >
                           <Sparkles className="w-4 h-4 inline-block mr-1" />
-                          Reverify with AI
+                          {geminiSuggestions === 'Error verifying with GroqCloud.' ? 'Retry AI Verification' : 'Reverify with AI'}
                         </button>
                       )}
                     </div>
@@ -442,10 +442,10 @@ export default function Preview() {
                       </div>
                     )}
                     {/* AI Response: Render HTML from Gemini, strip code fences, match UI */}
-                    {geminiSuggestions && !isReverifying && (
+                    {geminiSuggestions && geminiSuggestions !== 'Error verifying with GroqCloud.' && !isReverifying && (
                       <div className="mt-2">
                         <div
-                          className="rounded-xl border bg-accent/10 border-accent/20 text-white p-4 text-sm"
+                          className="rounded-3xl border bg-accent/10 border-accent/20 text-white p-4 text-sm"
                           style={{ overflowX: 'auto' }}
                         >
                           {/* Remove markdown code fences if present, split reasoning and review card if Gemini outputs two divs */}
@@ -475,6 +475,12 @@ export default function Preview() {
                         </div>
                       </div>
                     )}
+                    {/* Error message if AI verification fails */}
+                    {geminiSuggestions === 'Error verifying with GroqCloud.' && !isReverifying && (
+                      <div className="mt-2 text-red-400 text-sm">
+                        AI verification failed. Please check your connection and retry.
+                      </div>
+                    )}
                   </div>
                 </>
               )}
@@ -485,7 +491,7 @@ export default function Preview() {
 
                 {/* Resolution Progress */}
                 {isResolving && (
-                  <div className="p-4 rounded-xl border bg-blue-500/10 border-blue-500/20 text-blue-400">
+                  <div className="p-4 rounded-3xl border bg-blue-500/10 border-blue-500/20 text-blue-400">
                     <div className="flex items-center gap-2 mb-2">
                       <div className="w-4 h-4 border-2 border-blue-400/30 border-t-blue-400 rounded-full animate-spin"></div>
                       <div className="font-semibold">Resolving Conflicts...</div>
@@ -508,7 +514,7 @@ export default function Preview() {
                   <div className="space-y-2">
                     <div className="font-semibold text-white text-sm mb-2">Suggestions:</div>
                     {resolutionSuggestions.map((suggestion, idx) => (
-                      <div key={idx} className="p-3 rounded-lg bg-white/5 border border-white/10">
+                      <div key={idx} className="p-3 rounded-xl bg-white/2 border border-white/10">
                         <div className="font-semibold text-accent text-sm mb-1">
                           {suggestion.subject}
                         </div>
@@ -537,7 +543,7 @@ export default function Preview() {
           {/* Navigation buttons */}
           <div className="flex flex-row gap-3 items-stretch justify-center w-full h-11">
             <button
-              className=" px-4 rounded-xl h-full w-full text-[15px] transition shadow-md bg-white/10 border text-white border-accent/10 hover:bg-accent/10 flex items-center justify-center"
+              className=" px-4 rounded-3xl h-full w-full text-[15px] transition shadow-md bg-white/10 border text-white border-accent/5 hover:bg-accent/10 flex items-center justify-center"
               onClick={() =>
                 navigate('/preferences', {
                   state: {
@@ -550,7 +556,7 @@ export default function Preview() {
               Back
             </button>
             <button
-              className={` px-4 rounded-xl w-full h-full text-[15px] transition shadow-md flex items-center justify-center
+              className={` px-4 rounded-3xl w-full h-full text-[15px] transition shadow-md flex items-center justify-center
                 ${selectedSubjects.length > 0 ? 'bg-accent text-white' : 'bg-accent/40 text-white/60'}
             `}
               disabled={selectedSubjects.length === 0}
