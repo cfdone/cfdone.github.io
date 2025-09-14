@@ -5,13 +5,19 @@ import { useAuth } from '../hooks/useAuth'
 import LoadingPulseOverlay from '../components/Loading'
 import logo from '../assets/logo.svg'
 
+
 export default function Login() {
-  const { signInWithGoogle, loading } = useAuth()
+  const { signInWithGoogle, loading, user } = useAuth()
   const [isSigningIn, setIsSigningIn] = useState(false)
   const [error, setError] = useState(null)
 
   if (loading) {
     return <LoadingPulseOverlay />
+  }
+
+  // Redirect to home if already logged in
+  if (user) {
+    return <Navigate to="/home" replace />
   }
 
   const handleGoogleSignIn = async () => {

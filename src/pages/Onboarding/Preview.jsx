@@ -7,7 +7,6 @@ import logo from '../../assets/logo.svg'
 import StepTrack from '../../components/Onboarding/StepTrack'
 import { timeToMinutes, timeRangesOverlap } from '../../utils/timeUtils'
 import TimeTable from '../../assets/timetable.json'
-// ...existing code...
 import { verifyTimetableWithGroqCloud } from '../../utils/ai/grokcloud'
 import { Sparkles } from 'lucide-react'
 import { supabase } from '../../config/supabase'
@@ -16,7 +15,6 @@ export default function Preview() {
   const navigate = useNavigate()
   const location = useLocation()
 
-  // Get selected subjects and user preferences from location state
   const selectedSubjects = useMemo(() => {
     return location.state?.selectedSubjects || []
   }, [location.state?.selectedSubjects])
@@ -35,9 +33,6 @@ export default function Preview() {
   const [conflictSubjects, setConflictSubjects] = useState([])
   const [resolutionSuggestions, setResolutionSuggestions] = useState([])
 
-  // Loader states
-  // Removed unused isCreating and progress states
-  // Add resolving state (not used in this component)
   const [isResolving] = useState(false)
   const [resolutionProgress] = useState(0)
 
