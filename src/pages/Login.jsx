@@ -31,13 +31,13 @@ export default function Login() {
 
   return (
     <>
-      <div className="h-screen bg-black flex flex-col justify-between items-center px-4 pt-safe-offset-8 pb-safe">
+      <div className="h-screen bg-black flex flex-col justify-between items-center px-4 pt-safe-offset-8 pb-safe-offset-3">
         <div className="flex flex-col items-center gap-6 px-4 py-6 w-full max-w-md mx-auto">
-          <h1 className=" text-white font-semibold text-2xl mb-2 text-center">
-            Fast Timetable <span className="text-accent">Sucks?</span>
+          <h4 className=" text-white font-semibold text-2xl mb-2 text-center">
+            Fast Timetable <span className="text-accent grad">Sucks?</span>
             <br />
             <span className="text-sm font-medium  text-neutral-200">Yeah, we feel your pain!</span>
-          </h1>
+          </h4>
         </div>
         <img src={logo} alt="Logo" className="w-54 h-54 user-select-none mb-2" />
         <div className="flex flex-col gap-3 items-center justify-center w-full max-w-md mx-auto px-2 pb-6">

@@ -1,7 +1,7 @@
 // ...existing code...
 import { Navigate } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
-import useTimetableSync from '../hooks/useTimetableSync'
+// ...existing code...
 import LoadingPulseOverlay from './Loading'
 
 export function AuthGuard({ children }) {
@@ -19,9 +19,9 @@ export function AuthGuard({ children }) {
 
 export function ProtectedRoute({ children }) {
   const { user, loading: authLoading } = useAuth()
-  const { loading: timetableLoading } = useTimetableSync()
+  // ...existing code...
 
-  if (authLoading || timetableLoading) {
+  if (authLoading) {
     return <LoadingPulseOverlay />
   }
   if (!user) {
@@ -37,14 +37,16 @@ export function ProtectedRoute({ children }) {
 
 export function OnboardingGuard({ children }) {
   const { user, loading: authLoading } = useAuth()
-  const { timetableData, onboardingMode, loading: timetableLoading } = useTimetableSync()
-  if (authLoading || timetableLoading) {
+  // ...existing code...
+  if (authLoading) {
     return <LoadingPulseOverlay />
   }
   if (!user) {
     return <Navigate to="/login" replace />
   }
-  if (timetableData && onboardingMode) {
+  const localTimetable = localStorage.getItem('timetableData')
+  const localOnboarding = localStorage.getItem('onboardingMode')
+  if (localTimetable && localOnboarding) {
     return <Navigate to="/home" replace />
   }
   return children

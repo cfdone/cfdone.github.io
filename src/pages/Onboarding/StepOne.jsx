@@ -9,7 +9,7 @@ export default function StepOne() {
   const [steps, setSteps] = useState(2)
   return (
     <>
-      <div className="h-screen bg-black flex flex-col justify-between items-center px-2 pt-safe-offset-8 pb-safe">
+      <div className="h-screen bg-black flex flex-col justify-between items-center px-2 pt-safe-offset-8 pb-safe-offset-3">
         <div className="w-full justify-center flex flex-col gap-6 items-center">
           <img src={logo} alt="Logo" className="w-15 h-15 user-select-none mb-2" />
           <StepTrack currentStep={1} totalSteps={steps} />

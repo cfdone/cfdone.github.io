@@ -165,7 +165,7 @@ export default function Preferences() {
     userPreferences.parentSection.section
 
   return (
-    <div className="h-screen bg-black flex flex-col items-center px-2 pt-safe-offset-8 pb-safe">
+    <div className="h-screen bg-black flex flex-col items-center px-2 pt-safe-offset-8 pb-safe-offset-3">
       {/* Fixed Header */}
       <div className="w-full justify-center flex flex-col gap-6 items-center flex-shrink-0">
         <img src={logo} alt="Logo" className="w-15 h-15 user-select-none mb-2" />

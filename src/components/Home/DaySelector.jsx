@@ -5,19 +5,14 @@ export default function DaySelector({ onDaySelect, currentDay }) {
   const [weekDays, setWeekDays] = useState([])
   useEffect(() => {
     const today = new Date()
-    const fullNames = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
-    const shortNames = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+    const fullNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+    const shortNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
     const days = []
-    let startDate = new Date(today)
-    // Set startDate to Monday of the current week
-    while (startDate.getDay() !== 1) {
-      startDate.setDate(startDate.getDate() - 1)
-    }
-    for (let i = 0; i < 7; i++) {
-      const day = new Date(startDate)
-      day.setDate(startDate.getDate() + i)
-      const dayNum = (day.getDay() + 6) % 7 // 0=Sunday, 1=Monday, ...
-      const isToday = day.toDateString() === today.toDateString()
+    for (let i = 0; i < 6; i++) {
+      const day = new Date(today)
+      day.setDate(today.getDate() + i)
+      const dayNum = day.getDay()
+      const isToday = i === 0
       const dayInfo = {
         fullName: fullNames[dayNum],
         shortName: shortNames[dayNum],
@@ -39,7 +34,7 @@ export default function DaySelector({ onDaySelect, currentDay }) {
   return (
     <div className="flex overflow-x-auto no-scrollbar w-full mb-2">
       <div className="flex w-full gap-4">
-        {weekDays.slice(0, 5).map((day, index) => {
+        {weekDays.map((day, index) => {
           const dayClasses =
             selectedDay === day.fullName
               ? 'bg-accent/20 border-accent/30 text-white'
@@ -51,7 +46,7 @@ export default function DaySelector({ onDaySelect, currentDay }) {
             <button
               key={index}
               onClick={() => handleDayClick(day.fullName)}
-              className={`flex-shrink-0 flex flex-col items-center p-1 rounded-xl border transition-all w-[70px] ${dayClasses}`}
+              className={`flex-shrink-0 flex flex-col items-center p-1 rounded-2xl border transition-all w-[70px] ${dayClasses}`}
             >
               <span className="text-xs font-semibold">{day.shortName}</span>
               <span className={`text-sm font-semibold ${day.isToday ? 'text-accent' : ''}`}>

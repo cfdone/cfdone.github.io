@@ -7,14 +7,14 @@ import logo from '../../assets/logo.svg'
 import StepTrack from '../../components/Onboarding/StepTrack'
 import { timeToMinutes, timeRangesOverlap } from '../../utils/timeUtils'
 import TimeTable from '../../assets/timetable.json'
-import useTimetableSync from '../../hooks/useTimetableSync'
+// ...existing code...
 import { verifyTimetableWithGroqCloud } from '../../utils/ai/grokcloud'
 import { Sparkles } from 'lucide-react'
+import { supabase } from '../../config/supabase'
 
 export default function Preview() {
   const navigate = useNavigate()
   const location = useLocation()
-  const { saveTimetable } = useTimetableSync()
 
   // Get selected subjects and user preferences from location state
   const selectedSubjects = useMemo(() => {
@@ -315,7 +315,7 @@ export default function Preview() {
   }
 
   return (
-    <div className="h-screen bg-black flex flex-col items-center px-2 pt-safe-offset-8 pb-safe">
+    <div className="h-screen bg-black flex flex-col items-center px-2 pt-safe-offset-8 pb-safe-offset-3-offset-5">
       {/* Fixed Header */}
       <div className="w-full justify-center flex flex-col gap-6 items-center flex-shrink-0">
         <img src={logo} alt="Logo" className="w-15 h-15 user-select-none mb-2" />
@@ -574,8 +574,26 @@ export default function Preview() {
                     studentType: 'lagger',
                   }
                   try {
-                    await saveTimetable(timetableData, 'lagger')
+                    // Get current user
+                    const { data: { user } } = await supabase.auth.getUser()
+                    if (!user) {
+                      setErrorMsg('No authenticated user found. Please log in.')
+                      return
+                    }
+                    const { error } = await supabase.from('user_timetables').upsert([
+                      {
+                        user_id: user.id,
+                        timetable_data: timetableData,
+                        onboarding_mode: 'lagger'
+                      }
+                    ], { onConflict: ['user_id'], ignoreDuplicates: false })
+                    if (error) {
+                      setErrorMsg('Failed to upsert timetable to Supabase.')
+                      return
+                    }
+                    localStorage.setItem('timetableData', JSON.stringify(timetableData))
                     localStorage.setItem('onboardingComplete', 'true')
+                    localStorage.setItem('onboardingMode', 'lagger')
                     navigate('/home', {
                       state: {
                         ...timetableData,

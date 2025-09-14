@@ -1,6 +1,4 @@
 import { Clock, MapPin } from 'lucide-react'
-import TimetableSyncStatus from '../TimetableSyncStatus'
-
 export default function CurrentClassCard({
   currentClass,
   sortedTodayClasses,
@@ -17,7 +15,7 @@ export default function CurrentClassCard({
       <div className="flex items-center gap-2 mb-2">
         <div className="w-2 h-2 bg-red-400 rounded-full animate-pulse"></div>
         <span className="text-red-400  font-semibold text-xs uppercase tracking-wide">
-          ● LIVE NOW
+          LIVE NOW
         </span>
         <div className="flex-1"></div>
         <TimetableSyncStatus

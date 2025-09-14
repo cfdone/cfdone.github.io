@@ -19,7 +19,7 @@ export default function TodaySchedule({
 
   if (sortedTodayClasses.length === 0) {
     return (
-      <div className="bg-white/5 p-6 rounded-xl border border-accent/10 text-center">
+      <div className="bg-white/5 p-6 rounded-3xl border border-accent/10 text-center">
         <div className="mb-3 flex justify-center">
           <Sun className="w-10 h-10 text-accent" />
         </div>

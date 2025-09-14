@@ -11,26 +11,18 @@ import {
   DaySelector,
 } from '../components/Home'
 import { timeToMinutes } from '../utils/timeUtils'
-import useTimetableSync from '../hooks/useTimetableSync'
+// ...existing code...
 import LoadingPulseOverlay from '../components/Loading'
 export default function Home() {
   const location = useLocation()
-  const {
-    timetableData: syncedTimetableData,
-    hasTimetable,
-    loading: timetableLoading,
-  } = useTimetableSync()
-
   const [selection, setSelection] = useState(location.state || null)
   const [currentTime, setCurrentTime] = useState(new Date())
   const [viewWeekly, setViewWeekly] = useState(false)
   const [selectedDay, setSelectedDay] = useState('')
 
-  // Load data from timetable sync hook or localStorage fallback
+  // Load timetable data from localStorage only
   useEffect(() => {
-    if (hasTimetable() && syncedTimetableData) {
-      setSelection(syncedTimetableData)
-    } else if (!selection) {
+    if (!selection) {
       try {
         const savedTimetableData = localStorage.getItem('timetableData')
         if (savedTimetableData) {
@@ -41,7 +33,7 @@ export default function Home() {
         // Error loading data
       }
     }
-  }, [selection, syncedTimetableData, hasTimetable])
+  }, [selection])
 
   // Update time every minute
   useEffect(() => {
@@ -226,11 +218,7 @@ export default function Home() {
       }
     }, [actualTodayClasses, getCurrentMinutes])
 
-  // We don't need to calculate this anymore since we're using actual values everywhere
-
-  if (timetableLoading) {
-    return <LoadingPulseOverlay />
-  }
+  // Only show loading if selection is null and localStorage is being checked
   if (!selection) {
     return <NoTimetableData />
   }

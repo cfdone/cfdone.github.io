@@ -13,6 +13,23 @@ export default function AuthCallback() {
       if (access_token && refresh_token) {
         try {
           await supabase.auth.setSession({ access_token, refresh_token })
+          const { data: { user } } = await supabase.auth.getUser()
+          if (user) {
+            const { data } = await supabase
+              .from('user_timetables')
+              .select('timetable_data, onboarding_mode')
+              .eq('user_id', user.id)
+              .single()
+            if (data) {
+              if (data.timetable_data) {
+                localStorage.setItem('timetableData', JSON.stringify(data.timetable_data))
+              }
+              if (data.onboarding_mode) {
+                localStorage.setItem('onboardingMode', data.onboarding_mode)
+                localStorage.setItem('onboardingComplete', 'true')
+              }
+            }
+          }
         } catch (e) {
           console.error('AuthCallback: error setting session', e)
         }

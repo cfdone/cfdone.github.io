@@ -1,3 +1,4 @@
+import { supabase } from '../../config/supabase'
 import { useState, useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { BookOpen, GraduationCap, Calendar, Tag } from 'lucide-react'
@@ -5,11 +6,11 @@ import TimeTable from '../../assets/timetable.json'
 import logo from '../../assets/logo.svg'
 import StepTrack from '../../components/Onboarding/StepTrack'
 import { timeToMinutes } from '../../utils/timeUtils'
-import useTimetableSync from '../../hooks/useTimetableSync'
+// ...existing code...
 
 export default function Resolved() {
   const navigate = useNavigate()
-  const { saveTimetable } = useTimetableSync()
+  // ...existing code...
 
   // Degree/Semester/Section/Subject selection logic (from DegreeSectionSelector & SubjectSelector)
   const [selectedSubjects, setSelectedSubjects] = useState([])
@@ -160,7 +161,7 @@ export default function Resolved() {
   }
 
   return (
-    <div className="h-screen bg-black flex flex-col items-center px-2 pt-safe-offset-8 pb-safe">
+    <div className="h-screen bg-black flex flex-col items-center px-2 pt-safe-offset-8 pb-safe-offset-3">
       {/* Fixed Header */}
       <div className="w-full justify-center flex flex-col gap-6 items-center flex-shrink-0">
         <img src={logo} alt="Logo" className="w-15 h-15 user-select-none mb-2" />
@@ -308,12 +309,29 @@ export default function Resolved() {
                   }
 
                   try {
-                    // Save using the sync hook
-                    await saveTimetable(timetableData, 'lagger')
-
-                    // Legacy localStorage for compatibility
+                    // Get current user
+                    const { data: { user } } = await supabase.auth.getUser()
+                    if (!user) {
+                      setIsCreating(false)
+                      alert('No authenticated user found. Please log in.')
+                      return
+                    }
+                    // Upsert to Supabase with user_id only (overwrite previous record)
+                    const { error } = await supabase.from('user_timetables').upsert([
+                      {
+                        user_id: user.id,
+                        timetable_data: timetableData,
+                        onboarding_mode: 'custom'
+                      }
+                    ], { onConflict: ['user_id'], ignoreDuplicates: false })
+                    if (error) {
+                      setIsCreating(false)
+                      alert('Failed to upsert timetable to Supabase.')
+                      return
+                    }
+                    localStorage.setItem('timetableData', JSON.stringify(timetableData))
                     localStorage.setItem('onboardingComplete', 'true')
-
+                    localStorage.setItem('onboardingMode', 'custom')
                     navigate('/home', {
                       state: timetableData,
                     })

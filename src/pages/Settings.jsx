@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom'
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useEffect } from 'react'
 import {
   RefreshCw,
   Info,
@@ -16,55 +16,70 @@ import {
 import Navbar from '../components/Navbar'
 import LoadingPulseOverlay from '../components/Loading'
 import { useAuth } from '../hooks/useAuth'
-import useTimetableSync from '../hooks/useTimetableSync'
+// ...existing code...
 import logo from '../assets/logo.svg'
 
 export default function Settings() {
   const navigate = useNavigate()
   const { user, signOut } = useAuth()
-  const { resetTimetable } = useTimetableSync()
+  // ...existing code...
+
 
   const [showResetConfirm, setShowResetConfirm] = useState(false)
-  // Clear cache state removed
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false)
   const [expandedAccordion, setExpandedAccordion] = useState(null)
   const [isResetting, setIsResetting] = useState(false)
   const [isLoading] = useState(false)
+  const [isOnline, setIsOnline] = useState(navigator.onLine)
+
+  useEffect(() => {
+    const handleOnline = () => setIsOnline(true)
+    const handleOffline = () => setIsOnline(false)
+    window.addEventListener('online', handleOnline)
+    window.addEventListener('offline', handleOffline)
+    return () => {
+      window.removeEventListener('online', handleOnline)
+      window.removeEventListener('offline', handleOffline)
+    }
+  }, [])
 
   const toggleAccordion = accordion => {
     setExpandedAccordion(expandedAccordion === accordion ? null : accordion)
   }
 
+
   const handleResetOnboarding = useCallback(async () => {
+    if (!isOnline) return;
     setIsResetting(true)
     try {
-      await resetTimetable()
-      navigate('/stepone', { replace: true })
-      setIsResetting(false)
-      setShowResetConfirm(false)
+      localStorage.removeItem('onboardingMode');
+      localStorage.removeItem('timetableData');
+      navigate('/stepone', { replace: true });
+      setIsResetting(false);
+      setShowResetConfirm(false);
     } catch {
-      setIsResetting(false)
-      setShowResetConfirm(false)
-      // Error handling
+      setIsResetting(false);
+      setShowResetConfirm(false);
     }
-  }, [navigate, resetTimetable])
+  }, [navigate, isOnline]);
 
-  // Clear cache handler removed
+
 
   const handleLogout = useCallback(async () => {
-    setIsResetting(true)
+    if (!isOnline) return;
+    setIsResetting(true);
     try {
-      localStorage.clear()
-      await signOut()
-      navigate('/login', { replace: true })
-      setIsResetting(false)
-      setShowLogoutConfirm(false)
+      localStorage.clear();
+      await signOut?.();
+      navigate('/login', { replace: true });
+      setIsResetting(false);
+      setShowLogoutConfirm(false);
     } catch {
-      setIsResetting(false)
-      setShowLogoutConfirm(false)
+      setIsResetting(false);
+      setShowLogoutConfirm(false);
       // Error handling
     }
-  }, [signOut, navigate])
+  }, [signOut, navigate, isOnline]);
 
   const getTimetableInfo = useCallback(() => {
     try {
@@ -85,9 +100,9 @@ export default function Settings() {
           return `${data.degree} • Semester ${data.semester} • Section ${data.section}\n${countClasses} classes per week`
         } else if (data.studentType === 'lagger') {
           // More detailed info for lagger students
-          const subjects = data.subjects || []
+          const subjects = data.subjects || [];
           return (
-            <>
+            <div>
               <div className="font-bold text-accent text-base flex items-center gap-2 mb-1">
                 <FileText className="w-5 h-5 text-accent" />
                 <span>Custom Timetable</span>
@@ -95,13 +110,17 @@ export default function Settings() {
               <div className="text-white/80 text-sm mb-2">
                 {subjects.length || 0} subjects selected
               </div>
-              <ul className="list-disc pl-5 text-white/70 text-sm space-y-1">
-                {subjects.map(s => (
-                  <li key={s.name}>{s.name}</li>
-                ))}
-              </ul>
-            </>
-          )
+              {subjects.length > 0 && (
+                <div>
+                  <ul className="list-disc pl-5 text-white/70 text-sm space-y-1">
+                    {subjects.map(s => (
+                      <li key={s.name}>{s.name}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </div>
+          );
         }
       }
       return 'No timetable data'
@@ -117,7 +136,7 @@ export default function Settings() {
   return (
     <>
       {(isLoading || isResetting) && <LoadingPulseOverlay />}
-      <div className="fixed inset-0 bg-black">
+  <div className="fixed inset-0 bg-black">
         {/* Simplified background decoration - same as Home.jsx */}
 
         <div className="flex flex-col h-full relative z-10">
@@ -162,11 +181,19 @@ export default function Settings() {
                             {user.user_metadata?.full_name || user.email}
                           </p>
                           <p className="text-white/70 text-sm">{user.email}</p>
+                          {/* Online/Offline Badge below email */}
+                          <span
+                            className={`mt-2 inline-block px-3 py-1 rounded-full text-xs font-semibold ${isOnline ? 'bg-green-700 text-green-200' : 'bg-red-700 text-red-200'}`}
+                            title={isOnline ? 'You are online' : 'You are offline'}
+                          >
+                            {isOnline ? 'Online' : 'Offline'}
+                          </span>
                         </div>
                       </div>
                       <button
-                        onClick={() => setShowLogoutConfirm(true)}
-                        className="p-2 hover:bg-white/10 rounded-lg transition-colors"
+                        onClick={() => isOnline && setShowLogoutConfirm(true)}
+                        disabled={!isOnline}
+                        className={`p-2 hover:bg-white/10 rounded-lg transition-colors ${!isOnline ? 'opacity-50 cursor-not-allowed' : ''}`}
                       >
                         <LogOut className="w-5 h-5 text-white/70" />
                       </button>
@@ -182,7 +209,12 @@ export default function Settings() {
                 </h4>
                 <div className="bg-white/5 p-4 rounded-3xl border border-accent/10">
                   <div className="max-h-32 overflow-y-auto pr-2 no-scrollbar">
-                    <p className="text-white/70 text-sm  mb-2">{getTimetableInfo()}</p>
+                    {/* Timetable info can be a string or JSX, so render accordingly */}
+                    {typeof getTimetableInfo() === 'string' ? (
+                      <p className="text-white/70 text-sm mb-2">{getTimetableInfo()}</p>
+                    ) : (
+                      <div className="mb-2">{getTimetableInfo()}</div>
+                    )}
                     <div className="text-xs text-white/50 mb-1">
                       You can change your timetable setup anytime by resetting timetable
                     </div>
@@ -200,9 +232,9 @@ export default function Settings() {
                     {/* Sync Status Display removed */}
 
                     <button
-                      onClick={handleResetOnboarding}
-                      disabled={isResetting}
-                      className="w-full bg-white/5 p-4 rounded-3xl border border-accent/10 hover:bg-white/10 transition-colors text-left disabled:opacity-50 disabled:cursor-not-allowed"
+                        onClick={() => setShowResetConfirm(true)}
+                        disabled={isResetting || !isOnline}
+                        className={`w-full bg-white/5 p-4 rounded-3xl border border-accent/10 hover:bg-white/10 transition-colors text-left ${isResetting || !isOnline ? 'opacity-50 cursor-not-allowed' : ''}`}
                     >
                       <div className="flex items-center justify-between">
                         <div className="flex items-center">
@@ -214,9 +246,7 @@ export default function Settings() {
                             <p className="text-white/70 text-sm ">
                               Clear current setup and start onboarding again
                             </p>
-                            <p className="text-red-400 text-xs mt-1 font-semibold">
-                              Warning: All your timetable data will be lost!
-                            </p>
+                            
                           </div>
                         </div>
                         <ChevronRight className="w-5 h-5 text-white/30" />
@@ -505,18 +535,22 @@ export default function Settings() {
                   This will clear your current timetable setup and take you back to onboarding.
                   You'll need to set up your timetable again.
                 </p>
+                {!isOnline && (
+                  <p className="text-red-400 text-xs mt-2 font-semibold">You must be online to reset your timetable.</p>
+                )}
               </div>
 
               <div className="flex gap-3">
                 <button
                   onClick={() => setShowResetConfirm(false)}
-                  className="flex-1 bg-white/10 text-white px-4 py-3 rounded-3xl  hover:bg-white/20 transition-colors"
+                  className="flex-1 bg-white/10 text-white px-3 py-2 rounded-3xl  hover:bg-white/20 transition-colors"
                 >
                   Cancel
                 </button>
                 <button
                   onClick={handleResetOnboarding}
-                  className="flex-1 bg-red-500 text-white px-4 py-3 rounded-3xl  hover:bg-red-600 transition-colors"
+                  disabled={!isOnline}
+                  className={`flex-1 bg-red-500 text-white px-3 py-2 rounded-3xl  hover:bg-red-600 transition-colors ${!isOnline ? 'opacity-50 cursor-not-allowed' : ''}`}
                 >
                   Reset
                 </button>
@@ -534,21 +568,24 @@ export default function Settings() {
               <div className="text-center mb-4">
                 <h3 className=" text-accent font-medium text-xl mb-2">Sign Out?</h3>
                 <p className="text-white/70 text-sm ">
-                  You will be signed out of your account. Your timetable data will remain saved
-                  locally.
+                  You will be signed out of your account. Your timetable data will remain saved and accessible after signing back in.
                 </p>
+                {!isOnline && (
+                  <p className="text-red-400 text-xs mt-2 font-semibold">You must be online to sign out.</p>
+                )}
               </div>
 
               <div className="flex gap-3">
                 <button
                   onClick={() => setShowLogoutConfirm(false)}
-                  className="flex-1 bg-white/10 text-white px-4 py-3 rounded-3xl  hover:bg-white/20 transition-colors"
+                  className="flex-1 bg-white/10 text-white px-3 py-2 rounded-3xl  hover:bg-white/20 transition-colors"
                 >
                   Cancel
                 </button>
                 <button
                   onClick={handleLogout}
-                  className="flex-1 bg-red-500 text-white px-4 py-3 rounded-3xl  hover:bg-red-600 transition-colors"
+                  disabled={!isOnline}
+                  className={`flex-1 bg-red-500 text-white px-3 py-2 rounded-3xl  hover:bg-red-600 transition-colors ${!isOnline ? 'opacity-50 cursor-not-allowed' : ''}`}
                 >
                   Sign Out
                 </button>

@@ -1,14 +1,15 @@
+import { supabase } from '../../config/supabase'
 import { useState, useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Tag, GraduationCap, Calendar } from 'lucide-react'
 import TimeTable from '../../assets/timetable.json'
 import logo from '../../assets/logo.svg'
 import StepTrack from '../../components/Onboarding/StepTrack'
-import useTimetableSync from '../../hooks/useTimetableSync'
+// ...existing code...
 
 export default function Regular() {
   const navigate = useNavigate()
-  const { saveTimetable } = useTimetableSync()
+  // ...existing code...
   const [selectedDegree, setSelectedDegree] = useState('')
   const [selectedSemester, setSelectedSemester] = useState('')
   const [selectedSection, setSelectedSection] = useState('')
@@ -55,12 +56,29 @@ export default function Regular() {
       }
 
       try {
-        // Save using the sync hook
-        await saveTimetable(timetableData, 'regular')
-
-        // Legacy localStorage for compatibility
+        // Get current user
+        const { data: { user } } = await supabase.auth.getUser()
+        if (!user) {
+          setIsCreating(false)
+          alert('No authenticated user found. Please log in.')
+          return
+        }
+        // Upsert to Supabase with user_id only (overwrite previous record)
+        const { error } = await supabase.from('user_timetables').upsert([
+          {
+            user_id: user.id,
+            timetable_data: timetableData,
+            onboarding_mode: 'regular'
+          }
+        ], { onConflict: ['user_id'], ignoreDuplicates: false })
+        if (error) {
+          setIsCreating(false)
+          alert('Failed to upsert timetable to Supabase.')
+          return
+        }
+        localStorage.setItem('timetableData', JSON.stringify(timetableData))
         localStorage.setItem('onboardingComplete', 'true')
-
+        localStorage.setItem('onboardingMode', 'regular')
         navigate('/home', {
           state: timetableData,
         })
@@ -71,7 +89,7 @@ export default function Regular() {
   }
 
   return (
-    <div className="h-screen bg-black flex flex-col items-center px-2 pt-safe-offset-8 pb-safe">
+    <div className="h-screen bg-black flex flex-col items-center px-2 pt-safe-offset-8 pb-safe-offset-3">
       <div className="w-full justify-center flex flex-col gap-6 items-center">
         <img src={logo} alt="Logo" className="w-15 h-15 user-select-none mb-2" />
         <StepTrack currentStep={2} totalSteps={2} />
