@@ -45,6 +45,10 @@ export default function AuthProvider({ children }) {
       provider: 'google',
       options: {
         redirectTo: `${window.location.origin}/auth/callback`,
+        ueryParams: {
+        access_type: 'offline', // enables refresh token
+        prompt: 'consent'       // ensures Google issues a refresh token
+      }
       },
     })
     return { data, error }
