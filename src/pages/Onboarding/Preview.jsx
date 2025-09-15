@@ -151,17 +151,29 @@ export default function Preview() {
   }, [conflictSubjects, selectedSubjects, generateResolutionSuggestions])
 
   // Helper function to generate a realistic timetable for preview using actual timetable data
-  const generateMockTimetable = subjects => {
+  const generateMockTimetable = (subjects, userPreferences) => {
     const timetable = {}
     const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
     days.forEach(day => {
       timetable[day] = []
     })
-    // For each subject, find its actual schedule in the timetable data
+
     subjects.forEach(subject => {
-      if (!subject.locations || subject.locations.length === 0) return
+      // Filter out locations marked as Full
+      const availableLocations = (subject.locations || []).filter(loc => {
+        const sectionKey = `${subject.name}-${loc.degree}-${loc.semester}-${loc.section}`
+        return (
+          userPreferences?.seatAvailability?.[sectionKey] !== false
+        )
+      })
+
+      if (availableLocations.length === 0) {
+        // Optionally: show a warning or skip assignment
+        return
+      }
+
       let assigned = false
-      for (const loc of subject.locations) {
+      for (const loc of availableLocations) {
         if (!loc.degree || !loc.semester || !loc.section) continue
         const sectionData = TimeTable?.[loc.degree]?.[loc.semester]?.[loc.section]
         if (sectionData) {
@@ -189,23 +201,24 @@ export default function Preview() {
           if (foundSlot) break
         }
       }
-      // If not assigned, fallback: add to first available day/time without conflict
-      if (!assigned) {
+      // Fallback: only assign if there is at least one available location
+      if (!assigned && availableLocations.length > 0) {
         for (const day of days) {
           const hasConflict = timetable[day].some(existing =>
             timeRangesOverlap(existing.start, existing.end, '8:45', '10:10')
           )
           if (!hasConflict) {
+            const loc = availableLocations[0]
             timetable[day].push({
               subject: subject.name,
               start: '8:45',
               end: '10:10',
               course: subject.name,
-              teacher: subject.locations[0]?.teacher || 'TBD',
-              room: subject.locations[0]?.room || 'TBD',
-              degree: subject.locations[0]?.degree || 'TBD',
-              semester: subject.locations[0]?.semester || 'TBD',
-              section: subject.locations[0]?.section || 'TBD',
+              teacher: loc.teacher || 'TBD',
+              room: loc.room || 'TBD',
+              degree: loc.degree || 'TBD',
+              semester: loc.semester || 'TBD',
+              section: loc.section || 'TBD',
             })
             break
           }
