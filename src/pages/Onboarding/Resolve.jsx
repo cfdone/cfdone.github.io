@@ -72,9 +72,9 @@ export default function Resolve() {
       if (isSelected) {
         return prev.filter(s => s.name !== subject.name)
       } else {
-        // Enforce maximum 10 subjects limit
-        if (prev.length >= 10) {
-          alert('You can select a maximum of 10 subjects')
+        // Enforce maximum 8 subjects limit
+        if (prev.length >= 8) {
+          alert('You can select a maximum of 8 subjects')
           return prev
         }
         return [...prev, subject]
@@ -142,9 +142,9 @@ export default function Resolve() {
         <StepTrack currentStep={2} totalSteps={4} />
         <div className="text-center mb-4">
           <h1 className=" text-accent font-semibold text-xl mb-2">
-            Select Your Subjects ({selectedSubjects.length}/10)
+            Select Your Subjects ({selectedSubjects.length}/8)
           </h1>
-          <p className="text-white/70 text-sm ">Choose up to 10 subjects for your timetable</p>
+          <p className="text-white/70 text-sm ">Choose up to 8 subjects for your timetable</p>
         </div>
 
         {/* Search Input */}
@@ -276,7 +276,7 @@ export default function Resolve() {
             disabled={selectedSubjects.length === 0}
             onClick={handleContinueToPreferences}
           >
-            Next ({selectedSubjects.length}/10 selected)
+            Next
           </button>
         </div>
       </div>

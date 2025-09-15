@@ -72,14 +72,18 @@ export default function Preferences() {
   // Use selectedSubjects if provided, otherwise use all subjects for general preferences
   const subjectsForPreferences = selectedSubjects.length > 0 ? selectedSubjects : allSubjectsData
 
-  const [userPreferences, setUserPreferences] = useState({
-    parentSection: {
-      degree: '',
-      semester: '',
-      section: '',
-    },
-    generalSeatPolicy: 'custom',
-    seatAvailability: {},
+  const [userPreferences, setUserPreferences] = useState(() => {
+    return (
+      location.state?.userPreferences || {
+        parentSection: {
+          degree: '',
+          semester: '',
+          section: '',
+        },
+        generalSeatPolicy: 'custom',
+        seatAvailability: {},
+      }
+    )
   })
 
   const [expandedSubjects, setExpandedSubjects] = useState(new Set())
