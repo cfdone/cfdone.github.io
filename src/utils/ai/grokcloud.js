@@ -5,26 +5,26 @@ export async function callChatCompletion(messages) {
   // Get current session for auth token
   const {
     data: { session },
-  } = await supabase.auth.getSession();
+  } = await supabase.auth.getSession()
 
   const headers = {
-    "Content-Type": "application/json",
-  };
+    'Content-Type': 'application/json',
+  }
   if (session?.access_token) {
-    headers["Authorization"] = `Bearer ${session.access_token}`;
+    headers['Authorization'] = `Bearer ${session.access_token}`
   }
 
-  const response = await fetch("https://golubbrxkyrdjwzoherf.supabase.co/functions/v1/groq-proxy", {
-    method: "POST",
+  const response = await fetch('https://golubbrxkyrdjwzoherf.supabase.co/functions/v1/groq-proxy', {
+    method: 'POST',
     headers,
     body: JSON.stringify({
-      model: "openai/gpt-oss-20b",
+      model: 'openai/gpt-oss-20b',
       messages: messages,
     }),
-  });
+  })
 
-  const data = await response.json();
-  return data;
+  const data = await response.json()
+  return data
 }
 
 export async function verifyTimetableWithGroqCloud({
@@ -47,13 +47,13 @@ export async function verifyTimetableWithGroqCloud({
   try {
     const messages = [
       {
-        role: "user",
+        role: 'user',
         content: prompt,
       },
-    ];
-    const completion = await callChatCompletion(messages);
-    return completion.choices?.[0]?.message?.content || "";
+    ]
+    const completion = await callChatCompletion(messages)
+    return completion.choices?.[0]?.message?.content || ''
   } catch {
-    return "Error verifying with GroqCloud.";
+    return 'Error verifying with GroqCloud.'
   }
 }

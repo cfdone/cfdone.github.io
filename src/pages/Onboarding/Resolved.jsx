@@ -1,5 +1,6 @@
 import { supabase } from '../../config/supabase'
 import { useState, useMemo } from 'react'
+import Toast from '../../components/Toast'
 import { useNavigate } from 'react-router-dom'
 import { BookOpen, GraduationCap, Calendar, Tag } from 'lucide-react'
 import TimeTable from '../../assets/timetable.json'
@@ -9,6 +10,7 @@ import { timeToMinutes } from '../../utils/timeUtils'
 // ...existing code...
 
 export default function Resolved() {
+  const [toastMsg, setToastMsg] = useState('')
   const navigate = useNavigate()
   // ...existing code...
 
@@ -59,7 +61,7 @@ export default function Resolved() {
       } else {
         // Enforce maximum 10 subjects limit
         if (prev.length >= 10) {
-          alert('You can select a maximum of 10 subjects')
+          setToastMsg('You can only select up to 10 subjects.')
           return prev
         }
         // Add the subject from current selection
@@ -310,20 +312,25 @@ export default function Resolved() {
 
                   try {
                     // Get current user
-                    const { data: { user } } = await supabase.auth.getUser()
+                    const {
+                      data: { user },
+                    } = await supabase.auth.getUser()
                     if (!user) {
                       setIsCreating(false)
                       alert('No authenticated user found. Please log in.')
                       return
                     }
                     // Upsert to Supabase with user_id only (overwrite previous record)
-                    const { error } = await supabase.from('user_timetables').upsert([
-                      {
-                        user_id: user.id,
-                        timetable_data: timetableData,
-                        onboarding_mode: 'custom'
-                      }
-                    ], { onConflict: ['user_id'], ignoreDuplicates: false })
+                    const { error } = await supabase.from('user_timetables').upsert(
+                      [
+                        {
+                          user_id: user.id,
+                          timetable_data: timetableData,
+                          onboarding_mode: 'custom',
+                        },
+                      ],
+                      { onConflict: ['user_id'], ignoreDuplicates: false }
+                    )
                     if (error) {
                       setIsCreating(false)
                       alert('Failed to upsert timetable to Supabase.')
@@ -561,6 +568,13 @@ export default function Resolved() {
           </div>
         </div>
       )}
+      <Toast
+        show={!!toastMsg}
+        message={toastMsg}
+        type="error"
+        onClose={() => setToastMsg('')}
+        duration={3500}
+      />
     </div>
   )
 }

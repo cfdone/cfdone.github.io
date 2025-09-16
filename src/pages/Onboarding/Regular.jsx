@@ -1,5 +1,6 @@
 import { supabase } from '../../config/supabase'
 import { useState, useMemo } from 'react'
+import Toast from '../../components/Toast'
 import { useNavigate } from 'react-router-dom'
 import { Tag, GraduationCap, Calendar } from 'lucide-react'
 import TimeTable from '../../assets/timetable.json'
@@ -8,6 +9,7 @@ import StepTrack from '../../components/Onboarding/StepTrack'
 // ...existing code...
 
 export default function Regular() {
+  const [toastMsg, setToastMsg] = useState('')
   const navigate = useNavigate()
   // ...existing code...
   const [selectedDegree, setSelectedDegree] = useState('')
@@ -57,23 +59,28 @@ export default function Regular() {
 
       try {
         // Get current user
-        const { data: { user } } = await supabase.auth.getUser()
+        const {
+          data: { user },
+        } = await supabase.auth.getUser()
         if (!user) {
           setIsCreating(false)
-          alert('No authenticated user found. Please log in.')
+          setToastMsg('Please log in to continue.')
           return
         }
         // Upsert to Supabase with user_id only (overwrite previous record)
-        const { error } = await supabase.from('user_timetables').upsert([
-          {
-            user_id: user.id,
-            timetable_data: timetableData,
-            onboarding_mode: 'regular'
-          }
-        ], { onConflict: ['user_id'], ignoreDuplicates: false })
+        const { error } = await supabase.from('user_timetables').upsert(
+          [
+            {
+              user_id: user.id,
+              timetable_data: timetableData,
+              onboarding_mode: 'regular',
+            },
+          ],
+          { onConflict: ['user_id'], ignoreDuplicates: false }
+        )
         if (error) {
           setIsCreating(false)
-          alert('Failed to upsert timetable to Supabase.')
+          setToastMsg('Could not save your timetable. Please try again.')
           return
         }
         localStorage.setItem('timetableData', JSON.stringify(timetableData))
@@ -244,6 +251,13 @@ export default function Regular() {
           </button>
         </div>
       </div>
+      <Toast
+        show={!!toastMsg}
+        message={toastMsg}
+        type="error"
+        onClose={() => setToastMsg('')}
+        duration={3500}
+      />
     </div>
   )
 }

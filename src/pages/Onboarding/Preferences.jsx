@@ -163,10 +163,24 @@ export default function Preferences() {
     })
   }
 
+  // Check if all sections for all subjects are marked as full
+  const allSectionsFullForAllSubjects =
+    subjectsForPreferences.length > 0 &&
+    subjectsForPreferences.every(subject => {
+      return (
+        subject.locations.length > 0 &&
+        subject.locations.every(loc => {
+          const sectionKey = `${subject.name}-${loc.degree}-${loc.semester}-${loc.section}`
+          return userPreferences.seatAvailability[sectionKey] === false
+        })
+      )
+    })
+
   const canContinue =
     userPreferences.parentSection.degree &&
     userPreferences.parentSection.semester &&
-    userPreferences.parentSection.section
+    userPreferences.parentSection.section &&
+    !allSectionsFullForAllSubjects
 
   return (
     <div className="h-screen bg-black flex flex-col items-center px-2 pt-safe-offset-8 pb-safe-offset-3">
@@ -357,6 +371,13 @@ export default function Preferences() {
             <div className="space-y-3">
               {subjectsForPreferences.map(subject => {
                 const isExpanded = expandedSubjects.has(subject.name)
+                // Handler: Check if all sections for this subject are marked as Full
+                const allFull =
+                  subject.locations.length > 0 &&
+                  subject.locations.every(loc => {
+                    const sectionKey = `${subject.name}-${loc.degree}-${loc.semester}-${loc.section}`
+                    return userPreferences.seatAvailability[sectionKey] === false
+                  })
                 return (
                   <div key={subject.name} className="border border-white/10 rounded-3xl">
                     <button
@@ -385,101 +406,45 @@ export default function Preferences() {
 
                     {isExpanded && (
                       <div className="p-3 pt-0 space-y-2">
-                        {subject.locations.map((location, idx) => {
-                          const sectionKey = `${location.degree}-${location.semester}-${location.section}`
-                          const availabilityKey = `${subject.name}-${sectionKey}`
-                          const currentStatus = userPreferences.seatAvailability[availabilityKey]
-
-                          const isParentSection =
-                            location.degree === userPreferences.parentSection.degree &&
-                            location.semester === userPreferences.parentSection.semester &&
-                            location.section === userPreferences.parentSection.section
-
+                        {/* Handler: Show warning if all sections are full for this subject */}
+                        {allFull && (
+                          <div className="p-3 mb-2 rounded-3xl bg-yellow-500/10 border border-yellow-500/30 text-yellow-700 text-sm font-semibold">
+                            All sections for <span className="font-bold">{subject.name}</span> are
+                            marked as Full. This subject will not be included in your timetable.
+                          </div>
+                        )}
+                        {subject.locations.map(location => {
+                          const sectionKey = `${subject.name}-${location.degree}-${location.semester}-${location.section}`
+                          const isFull = userPreferences.seatAvailability[sectionKey] === false
                           return (
                             <div
-                              key={idx}
-                              className={`p-3 rounded-3xl ${
-                                isParentSection
-                                  ? 'bg-accent/10 border border-accent/20'
-                                  : 'bg-white/2'
-                              }`}
+                              key={sectionKey}
+                              className={`flex flex-col md:flex-row items-start md:items-center justify-between p-3 rounded-2xl border border-white/10 bg-white/5 ${isFull ? 'opacity-60' : ''}`}
                             >
-                              <div className="flex items-center justify-between mb-2">
-                                <div>
-                                  <div className="text-white text-sm font-semibold flex items-center gap-2">
-                                    {location.degree} • Semester {location.semester} • Section{' '}
-                                    {location.section}
-                                    {isParentSection && (
-                                      <span className="text-xs bg-accent text-white px-2 py-1 rounded-full flex items-center gap-1">
-                                        <Target className="w-3 h-3" /> Parent
-                                      </span>
-                                    )}
-                                  </div>
-                                  {location.teacher && (
-                                    <div className="text-white/60 text-xs mt-1">
-                                      Teacher: {location.teacher}
-                                    </div>
-                                  )}
+                              <div className="flex flex-col gap-1">
+                                <div className="font-semibold text-white text-sm">
+                                  {location.degree} • Sem {location.semester} • Sec{' '}
+                                  {location.section}
+                                </div>
+                                <div className="text-xs text-white/60">
+                                  Teacher: {location.teacher || 'N/A'} | Room:{' '}
+                                  {location.room || 'N/A'}
                                 </div>
                               </div>
-
-                              <div className="flex gap-1.5">
+                              <div className="flex items-center gap-2 mt-2 md:mt-0">
                                 <button
-                                  onClick={() =>
+                                  className={`px-3 py-1 rounded-2xl text-xs font-semibold border transition-all ${isFull ? 'bg-yellow-500/20 border-yellow-500 text-yellow-700' : 'bg-green-500/20 border-green-500 text-green-700'}`}
+                                  onClick={() => {
                                     setUserPreferences(prev => ({
                                       ...prev,
-                                      generalSeatPolicy: 'custom',
                                       seatAvailability: {
                                         ...prev.seatAvailability,
-                                        [availabilityKey]: true,
+                                        [sectionKey]: isFull ? true : false,
                                       },
                                     }))
-                                  }
-                                  className={`flex-1 px-2 py-1.5 rounded-3xl text-xs font-semibold transition-all flex items-center justify-center gap-1 ${
-                                    currentStatus === true
-                                      ? 'bg-green-500 text-white'
-                                      : 'bg-white/10 text-white/70 hover:bg-green-500/20'
-                                  }`}
+                                  }}
                                 >
-                                  <Check className="w-3 h-3" /> Available
-                                </button>
-                                <button
-                                  onClick={() =>
-                                    setUserPreferences(prev => ({
-                                      ...prev,
-                                      generalSeatPolicy: 'custom',
-                                      seatAvailability: {
-                                        ...prev.seatAvailability,
-                                        [availabilityKey]: false,
-                                      },
-                                    }))
-                                  }
-                                  className={`flex-1 px-2 py-1.5 rounded-3xl text-xs font-semibold transition-all flex items-center justify-center gap-1 ${
-                                    currentStatus === false
-                                      ? 'bg-red-500 text-white'
-                                      : 'bg-white/10 text-white/70 hover:bg-red-500/20'
-                                  }`}
-                                >
-                                  <X className="w-3 h-3" /> Full
-                                </button>
-                                <button
-                                  onClick={() =>
-                                    setUserPreferences(prev => {
-                                      const newSeatAvailability = { ...prev.seatAvailability }
-                                      delete newSeatAvailability[availabilityKey]
-                                      return {
-                                        ...prev,
-                                        seatAvailability: newSeatAvailability,
-                                      }
-                                    })
-                                  }
-                                  className={`px-2 py-1.5 rounded-3xl text-xs font-semibold transition-all ${
-                                    currentStatus === undefined
-                                      ? 'bg-yellow-500 text-black'
-                                      : 'bg-white/10 text-white/70 hover:bg-yellow-500/20'
-                                  }`}
-                                >
-                                  ? Auto
+                                  {isFull ? 'Mark Available' : 'Mark Full'}
                                 </button>
                               </div>
                             </div>
@@ -495,48 +460,56 @@ export default function Preferences() {
         </div>
       </div>
 
-      {/* Fixed Navigation Buttons */}
-        <div className="flex flex-row gap-3 items-stretch justify-center w-full max-w-md mx-auto px-2 pb-6 pt-2 bg-gradient-to-b from-transparent to-black h-20">
-          <button
-            className=" px-4 py-3 rounded-3xl w-full text-[15px] transition shadow-md bg-white/10 border text-white border-accent/5 hover:bg-accent/10"
-            onClick={() =>
-              navigate('/resolve', {
-                state: {
-                  selectedSubjects,
-                  step: 'subject-selection',
-                },
-              })
-            }
-          >
-            Back
-          </button>
-         
-          <button
-            className={`px-4 rounded-3xl w-full h-full text-[15px] transition shadow-md flex items-center justify-center
-                            ${
-                              canContinue
-                                ? 'bg-accent text-white hover:bg-accent/80'
-                                : 'bg-accent/40 text-white/60 cursor-not-allowed'
-                            }
-                        `}
-            disabled={!canContinue || isCreating}
-            onClick={handleCreateTimetable}
-          >
-            {isCreating ? (
-              <div className="flex flex-col items-center w-full">
-                <div className="w-full  bg-white/20 rounded-full h-1.5">
-                  <div
-                    className="bg-white h-1.5 rounded-full transition-all duration-75 ease-out"
-                    style={{ width: `${progress}%` }}
-                  ></div>
-                </div>
-              </div>
-            ) : (
-              'Create Timetable'
-            )}
-          </button>
+      {/* Error message if all sections full for all subjects */}
+      {allSectionsFullForAllSubjects && (
+        <div className="w-full max-w-md mx-auto px-2 pb-2">
+          <div className="p-3 rounded-3xl bg-red-500/10 border border-red-500/30 text-red-700 text-sm font-semibold text-center">
+            All sections full for all subjects, can't proceed.
+          </div>
         </div>
+      )}
+
+      {/* Fixed Navigation Buttons */}
+      <div className="flex flex-row gap-3 items-stretch justify-center w-full max-w-md mx-auto px-2 pb-6 pt-2 bg-gradient-to-b from-transparent to-black h-20">
+        <button
+          className=" px-4 py-3 rounded-3xl w-full text-[15px] transition shadow-md bg-white/10 border text-white border-accent/5 hover:bg-accent/10"
+          onClick={() =>
+            navigate('/resolve', {
+              state: {
+                selectedSubjects,
+                step: 'subject-selection',
+              },
+            })
+          }
+        >
+          Back
+        </button>
+
+        <button
+          className={`px-4 rounded-3xl w-full h-full text-[15px] transition shadow-md flex items-center justify-center
+                          ${
+                            canContinue
+                              ? 'bg-accent text-white hover:bg-accent/80'
+                              : 'bg-accent/40 text-white/60 cursor-not-allowed'
+                          }
+                      `}
+          disabled={!canContinue || isCreating}
+          onClick={handleCreateTimetable}
+        >
+          {isCreating ? (
+            <div className="flex flex-col items-center w-full">
+              <div className="w-full  bg-white/20 rounded-full h-1.5">
+                <div
+                  className="bg-white h-1.5 rounded-full transition-all duration-75 ease-out"
+                  style={{ width: `${progress}%` }}
+                ></div>
+              </div>
+            </div>
+          ) : (
+            'Create Timetable'
+          )}
+        </button>
       </div>
-    
+    </div>
   )
 }

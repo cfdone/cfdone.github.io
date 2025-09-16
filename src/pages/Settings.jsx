@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom'
+import Toast from '../components/Toast'
 import { useState, useCallback, useEffect } from 'react'
 import {
   RefreshCw,
@@ -20,10 +21,10 @@ import { useAuth } from '../hooks/useAuth'
 import logo from '../assets/logo.svg'
 
 export default function Settings() {
+  const [toastMsg, setToastMsg] = useState('')
   const navigate = useNavigate()
   const { user, signOut } = useAuth()
   // ...existing code...
-
 
   const [showResetConfirm, setShowResetConfirm] = useState(false)
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false)
@@ -47,39 +48,37 @@ export default function Settings() {
     setExpandedAccordion(expandedAccordion === accordion ? null : accordion)
   }
 
-
   const handleResetOnboarding = useCallback(async () => {
-    if (!isOnline) return;
+    if (!isOnline) return
     setIsResetting(true)
     try {
-      localStorage.removeItem('onboardingMode');
-      localStorage.removeItem('timetableData');
-      navigate('/stepone', { replace: true });
-      setIsResetting(false);
-      setShowResetConfirm(false);
+      localStorage.removeItem('onboardingMode')
+      localStorage.removeItem('timetableData')
+      navigate('/stepone', { replace: true })
+      setIsResetting(false)
+      setShowResetConfirm(false)
     } catch {
-      setIsResetting(false);
-      setShowResetConfirm(false);
+      setIsResetting(false)
+      setShowResetConfirm(false)
+      setToastMsg('Could not reset your onboarding. Please try again.')
     }
-  }, [navigate, isOnline]);
-
-
+  }, [navigate, isOnline])
 
   const handleLogout = useCallback(async () => {
-    if (!isOnline) return;
-    setIsResetting(true);
+    if (!isOnline) return
+    setIsResetting(true)
     try {
-      localStorage.clear();
-      await signOut?.();
-      navigate('/login', { replace: true });
-      setIsResetting(false);
-      setShowLogoutConfirm(false);
+      localStorage.clear()
+      await signOut?.()
+      navigate('/login', { replace: true })
+      setIsResetting(false)
+      setShowLogoutConfirm(false)
     } catch {
-      setIsResetting(false);
-      setShowLogoutConfirm(false);
-      // Error handling
+      setIsResetting(false)
+      setShowLogoutConfirm(false)
+      setToastMsg('Could not log you out. Please try again.')
     }
-  }, [signOut, navigate, isOnline]);
+  }, [signOut, navigate, isOnline])
 
   const getTimetableInfo = useCallback(() => {
     try {
@@ -100,7 +99,7 @@ export default function Settings() {
           return `${data.degree} • Semester ${data.semester} • Section ${data.section}\n${countClasses} classes per week`
         } else if (data.studentType === 'lagger') {
           // More detailed info for lagger students
-          const subjects = data.subjects || [];
+          const subjects = data.subjects || []
           return (
             <div>
               <div className="font-bold text-accent text-base flex items-center gap-2 mb-1">
@@ -120,7 +119,7 @@ export default function Settings() {
                 </div>
               )}
             </div>
-          );
+          )
         }
       }
       return 'No timetable data'
@@ -136,7 +135,7 @@ export default function Settings() {
   return (
     <>
       {(isLoading || isResetting) && <LoadingPulseOverlay />}
-  <div className="fixed inset-0 bg-black">
+      <div className="fixed inset-0 bg-black">
         {/* Simplified background decoration - same as Home.jsx */}
 
         <div className="flex flex-col h-full relative z-10">
@@ -232,9 +231,9 @@ export default function Settings() {
                     {/* Sync Status Display removed */}
 
                     <button
-                        onClick={() => setShowResetConfirm(true)}
-                        disabled={isResetting || !isOnline}
-                        className={`w-full bg-white/2 p-4 rounded-3xl border border-accent/5 hover:bg-white/10 transition-colors text-left ${isResetting || !isOnline ? 'opacity-50 cursor-not-allowed' : ''}`}
+                      onClick={() => setShowResetConfirm(true)}
+                      disabled={isResetting || !isOnline}
+                      className={`w-full bg-white/2 p-4 rounded-3xl border border-accent/5 hover:bg-white/10 transition-colors text-left ${isResetting || !isOnline ? 'opacity-50 cursor-not-allowed' : ''}`}
                     >
                       <div className="flex items-center justify-between">
                         <div className="flex items-center">
@@ -246,7 +245,6 @@ export default function Settings() {
                             <p className="text-white/70 text-sm ">
                               Clear current setup and start onboarding again
                             </p>
-                            
                           </div>
                         </div>
                         <ChevronRight className="w-5 h-5 text-white/30" />
@@ -536,7 +534,9 @@ export default function Settings() {
                   You'll need to set up your timetable again.
                 </p>
                 {!isOnline && (
-                  <p className="text-red-400 text-xs mt-2 font-semibold">You must be online to reset your timetable.</p>
+                  <p className="text-red-400 text-xs mt-2 font-semibold">
+                    You must be online to reset your timetable.
+                  </p>
                 )}
               </div>
 
@@ -568,10 +568,13 @@ export default function Settings() {
               <div className="text-center mb-4">
                 <h3 className=" text-accent font-medium text-xl mb-2">Sign Out?</h3>
                 <p className="text-white/70 text-sm ">
-                  You will be signed out of your account. Your timetable data will remain saved and accessible after signing back in.
+                  You will be signed out of your account. Your timetable data will remain saved and
+                  accessible after signing back in.
                 </p>
                 {!isOnline && (
-                  <p className="text-red-400 text-xs mt-2 font-semibold">You must be online to sign out.</p>
+                  <p className="text-red-400 text-xs mt-2 font-semibold">
+                    You must be online to sign out.
+                  </p>
                 )}
               </div>
 
@@ -594,6 +597,13 @@ export default function Settings() {
           </div>
         )}
       </div>
+      <Toast
+        show={!!toastMsg}
+        message={toastMsg}
+        type="error"
+        onClose={() => setToastMsg('')}
+        duration={3500}
+      />
     </>
   )
 }

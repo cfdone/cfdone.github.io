@@ -1,4 +1,5 @@
 import { useState, useMemo } from 'react'
+import Toast from '../../components/Toast'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { BookOpen, Book, MapPin, Search } from 'lucide-react'
 import TimeTable from '../../assets/timetable.json'
@@ -6,6 +7,7 @@ import logo from '../../assets/logo.svg'
 import StepTrack from '../../components/Onboarding/StepTrack'
 
 export default function Resolve() {
+  const [toastMsg, setToastMsg] = useState('')
   const navigate = useNavigate()
   const location = useLocation()
 
@@ -74,7 +76,7 @@ export default function Resolve() {
       } else {
         // Enforce maximum 8 subjects limit
         if (prev.length >= 8) {
-          alert('You can select a maximum of 8 subjects')
+          setToastMsg('You can only select up to 8 subjects.')
           return prev
         }
         return [...prev, subject]
@@ -190,7 +192,6 @@ export default function Resolve() {
                 !subject.name.toLowerCase().startsWith(searchQuery.toLowerCase())
 
               return (
-
                 <button
                   key={subject.name}
                   type="button"
@@ -280,6 +281,13 @@ export default function Resolve() {
           </button>
         </div>
       </div>
+      <Toast
+        show={!!toastMsg}
+        message={toastMsg}
+        type="error"
+        onClose={() => setToastMsg('')}
+        duration={3500}
+      />
     </div>
   )
 }

@@ -1,6 +1,7 @@
 import { useState, useMemo, useEffect, useCallback } from 'react'
+import Toast from '../../components/Toast'
 import { useNavigate, useLocation } from 'react-router-dom'
-import { CheckCircle, AlertTriangle, Target, Book, MapPin } from 'lucide-react'
+import { CheckCircle, AlertTriangle, Target, Book, MapPin, Star } from 'lucide-react'
 import ShinyText from '../../components/ShinyText'
 
 import logo from '../../assets/logo.svg'
@@ -39,9 +40,8 @@ export default function Preview() {
   // Error message for failed timetable creation
   const [errorMsg, setErrorMsg] = useState('')
 
-  // Gemini verification states
-  // Removed unused geminiStatus state
-  const [geminiSuggestions, setGeminiSuggestions] = useState('')
+  // GroqCloud verification states
+  const [grokcloudResponse, setGrokcloudResponse] = useState('')
   const [isReverifying, setIsReverifying] = useState(false)
   const [hasReverified, setHasReverified] = useState(false)
 
@@ -162,9 +162,7 @@ export default function Preview() {
       // Filter out locations marked as Full
       const availableLocations = (subject.locations || []).filter(loc => {
         const sectionKey = `${subject.name}-${loc.degree}-${loc.semester}-${loc.section}`
-        return (
-          userPreferences?.seatAvailability?.[sectionKey] !== false
-        )
+        return userPreferences?.seatAvailability?.[sectionKey] !== false
       })
 
       if (availableLocations.length === 0) {
@@ -333,7 +331,14 @@ export default function Preview() {
           <p className="text-white/70 text-sm ">
             Review your schedule before creating the final timetable
           </p>
-          {errorMsg && <div className="text-red-500 mt-2 text-sm">{errorMsg}</div>}
+          {/* Toast for error messages */}
+          <Toast
+            show={!!errorMsg}
+            message={errorMsg}
+            type="error"
+            onClose={() => setErrorMsg('')}
+            duration={3500}
+          />
         </div>
       </div>
 
@@ -361,7 +366,7 @@ export default function Preview() {
                 </div>
               )}
 
-              {/* Move Conflict Card and Gemini Card to Top */}
+              {/* Move Conflict Card and GroqCloud Card to Top */}
               {resolvedTimetable && !isResolving && (
                 <>
                   <div
@@ -407,37 +412,44 @@ export default function Preview() {
                       <br />
                     </div>
                   </div>
-                  {/* XARVIN AI Review Card with Reverify Button */}
+                  {/* GroqCloud AI Review Card with Reverify Button */}
                   <div className="mt-3 p-4 rounded-3xl border bg-accent/10 border-accent/20 text-white">
                     <div className="flex items-center justify-between">
-                      XARVIN AI Review:
-                      {!isReverifying && (!geminiSuggestions || geminiSuggestions === 'Error verifying with GroqCloud.') && (
-                        <button
-                          className="px-3 py-1  text-white text-xs hover:bg-accent/80 transition rounded-full  font-semibold"
-                          style={{
-                            background:
-                              'linear-gradient(135deg, #a980ff, #182fff99) 0 0 / 200% 200%',
-                          }}
-                          disabled={hasReverified && geminiSuggestions !== 'Error verifying with GroqCloud.'}
-                          onClick={async () => {
-                            setIsReverifying(true)
-                            setGeminiSuggestions('')
-                            setHasReverified(false)
-                            const geminiReply = await verifyTimetableWithGroqCloud({
-                              timetable: resolvedTimetable,
-                              conflictSubjects,
-                              resolutionSuggestions,
-                              selectedSubjects,
-                            })
-                            setGeminiSuggestions(geminiReply)
-                            setIsReverifying(false)
-                            setHasReverified(true)
-                          }}
-                        >
-                          <Sparkles className="w-4 h-4 inline-block mr-1" />
-                          {geminiSuggestions === 'Error verifying with GroqCloud.' ? 'Retry AI Verification' : 'Reverify with AI'}
-                        </button>
-                      )}
+                      GroqCloud AI Review:
+                      {!isReverifying &&
+                        (!grokcloudResponse ||
+                          grokcloudResponse === 'Error verifying with GroqCloud.') && (
+                          <button
+                            className="px-3 py-1  text-white text-xs hover:bg-accent/80 transition rounded-full  font-semibold"
+                            style={{
+                              background:
+                                'linear-gradient(135deg, #a980ff, #182fff99) 0 0 / 200% 200%',
+                            }}
+                            disabled={
+                              hasReverified &&
+                              grokcloudResponse !== 'Error verifying with GroqCloud.'
+                            }
+                            onClick={async () => {
+                              setIsReverifying(true)
+                              setGrokcloudResponse('')
+                              setHasReverified(false)
+                              const response = await verifyTimetableWithGroqCloud({
+                                timetable: resolvedTimetable,
+                                conflictSubjects,
+                                resolutionSuggestions,
+                                selectedSubjects,
+                              })
+                              setGrokcloudResponse(response)
+                              setIsReverifying(false)
+                              setHasReverified(true)
+                            }}
+                          >
+                            <Sparkles className="w-4 h-4 inline-block mr-1" />
+                            {grokcloudResponse === 'Error verifying with GroqCloud.'
+                              ? 'Retry AI Verification'
+                              : 'Reverify with AI'}
+                          </button>
+                        )}
                     </div>
 
                     {/* Reasoning Animation */}
@@ -454,42 +466,21 @@ export default function Preview() {
                         />
                       </div>
                     )}
-                    {/* AI Response: Render HTML from Gemini, strip code fences, match UI */}
-                    {geminiSuggestions && geminiSuggestions !== 'Error verifying with GroqCloud.' && !isReverifying && (
-                      <div className="mt-2">
-                        <div
-                          className="rounded-3xl border bg-accent/10 border-accent/20 text-white p-4 text-sm"
-                          style={{ overflowX: 'auto' }}
-                        >
-                          {/* Remove markdown code fences if present, split reasoning and review card if Gemini outputs two divs */}
-                          {(() => {
-                            const html = geminiSuggestions
-                              .replace(/```html[\s\S]*?<div/gi, '<div')
-                              .replace(/```/g, '')
-                              .trim()
-                            // Try to split reasoning and review card if Gemini outputs two divs
-                            const parts = html.split(
-                              /(<div[^>]*class=["']?[^"'>]*review-card[^"'>]*["']?[^>]*>)/i
-                            )
-                            if (parts.length > 1) {
-                              return (
-                                <>
-                                  <div className="mb-3 text-white/80 text-sm leading-relaxed">
-                                    {parts[0].replace(/<div.*?>|<\/div>/g, '')}
-                                  </div>
-                                  <div
-                                    dangerouslySetInnerHTML={{ __html: parts.slice(1).join('') }}
-                                  />
-                                </>
-                              )
-                            }
-                            return <div dangerouslySetInnerHTML={{ __html: html }} />
-                          })()}
+                    {/* AI Response: Render GroqCloud plain text */}
+                    {grokcloudResponse &&
+                      grokcloudResponse !== 'Error verifying with GroqCloud.' &&
+                      !isReverifying && (
+                        <div className="mt-2">
+                          <div
+                            className="rounded-3xl border bg-accent/10 border-accent/20 text-white p-4 text-sm"
+                            style={{ overflowX: 'auto' }}
+                          >
+                            {grokcloudResponse}
+                          </div>
                         </div>
-                      </div>
-                    )}
+                      )}
                     {/* Error message if AI verification fails */}
-                    {geminiSuggestions === 'Error verifying with GroqCloud.' && !isReverifying && (
+                    {grokcloudResponse === 'Error verifying with GroqCloud.' && !isReverifying && (
                       <div className="mt-2 text-red-400 text-sm">
                         AI verification failed. Please check your connection and retry.
                       </div>
@@ -499,6 +490,14 @@ export default function Preview() {
               )}
 
               <div className="space-y-4">
+                {/* Handler: Show warning if all subjects are skipped (all sections full) */}
+                {resolvedTimetable &&
+                  Object.values(resolvedTimetable).every(day => day.length === 0) && (
+                    <div className="p-4 rounded-3xl bg-yellow-500/10 border border-yellow-500/30 text-yellow-700 text-sm font-semibold">
+                      All selected subjects are marked as Full in all sections. No classes will be
+                      scheduled in your timetable.
+                    </div>
+                  )}
                 {/* Timetable by Day */}
                 {resolvedTimetable && renderTimetableByDay(resolvedTimetable)}
 
@@ -522,26 +521,45 @@ export default function Preview() {
                   </div>
                 )}
 
-                {/* Resolution Suggestions */}
+                {/* Resolution Suggestions with conflict details */}
                 {resolutionSuggestions.length > 0 && (
                   <div className="space-y-2">
                     <div className="font-semibold text-white text-sm mb-2">Suggestions:</div>
-                    {resolutionSuggestions.map((suggestion, idx) => (
-                      <div key={idx} className="p-3 rounded-xl bg-white/2 border border-white/10">
-                        <div className="font-semibold text-accent text-sm mb-1">
-                          {suggestion.subject}
-                        </div>
-                        <div className="text-white/70 text-sm">{suggestion.message}</div>
-                        {suggestion.alternatives.length > 0 && (
-                          <div className="mt-2 text-xs text-white/50">
-                            Available in:{' '}
-                            {suggestion.alternatives
-                              .map(alt => `${alt.degree} S${alt.semester}-${alt.section}`)
-                              .join(', ')}
+                    {resolutionSuggestions.map((suggestion, idx) => {
+                      // Handler: Show conflict details for subjects with multiple conflicts
+                      const conflictDays = []
+                      if (resolvedTimetable) {
+                        Object.entries(resolvedTimetable).forEach(([day, classes]) => {
+                          if (
+                            classes.some(cls => (cls.subject || cls.course) === suggestion.subject)
+                          ) {
+                            conflictDays.push(day)
+                          }
+                        })
+                      }
+                      return (
+                        <div key={idx} className="p-3 rounded-xl bg-white/2 border border-white/10">
+                          <div className="font-semibold text-accent text-sm mb-1">
+                            {suggestion.subject}
                           </div>
-                        )}
-                      </div>
-                    ))}
+                          <div className="text-white/70 text-sm">{suggestion.message}</div>
+                          {suggestion.alternatives.length > 0 && (
+                            <div className="mt-2 text-xs text-white/50">
+                              Available in:{' '}
+                              {suggestion.alternatives
+                                .map(alt => `${alt.degree} S${alt.semester}-${alt.section}`)
+                                .join(', ')}
+                            </div>
+                          )}
+                          {/* Show conflict days if more than one */}
+                          {conflictDays.length > 1 && (
+                            <div className="mt-2 text-xs text-yellow-400">
+                              Conflicts occur on: {conflictDays.join(', ')}
+                            </div>
+                          )}
+                        </div>
+                      )
+                    })}
                   </div>
                 )}
               </div>
@@ -584,25 +602,30 @@ export default function Preview() {
                     hasConflicts: conflictSubjects.length > 0,
                     conflictSubjects: conflictSubjects,
                     resolutionSuggestions: resolutionSuggestions,
-                    aiReview: geminiSuggestions, // Save AI review for reference
+                    aiReview: grokcloudResponse, // Save AI review for reference
                     studentType: 'lagger',
                   }
                   try {
                     // Get current user
-                    const { data: { user } } = await supabase.auth.getUser()
+                    const {
+                      data: { user },
+                    } = await supabase.auth.getUser()
                     if (!user) {
-                      setErrorMsg('No authenticated user found. Please log in.')
+                      setErrorMsg('You need to log in to continue.')
                       return
                     }
-                    const { error } = await supabase.from('user_timetables').upsert([
-                      {
-                        user_id: user.id,
-                        timetable_data: timetableData,
-                        onboarding_mode: 'lagger'
-                      }
-                    ], { onConflict: ['user_id'], ignoreDuplicates: false })
+                    const { error } = await supabase.from('user_timetables').upsert(
+                      [
+                        {
+                          user_id: user.id,
+                          timetable_data: timetableData,
+                          onboarding_mode: 'lagger',
+                        },
+                      ],
+                      { onConflict: ['user_id'], ignoreDuplicates: false }
+                    )
                     if (error) {
-                      setErrorMsg('Failed to upsert timetable to Supabase.')
+                      setErrorMsg('Could not save your timetable. Please try again.')
                       return
                     }
                     localStorage.setItem('timetableData', JSON.stringify(timetableData))
@@ -615,7 +638,7 @@ export default function Preview() {
                       },
                     })
                   } catch {
-                    setErrorMsg('Failed to create timetable. Please try again.')
+                    setErrorMsg('Something went wrong. Please try again.')
                   }
                 }
               }}

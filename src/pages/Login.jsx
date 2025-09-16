@@ -1,10 +1,10 @@
 import { Navigate } from 'react-router-dom'
 // ...existing code...
 import React, { useState } from 'react'
+import Toast from '../components/Toast'
 import { useAuth } from '../hooks/useAuth'
 import LoadingPulseOverlay from '../components/Loading'
 import logo from '../assets/logo.svg'
-
 
 export default function Login() {
   const { signInWithGoogle, loading, user } = useAuth()
@@ -37,6 +37,13 @@ export default function Login() {
 
   return (
     <>
+      <Toast
+        show={!!error}
+        message={error}
+        type="error"
+        onClose={() => setError(null)}
+        duration={3500}
+      />
       <div className="h-screen bg-black flex flex-col justify-between items-center px-4 pt-safe-offset-8 pb-safe-offset-3">
         <div className="flex flex-col items-center gap-6 px-4 py-6 w-full max-w-md mx-auto">
           <h4 className=" text-white font-semibold text-2xl mb-2 text-center">

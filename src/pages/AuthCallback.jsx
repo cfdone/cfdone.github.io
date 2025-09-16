@@ -13,7 +13,9 @@ export default function AuthCallback() {
       if (access_token && refresh_token) {
         try {
           await supabase.auth.setSession({ access_token, refresh_token })
-          const { data: { user } } = await supabase.auth.getUser()
+          const {
+            data: { user },
+          } = await supabase.auth.getUser()
           if (user) {
             const { data } = await supabase
               .from('user_timetables')
