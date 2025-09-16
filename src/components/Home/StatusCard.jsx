@@ -7,7 +7,7 @@ export default function StatusCard({ currentClass, totalClasses, doneClasses }) 
         {/* Subtle animated background pattern */}
         <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -skew-x-12 animate-pulse"></div>
         <div className="relative z-10">
-          <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               <div className="p-2 bg-accent/20 rounded-full">
                 <Clock className="w-4 h-4 text-accent" />
@@ -33,7 +33,7 @@ export default function StatusCard({ currentClass, totalClasses, doneClasses }) 
   // If no classes today
   if (totalClasses === 0) {
     return (
-      <div className="bg-white/2  p-6 rounded-3xl border border-accent/5 mb-4 backdrop-blur-sm transition-all duration-300">
+      <div className="bg-white/2  p-6 rounded-3xl border border-accent/5 backdrop-blur-sm transition-all duration-300">
         <div className="text-center space-y-3">
           <div className="inline-flex p-3 bg-accent/15 rounded-full">
             <Sun className="w-6 h-6 text-accent" />

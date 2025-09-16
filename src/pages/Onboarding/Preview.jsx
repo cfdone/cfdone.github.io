@@ -45,6 +45,10 @@ export default function Preview() {
   const [isReverifying, setIsReverifying] = useState(false)
   const [hasReverified, setHasReverified] = useState(false)
 
+  // Upload progress for Done button
+  const [isUploading, setIsUploading] = useState(false)
+  const [uploadProgress, setUploadProgress] = useState(0)
+
   // Function to check for time conflicts in the timetable
   const detectTimeConflicts = useCallback(timetable => {
     const conflicts = []
@@ -590,10 +594,19 @@ export default function Preview() {
               className={` px-4 rounded-3xl w-full h-full text-[15px] transition shadow-md flex items-center justify-center
                 ${selectedSubjects.length > 0 ? 'bg-accent text-white' : 'bg-accent/40 text-white/60'}
             `}
-              disabled={selectedSubjects.length === 0}
+              disabled={selectedSubjects.length === 0 || isUploading}
               onClick={async () => {
-                // Allow Done even if AI gives conflicts; AI suggestions are advisory only
                 if (selectedSubjects.length > 0 && resolvedTimetable) {
+                  setIsUploading(true)
+                  setUploadProgress(0)
+                  // Animate progress bar
+                  let currentProgress = 0
+                  const progressIncrement = 2
+                  const intervalTime = 20
+                  const progressInterval = setInterval(() => {
+                    currentProgress += progressIncrement
+                    setUploadProgress(Math.min(currentProgress, 95)) // Stop at 95% until upload finishes
+                  }, intervalTime)
                   const timetableData = {
                     subjects: selectedSubjects,
                     timetable: resolvedTimetable,
@@ -606,12 +619,14 @@ export default function Preview() {
                     studentType: 'lagger',
                   }
                   try {
-                    // Get current user
                     const {
                       data: { user },
                     } = await supabase.auth.getUser()
                     if (!user) {
                       setErrorMsg('You need to log in to continue.')
+                      clearInterval(progressInterval)
+                      setIsUploading(false)
+                      setUploadProgress(0)
                       return
                     }
                     const { error } = await supabase.from('user_timetables').upsert(
@@ -626,24 +641,47 @@ export default function Preview() {
                     )
                     if (error) {
                       setErrorMsg('Could not save your timetable. Please try again.')
+                      clearInterval(progressInterval)
+                      setIsUploading(false)
+                      setUploadProgress(0)
                       return
                     }
                     localStorage.setItem('timetableData', JSON.stringify(timetableData))
                     localStorage.setItem('onboardingComplete', 'true')
                     localStorage.setItem('onboardingMode', 'lagger')
-                    navigate('/home', {
-                      state: {
-                        ...timetableData,
-                        studentType: 'lagger',
-                      },
-                    })
+                    setUploadProgress(100)
+                    clearInterval(progressInterval)
+                    setTimeout(() => {
+                      setIsUploading(false)
+                      setUploadProgress(0)
+                      navigate('/home', {
+                        state: {
+                          ...timetableData,
+                          studentType: 'lagger',
+                        },
+                      })
+                    }, 300)
                   } catch {
                     setErrorMsg('Something went wrong. Please try again.')
+                    clearInterval(progressInterval)
+                    setIsUploading(false)
+                    setUploadProgress(0)
                   }
                 }
               }}
             >
-              Done
+              {isUploading ? (
+                <div className="flex flex-col items-center w-full">
+                  <div className="w-full bg-white/20 rounded-full h-1.5">
+                    <div
+                      className="bg-white h-1.5 rounded-full transition-all duration-75 ease-out"
+                      style={{ width: `${uploadProgress}%` }}
+                    ></div>
+                  </div>
+                </div>
+              ) : (
+                'Done'
+              )}
             </button>
           </div>
         </div>
