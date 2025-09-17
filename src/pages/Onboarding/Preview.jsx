@@ -55,7 +55,7 @@ export default function Preview() {
 
     // Check for conflicts in each day's schedule
     Object.values(timetable).forEach(classes => {
-      if (classes.length < 2) return // No conflicts possible with 0-1 classes
+      if (!Array.isArray(classes) || classes.length < 2) return // No conflicts possible
 
       // Sort classes by start time
       const sortedClasses = [...classes].sort(
@@ -118,11 +118,10 @@ export default function Preview() {
     [userPreferences]
   )
 
-  // Effect to get the resolved timetable from location state or generate it
+  // Effect to get the resolved timetable from location state and detect conflicts
   useEffect(() => {
     if (location.state?.resolvedTimetable) {
       setResolvedTimetable(location.state.resolvedTimetable)
-
       // If conflicts aren't provided in location state, detect them
       if (!location.state.conflictSubjects) {
         const detectedConflicts = detectTimeConflicts(location.state.resolvedTimetable)
@@ -130,20 +129,19 @@ export default function Preview() {
       } else {
         setConflictSubjects(location.state.conflictSubjects)
       }
-    } else if (selectedSubjects.length > 0) {
-      // Generate a simple mock timetable for preview
-      const mockTimetable = generateMockTimetable(selectedSubjects, userPreferences)
-      setResolvedTimetable(mockTimetable)
-
-      // Detect conflicts in the mock timetable
-      const detectedConflicts = detectTimeConflicts(mockTimetable)
+    } else if (TimeTable && userPreferences?.parentSection?.degree && userPreferences?.parentSection?.semester && userPreferences?.parentSection?.section) {
+      const sectionTimetable = TimeTable?.[userPreferences.parentSection.degree]?.[userPreferences.parentSection.semester]?.[userPreferences.parentSection.section] || null;
+      setResolvedTimetable(sectionTimetable)
+      const detectedConflicts = sectionTimetable ? detectTimeConflicts(sectionTimetable) : [];
       setConflictSubjects(detectedConflicts)
+    } else {
+      setResolvedTimetable(null)
+      setConflictSubjects([])
     }
-
     if (location.state?.resolutionSuggestions) {
       setResolutionSuggestions(location.state.resolutionSuggestions)
     }
-  }, [location.state, selectedSubjects, userPreferences, detectTimeConflicts])
+  }, [location.state, detectTimeConflicts, userPreferences.parentSection.degree, userPreferences.parentSection.semester, userPreferences.parentSection.section])
 
   // Effect to generate resolution suggestions when conflicts are detected
   useEffect(() => {
@@ -154,92 +152,17 @@ export default function Preview() {
     }
   }, [conflictSubjects, selectedSubjects, generateResolutionSuggestions])
 
-  // Helper function to generate a realistic timetable for preview using actual timetable data
-  const generateMockTimetable = (subjects, userPreferences) => {
-    const timetable = {}
-    const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
-    days.forEach(day => {
-      timetable[day] = []
-    })
-
-    subjects.forEach(subject => {
-      // Filter out locations marked as Full
-      const availableLocations = (subject.locations || []).filter(loc => {
-        const sectionKey = `${subject.name}-${loc.degree}-${loc.semester}-${loc.section}`
-        return userPreferences?.seatAvailability?.[sectionKey] !== false
-      })
-
-      if (availableLocations.length === 0) {
-        // Optionally: show a warning or skip assignment
-        return
-      }
-
-      let assigned = false
-      for (const loc of availableLocations) {
-        if (!loc.degree || !loc.semester || !loc.section) continue
-        const sectionData = TimeTable?.[loc.degree]?.[loc.semester]?.[loc.section]
-        if (sectionData) {
-          let foundSlot = false
-          Object.entries(sectionData).forEach(([day, slots]) => {
-            slots.forEach(slot => {
-              if (slot.course === subject.name) {
-                const hasConflict = timetable[day].some(existing =>
-                  timeRangesOverlap(existing.start, existing.end, slot.start, slot.end)
-                )
-                if (!hasConflict) {
-                  timetable[day].push({
-                    ...slot,
-                    subject: subject.name,
-                    degree: loc.degree,
-                    semester: loc.semester,
-                    section: loc.section,
-                  })
-                  assigned = true
-                  foundSlot = true
-                }
-              }
-            })
-          })
-          if (foundSlot) break
-        }
-      }
-      // Fallback: only assign if there is at least one available location
-      if (!assigned && availableLocations.length > 0) {
-        for (const day of days) {
-          const hasConflict = timetable[day].some(existing =>
-            timeRangesOverlap(existing.start, existing.end, '8:45', '10:10')
-          )
-          if (!hasConflict) {
-            const loc = availableLocations[0]
-            timetable[day].push({
-              subject: subject.name,
-              start: '8:45',
-              end: '10:10',
-              course: subject.name,
-              teacher: loc.teacher || 'TBD',
-              room: loc.room || 'TBD',
-              degree: loc.degree || 'TBD',
-              semester: loc.semester || 'TBD',
-              section: loc.section || 'TBD',
-            })
-            break
-          }
-        }
-      }
-    })
-    return timetable
-  }
 
   // Weekly timetable preview styled like WeeklySchedule.jsx
   const renderTimetableByDay = timetable => {
-    if (!timetable) return null
-    const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
+    if (!timetable) return null;
+    const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
     return (
       <div className="space-y-3">
         {days
           .filter(day => Object.prototype.hasOwnProperty.call(timetable, day))
           .map(day => {
-            const classes = timetable[day] || []
+            const classes = timetable[day] || [];
             return (
               <div key={day}>
                 <div className="bg-white/2 rounded-3xl border border-accent/5 overflow-hidden">
@@ -265,7 +188,10 @@ export default function Preview() {
                       classes
                         .sort((a, b) => timeToMinutes(a.start) - timeToMinutes(b.start))
                         .map((cls, idx) => {
-                          const isConflict = conflictSubjects.includes(cls.subject || cls.course)
+                          const isConflict = conflictSubjects.includes(cls.subject || cls.course);
+                          const degree = cls.degree || userPreferences.parentSection.degree || 'N/A';
+                          const semester = cls.semester || userPreferences.parentSection.semester || 'N/A';
+                          const section = cls.section || userPreferences.parentSection.section || 'N/A';
                           return (
                             <div
                               key={idx}
@@ -298,8 +224,7 @@ export default function Preview() {
                                       {cls.teacher || 'Teacher TBD'}
                                     </div>
                                     <div className="text-xs  text-accent/50">
-                                      {cls.degree || 'N/A'} • S{cls.semester || 'N/A'}-
-                                      {cls.section || 'N/A'}
+                                      {degree} • S{semester}-{section}
                                     </div>
                                   </div>
                                 </div>
@@ -312,16 +237,16 @@ export default function Preview() {
                                 </div>
                               </div>
                             </div>
-                          )
+                          );
                         })
                     )}
                   </div>
                 </div>
               </div>
-            )
+            );
           })}
       </div>
-    )
+    );
   }
 
   return (
@@ -370,8 +295,8 @@ export default function Preview() {
                 </div>
               )}
 
-              {/* Move Conflict Card and GroqCloud Card to Top */}
-              {resolvedTimetable && !isResolving && (
+          {/* Move Conflict Card and GroqCloud Card to Top */}
+          {resolvedTimetable && !isResolving && (
                 <>
                   <div
                     className={`p-4 rounded-3xl border ${
@@ -496,14 +421,21 @@ export default function Preview() {
               <div className="space-y-4">
                 {/* Handler: Show warning if all subjects are skipped (all sections full) */}
                 {resolvedTimetable &&
-                  Object.values(resolvedTimetable).every(day => day.length === 0) && (
+                  Array.isArray(Object.values(resolvedTimetable)) &&
+                  Object.values(resolvedTimetable).every(day => Array.isArray(day) && day.length === 0) && (
                     <div className="p-4 rounded-3xl bg-yellow-500/10 border border-yellow-500/30 text-yellow-700 text-sm font-semibold">
                       All selected subjects are marked as Full in all sections. No classes will be
                       scheduled in your timetable.
                     </div>
                   )}
                 {/* Timetable by Day */}
-                {resolvedTimetable && renderTimetableByDay(resolvedTimetable)}
+                {resolvedTimetable
+                  ? renderTimetableByDay(resolvedTimetable)
+                  : (
+                    <div className="p-4 rounded-3xl bg-red-500/10 border border-red-500/30 text-red-700 text-sm font-semibold">
+                      No timetable data available.
+                    </div>
+                  )}
 
                 {/* Resolution Progress */}
                 {isResolving && (
