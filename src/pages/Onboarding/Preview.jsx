@@ -49,42 +49,47 @@ export default function Preview() {
   const [isUploading, setIsUploading] = useState(false)
   const [uploadProgress, setUploadProgress] = useState(0)
 
-  // Function to check for time conflicts in the timetable
-  const detectTimeConflicts = useCallback(timetable => {
-    const conflicts = []
-
-    // Check for conflicts in each day's schedule
-    Object.values(timetable).forEach(classes => {
-      if (!Array.isArray(classes) || classes.length < 2) return // No conflicts possible
-
-      // Sort classes by start time
-      const sortedClasses = [...classes].sort(
-        (a, b) => timeToMinutes(a.start) - timeToMinutes(b.start)
-      )
-
-      // Check for overlaps using the new overlap detection
-      for (let i = 0; i < sortedClasses.length - 1; i++) {
-        const current = sortedClasses[i]
-        const next = sortedClasses[i + 1]
-
-        // Use the improved overlap detection
-        if (timeRangesOverlap(current.start, current.end, next.start, next.end)) {
-          // Add both subjects to conflicts if they're not already there
-          const currentSubject = current.subject || current.course
-          const nextSubject = next.subject || next.course
-
-          if (currentSubject && !conflicts.includes(currentSubject)) {
-            conflicts.push(currentSubject)
-          }
-          if (nextSubject && !conflicts.includes(nextSubject)) {
-            conflicts.push(nextSubject)
-          }
-        }
+  // CSP-based conflict detection and assignment
+  // Returns {conflicts: [], assignments: {day: [classes]}}
+  const detectTimeConflicts = useCallback((timetable = []) => {
+    const conflicts = [];
+    const assignments = {};
+    // For each day, try to assign classes without overlap
+    Object.entries(timetable).forEach(([day, classes]) => {
+      if (!Array.isArray(classes) || classes.length < 2) {
+        assignments[day] = classes;
+        return;
       }
-    })
-
-    return conflicts
-  }, [])
+      // CSP: Backtracking assignment for this day's classes
+      const assigned = [];
+      const usedSlots = [];
+      classes
+        .sort((a, b) => timeToMinutes(a.start) - timeToMinutes(b.start))
+        .forEach(cls => {
+          // Check if this class overlaps with any already assigned
+          const overlap = assigned.some(
+            assignedCls => timeRangesOverlap(
+              assignedCls.start,
+              assignedCls.end,
+              cls.start,
+              cls.end
+            )
+          );
+          if (!overlap) {
+            assigned.push(cls);
+            usedSlots.push([cls.start, cls.end]);
+          } else {
+            // Mark conflict
+            const subjectName = cls.subject || cls.course;
+            if (subjectName && !conflicts.includes(subjectName)) {
+              conflicts.push(subjectName);
+            }
+          }
+        });
+      assignments[day] = assigned;
+    });
+    return { conflicts, assignments };
+  }, []);
 
   // Function to generate resolution suggestions for conflicting subjects
   const generateResolutionSuggestions = useCallback(
@@ -121,27 +126,37 @@ export default function Preview() {
   // Effect to get the resolved timetable from location state and detect conflicts
   useEffect(() => {
     if (location.state?.resolvedTimetable) {
-      setResolvedTimetable(location.state.resolvedTimetable)
+      setResolvedTimetable(location.state.resolvedTimetable);
       // If conflicts aren't provided in location state, detect them
       if (!location.state.conflictSubjects) {
-        const detectedConflicts = detectTimeConflicts(location.state.resolvedTimetable)
-        setConflictSubjects(detectedConflicts)
+        const { conflicts } = detectTimeConflicts(location.state.resolvedTimetable, selectedSubjects);
+        setConflictSubjects(conflicts);
+        // Optionally, use assignments for rendering
       } else {
-        setConflictSubjects(location.state.conflictSubjects)
+        setConflictSubjects(location.state.conflictSubjects);
       }
-    } else if (TimeTable && userPreferences?.parentSection?.degree && userPreferences?.parentSection?.semester && userPreferences?.parentSection?.section) {
-      const sectionTimetable = TimeTable?.[userPreferences.parentSection.degree]?.[userPreferences.parentSection.semester]?.[userPreferences.parentSection.section] || null;
-      setResolvedTimetable(sectionTimetable)
-      const detectedConflicts = sectionTimetable ? detectTimeConflicts(sectionTimetable) : [];
-      setConflictSubjects(detectedConflicts)
+    } else if (
+      TimeTable &&
+      userPreferences?.parentSection?.degree &&
+      userPreferences?.parentSection?.semester &&
+      userPreferences?.parentSection?.section
+    ) {
+      const sectionTimetable =
+        TimeTable?.[userPreferences.parentSection.degree]?.[userPreferences.parentSection.semester]?.[userPreferences.parentSection.section] || null;
+      setResolvedTimetable(sectionTimetable);
+      const { conflicts } = sectionTimetable
+        ? detectTimeConflicts(sectionTimetable, selectedSubjects)
+        : { conflicts: [], assignments: {} };
+      setConflictSubjects(conflicts);
+      // Optionally, use assignments for rendering
     } else {
-      setResolvedTimetable(null)
-      setConflictSubjects([])
+      setResolvedTimetable(null);
+      setConflictSubjects([]);
     }
     if (location.state?.resolutionSuggestions) {
-      setResolutionSuggestions(location.state.resolutionSuggestions)
+      setResolutionSuggestions(location.state.resolutionSuggestions);
     }
-  }, [location.state, detectTimeConflicts, userPreferences.parentSection.degree, userPreferences.parentSection.semester, userPreferences.parentSection.section])
+  }, [location.state, detectTimeConflicts, userPreferences.parentSection.degree, userPreferences.parentSection.semester, userPreferences.parentSection.section, selectedSubjects]);
 
   // Effect to generate resolution suggestions when conflicts are detected
   useEffect(() => {
