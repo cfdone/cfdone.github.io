@@ -13,7 +13,7 @@ import {
 import TimeTable from '../../assets/timetable.json'
 import logo from '../../assets/logo.svg'
 import StepTrack from '../../components/Onboarding/StepTrack'
-import { resolveClashes } from '../../utils/smartClashResolver'
+import { resolveClashesWithAI, analyzeTimetableQuality } from '../../utils/ai/aiClashResolver'
 
 export default function Preferences() {
   const navigate = useNavigate()
@@ -140,32 +140,45 @@ export default function Preferences() {
     setExpandedSubjects(newExpanded)
   }
 
-  // Loader state for button
+  // AI processing states
   const [isCreating, setIsCreating] = useState(false)
   const [progress, setProgress] = useState(0)
+  const [aiPhase, setAiPhase] = useState('')
+  const [aiStatus, setAiStatus] = useState('')
 
   const handleCreateTimetable = async () => {
     setIsCreating(true)
     setProgress(0)
     
     try {
-      // Simulate progress while resolving
-      const progressInterval = setInterval(() => {
-        setProgress(prev => Math.min(prev + 10, 90))
-      }, 150)
-      
-      console.log('Starting smart clash resolution...')
+      console.log('🤖 Starting AI-powered clash resolution...')
       console.log('User preferences:', userPreferences)
       console.log('Selected subjects:', selectedSubjects)
       
-      // Use the smart clash resolver
-      const result = resolveClashes(selectedSubjects, userPreferences)
+      // Use the AI clash resolver with real-time progress updates
+      const result = await resolveClashesWithAI(selectedSubjects, userPreferences, (progressUpdate) => {
+        if (progressUpdate.phase === 'genetic') {
+          // Genetic algorithm progress (0-70%)
+          const geneticProgress = (progressUpdate.progress / 100) * 70
+          setProgress(Math.min(geneticProgress, 70))
+          setAiPhase('genetic')
+          setAiStatus(`🧬 Generation ${progressUpdate.generation}/${progressUpdate.totalGenerations || 50} - Best Score: ${progressUpdate.bestScore || 0}`)
+        } else if (progressUpdate.phase === 'annealing') {
+          // Simulated annealing progress (70-95%)
+          const annealingProgress = 70 + (progressUpdate.iteration / 1000) * 25
+          setProgress(Math.min(annealingProgress, 95))
+          setAiPhase('annealing')
+          setAiStatus(`🔥 Fine-tuning... Temperature: ${Math.round(progressUpdate.temperature || 0)}`)
+        }
+      })
       
-      clearInterval(progressInterval)
+      // Analyze timetable quality
+      const qualityAnalysis = analyzeTimetableQuality(result.timetable, result.conflicts, result.aiMetrics)
+      
       setProgress(100)
       
       // Small delay to show completion
-      await new Promise(resolve => setTimeout(resolve, 300))
+      await new Promise(resolve => setTimeout(resolve, 500))
       
       navigate('/preview', {
         state: {
@@ -176,17 +189,20 @@ export default function Preferences() {
           resolutionSuggestions: result.conflicts.map(subject => ({
             subject,
             message: result.success 
-              ? 'No conflicts detected for this subject.'
-              : 'This subject has time conflicts that could not be resolved automatically.',
+              ? 'AI optimally placed this subject with no conflicts.'
+              : 'AI minimized conflicts but some scheduling overlaps remain.',
             alternatives: []
           })),
           resolutionSuccess: result.success,
           resolutionDetails: result.conflictDetails || [],
-          resolutionMessage: result.message
+          resolutionMessage: result.message,
+          skippedSubjects: result.skippedSubjects || [],
+          aiMetrics: result.aiMetrics,
+          qualityAnalysis
         },
       })
     } catch (error) {
-      console.error('Error resolving clashes:', error)
+      console.error('❌ AI clash resolution failed:', error)
       setIsCreating(false)
       setProgress(0)
       // You can add error toast here
@@ -527,16 +543,26 @@ export default function Preferences() {
           onClick={handleCreateTimetable}
         >
           {isCreating ? (
-            <div className="flex flex-col items-center w-full">
-              <div className="w-full  bg-white/20 rounded-full h-1.5">
+            <div className="flex flex-col items-center w-full gap-1">
+              <div className="w-full bg-white/20 rounded-full h-1.5">
                 <div
                   className="bg-white h-1.5 rounded-full transition-all duration-75 ease-out"
                   style={{ width: `${progress}%` }}
                 ></div>
               </div>
+              {aiPhase && (
+                <div className="text-xs opacity-90">
+                  {aiPhase === 'genetic' ? '🤖 AI Optimization' : '✨ Fine-tuning'}
+                </div>
+              )}
+              {aiStatus && (
+                <div className="text-xs opacity-70 text-center truncate w-full">
+                  {aiStatus}
+                </div>
+              )}
             </div>
           ) : (
-            'Create Timetable'
+            '🤖 Create with AI'
           )}
         </button>
       </div>

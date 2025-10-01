@@ -30,13 +30,16 @@ export default function Preview() {
     )
   }, [location.state?.userPreferences])
 
-  // Get resolved data from navigation state (from smart resolver)
+  // Get resolved data from navigation state (from AI resolver)
   const [resolvedTimetable, setResolvedTimetable] = useState(null)
   const [conflictSubjects, setConflictSubjects] = useState([])
   const [resolutionSuggestions, setResolutionSuggestions] = useState([])
   const [resolutionSuccess, setResolutionSuccess] = useState(false)
   const [resolutionDetails, setResolutionDetails] = useState([])
   const [resolutionMessage, setResolutionMessage] = useState('')
+  const [skippedSubjects, setSkippedSubjects] = useState([])
+  const [aiMetrics, setAiMetrics] = useState(null)
+  const [qualityAnalysis, setQualityAnalysis] = useState(null)
 
   const [isResolving] = useState(false)
   const [resolutionProgress] = useState(0)
@@ -136,13 +139,16 @@ export default function Preview() {
     console.log('Preview: Location state:', location.state)
     
     if (location.state?.resolvedTimetable) {
-      console.log('Using resolved timetable from smart resolver')
+      console.log('Using resolved timetable from AI resolver')
       setResolvedTimetable(location.state.resolvedTimetable)
       setConflictSubjects(location.state.conflictSubjects || [])
       setResolutionSuggestions(location.state.resolutionSuggestions || [])
       setResolutionSuccess(location.state.resolutionSuccess || false)
       setResolutionDetails(location.state.resolutionDetails || [])
       setResolutionMessage(location.state.resolutionMessage || '')
+      setSkippedSubjects(location.state.skippedSubjects || [])
+      setAiMetrics(location.state.aiMetrics || null)
+      setQualityAnalysis(location.state.qualityAnalysis || null)
     } else {
       console.log('No resolved timetable found, falling back to parent section')
       
@@ -219,26 +225,60 @@ export default function Preview() {
                           const degree = cls.degree || userPreferences.parentSection.degree || 'N/A';
                           const semester = cls.semester || userPreferences.parentSection.semester || 'N/A';
                           const section = cls.section || userPreferences.parentSection.section || 'N/A';
+                          
+                          // Check if this is from parent section
+                          const isParentSection = degree === userPreferences.parentSection.degree &&
+                                                semester === userPreferences.parentSection.semester &&
+                                                section === userPreferences.parentSection.section;
+                          
                           return (
                             <div
                               key={idx}
-                              className={`p-4 transition-colors ${isConflict ? 'bg-yellow-500/10 border-l-4 border-yellow-500' : ''}`}
+                              className={`p-4 transition-colors ${
+                                isConflict 
+                                  ? 'bg-yellow-500/10 border-l-4 border-yellow-500' 
+                                  : isParentSection 
+                                    ? 'bg-green-500/5 border-l-4 border-green-500/30'
+                                    : 'bg-blue-500/5 border-l-4 border-blue-500/30'
+                              }`}
                             >
                               <div className="flex items-start justify-between">
                                 {/* Left: Course info */}
                                 <div className="flex-1 pr-4">
                                   <div className="flex items-center gap-2 mb-2">
                                     <div
-                                      className={`w-2 h-2 rounded-full flex-shrink-0 ${isConflict ? 'bg-yellow-400 animate-pulse' : 'bg-accent/40'}`}
+                                      className={`w-2 h-2 rounded-full flex-shrink-0 ${
+                                        isConflict 
+                                          ? 'bg-yellow-400 animate-pulse' 
+                                          : isParentSection 
+                                            ? 'bg-green-400' 
+                                            : 'bg-blue-400'
+                                      }`}
                                     ></div>
                                     <h4
-                                      className={` font-semibold text-sm ${isConflict ? 'text-yellow-400' : 'text-white'}`}
+                                      className={`font-semibold text-sm ${
+                                        isConflict 
+                                          ? 'text-yellow-400' 
+                                          : isParentSection 
+                                            ? 'text-green-300' 
+                                            : 'text-white'
+                                      }`}
                                     >
                                       {cls.subject || cls.course}
                                     </h4>
                                     {isConflict && (
-                                      <span className="bg-yellow-500/20 text-yellow-400 px-2 py-0.5 rounded-full text-xs  font-semibold">
-                                        Conflict
+                                      <span className="bg-yellow-500/20 text-yellow-400 px-2 py-0.5 rounded-full text-xs font-semibold">
+                                        ⚠️ Conflict
+                                      </span>
+                                    )}
+                                    {isParentSection && !isConflict && (
+                                      <span className="bg-green-500/20 text-green-400 px-2 py-0.5 rounded-full text-xs font-semibold">
+                                        🎯 Parent
+                                      </span>
+                                    )}
+                                    {!isParentSection && !isConflict && (
+                                      <span className="bg-blue-500/20 text-blue-400 px-2 py-0.5 rounded-full text-xs font-semibold">
+                                        🤖 AI
                                       </span>
                                     )}
                                   </div>
@@ -283,9 +323,9 @@ export default function Preview() {
         <img src={logo} alt="Logo" className="w-15 h-15 user-select-none mb-2" />
         <StepTrack currentStep={4} totalSteps={4} />
         <div className="text-center mb-6">
-          <h1 className=" text-accent font-semibold text-xl mb-2">Review Your Timetable</h1>
+          <h1 className=" text-accent font-semibold text-xl mb-2">🤖 AI-Optimized Timetable</h1>
           <p className="text-white/70 text-sm ">
-            Review your schedule before creating the final timetable
+            Review your AI-generated schedule with intelligent conflict resolution
           </p>
           {/* Toast for error messages */}
           <Toast
@@ -368,6 +408,77 @@ export default function Preview() {
                       </div>
                     )}
                   </div>
+
+                  {/* AI Metrics and Quality Analysis */}
+                  {aiMetrics && (
+                    <div className="mt-3 p-4 rounded-3xl border bg-gradient-to-r from-purple-500/10 to-blue-500/10 border-purple-500/20 text-white">
+                      <div className="flex items-center gap-2 mb-2">
+                        <div className="w-2 h-2 rounded-full bg-purple-400 animate-pulse"></div>
+                        <div className="font-semibold">🤖 AI Performance Metrics</div>
+                      </div>
+                      <div className="grid grid-cols-2 gap-3 text-sm">
+                        <div className="bg-white/5 rounded-2xl p-3">
+                          <div className="text-purple-300 text-xs font-semibold">Algorithm</div>
+                          <div className="text-white">{aiMetrics.algorithm?.split('+')[0] || 'AI'}</div>
+                        </div>
+                        <div className="bg-white/5 rounded-2xl p-3">
+                          <div className="text-purple-300 text-xs font-semibold">Final Score</div>
+                          <div className="text-white">{aiMetrics.finalScore || 0}</div>
+                        </div>
+                        <div className="bg-white/5 rounded-2xl p-3">
+                          <div className="text-purple-300 text-xs font-semibold">Subjects Placed</div>
+                          <div className="text-white">{aiMetrics.subjectsScheduled || 0}/{selectedSubjects.length}</div>
+                        </div>
+                        <div className="bg-white/5 rounded-2xl p-3">
+                          <div className="text-purple-300 text-xs font-semibold">Conflicts</div>
+                          <div className="text-white">{aiMetrics.totalConflicts || 0}</div>
+                        </div>
+                      </div>
+                      {skippedSubjects.length > 0 && (
+                        <div className="mt-3 p-2 bg-yellow-500/10 rounded-2xl">
+                          <div className="text-yellow-400 text-xs font-semibold">Skipped Subjects (All Sections Full)</div>
+                          <div className="text-yellow-300 text-xs">{skippedSubjects.join(', ')}</div>
+                        </div>
+                      )}
+                    </div>
+                  )}
+
+                  {/* Quality Analysis */}
+                  {qualityAnalysis && (
+                    <div className="mt-3 p-4 rounded-3xl border bg-gradient-to-r from-green-500/10 to-emerald-500/10 border-green-500/20 text-white">
+                      <div className="flex items-center justify-between mb-2">
+                        <div className="flex items-center gap-2">
+                          <div className="font-semibold">📊 Timetable Quality</div>
+                          <div className={`px-2 py-0.5 rounded-full text-xs font-semibold ${
+                            qualityAnalysis.overallScore === 'A+' ? 'bg-green-500/20 text-green-400' :
+                            qualityAnalysis.overallScore === 'A' ? 'bg-blue-500/20 text-blue-400' :
+                            'bg-yellow-500/20 text-yellow-400'
+                          }`}>
+                            {qualityAnalysis.overallScore}
+                          </div>
+                        </div>
+                        <div className="text-sm opacity-70">
+                          {qualityAnalysis.aiConfidence}% Confidence
+                        </div>
+                      </div>
+                      <div className="space-y-2">
+                        {qualityAnalysis.insights.map((insight, idx) => (
+                          <div key={idx} className="text-sm text-white/80">
+                            {insight}
+                          </div>
+                        ))}
+                        {qualityAnalysis.recommendations.length > 0 && (
+                          <div className="mt-3 p-2 bg-blue-500/10 rounded-2xl">
+                            <div className="text-blue-400 text-xs font-semibold mb-1">Recommendations</div>
+                            {qualityAnalysis.recommendations.map((rec, idx) => (
+                              <div key={idx} className="text-blue-300 text-xs">• {rec}</div>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  )}
+
                   {/* GroqCloud AI Review Card with Reverify Button */}
                   <div className="mt-3 p-4 rounded-3xl border bg-accent/10 border-accent/20 text-white">
                     <div className="flex items-center justify-between">
