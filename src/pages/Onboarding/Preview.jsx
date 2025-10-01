@@ -30,16 +30,9 @@ export default function Preview() {
     )
   }, [location.state?.userPreferences])
 
-  // Get resolved data from navigation state (from AI resolver)
   const [resolvedTimetable, setResolvedTimetable] = useState(null)
   const [conflictSubjects, setConflictSubjects] = useState([])
   const [resolutionSuggestions, setResolutionSuggestions] = useState([])
-  const [resolutionSuccess, setResolutionSuccess] = useState(false)
-  const [resolutionDetails, setResolutionDetails] = useState([])
-  const [resolutionMessage, setResolutionMessage] = useState('')
-  const [skippedSubjects, setSkippedSubjects] = useState([])
-  const [aiMetrics, setAiMetrics] = useState(null)
-  const [qualityAnalysis, setQualityAnalysis] = useState(null)
 
   const [isResolving] = useState(false)
   const [resolutionProgress] = useState(0)
@@ -56,76 +49,67 @@ export default function Preview() {
   const [isUploading, setIsUploading] = useState(false)
   const [uploadProgress, setUploadProgress] = useState(0)
 
-  // Simple conflict detection for display purposes only
-  const detectTimeConflicts = useCallback((timetable = []) => {
-    const conflicts = [];
-    
-    if (!timetable || typeof timetable !== 'object') {
-      return { conflicts: [], assignments: {} };
-    }
+  // Function to check for time conflicts in the timetable
+  const detectTimeConflicts = useCallback(timetable => {
+    const conflicts = []
 
-    // Check each day for time overlaps
-    Object.entries(timetable).forEach(([, classes]) => {
-      if (!Array.isArray(classes) || classes.length < 2) {
-        return;
-      }
-      
+    // Check for conflicts in each day's schedule
+    Object.values(timetable).forEach(classes => {
+      if (classes.length < 2) return // No conflicts possible with 0-1 classes
+
       // Sort classes by start time
-      const sortedClasses = classes.sort((a, b) => timeToMinutes(a.start) - timeToMinutes(b.start));
-      
-      // Check for overlaps
+      const sortedClasses = [...classes].sort(
+        (a, b) => timeToMinutes(a.start) - timeToMinutes(b.start)
+      )
+
+      // Check for overlaps using the new overlap detection
       for (let i = 0; i < sortedClasses.length - 1; i++) {
-        for (let j = i + 1; j < sortedClasses.length; j++) {
-          const class1 = sortedClasses[i];
-          const class2 = sortedClasses[j];
-          
-          if (timeRangesOverlap(class1.start, class1.end, class2.start, class2.end)) {
-            const subject1 = class1.subject || class1.course;
-            const subject2 = class2.subject || class2.course;
-            
-            if (subject1 && !conflicts.includes(subject1)) {
-              conflicts.push(subject1);
-            }
-            if (subject2 && !conflicts.includes(subject2)) {
-              conflicts.push(subject2);
-            }
+        const current = sortedClasses[i]
+        const next = sortedClasses[i + 1]
+
+        // Use the improved overlap detection
+        if (timeRangesOverlap(current.start, current.end, next.start, next.end)) {
+          // Add both subjects to conflicts if they're not already there
+          const currentSubject = current.subject || current.course
+          const nextSubject = next.subject || next.course
+
+          if (currentSubject && !conflicts.includes(currentSubject)) {
+            conflicts.push(currentSubject)
+          }
+          if (nextSubject && !conflicts.includes(nextSubject)) {
+            conflicts.push(nextSubject)
           }
         }
       }
-    });
-    
-    return { conflicts, assignments: timetable };
-  }, []);
+    })
 
-  // Generate resolution suggestions for conflicting subjects
+    return conflicts
+  }, [])
+
+  // Function to generate resolution suggestions for conflicting subjects
   const generateResolutionSuggestions = useCallback(
     (conflicts, subjects) => {
+      // For each conflict, suggest alternate sections/times if available
       return conflicts
         .map(conflictSubject => {
           const subject = subjects.find(s => s.name === conflictSubject)
           if (!subject || !subject.locations || !userPreferences?.parentSection) return null
-          
+          // Find alternative locations (sections) for this subject
           const parentSection = userPreferences.parentSection
           const alternatives = subject.locations.filter(loc => {
-            // Only suggest sections that aren't marked as full
-            const sectionKey = `${subject.name}-${loc.degree}-${loc.semester}-${loc.section}`
-            const isNotFull = userPreferences.seatAvailability[sectionKey] !== false
-            
-            // Only suggest if not in parent section and not full
+            // Only suggest if not in parent section
             return (
-              isNotFull &&
-              (loc.degree !== parentSection.degree ||
-               loc.semester !== parentSection.semester ||
-               loc.section !== parentSection.section)
+              loc.degree !== parentSection.degree ||
+              loc.semester !== parentSection.semester ||
+              loc.section !== parentSection.section
             )
           })
-          
           return {
             subject: subject.name,
             message:
               alternatives.length > 0
-                ? 'Try selecting a different section that has available seats to avoid conflicts.'
-                : 'No alternate sections with available seats. Manual adjustment may be required.',
+                ? 'Try selecting a different section or time slot for this subject to avoid conflicts.'
+                : 'No alternate sections available. Manual adjustment may be required.',
             alternatives,
           }
         })
@@ -134,47 +118,32 @@ export default function Preview() {
     [userPreferences]
   )
 
-  // Effect to handle resolved timetable from navigation state
+  // Effect to get the resolved timetable from location state or generate it
   useEffect(() => {
-    console.log('Preview: Location state:', location.state)
-    
     if (location.state?.resolvedTimetable) {
-      console.log('Using resolved timetable from AI resolver')
       setResolvedTimetable(location.state.resolvedTimetable)
-      setConflictSubjects(location.state.conflictSubjects || [])
-      setResolutionSuggestions(location.state.resolutionSuggestions || [])
-      setResolutionSuccess(location.state.resolutionSuccess || false)
-      setResolutionDetails(location.state.resolutionDetails || [])
-      setResolutionMessage(location.state.resolutionMessage || '')
-      setSkippedSubjects(location.state.skippedSubjects || [])
-      setAiMetrics(location.state.aiMetrics || null)
-      setQualityAnalysis(location.state.qualityAnalysis || null)
-    } else {
-      console.log('No resolved timetable found, falling back to parent section')
-      
-      // Fallback: try to get timetable from parent section (but this shouldn't happen with smart resolver)
-      if (
-        TimeTable &&
-        userPreferences?.parentSection?.degree &&
-        userPreferences?.parentSection?.semester &&
-        userPreferences?.parentSection?.section
-      ) {
-        const parentTimetable =
-          TimeTable[userPreferences.parentSection.degree]?.[userPreferences.parentSection.semester]?.[userPreferences.parentSection.section]
-        
-        if (parentTimetable) {
-          setResolvedTimetable(parentTimetable)
-          const { conflicts } = detectTimeConflicts(parentTimetable)
-          setConflictSubjects(conflicts)
-        } else {
-          setErrorMsg('No timetable data found for selected parent section')
-        }
+
+      // If conflicts aren't provided in location state, detect them
+      if (!location.state.conflictSubjects) {
+        const detectedConflicts = detectTimeConflicts(location.state.resolvedTimetable)
+        setConflictSubjects(detectedConflicts)
       } else {
-        setResolvedTimetable(null)
-        setConflictSubjects([])
+        setConflictSubjects(location.state.conflictSubjects)
       }
+    } else if (selectedSubjects.length > 0) {
+      // Generate a simple mock timetable for preview
+      const mockTimetable = generateMockTimetable(selectedSubjects, userPreferences)
+      setResolvedTimetable(mockTimetable)
+
+      // Detect conflicts in the mock timetable
+      const detectedConflicts = detectTimeConflicts(mockTimetable)
+      setConflictSubjects(detectedConflicts)
     }
-  }, [location.state, detectTimeConflicts, userPreferences]);
+
+    if (location.state?.resolutionSuggestions) {
+      setResolutionSuggestions(location.state.resolutionSuggestions)
+    }
+  }, [location.state, selectedSubjects, userPreferences, detectTimeConflicts])
 
   // Effect to generate resolution suggestions when conflicts are detected
   useEffect(() => {
@@ -185,17 +154,92 @@ export default function Preview() {
     }
   }, [conflictSubjects, selectedSubjects, generateResolutionSuggestions])
 
+  // Helper function to generate a realistic timetable for preview using actual timetable data
+  const generateMockTimetable = (subjects, userPreferences) => {
+    const timetable = {}
+    const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
+    days.forEach(day => {
+      timetable[day] = []
+    })
+
+    subjects.forEach(subject => {
+      // Filter out locations marked as Full
+      const availableLocations = (subject.locations || []).filter(loc => {
+        const sectionKey = `${subject.name}-${loc.degree}-${loc.semester}-${loc.section}`
+        return userPreferences?.seatAvailability?.[sectionKey] !== false
+      })
+
+      if (availableLocations.length === 0) {
+        // Optionally: show a warning or skip assignment
+        return
+      }
+
+      let assigned = false
+      for (const loc of availableLocations) {
+        if (!loc.degree || !loc.semester || !loc.section) continue
+        const sectionData = TimeTable?.[loc.degree]?.[loc.semester]?.[loc.section]
+        if (sectionData) {
+          let foundSlot = false
+          Object.entries(sectionData).forEach(([day, slots]) => {
+            slots.forEach(slot => {
+              if (slot.course === subject.name) {
+                const hasConflict = timetable[day].some(existing =>
+                  timeRangesOverlap(existing.start, existing.end, slot.start, slot.end)
+                )
+                if (!hasConflict) {
+                  timetable[day].push({
+                    ...slot,
+                    subject: subject.name,
+                    degree: loc.degree,
+                    semester: loc.semester,
+                    section: loc.section,
+                  })
+                  assigned = true
+                  foundSlot = true
+                }
+              }
+            })
+          })
+          if (foundSlot) break
+        }
+      }
+      // Fallback: only assign if there is at least one available location
+      if (!assigned && availableLocations.length > 0) {
+        for (const day of days) {
+          const hasConflict = timetable[day].some(existing =>
+            timeRangesOverlap(existing.start, existing.end, '8:45', '10:10')
+          )
+          if (!hasConflict) {
+            const loc = availableLocations[0]
+            timetable[day].push({
+              subject: subject.name,
+              start: '8:45',
+              end: '10:10',
+              course: subject.name,
+              teacher: loc.teacher || 'TBD',
+              room: loc.room || 'TBD',
+              degree: loc.degree || 'TBD',
+              semester: loc.semester || 'TBD',
+              section: loc.section || 'TBD',
+            })
+            break
+          }
+        }
+      }
+    })
+    return timetable
+  }
 
   // Weekly timetable preview styled like WeeklySchedule.jsx
   const renderTimetableByDay = timetable => {
-    if (!timetable) return null;
-    const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
+    if (!timetable) return null
+    const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
     return (
       <div className="space-y-3">
         {days
           .filter(day => Object.prototype.hasOwnProperty.call(timetable, day))
           .map(day => {
-            const classes = timetable[day] || [];
+            const classes = timetable[day] || []
             return (
               <div key={day}>
                 <div className="bg-white/2 rounded-3xl border border-accent/5 overflow-hidden">
@@ -221,64 +265,27 @@ export default function Preview() {
                       classes
                         .sort((a, b) => timeToMinutes(a.start) - timeToMinutes(b.start))
                         .map((cls, idx) => {
-                          const isConflict = conflictSubjects.includes(cls.subject || cls.course);
-                          const degree = cls.degree || userPreferences.parentSection.degree || 'N/A';
-                          const semester = cls.semester || userPreferences.parentSection.semester || 'N/A';
-                          const section = cls.section || userPreferences.parentSection.section || 'N/A';
-                          
-                          // Check if this is from parent section
-                          const isParentSection = degree === userPreferences.parentSection.degree &&
-                                                semester === userPreferences.parentSection.semester &&
-                                                section === userPreferences.parentSection.section;
-                          
+                          const isConflict = conflictSubjects.includes(cls.subject || cls.course)
                           return (
                             <div
                               key={idx}
-                              className={`p-4 transition-colors ${
-                                isConflict 
-                                  ? 'bg-yellow-500/10 border-l-4 border-yellow-500' 
-                                  : isParentSection 
-                                    ? 'bg-green-500/5 border-l-4 border-green-500/30'
-                                    : 'bg-blue-500/5 border-l-4 border-blue-500/30'
-                              }`}
+                              className={`p-4 transition-colors ${isConflict ? 'bg-yellow-500/10 border-l-4 border-yellow-500' : ''}`}
                             >
                               <div className="flex items-start justify-between">
                                 {/* Left: Course info */}
                                 <div className="flex-1 pr-4">
                                   <div className="flex items-center gap-2 mb-2">
                                     <div
-                                      className={`w-2 h-2 rounded-full flex-shrink-0 ${
-                                        isConflict 
-                                          ? 'bg-yellow-400 animate-pulse' 
-                                          : isParentSection 
-                                            ? 'bg-green-400' 
-                                            : 'bg-blue-400'
-                                      }`}
+                                      className={`w-2 h-2 rounded-full flex-shrink-0 ${isConflict ? 'bg-yellow-400 animate-pulse' : 'bg-accent/40'}`}
                                     ></div>
                                     <h4
-                                      className={`font-semibold text-sm ${
-                                        isConflict 
-                                          ? 'text-yellow-400' 
-                                          : isParentSection 
-                                            ? 'text-green-300' 
-                                            : 'text-white'
-                                      }`}
+                                      className={` font-semibold text-sm ${isConflict ? 'text-yellow-400' : 'text-white'}`}
                                     >
                                       {cls.subject || cls.course}
                                     </h4>
                                     {isConflict && (
-                                      <span className="bg-yellow-500/20 text-yellow-400 px-2 py-0.5 rounded-full text-xs font-semibold">
-                                        ⚠️ Conflict
-                                      </span>
-                                    )}
-                                    {isParentSection && !isConflict && (
-                                      <span className="bg-green-500/20 text-green-400 px-2 py-0.5 rounded-full text-xs font-semibold">
-                                        🎯 Parent
-                                      </span>
-                                    )}
-                                    {!isParentSection && !isConflict && (
-                                      <span className="bg-blue-500/20 text-blue-400 px-2 py-0.5 rounded-full text-xs font-semibold">
-                                        🤖 AI
+                                      <span className="bg-yellow-500/20 text-yellow-400 px-2 py-0.5 rounded-full text-xs  font-semibold">
+                                        Conflict
                                       </span>
                                     )}
                                   </div>
@@ -291,7 +298,8 @@ export default function Preview() {
                                       {cls.teacher || 'Teacher TBD'}
                                     </div>
                                     <div className="text-xs  text-accent/50">
-                                      {degree} • S{semester}-{section}
+                                      {cls.degree || 'N/A'} • S{cls.semester || 'N/A'}-
+                                      {cls.section || 'N/A'}
                                     </div>
                                   </div>
                                 </div>
@@ -304,16 +312,16 @@ export default function Preview() {
                                 </div>
                               </div>
                             </div>
-                          );
+                          )
                         })
                     )}
                   </div>
                 </div>
               </div>
-            );
+            )
           })}
       </div>
-    );
+    )
   }
 
   return (
@@ -323,9 +331,9 @@ export default function Preview() {
         <img src={logo} alt="Logo" className="w-15 h-15 user-select-none mb-2" />
         <StepTrack currentStep={4} totalSteps={4} />
         <div className="text-center mb-6">
-          <h1 className=" text-accent font-semibold text-xl mb-2">🤖 AI-Optimized Timetable</h1>
+          <h1 className=" text-accent font-semibold text-xl mb-2">Review Your Timetable</h1>
           <p className="text-white/70 text-sm ">
-            Review your AI-generated schedule with intelligent conflict resolution
+            Review your schedule before creating the final timetable
           </p>
           {/* Toast for error messages */}
           <Toast
@@ -362,34 +370,34 @@ export default function Preview() {
                 </div>
               )}
 
-          {/* Resolution Status Card */}
-          {resolvedTimetable && !isResolving && (
+              {/* Move Conflict Card and GroqCloud Card to Top */}
+              {resolvedTimetable && !isResolving && (
                 <>
                   <div
                     className={`p-4 rounded-3xl border ${
-                      resolutionSuccess && conflictSubjects.length === 0
+                      conflictSubjects.length === 0
                         ? 'bg-green-500/10 border-green-500/20 text-green-400'
                         : 'bg-yellow-500/10 border-yellow-500/20 text-yellow-400'
                     }`}
                   >
                     <div className="flex items-center gap-2 mb-2">
                       <div>
-                        {resolutionSuccess && conflictSubjects.length === 0 ? (
+                        {conflictSubjects.length === 0 ? (
                           <CheckCircle className="w-5 h-5 text-green-400" />
                         ) : (
                           <AlertTriangle className="w-5 h-5 text-yellow-400" />
                         )}
                       </div>
                       <div className="font-semibold">
-                        {resolutionSuccess && conflictSubjects.length === 0
-                          ? 'Perfect Schedule Created!'
-                          : `${conflictSubjects.length} Subject${conflictSubjects.length > 1 ? 's' : ''} Have Conflicts`}
+                        {conflictSubjects.length === 0
+                          ? 'Parent Section Schedule Created!'
+                          : `${conflictSubjects.length} Subject${conflictSubjects.length > 1 ? 's' : ''} Need${conflictSubjects.length > 1 ? '' : 's'} Attention`}
                       </div>
                     </div>
                     <div className="text-sm opacity-80">
-                      {resolutionMessage || (resolutionSuccess && conflictSubjects.length === 0
-                        ? `Optimal schedule found with no time conflicts for your parent section.`
-                        : 'Smart resolver found the best possible schedule, but some conflicts remain.')}
+                      {conflictSubjects.length === 0
+                        ? `Perfect schedule optimized for your parent section: ${userPreferences.parentSection.degree} • Semester ${userPreferences.parentSection.semester} • Section ${userPreferences.parentSection.section}`
+                        : 'Schedule created with parent section optimization, but some subjects may need manual adjustment'}
                     </div>
                     {userPreferences.parentSection.degree && (
                       <div className="mt-2 text-xs opacity-70 flex items-center gap-1">
@@ -397,88 +405,17 @@ export default function Preview() {
                         {userPreferences.parentSection.degree} • Semester{' '}
                         {userPreferences.parentSection.semester} • Section{' '}
                         {userPreferences.parentSection.section}
+                        {Object.values(userPreferences.seatAvailability).filter(Boolean).length >
+                          0 &&
+                          ` • ${Object.values(userPreferences.seatAvailability).filter(Boolean).length} confirmed seats`}
                       </div>
                     )}
-                    {/* Check if no classes could be scheduled */}
-                    {resolvedTimetable && !Object.values(resolvedTimetable).some(day => 
-                      Array.isArray(day) && day.length > 0
-                    ) && (
-                      <div className="mt-2 text-xs text-red-400 font-semibold">
-                        ⚠️ No classes could be scheduled - all selected sections may be marked as full.
-                      </div>
-                    )}
+                    {/* Prompt user to reverify timetable */}
+                    <div className="mt-2 text-xs text-yellow-300 font-semibold">
+                      Please reverify your timetable and class times for each day before proceeding.
+                      <br />
+                    </div>
                   </div>
-
-                  {/* AI Metrics and Quality Analysis */}
-                  {aiMetrics && (
-                    <div className="mt-3 p-4 rounded-3xl border bg-gradient-to-r from-purple-500/10 to-blue-500/10 border-purple-500/20 text-white">
-                      <div className="flex items-center gap-2 mb-2">
-                        <div className="w-2 h-2 rounded-full bg-purple-400 animate-pulse"></div>
-                        <div className="font-semibold">🤖 AI Performance Metrics</div>
-                      </div>
-                      <div className="grid grid-cols-2 gap-3 text-sm">
-                        <div className="bg-white/5 rounded-2xl p-3">
-                          <div className="text-purple-300 text-xs font-semibold">Algorithm</div>
-                          <div className="text-white">{aiMetrics.algorithm?.split('+')[0] || 'AI'}</div>
-                        </div>
-                        <div className="bg-white/5 rounded-2xl p-3">
-                          <div className="text-purple-300 text-xs font-semibold">Final Score</div>
-                          <div className="text-white">{aiMetrics.finalScore || 0}</div>
-                        </div>
-                        <div className="bg-white/5 rounded-2xl p-3">
-                          <div className="text-purple-300 text-xs font-semibold">Subjects Placed</div>
-                          <div className="text-white">{aiMetrics.subjectsScheduled || 0}/{selectedSubjects.length}</div>
-                        </div>
-                        <div className="bg-white/5 rounded-2xl p-3">
-                          <div className="text-purple-300 text-xs font-semibold">Conflicts</div>
-                          <div className="text-white">{aiMetrics.totalConflicts || 0}</div>
-                        </div>
-                      </div>
-                      {skippedSubjects.length > 0 && (
-                        <div className="mt-3 p-2 bg-yellow-500/10 rounded-2xl">
-                          <div className="text-yellow-400 text-xs font-semibold">Skipped Subjects (All Sections Full)</div>
-                          <div className="text-yellow-300 text-xs">{skippedSubjects.join(', ')}</div>
-                        </div>
-                      )}
-                    </div>
-                  )}
-
-                  {/* Quality Analysis */}
-                  {qualityAnalysis && (
-                    <div className="mt-3 p-4 rounded-3xl border bg-gradient-to-r from-green-500/10 to-emerald-500/10 border-green-500/20 text-white">
-                      <div className="flex items-center justify-between mb-2">
-                        <div className="flex items-center gap-2">
-                          <div className="font-semibold">📊 Timetable Quality</div>
-                          <div className={`px-2 py-0.5 rounded-full text-xs font-semibold ${
-                            qualityAnalysis.overallScore === 'A+' ? 'bg-green-500/20 text-green-400' :
-                            qualityAnalysis.overallScore === 'A' ? 'bg-blue-500/20 text-blue-400' :
-                            'bg-yellow-500/20 text-yellow-400'
-                          }`}>
-                            {qualityAnalysis.overallScore}
-                          </div>
-                        </div>
-                        <div className="text-sm opacity-70">
-                          {qualityAnalysis.aiConfidence}% Confidence
-                        </div>
-                      </div>
-                      <div className="space-y-2">
-                        {qualityAnalysis.insights.map((insight, idx) => (
-                          <div key={idx} className="text-sm text-white/80">
-                            {insight}
-                          </div>
-                        ))}
-                        {qualityAnalysis.recommendations.length > 0 && (
-                          <div className="mt-3 p-2 bg-blue-500/10 rounded-2xl">
-                            <div className="text-blue-400 text-xs font-semibold mb-1">Recommendations</div>
-                            {qualityAnalysis.recommendations.map((rec, idx) => (
-                              <div key={idx} className="text-blue-300 text-xs">• {rec}</div>
-                            ))}
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  )}
-
                   {/* GroqCloud AI Review Card with Reverify Button */}
                   <div className="mt-3 p-4 rounded-3xl border bg-accent/10 border-accent/20 text-white">
                     <div className="flex items-center justify-between">
@@ -559,21 +496,14 @@ export default function Preview() {
               <div className="space-y-4">
                 {/* Handler: Show warning if all subjects are skipped (all sections full) */}
                 {resolvedTimetable &&
-                  Array.isArray(Object.values(resolvedTimetable)) &&
-                  Object.values(resolvedTimetable).every(day => Array.isArray(day) && day.length === 0) && (
+                  Object.values(resolvedTimetable).every(day => day.length === 0) && (
                     <div className="p-4 rounded-3xl bg-yellow-500/10 border border-yellow-500/30 text-yellow-700 text-sm font-semibold">
                       All selected subjects are marked as Full in all sections. No classes will be
                       scheduled in your timetable.
                     </div>
                   )}
                 {/* Timetable by Day */}
-                {resolvedTimetable
-                  ? renderTimetableByDay(resolvedTimetable)
-                  : (
-                    <div className="p-4 rounded-3xl bg-red-500/10 border border-red-500/30 text-red-700 text-sm font-semibold">
-                      No timetable data available.
-                    </div>
-                  )}
+                {resolvedTimetable && renderTimetableByDay(resolvedTimetable)}
 
                 {/* Resolution Progress */}
                 {isResolving && (
@@ -592,33 +522,6 @@ export default function Preview() {
                     <div className="text-sm opacity-80">
                       Analyzing {selectedSubjects.length} subjects across all available sections...
                     </div>
-                  </div>
-                )}
-
-                {/* Resolution Details (if any) */}
-                {resolutionDetails.length > 0 && (
-                  <div className="space-y-2">
-                    <div className="font-semibold text-white text-sm mb-2">
-                      Conflict Details:
-                    </div>
-                    {resolutionDetails.slice(0, 5).map((detail, idx) => (
-                      <div key={idx} className="p-3 rounded-xl bg-red-500/10 border border-red-500/20">
-                        <div className="text-red-400 text-sm font-semibold">
-                          {detail.subject1} ↔ {detail.subject2}
-                        </div>
-                        <div className="text-red-300 text-xs">
-                          Both scheduled on {detail.day} at overlapping times
-                        </div>
-                        <div className="text-white/60 text-xs">
-                          {detail.subject1}: {detail.time1} | {detail.subject2}: {detail.time2}
-                        </div>
-                      </div>
-                    ))}
-                    {resolutionDetails.length > 5 && (
-                      <div className="text-white/50 text-xs text-center">
-                        ... and {resolutionDetails.length - 5} more conflicts
-                      </div>
-                    )}
                   </div>
                 )}
 
@@ -689,18 +592,11 @@ export default function Preview() {
             </button>
             <button
               className={` px-4 rounded-3xl w-full h-full text-[15px] transition shadow-md flex items-center justify-center
-                ${selectedSubjects.length > 0 && resolvedTimetable && Object.values(resolvedTimetable).some(day => 
-                  Array.isArray(day) && day.length > 0
-                ) ? 'bg-accent text-white' : 'bg-accent/40 text-white/60'}
+                ${selectedSubjects.length > 0 ? 'bg-accent text-white' : 'bg-accent/40 text-white/60'}
             `}
-              disabled={selectedSubjects.length === 0 || isUploading || !resolvedTimetable || !Object.values(resolvedTimetable).some(day => 
-                Array.isArray(day) && day.length > 0
-              )}
+              disabled={selectedSubjects.length === 0 || isUploading}
               onClick={async () => {
-                const hasAnyClasses = resolvedTimetable && Object.values(resolvedTimetable).some(day => 
-                  Array.isArray(day) && day.length > 0
-                )
-                if (selectedSubjects.length > 0 && resolvedTimetable && hasAnyClasses) {
+                if (selectedSubjects.length > 0 && resolvedTimetable) {
                   setIsUploading(true)
                   setUploadProgress(0)
                   // Animate progress bar
@@ -719,11 +615,8 @@ export default function Preview() {
                     hasConflicts: conflictSubjects.length > 0,
                     conflictSubjects: conflictSubjects,
                     resolutionSuggestions: resolutionSuggestions,
-                    resolutionSuccess: resolutionSuccess,
-                    resolutionDetails: resolutionDetails,
-                    aiReview: grokcloudResponse,
+                    aiReview: grokcloudResponse, // Save AI review for reference
                     studentType: 'lagger',
-                    userPreferences: userPreferences
                   }
                   try {
                     const {
