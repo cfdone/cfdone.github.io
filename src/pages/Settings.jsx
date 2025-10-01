@@ -17,20 +17,17 @@ import {
 import Navbar from '../components/Navbar'
 import LoadingPulseOverlay from '../components/Loading'
 import { useAuth } from '../hooks/useAuth'
-// ...existing code...
+import { supabase } from '../config/supabase'
 import logo from '../assets/logo.svg'
 
 export default function Settings() {
   const [toastMsg, setToastMsg] = useState('')
   const navigate = useNavigate()
   const { user, signOut } = useAuth()
-  // ...existing code...
-
   const [showResetConfirm, setShowResetConfirm] = useState(false)
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false)
   const [expandedAccordion, setExpandedAccordion] = useState(null)
   const [isResetting, setIsResetting] = useState(false)
-  const [isLoading] = useState(false)
   const [isOnline, setIsOnline] = useState(navigator.onLine)
 
   useEffect(() => {
@@ -51,34 +48,59 @@ export default function Settings() {
   const handleResetOnboarding = useCallback(async () => {
     if (!isOnline) return
     setIsResetting(true)
+    setShowResetConfirm(false) // Close modal immediately
+    
     try {
+      // Get current user
+      const {
+        data: { user },
+      } = await supabase.auth.getUser()
+
+      if (user) {
+        // Delete timetable data from Supabase database
+        const { error } = await supabase
+          .from('user_timetables')
+          .delete()
+          .eq('user_id', user.id)
+
+        if (error) {
+          console.error('Error deleting timetable from database:', error)
+          setToastMsg('Failed to reset timetable in database. Please try again.')
+          setIsResetting(false)
+          return
+        }
+      }
+
+      // Clear localStorage
       localStorage.removeItem('onboardingMode')
       localStorage.removeItem('timetableData')
-      navigate('/stepone', { replace: true })
+      localStorage.removeItem('onboardingComplete')
+
+      // Small delay to show reset completion, then navigate
+      setTimeout(() => {
+        navigate('/stepone', { replace: true })
+        setIsResetting(false)
+      }, 800)
+      
+    } catch (error) {
+      console.error('Reset onboarding error:', error)
       setIsResetting(false)
-      setShowResetConfirm(false)
-    } catch {
-      setIsResetting(false)
-      setShowResetConfirm(false)
       setToastMsg('Could not reset your onboarding. Please try again.')
     }
   }, [navigate, isOnline])
 
   const handleLogout = useCallback(async () => {
     if (!isOnline) return
-    setIsResetting(true)
+    setShowLogoutConfirm(false) // Close modal immediately
     try {
-      localStorage.clear()
+      // The AuthContext will handle loading states automatically
       await signOut?.()
-      navigate('/login', { replace: true })
-      setIsResetting(false)
-      setShowLogoutConfirm(false)
-    } catch {
-      setIsResetting(false)
-      setShowLogoutConfirm(false)
+      // Navigation will be handled by RouteGuard after auth state changes
+    } catch (error) {
+      console.error('Logout error:', error)
       setToastMsg('Could not log you out. Please try again.')
     }
-  }, [signOut, navigate, isOnline])
+  }, [signOut, isOnline])
 
   const getTimetableInfo = useCallback(() => {
     try {
@@ -134,7 +156,7 @@ export default function Settings() {
 
   return (
     <>
-      {(isLoading || isResetting) && <LoadingPulseOverlay />}
+      {isResetting && <LoadingPulseOverlay />}
       <div className="fixed inset-0 bg-black">
         {/* Simplified background decoration - same as Home.jsx */}
 

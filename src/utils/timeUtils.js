@@ -2,27 +2,38 @@
  * Convert time string to minutes since midnight
  * Handles both AM/PM and 24-hour formats consistently
  *
- * @param {string} timeStr - Time string in format "H:MM" or "HH:MM"
+ * @param {string} timeStr - Time string in format "H:MM AM/PM" or "HH:MM"
  * @returns {number} - Minutes since midnight
  */
 export const timeToMinutes = timeStr => {
   if (!timeStr || typeof timeStr !== 'string') return 0
 
+  // Handle AM/PM format (e.g., "1:15 PM", "11:30 AM")
+  const ampmMatch = timeStr.match(/(\d{1,2}):(\d{2})\s*(AM|PM)/i)
+  if (ampmMatch) {
+    let hours = parseInt(ampmMatch[1], 10)
+    const minutes = parseInt(ampmMatch[2], 10)
+    const period = ampmMatch[3].toUpperCase()
+    
+    // Convert to 24-hour format
+    if (period === 'PM' && hours !== 12) {
+      hours += 12
+    } else if (period === 'AM' && hours === 12) {
+      hours = 0
+    }
+    
+    return hours * 60 + minutes
+  }
+
+  // Handle 24-hour format
   const timeMatch = timeStr.match(/(\d{1,2}):(\d{2})/)
   if (!timeMatch) return 0
 
-  let hours = parseInt(timeMatch[1], 10)
+  const hours = parseInt(timeMatch[1], 10)
   const minutes = parseInt(timeMatch[2], 10)
 
   // Validate hours and minutes
   if (hours < 0 || hours > 23 || minutes < 0 || minutes > 59) return 0
-
-  // Handle PM conversion for university schedule
-  // Assume 1:00-7:59 are PM (add 12 hours) but 12:00-12:59 are already correct as noon
-  // 8:00-11:59 are AM (keep as is)
-  if (hours >= 1 && hours < 8 && hours !== 12) {
-    hours += 12 // Convert to 24-hour format
-  }
 
   return hours * 60 + minutes
 }

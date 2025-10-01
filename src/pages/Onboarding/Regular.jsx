@@ -6,19 +6,16 @@ import { Tag, GraduationCap, Calendar } from 'lucide-react'
 import TimeTable from '../../assets/timetable.json'
 import logo from '../../assets/logo.svg'
 import StepTrack from '../../components/Onboarding/StepTrack'
-// ...existing code...
 
 export default function Regular() {
   const [toastMsg, setToastMsg] = useState('')
   const navigate = useNavigate()
-  // ...existing code...
   const [selectedDegree, setSelectedDegree] = useState('')
   const [selectedSemester, setSelectedSemester] = useState('')
   const [selectedSection, setSelectedSection] = useState('')
   const [isCreating, setIsCreating] = useState(false)
   const [progress, setProgress] = useState(0)
 
-  // Get all available degrees, semesters, and sections
   const degreeNames = Object.keys(TimeTable)
   const semesterNames = selectedDegree ? Object.keys(TimeTable[selectedDegree]) : []
   const sectionNames =
@@ -26,7 +23,6 @@ export default function Regular() {
       ? Object.keys(TimeTable[selectedDegree][selectedSemester])
       : []
 
-  // Get timetable for selected section
   const timetable = useMemo(() => {
     if (!selectedDegree || !selectedSemester || !selectedSection) return {}
     return TimeTable[selectedDegree][selectedSemester][selectedSection]

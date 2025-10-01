@@ -13,6 +13,7 @@ import {
 import TimeTable from '../../assets/timetable.json'
 import logo from '../../assets/logo.svg'
 import StepTrack from '../../components/Onboarding/StepTrack'
+import { resolveClashes } from '../../utils/smartClashResolver'
 
 export default function Preferences() {
   const navigate = useNavigate()
@@ -146,21 +147,50 @@ export default function Preferences() {
   const handleCreateTimetable = async () => {
     setIsCreating(true)
     setProgress(0)
-    let currentProgress = 0
-    const progressIncrement = 2
-    const intervalTime = 20
-    while (currentProgress < 100) {
-      currentProgress += progressIncrement
-      setProgress(Math.min(currentProgress, 100))
-      await new Promise(resolve => setTimeout(resolve, intervalTime))
+    
+    try {
+      // Simulate progress while resolving
+      const progressInterval = setInterval(() => {
+        setProgress(prev => Math.min(prev + 10, 90))
+      }, 150)
+      
+      console.log('Starting smart clash resolution...')
+      console.log('User preferences:', userPreferences)
+      console.log('Selected subjects:', selectedSubjects)
+      
+      // Use the smart clash resolver
+      const result = resolveClashes(selectedSubjects, userPreferences)
+      
+      clearInterval(progressInterval)
+      setProgress(100)
+      
+      // Small delay to show completion
+      await new Promise(resolve => setTimeout(resolve, 300))
+      
+      navigate('/preview', {
+        state: {
+          selectedSubjects: selectedSubjects,
+          userPreferences,
+          resolvedTimetable: result.timetable,
+          conflictSubjects: result.conflicts,
+          resolutionSuggestions: result.conflicts.map(subject => ({
+            subject,
+            message: result.success 
+              ? 'No conflicts detected for this subject.'
+              : 'This subject has time conflicts that could not be resolved automatically.',
+            alternatives: []
+          })),
+          resolutionSuccess: result.success,
+          resolutionDetails: result.conflictDetails || [],
+          resolutionMessage: result.message
+        },
+      })
+    } catch (error) {
+      console.error('Error resolving clashes:', error)
+      setIsCreating(false)
+      setProgress(0)
+      // You can add error toast here
     }
-    // Go to preview step with selected subjects and preferences
-    navigate('/preview', {
-      state: {
-        selectedSubjects: selectedSubjects,
-        userPreferences,
-      },
-    })
   }
 
   // Check if all sections for all subjects are marked as full

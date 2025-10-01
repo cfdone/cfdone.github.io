@@ -32,32 +32,48 @@ export default function AuthProvider({ children }) {
       if (event === 'SIGNED_OUT') {
         clearLocalData()
       }
-
-      setUser(session?.user || null)
-      setLoading(false)
+      
+      if (event === 'SIGNED_IN') {
+        // Keep loading state for a moment to allow data sync
+        setUser(session?.user || null)
+        setTimeout(() => setLoading(false), 100)
+      } else {
+        setUser(session?.user || null)
+        setLoading(false)
+      }
     })
 
     return () => subscription.unsubscribe()
   }, [])
 
   const signInWithGoogle = async () => {
+    setLoading(true) // Set loading state during sign-in process
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
         redirectTo: `${window.location.origin}/auth/callback`,
-        ueryParams: {
+        queryParams: {
           access_type: 'offline', // enables refresh token
           prompt: 'consent', // ensures Google issues a refresh token
         },
       },
     })
+    
+    // Note: loading will be set to false by the auth state change listener
     return { data, error }
   }
 
   const signOut = async () => {
-    clearLocalData()
-    const { error } = await supabase.auth.signOut()
-    return { error }
+    try {
+      clearLocalData()
+      setUser(null)
+      const { error } = await supabase.auth.signOut()
+      if (error) throw error
+      return { success: true }
+    } catch (error) {
+      console.error('Sign out error:', error)
+      return { success: false, error: error.message }
+    }
   }
 
   const value = {

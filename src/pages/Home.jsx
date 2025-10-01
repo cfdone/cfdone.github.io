@@ -12,7 +12,7 @@ import {
 } from '../components/Home'
 import { timeToMinutes } from '../utils/timeUtils'
 // ...existing code...
-import LoadingPulseOverlay from '../components/Loading'
+
 export default function Home() {
   const location = useLocation()
   const [selection, setSelection] = useState(location.state || null)

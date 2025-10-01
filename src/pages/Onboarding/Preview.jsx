@@ -30,9 +30,13 @@ export default function Preview() {
     )
   }, [location.state?.userPreferences])
 
+  // Get resolved data from navigation state (from smart resolver)
   const [resolvedTimetable, setResolvedTimetable] = useState(null)
   const [conflictSubjects, setConflictSubjects] = useState([])
   const [resolutionSuggestions, setResolutionSuggestions] = useState([])
+  const [resolutionSuccess, setResolutionSuccess] = useState(false)
+  const [resolutionDetails, setResolutionDetails] = useState([])
+  const [resolutionMessage, setResolutionMessage] = useState('')
 
   const [isResolving] = useState(false)
   const [resolutionProgress] = useState(0)
@@ -49,72 +53,76 @@ export default function Preview() {
   const [isUploading, setIsUploading] = useState(false)
   const [uploadProgress, setUploadProgress] = useState(0)
 
-  // CSP-based conflict detection and assignment
-  // Returns {conflicts: [], assignments: {day: [classes]}}
+  // Simple conflict detection for display purposes only
   const detectTimeConflicts = useCallback((timetable = []) => {
     const conflicts = [];
-    const assignments = {};
-    // For each day, try to assign classes without overlap
-    Object.entries(timetable).forEach(([day, classes]) => {
+    
+    if (!timetable || typeof timetable !== 'object') {
+      return { conflicts: [], assignments: {} };
+    }
+
+    // Check each day for time overlaps
+    Object.entries(timetable).forEach(([, classes]) => {
       if (!Array.isArray(classes) || classes.length < 2) {
-        assignments[day] = classes;
         return;
       }
-      // CSP: Backtracking assignment for this day's classes
-      const assigned = [];
-      const usedSlots = [];
-      classes
-        .sort((a, b) => timeToMinutes(a.start) - timeToMinutes(b.start))
-        .forEach(cls => {
-          // Check if this class overlaps with any already assigned
-          const overlap = assigned.some(
-            assignedCls => timeRangesOverlap(
-              assignedCls.start,
-              assignedCls.end,
-              cls.start,
-              cls.end
-            )
-          );
-          if (!overlap) {
-            assigned.push(cls);
-            usedSlots.push([cls.start, cls.end]);
-          } else {
-            // Mark conflict
-            const subjectName = cls.subject || cls.course;
-            if (subjectName && !conflicts.includes(subjectName)) {
-              conflicts.push(subjectName);
+      
+      // Sort classes by start time
+      const sortedClasses = classes.sort((a, b) => timeToMinutes(a.start) - timeToMinutes(b.start));
+      
+      // Check for overlaps
+      for (let i = 0; i < sortedClasses.length - 1; i++) {
+        for (let j = i + 1; j < sortedClasses.length; j++) {
+          const class1 = sortedClasses[i];
+          const class2 = sortedClasses[j];
+          
+          if (timeRangesOverlap(class1.start, class1.end, class2.start, class2.end)) {
+            const subject1 = class1.subject || class1.course;
+            const subject2 = class2.subject || class2.course;
+            
+            if (subject1 && !conflicts.includes(subject1)) {
+              conflicts.push(subject1);
+            }
+            if (subject2 && !conflicts.includes(subject2)) {
+              conflicts.push(subject2);
             }
           }
-        });
-      assignments[day] = assigned;
+        }
+      }
     });
-    return { conflicts, assignments };
+    
+    return { conflicts, assignments: timetable };
   }, []);
 
-  // Function to generate resolution suggestions for conflicting subjects
+  // Generate resolution suggestions for conflicting subjects
   const generateResolutionSuggestions = useCallback(
     (conflicts, subjects) => {
-      // For each conflict, suggest alternate sections/times if available
       return conflicts
         .map(conflictSubject => {
           const subject = subjects.find(s => s.name === conflictSubject)
           if (!subject || !subject.locations || !userPreferences?.parentSection) return null
-          // Find alternative locations (sections) for this subject
+          
           const parentSection = userPreferences.parentSection
           const alternatives = subject.locations.filter(loc => {
-            // Only suggest if not in parent section
+            // Only suggest sections that aren't marked as full
+            const sectionKey = `${subject.name}-${loc.degree}-${loc.semester}-${loc.section}`
+            const isNotFull = userPreferences.seatAvailability[sectionKey] !== false
+            
+            // Only suggest if not in parent section and not full
             return (
-              loc.degree !== parentSection.degree ||
-              loc.semester !== parentSection.semester ||
-              loc.section !== parentSection.section
+              isNotFull &&
+              (loc.degree !== parentSection.degree ||
+               loc.semester !== parentSection.semester ||
+               loc.section !== parentSection.section)
             )
           })
+          
           return {
             subject: subject.name,
             message:
               alternatives.length > 0
-                ? 'Try selecting a different section or time slot for this subject to avoid conflicts.'
-                : 'No alternate sections available. Manual adjustment may be required.',
+                ? 'Try selecting a different section that has available seats to avoid conflicts.'
+                : 'No alternate sections with available seats. Manual adjustment may be required.',
             alternatives,
           }
         })
@@ -123,40 +131,44 @@ export default function Preview() {
     [userPreferences]
   )
 
-  // Effect to get the resolved timetable from location state and detect conflicts
+  // Effect to handle resolved timetable from navigation state
   useEffect(() => {
+    console.log('Preview: Location state:', location.state)
+    
     if (location.state?.resolvedTimetable) {
-      setResolvedTimetable(location.state.resolvedTimetable);
-      // If conflicts aren't provided in location state, detect them
-      if (!location.state.conflictSubjects) {
-        const { conflicts } = detectTimeConflicts(location.state.resolvedTimetable, selectedSubjects);
-        setConflictSubjects(conflicts);
-        // Optionally, use assignments for rendering
-      } else {
-        setConflictSubjects(location.state.conflictSubjects);
-      }
-    } else if (
-      TimeTable &&
-      userPreferences?.parentSection?.degree &&
-      userPreferences?.parentSection?.semester &&
-      userPreferences?.parentSection?.section
-    ) {
-      const sectionTimetable =
-        TimeTable?.[userPreferences.parentSection.degree]?.[userPreferences.parentSection.semester]?.[userPreferences.parentSection.section] || null;
-      setResolvedTimetable(sectionTimetable);
-      const { conflicts } = sectionTimetable
-        ? detectTimeConflicts(sectionTimetable, selectedSubjects)
-        : { conflicts: [], assignments: {} };
-      setConflictSubjects(conflicts);
-      // Optionally, use assignments for rendering
+      console.log('Using resolved timetable from smart resolver')
+      setResolvedTimetable(location.state.resolvedTimetable)
+      setConflictSubjects(location.state.conflictSubjects || [])
+      setResolutionSuggestions(location.state.resolutionSuggestions || [])
+      setResolutionSuccess(location.state.resolutionSuccess || false)
+      setResolutionDetails(location.state.resolutionDetails || [])
+      setResolutionMessage(location.state.resolutionMessage || '')
     } else {
-      setResolvedTimetable(null);
-      setConflictSubjects([]);
+      console.log('No resolved timetable found, falling back to parent section')
+      
+      // Fallback: try to get timetable from parent section (but this shouldn't happen with smart resolver)
+      if (
+        TimeTable &&
+        userPreferences?.parentSection?.degree &&
+        userPreferences?.parentSection?.semester &&
+        userPreferences?.parentSection?.section
+      ) {
+        const parentTimetable =
+          TimeTable[userPreferences.parentSection.degree]?.[userPreferences.parentSection.semester]?.[userPreferences.parentSection.section]
+        
+        if (parentTimetable) {
+          setResolvedTimetable(parentTimetable)
+          const { conflicts } = detectTimeConflicts(parentTimetable)
+          setConflictSubjects(conflicts)
+        } else {
+          setErrorMsg('No timetable data found for selected parent section')
+        }
+      } else {
+        setResolvedTimetable(null)
+        setConflictSubjects([])
+      }
     }
-    if (location.state?.resolutionSuggestions) {
-      setResolutionSuggestions(location.state.resolutionSuggestions);
-    }
-  }, [location.state, detectTimeConflicts, userPreferences.parentSection.degree, userPreferences.parentSection.semester, userPreferences.parentSection.section, selectedSubjects]);
+  }, [location.state, detectTimeConflicts, userPreferences]);
 
   // Effect to generate resolution suggestions when conflicts are detected
   useEffect(() => {
@@ -310,34 +322,34 @@ export default function Preview() {
                 </div>
               )}
 
-          {/* Move Conflict Card and GroqCloud Card to Top */}
+          {/* Resolution Status Card */}
           {resolvedTimetable && !isResolving && (
                 <>
                   <div
                     className={`p-4 rounded-3xl border ${
-                      conflictSubjects.length === 0
+                      resolutionSuccess && conflictSubjects.length === 0
                         ? 'bg-green-500/10 border-green-500/20 text-green-400'
                         : 'bg-yellow-500/10 border-yellow-500/20 text-yellow-400'
                     }`}
                   >
                     <div className="flex items-center gap-2 mb-2">
                       <div>
-                        {conflictSubjects.length === 0 ? (
+                        {resolutionSuccess && conflictSubjects.length === 0 ? (
                           <CheckCircle className="w-5 h-5 text-green-400" />
                         ) : (
                           <AlertTriangle className="w-5 h-5 text-yellow-400" />
                         )}
                       </div>
                       <div className="font-semibold">
-                        {conflictSubjects.length === 0
-                          ? 'Parent Section Schedule Created!'
-                          : `${conflictSubjects.length} Subject${conflictSubjects.length > 1 ? 's' : ''} Need${conflictSubjects.length > 1 ? '' : 's'} Attention`}
+                        {resolutionSuccess && conflictSubjects.length === 0
+                          ? 'Perfect Schedule Created!'
+                          : `${conflictSubjects.length} Subject${conflictSubjects.length > 1 ? 's' : ''} Have Conflicts`}
                       </div>
                     </div>
                     <div className="text-sm opacity-80">
-                      {conflictSubjects.length === 0
-                        ? `Perfect schedule optimized for your parent section: ${userPreferences.parentSection.degree} • Semester ${userPreferences.parentSection.semester} • Section ${userPreferences.parentSection.section}`
-                        : 'Schedule created with parent section optimization, but some subjects may need manual adjustment'}
+                      {resolutionMessage || (resolutionSuccess && conflictSubjects.length === 0
+                        ? `Optimal schedule found with no time conflicts for your parent section.`
+                        : 'Smart resolver found the best possible schedule, but some conflicts remain.')}
                     </div>
                     {userPreferences.parentSection.degree && (
                       <div className="mt-2 text-xs opacity-70 flex items-center gap-1">
@@ -345,16 +357,16 @@ export default function Preview() {
                         {userPreferences.parentSection.degree} • Semester{' '}
                         {userPreferences.parentSection.semester} • Section{' '}
                         {userPreferences.parentSection.section}
-                        {Object.values(userPreferences.seatAvailability).filter(Boolean).length >
-                          0 &&
-                          ` • ${Object.values(userPreferences.seatAvailability).filter(Boolean).length} confirmed seats`}
                       </div>
                     )}
-                    {/* Prompt user to reverify timetable */}
-                    <div className="mt-2 text-xs text-yellow-300 font-semibold">
-                      Please reverify your timetable and class times for each day before proceeding.
-                      <br />
-                    </div>
+                    {/* Check if no classes could be scheduled */}
+                    {resolvedTimetable && !Object.values(resolvedTimetable).some(day => 
+                      Array.isArray(day) && day.length > 0
+                    ) && (
+                      <div className="mt-2 text-xs text-red-400 font-semibold">
+                        ⚠️ No classes could be scheduled - all selected sections may be marked as full.
+                      </div>
+                    )}
                   </div>
                   {/* GroqCloud AI Review Card with Reverify Button */}
                   <div className="mt-3 p-4 rounded-3xl border bg-accent/10 border-accent/20 text-white">
@@ -472,6 +484,33 @@ export default function Preview() {
                   </div>
                 )}
 
+                {/* Resolution Details (if any) */}
+                {resolutionDetails.length > 0 && (
+                  <div className="space-y-2">
+                    <div className="font-semibold text-white text-sm mb-2">
+                      Conflict Details:
+                    </div>
+                    {resolutionDetails.slice(0, 5).map((detail, idx) => (
+                      <div key={idx} className="p-3 rounded-xl bg-red-500/10 border border-red-500/20">
+                        <div className="text-red-400 text-sm font-semibold">
+                          {detail.subject1} ↔ {detail.subject2}
+                        </div>
+                        <div className="text-red-300 text-xs">
+                          Both scheduled on {detail.day} at overlapping times
+                        </div>
+                        <div className="text-white/60 text-xs">
+                          {detail.subject1}: {detail.time1} | {detail.subject2}: {detail.time2}
+                        </div>
+                      </div>
+                    ))}
+                    {resolutionDetails.length > 5 && (
+                      <div className="text-white/50 text-xs text-center">
+                        ... and {resolutionDetails.length - 5} more conflicts
+                      </div>
+                    )}
+                  </div>
+                )}
+
                 {/* Resolution Suggestions with conflict details */}
                 {resolutionSuggestions.length > 0 && (
                   <div className="space-y-2">
@@ -539,11 +578,18 @@ export default function Preview() {
             </button>
             <button
               className={` px-4 rounded-3xl w-full h-full text-[15px] transition shadow-md flex items-center justify-center
-                ${selectedSubjects.length > 0 ? 'bg-accent text-white' : 'bg-accent/40 text-white/60'}
+                ${selectedSubjects.length > 0 && resolvedTimetable && Object.values(resolvedTimetable).some(day => 
+                  Array.isArray(day) && day.length > 0
+                ) ? 'bg-accent text-white' : 'bg-accent/40 text-white/60'}
             `}
-              disabled={selectedSubjects.length === 0 || isUploading}
+              disabled={selectedSubjects.length === 0 || isUploading || !resolvedTimetable || !Object.values(resolvedTimetable).some(day => 
+                Array.isArray(day) && day.length > 0
+              )}
               onClick={async () => {
-                if (selectedSubjects.length > 0 && resolvedTimetable) {
+                const hasAnyClasses = resolvedTimetable && Object.values(resolvedTimetable).some(day => 
+                  Array.isArray(day) && day.length > 0
+                )
+                if (selectedSubjects.length > 0 && resolvedTimetable && hasAnyClasses) {
                   setIsUploading(true)
                   setUploadProgress(0)
                   // Animate progress bar
@@ -562,8 +608,11 @@ export default function Preview() {
                     hasConflicts: conflictSubjects.length > 0,
                     conflictSubjects: conflictSubjects,
                     resolutionSuggestions: resolutionSuggestions,
-                    aiReview: grokcloudResponse, // Save AI review for reference
+                    resolutionSuccess: resolutionSuccess,
+                    resolutionDetails: resolutionDetails,
+                    aiReview: grokcloudResponse,
                     studentType: 'lagger',
+                    userPreferences: userPreferences
                   }
                   try {
                     const {
